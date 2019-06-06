@@ -1,0 +1,43 @@
+# workspaces
+cmd - j   : chunkc tiling::window --focus next
+cmd - k   : chunkc tiling::window --focus prev
+
+# swap window
+shift + alt - h : chunkc tiling::window --swap west
+shift + alt - j : chunkc tiling::window --swap south
+shift + alt - k : chunkc tiling::window --swap north
+shift + alt - l : chunkc tiling::window --swap east
+
+# move window
+shift + cmd - h : chunkc tiling::window --warp west
+shift + cmd - j : chunkc tiling::window --warp south
+shift + cmd - k : chunkc tiling::window --warp north
+shift + cmd - l : chunkc tiling::window --warp east
+
+# toggle window fullscreen
+alt - f : chunkc tiling::window --toggle fullscreen
+shift + alt - f : chunkc tiling::window --toggle native-fullscreen
+
+# change layout of desktop
+ctrl + alt - a : chunkc tiling::desktop --layout bsp
+ctrl + alt - s : chunkc tiling::desktop --layout monocle
+ctrl + alt - d : chunkc tiling::desktop --layout float
+
+# increase padding size
+shift + alt - 0x2d : chunkc tiling::desktop -p dec
+shift + alt - 0x2e : chunkc tiling::desktop -p inc
+
+
+
+cmd - 1 : chunkc tiling::desktop --focus 1
+cmd - 2 : chunkc tiling::desktop --focus 2
+cmd - 3 : chunkc tiling::desktop --focus 3
+cmd + shift - 1 : chunkc tiling::window --send-to-desktop 1; chunkc tiling::desktop --focus 1
+cmd + shift - 2 : chunkc tiling::window --send-to-desktop 2; chunkc tiling::desktop --focus 2
+cmd + shift - 3 : chunkc tiling::window --send-to-desktop 3; chunkc tiling::desktop --focus 3
+
+cmd + shift - 0x1B : chunk tiling::desktop -p inc
+cmd + shift - 0x18 : chunk tiling::desktop -p dec
+
+cmd + shift - space : chunkc tiling::window --toggle float;\
+chunkc tiling::window --grid-layout 4:4:1:1:2:2
