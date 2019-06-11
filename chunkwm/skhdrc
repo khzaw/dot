@@ -1,8 +1,8 @@
 :: default  : chunkc border::color 0xff61afef
 
 # workspaces
-cmd - j   : chunkc tiling::window --focus next
-cmd - k   : chunkc tiling::window --focus prev
+alt - j   : chunkc tiling::window --focus next
+alt - k   : chunkc tiling::window --focus prev
 
 # swap window
 shift + alt - h : chunkc tiling::window --swap west
