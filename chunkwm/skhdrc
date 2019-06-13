@@ -39,6 +39,11 @@ default                   < ctrl - return       : open -na iTerm
 
 cmd + shift - space : chunkc tiling::window --toggle float; chunkc tiling::window --grid-layout 4:4:1:1:2:2
 
+cmd + shift + alt - h : chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge west;  chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge east
+cmd + shift + alt - j : chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge south
+cmd + shift + alt - k : chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge south
+cmd + shift + alt - l : chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge west;  chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge east
+
 
 
 
