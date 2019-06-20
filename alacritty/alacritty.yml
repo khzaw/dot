@@ -50,4 +50,18 @@ colors:
     cyan:    '0x86c1b9'
     white:   '0xf8f8f8'
 
-background_opacity: 1.0
+background_opacity: 0.85
+
+window:
+  padding:
+    x: 16
+    y: 16
+
+  dynamic_padding: true
+  decorations: none
+
+cursor:
+  style: Beam
+  unfocused_hollow: true
+
+live_config_reload: true
