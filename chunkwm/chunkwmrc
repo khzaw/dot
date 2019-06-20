@@ -49,14 +49,14 @@ chunkc set custom_bar_offset_left        0
 chunkc set custom_bar_offset_right       0
 
 chunkc set global_desktop_mode           bsp
-chunkc set global_desktop_offset_top     40
-chunkc set global_desktop_offset_bottom  40
-chunkc set global_desktop_offset_left    40
-chunkc set global_desktop_offset_right   40
+chunkc set global_desktop_offset_top     60
+chunkc set global_desktop_offset_bottom  60
+chunkc set global_desktop_offset_left    60
+chunkc set global_desktop_offset_right   60
 chunkc set global_desktop_offset_gap     20
 
-chunkc set 1_desktop_mode                monocle
-chunkc set 2_desktop_mode                bsp
+chunkc set 1_desktop_mode                bsp
+chunkc set 2_desktop_mode                monocle
 
 chunkc set 3_desktop_mode                bsp
 chunkc set 3_desktop_offset_top          80
@@ -64,8 +64,8 @@ chunkc set 3_desktop_offset_bottom       80
 chunkc set 3_desktop_offset_left         120
 chunkc set 3_desktop_offset_right        120
 
-chunkc set 4_desktop_mode                float
-chunkc set 5_desktop_mode                bsp
+chunkc set 4_desktop_mode                bsp
+chunkc set 5_desktop_mode                float
 
 #
 # NOTE: syntax for desktop-specific settings
