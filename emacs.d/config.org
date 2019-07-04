@@ -1,13 +1,21 @@
+* Editorconfig
+  #+BEGIN_SRC 
+  (editorconfig-mode 1)
+  #+END_SRC
+* Evil mode
 #+BEGIN_SRC emacs-lisp
   (evil-mode 1)
   (evil-ex-define-cmd "q" 'kill-this-buffer)  ; prevent accidentally killing the frame
 #+END_SRC
 
+* Tab indents
 #+BEGIN_SRC emacs-lisp
   (setq-default tab-width 2)
   (setq-default indent-tabs-mode nil)
+  (setq js-indent-level 2)
 #+END_SRC
 
+* Reload init.el
 #+BEGIN_SRC emacs-lisp
   (defun khzaw/load-init()
     "Reload .emacs.d/init.el"
@@ -37,7 +45,9 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 ** Better looks and defaults
 *** Setting default font
 #+BEGIN_SRC emacs-lisp
-      (set-frame-font "IosevkaCC-17" nil t)
+      (set-face-attribute 'default nil :family "Iosevka" :height 170)
+      (set-face-attribute 'fixed-pitch nil :family "IosevkaCC")
+      (set-face-attribute 'variable-pitch nil :family "IBM Plex Mono")
 #+END_SRC
 
 *** Improving / Cleaning up the UI.
@@ -52,14 +62,23 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   (setq-default indicate-empty-lines t)
   (setq-default line-spacing 3)
   (setq frame-title-format '("Emacs"))
+  (set-window-margins (selected-window) 1 1)
+#+END_SRC
+*** Typography
+#+BEGIN_SRC emacs-lisp
+;; (olivetti-mode 1)  ;; Center text in the buffer
+;; (flyspell-mode 1)  ;; Catch spelling mistakes
+;; (type-mode 1)      ;; Good for symbols like em-dash
 #+END_SRC
 
-** No Backup~ Files
+*** No Backup~ Files
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
+  (setq auto-save-default nil)
+  (setq create-lockfiles nil)
 #+END_SRC
 
-** Web mode
+* Web mode
 #+BEGIN_SRC emacs-lisp
 (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
 (defun web-mode-init-hook ()
@@ -67,8 +86,15 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   (setq web-mode-markup-indent-offset 2))
 (add-hook 'web-mode-hook 'web-mode-init-hook)
 
-(defun web-mode-init-prettier-hook ()
+(defun init-prettier-hook ()
   (add-node-modules-path)
   (prettier-js-mode))
-(add-hook 'web-mode-hook 'web-mode-init-hook)
+
+(add-hook 'js-mode-hook 'init-prettier-hook)
+#+END_SRC
+* Text mode
+#+BEGIN_SRC emacs-lisp
+(add-hook 'text-mode-hook
+(lambda ()
+(variable-pitch-mode 1)))
 #+END_SRC

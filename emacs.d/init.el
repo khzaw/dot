@@ -6,14 +6,26 @@
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 
 (setq package-selected-packages '(evil
-                                   magit
-                                   smooth-scrolling
-                                   whick-key
-                                   org-bullets
-                                   one-themes
-                                   company-mode
-                                   fzf
-                                   ))
+                                  evil-escape
+                                  editorconfig
+                                  magit
+                                  smooth-scrolling
+                                  dired-x
+                                  whick-key
+                                  org-bullets
+                                  company-mode
+                                  fzf
+                                  one-themes
+                                  doom-themes
+                                  moe-theme
+                                  cyberpunk-theme
+                                  minimal-theme
+                                  grandshell-theme
+                                  poet-theme
+                                  web-mode
+                                  centered-window
+                                  prettier-js
+                                    ))
 (package-initialize)
 (setq package-enable-at-startup nil)
 (unless package-archive-contents
@@ -23,7 +35,7 @@
 ;; Load theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-(load-theme 'one-dark t)
+(load-theme 'doom-molokai t)
 
 ;; Load mail config file ~/.config.org
 (require 'org)
