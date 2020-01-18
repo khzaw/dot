@@ -6,6 +6,8 @@
 #+BEGIN_SRC emacs-lisp
   (evil-mode 1)
   (evil-ex-define-cmd "q" 'kill-this-buffer)  ; prevent accidentally killing the frame
+  (setq-default evil-escape-key-sequence "kj")
+  (setq-default evil-escape-delay 0.2)
 #+END_SRC
 
 * Tab indents
@@ -97,4 +99,21 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 (add-hook 'text-mode-hook
 (lambda ()
 (variable-pitch-mode 1)))
+#+END_SRC
+
+* Protobuf mode
+#+BEGIN_SRC emacs-lisp
+(defconst my-protobuf-style
+  '((c-basic-offset . 2)
+    (indent-tabs-mode . nil)))
+
+(add-hook 'protobuf-mode-hook
+  (lambda () (c-add-style "my-style" my-protobuf-style t)))
+#+END_SRC
+* Markdown mode
+#+BEGIN_SRC emacs-lisp
+(add-hook 'markdown-mode-hook
+  (lambda ()
+    (when buffer-file-name
+        (add-hook 'after-save-hook 'check-parens nil t))))
 #+END_SRC
