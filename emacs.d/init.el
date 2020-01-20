@@ -24,7 +24,7 @@
                                   moe-theme
                                   cyberpunk-theme
                                   minimal-theme
-                                  grandshelle-theme
+                                  grandshell-theme
                                   poet-theme
                                   web-mode
                                   centered-window
