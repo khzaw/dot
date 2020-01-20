@@ -1,7 +1,11 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 (require 'package)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 
@@ -20,13 +24,18 @@
                                   moe-theme
                                   cyberpunk-theme
                                   minimal-theme
-                                  grandshell-theme
+                                  grandshelle-theme
                                   poet-theme
                                   web-mode
                                   centered-window
                                   prettier-js
                                   protobuf-mode
                                   markdown-mode
+                                  helm
+                                  helm-projectile
+                                  restart-emacs
+                                  projectile
+                                  fancy-battery
                                     ))
 (package-initialize)
 (setq package-enable-at-startup nil)
@@ -44,17 +53,3 @@
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 (provide 'init)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(markdown-mode protobuf-mode fzf evil magit smooth-scrolling whick-key org-bullets one-themes company-mode fzf\.el)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
