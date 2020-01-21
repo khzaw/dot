@@ -14,9 +14,9 @@
 ** UI
 *** font
 #+BEGIN_SRC emacs-lisp
-      (set-face-attribute 'default nil :family "Iosevka" :height 160)
-      (set-face-attribute 'fixed-pitch nil :family "Iosevka")
-      (set-face-attribute 'variable-pitch nil :family "Iosevka")
+      (set-face-attribute 'default nil :family "Dank Mono" :height 160)
+      (set-face-attribute 'fixed-pitch nil :family "Dank Mono")
+      (set-face-attribute 'variable-pitch nil :family "Dank Mono")
 #+END_SRC
 *** maximize frame by default
 #+BEGIN_SRC emacs-lisp
@@ -114,28 +114,38 @@
 #+END_SRC
 ** web-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package web-mode
-    :ensure t
-    :config
-      (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
-      (setq web-mode-markup-indent-offset 2
-            web-mode-code-indent-offset 2
-            web-mode-css-indent-offset 2
-            web-mode-style-padding 2
-            web-mode-script-padding 2
-            web-mode-block-padding 2)
+    (use-package web-mode
+      :ensure t
+      :defer 2
+      ;; :after (add-node-modules-path)
+      :config
+        (progn
+            (setq web-mode-markup-indent-offset 2
+                    web-mode-code-indent-offset 2
+                    web-mode-css-indent-offset 2
+                    web-mode-style-padding 2
+                    web-mode-script-padding 2
+                    web-mode-block-padding 2))
     )
 #+END_SRC
 ** prettier-js
    #+BEGIN_SRC emacs-lisp
      (use-package prettier-js
+       :ensure t
        :init
-       (add-hook 'js2-mode-hook 'prettier-js-mode))
+       (add-hook 'js-mode-hook 'prettier-js-mode))
 
    #+END_SRC
-
+** add-node-modules-path
+   #+BEGIN_SRC emacs-lisp
+     (use-package add-node-modules-path
+:ensure t
+:init
+(add-hook 'web-mode-hook 'add-node-modules_path))
+   #+END_SRC
 ** org
    #+BEGIN_SRC emacs-lisp
+     (setq org-src-fontify-natively t) ;; fontify code in code blocks
      (setq org-src-tab-acts-natively t)  
    #+END_SRC
 ** org-bullets
@@ -151,54 +161,56 @@
    #+END_SRC
 ** helm
    #+BEGIN_SRC emacs-lisp
-   (use-package helm
-     :ensure t
-     :bind (("M-x" . helm-M-x)
-            ("M-y" . helm-show-kill-ring)
-            ("C-x b" . helm-mini)
-            ("C-x C-f" . helm-find-files))
+               (use-package helm
+                 :ensure t
+                 :bind (("M-x" . helm-M-x)
+                        ("C-x b" . helm-buffers-list)
+                        ("C-x C-f" . helm-find-files))
+                 :init
+                 (setq helm-M-x-fuzzy-match t
+                       helm-buffers-fuzzy-matching t
+                       helm-recentf-fuzzy-match t
+                       ;; helm-split-window-in-side-p t ; open helm buffer inside current window, not occupy whole other window
+                       ;; helm-move-to-line-cycle-in-source t ; move to end or beginning of source when reaching top or bottom of source
+                       ;; helm-ff-search-library-in-sexp t ; search for library in `require` and `declare-function` sexp.
+                       ;; helm-scroll-amount 8
+                       ;; helm-ff-file-name-history-use-recentf t
+                       ;; helm-mode-fuzzy-match t
+                       ;; helm-semantic-fuzzy-match t
+                  )
      :config
-     (progn 
-        (setq helm-M-x-fuzzy-match t   ; optional fuzzy matching for helm-M-x
-            helm-buffers-fuzzy-matching t
-            helm-recentf-fuzzy-match t
-            helm-split-window-in-side-p t ; open helm buffer inside current window, not occupy whole other window
-            helm-move-to-line-cycle-in-source t ; move to end or beginning of source when reaching top or bottom of source
-            helm-ff-search-library-in-sexp t ; search for library in `require` and `declare-function` sexp.
-            helm-scroll-amount 8
-            helm-ff-file-name-history-use-recentf t
-            helm-mode-fuzzy-match t
-            helm-semantic-fuzzy-match t
-            helm-imenu-fuzzy-match t
-            helm-echo-input-in-header-line t))
-    )
+     (helm-mode 1)
+     (require 'helm-config)
+          )
    #+END_SRC
 ** helm-ag
    #+BEGIN_SRC emacs-lisp
-   (use-package helm-ag
-     :ensure helm-ag
-   )
+     (use-package helm-ag
+       :ensure helm-ag
+       :bind ("C-c a g" . helm-do-ag-project-root)
+     )
    #+END_SRC
 ** projectile
    #+BEGIN_SRC emacs-lisp
-   (use-package projectile
-     :ensure t
-     :config
-       (projectile-mode)
-        (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-        (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-        (projectile-global-mode)
-        (setq projectile-completion-system 'helm)
-   )
+     (use-package projectile
+       :after (helm)
+       :ensure t
+       :config
+          (projectile-mode)
+          (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+          (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+          (projectile-global-mode)
+          (setq projectile-completion-system 'helm)
+     )
    #+END_SRC
 ** helm-projectile
    #+BEGIN_SRC emacs-lisp
-   (use-package helm-projectile
-     :ensure t
-     :bind ("M-t" . helm-projectile-find-file)
-     :config
-       (helm-projectile-on)
-   )
+     (use-package helm-projectile
+       :ensure t
+       :bind ("M-t" . helm-projectile-find-file)
+       :config
+         (helm-projectile-on)
+     )
    #+END_SRC
 ** protobuf-mode
    #+BEGIN_SRC emacs-lisp
@@ -217,14 +229,22 @@
    #+BEGIN_SRC emacs-lisp
     (use-package restart-emacs :ensure t)
    #+END_SRC
-** themes
+** doom-themes
    #+BEGIN_SRC emacs-lisp
-     (use-package doom-themes
-        :ensure t
-        :config
-            (setq doom-themes-enable-bold t
-                  doom-themes-enable-italic t)
-            (load-theme 'doom-dracula t))
+                    (use-package doom-themes
+                       :ensure t
+                       :config
+                           (setq doom-themes-enable-bold t
+                                 doom-themes-enable-italic t)
+                           (load-theme 'doom-dracula t)
+;; enable flashing mode-line on errors
+     (doom-themes-visual-bell-config)
+          (doom-themes-org-config)
+               )
+   #+END_SRC
+** gitignore-mode
+   #+BEGIN_SRC emacs-lisp
+(use-package gitignore-mode :ensure t)
    #+END_SRC
 * Reload init.el
 #+BEGIN_SRC emacs-lisp
