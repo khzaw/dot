@@ -1,9 +1,11 @@
 * General
 ** sanity
   #+BEGIN_SRC emacs-lisp
-(custom-set-variables '(inhibit-startup-screen t))
-(setq vc-follow-symlinks t) ;; don't  ask for confirmation when operating symlinked files
-(setq frame-resize-pixelwise t)
+    (custom-set-variables '(inhibit-startup-screen t))
+    (setq vc-follow-symlinks t) ;; don't  ask for confirmation when operating symlinked files
+    (setq frame-resize-pixelwise t)
+    (setq inhibit-compacting-font-caches t) ;; don't compact font caches during GC
+    (setq find-file-visit-truename t) ;; display true names for symlink files
   #+END_SRC
 ** Tab indents
 #+BEGIN_SRC emacs-lisp
@@ -13,32 +15,33 @@
 #+END_SRC
 ** UI
 *** font
-#+BEGIN_SRC emacs-lisp
-      (set-face-attribute 'default nil :family "Dank Mono" :height 160)
+    #+BEGIN_SRC emacs-lisp
+      (set-face-attribute 'default nil :family "Dank Mono" :height 140)
       (set-face-attribute 'fixed-pitch nil :family "Dank Mono")
       (set-face-attribute 'variable-pitch nil :family "Dank Mono")
-#+END_SRC
+    #+END_SRC
 *** maximize frame by default
 #+BEGIN_SRC emacs-lisp
      (setq initial-frame-alist (quote ((fullscreen . maximized))))
 #+END_SRC
 *** display column number
-#+BEGIN_SRC emacs-lisp
-(column-number-mode t)
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (column-number-mode t)
+    #+END_SRC
 ** misc
 #+BEGIN_SRC emacs-lisp
-  (setq inhibit-splash-screen t)
-  (setq ring-bell-function 'ignore)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
-  (blink-cursor-mode t)
-  (setq blink-cursor-blinks 0) ;; blink forever
-  (setq-default indicate-empty-lines t)
-  (setq-default line-spacing 3)
-  (setq frame-title-format '("Emacs"))
-  (set-window-margins (selected-window) 1 1)
+      (setq inhibit-splash-screen t)
+      (setq ring-bell-function 'ignore)
+      (tool-bar-mode -1)
+      (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (blink-cursor-mode t)
+      (setq blink-cursor-blinks 0) ;; blink forever
+      (setq-default indicate-empty-lines t)
+      (setq-default line-spacing 3)
+      (setq frame-title-format '("Emacs"))
+      (set-window-margins (selected-window) 1 1)
+      (setq use-dialog-box nil)
   #+END_SRC
 ** no backup~ files
 #+BEGIN_SRC emacs-lisp
@@ -53,6 +56,12 @@
   '(lambda () (interactive) (kill-buffer (current-buffer))))
 #+END_SRC
 * Packages
+** doom-modeline
+   #+BEGIN_SRC emacs-lisp
+    (use-package doom-modeline
+    :ensure t
+    :hook (after-init . doom-modeline-mode))
+   #+END_SRC
 ** fancy-battery
 #+BEGIN_SRC emacs-lisp
 (use-package fancy-battery
@@ -102,16 +111,16 @@
    #+END_SRC
 ** smooth-scrolling
    Override Emacs' default scrolling design: jumping half-page. Added "-aggressively" to prevent the cursor to jump around when user scrolls.
-#+BEGIN_SRC emacs-lisp
-(use-package smooth-scrolling
-  :config
-  (setq scroll-margin 1
-        smooth-scroll-margin 1
-        scroll-conservatively 0
-        scroll-up-aggressively 0.01
-        scroll-down-aggressively 0.01)
-  (smooth-scrolling-mode 1))
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+    (use-package smooth-scrolling
+    :config
+    (setq scroll-margin 1
+            smooth-scroll-margin 1
+            scroll-conservatively 0
+            scroll-up-aggressively 0.01
+            scroll-down-aggressively 0.01)
+    (smooth-scrolling-mode 1))
+    #+END_SRC
 ** web-mode
 #+BEGIN_SRC emacs-lisp
     (use-package web-mode
@@ -148,6 +157,10 @@
      (setq org-src-fontify-natively t) ;; fontify code in code blocks
      (setq org-src-tab-acts-natively t)  
    #+END_SRC
+** org-temp
+   #+begin_src emacs-lisp
+    (use-package org-temp :after org)
+   #+end_src
 ** org-bullets
    #+BEGIN_SRC emacs-lisp
    (use-package org-bullets
@@ -212,6 +225,23 @@
          (helm-projectile-on)
      )
    #+END_SRC
+** company
+   #+begin_src emacs-lisp
+     (use-package company
+       :ensure t
+       :init (global-company-mode)
+)
+   #+end_src
+** company-quickhelp
+   Documentation popups for company
+   #+begin_src emacs-lisp
+          (use-package company-quickhelp
+     :ensure t
+     :defer t
+:init
+(add-hook 'global-company-mode-hook #'company-quickhelp-mode))
+
+   #+end_src
 ** protobuf-mode
    #+BEGIN_SRC emacs-lisp
    (use-package protobuf-mode
@@ -244,7 +274,17 @@
    #+END_SRC
 ** gitignore-mode
    #+BEGIN_SRC emacs-lisp
-(use-package gitignore-mode :ensure t)
+     (use-package gitignore-mode :ensure t)
+   #+END_SRC
+** zone
+   #+BEGIN_SRC emacs-lisp
+     (use-package zone
+        :config
+        (zone-when-idle 300))
+   #+END_SRC
+** zone-nyan
+   #+BEGIN_SRC emacs-lisp
+     (use-package zone-nyan :ensure t :config (setq zone-programs [zone-nyan]))
    #+END_SRC
 * Reload init.el
 #+BEGIN_SRC emacs-lisp
