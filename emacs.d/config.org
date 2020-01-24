@@ -154,13 +154,19 @@
    #+END_SRC
 ** org
    #+BEGIN_SRC emacs-lisp
-     (setq org-src-fontify-natively t) ;; fontify code in code blocks
-     (setq org-src-tab-acts-natively t)  
+     (use-package org-mode
+       :config
+       (setq org-src-fontify-natively t) ;; fontify code in code blocks
+       (setq org-src-tab-acts-natively t)
+       (setq org-pretty-entities t)
+    )
    #+END_SRC
-** org-temp
+** org-tempo
+   Template expansion of Org structures
    #+begin_src emacs-lisp
-    (use-package org-temp :after org)
+    (use-package org-tempo :ensure t :after org)
    #+end_src
+
 ** org-bullets
    #+BEGIN_SRC emacs-lisp
    (use-package org-bullets
@@ -227,10 +233,15 @@
    #+END_SRC
 ** company
    #+begin_src emacs-lisp
-     (use-package company
-       :ensure t
-       :init (global-company-mode)
-)
+                    (use-package company
+                      :ensure t
+                      :config 
+          (global-company-mode)
+     (setq company-idle-delay 0.2)
+(setq company-show-numbers t)
+(setq company-tooltip-align-annotations t)
+
+               )
    #+end_src
 ** company-quickhelp
    Documentation popups for company
@@ -276,6 +287,14 @@
    #+BEGIN_SRC emacs-lisp
      (use-package gitignore-mode :ensure t)
    #+END_SRC
+** dockerfile-mode and docker-compose-mode
+   #+begin_src emacs-lisp
+          (use-package dockerfile-mode :defer t)
+     (use-package docker-compose-mode :defer t)
+   #+end_src
+
+   #+RESULTS:
+
 ** zone
    #+BEGIN_SRC emacs-lisp
      (use-package zone
@@ -286,6 +305,25 @@
    #+BEGIN_SRC emacs-lisp
      (use-package zone-nyan :ensure t :config (setq zone-programs [zone-nyan]))
    #+END_SRC
+** python
+   #+begin_src emacs-lisp
+                    (use-package python
+               :config
+          (setq python-indent-guess-indent-offset nil) ;; don't try to guess python indent offset
+     )
+   #+end_src
+** python-docstring
+   #+begin_src emacs-lisp
+          (use-package python-docstring
+     :hook ((python-mode . python-docstring-mode)))
+   #+end_src
+
+** blacken
+   #+begin_src emacs-lisp
+          (use-package blacken
+     :hook ((python-mode . blacken-mode))
+)
+   #+end_src
 * Reload init.el
 #+BEGIN_SRC emacs-lisp
   (defun khzaw/load-init()
