@@ -1,3 +1,7 @@
+;;; init.el --- Initialization file for Emacs
+;;; Commentary:
+;;; Emacs Startup File --- initialization for Emacs
+;;; Code:
 (add-to-list 'default-frame-alist '
   (ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '
@@ -26,3 +30,6 @@
 
 (require 'org)
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+
+(provide 'init)
+;;; init.el ends here
