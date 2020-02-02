@@ -40,9 +40,9 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil :family "Fira Code" :height 140)
-  (set-face-attribute 'fixed-pitch nil :family "Fira Code")
-  (set-face-attribute 'variable-pitch nil :family "Fira Code")
+  (set-face-attribute 'default nil :family "Iosevka Term" :height 180)
+  (set-face-attribute 'fixed-pitch nil :family "Iosevka Term")
+  (set-face-attribute 'variable-pitch nil :family "Iosevka Term")
   (setq-default line-spacing 1)
 #+END_SRC
 ** scroll-bar
@@ -113,7 +113,6 @@ Cleanup whitespace on save
     :hook (dired-mode . all-the-icons-dired-mode)
     )
 #+end_src
-
 ** diminish
 #+begin_src emacs-lisp
   (use-package diminish :demand t)
@@ -166,7 +165,7 @@ Cleanup whitespace on save
   (use-package which-key
     :diminish which-key-mode
     :config
-    (which-key-mode +1)
+    (which-key-mode t)
     (setq which-key-idle-delay 0.4
           which-key-idle-secondary-delay 0.4))
 #+END_SRC
@@ -199,13 +198,21 @@ Cleanup whitespace on save
 
 ** magit
 #+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :config
-    (global-set-key (kbd "C-x g") 'magit-status))
+(use-package magit
+  :bind ("C-x g" . magit-status)
+  :init
+  (setq magit-revision-show-gravatars t)
+  )
 #+END_SRC
 ** evil-magit
 #+begin_src emacs-lisp
   (use-package evil-magit)
+#+end_src
+** forge
+#+begin_src emacs-lisp
+(use-package forge
+  :after magit
+)
 #+end_src
 
 ** smooth-scrolling
@@ -275,6 +282,8 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
     (setq org-src-preserve-indentation t) ;; Tangligh should preserve indentation
     (setq org-catch-invisible-edits 'show) ;; Avoid accidentally editing folded regions
     (setq org-use-speed-commands t)
+    (setq org-confirm-babel-evaluate nil)
+    (setq org-edit-src-content-indentation 0)
     )
 #+END_SRC
 ** org-bullets
@@ -288,127 +297,125 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 #+BEGIN_SRC emacs-lisp
   (use-package aggressive-indent :ensure t)
 #+END_SRC
-** helm
-#+BEGIN_SRC emacs-lisp
-  (use-package helm
-    :ensure t
-    :bind (("M-x" . helm-M-x)
-           ("C-x b" . helm-buffers-list)
-           ("C-x C-f" . helm-find-files))
-    :init
-    (setq helm-M-x-fuzzy-match t
-          helm-buffers-fuzzy-matching t
-          helm-recentf-fuzzy-match t
-          helm-lisp-fuzzy-completion t
-          helm-semantic-fuzzy-match t
-          helm-autoresize-max-height 0
-          helm-autoresize-min-height 20
-          helm-split-window-in-side-p t ;; open helm buffer inside current window, not occupy whole other window
-          ;; helm-move-to-line-cycle-in-source t ; move to end or beginning of source when reaching top or bottom of source
-          ;; helm-ff-search-library-in-sexp t ; search for library in `require` and `declare-function` sexp.
-          ;; helm-scroll-amount 8
-          ;; helm-ff-file-name-history-use-recentf t
-          ;; helm-mode-fuzzy-match t
-          )
-    :config
-    (helm-mode 1)
-    (require 'helm-config)
-    )
-#+END_SRC
-** helm-ag
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-ag
-    :ensure helm-ag
-    :bind ("C-c a g" . helm-do-ag-project-root)
-    )
-#+END_SRC
+** ivy
+#+begin_src emacs-lisp
+(use-package ivy
+  :config
+    (ivy-mode 1) ; globally at startup
+    (setq ivy-use-virtual-buffers t)
+    (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  )
+  #+end_src
+** swiper
+#+begin_src emacs-lisp
+(use-package swiper
+  :bind (("C-s" . 'swiper))
+  )
+#+end_src
+** counsel
+#+begin_src emacs-lisp
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-c g" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-c a" . counsel-ag)
+         ("C-x l" . counsel-locate)
+         )
+  )
+#+end_src
 ** projectile
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :after (helm)
-    :ensure t
-    :config
-    (projectile-mode)
-    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (projectile-global-mode)
-    (setq projectile-completion-system 'helm)
-    )
+(use-package projectile
+  :after (ivy)
+  :init
+  (setq projectile-completion-system 'ivy)
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode)
+  (projectile-global-mode)
+  )
 #+END_SRC
-** helm-projectile
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-projectile
-    :ensure t
-    :bind ("M-t" . helm-projectile-find-file)
-    :config
-    (helm-projectile-on)
-    )
-#+END_SRC
+** counsel-projectile
+#+begin_src emacs-lisp
+(use-package counsel-projectile :config (counsel-projectile-mode))
+#+end_src
 ** company
 #+begin_src emacs-lisp
-  (use-package company
-    :diminish company-mode
-    :config
-    (global-company-mode)
-    (setq company-minimum-prefix-length 1)
-    (setq company-idle-delay 0.1)
-    (setq company-tooltip-align-annotations t)
-    (with-eval-after-load 'company
-      (define-key company-active-map (kbd "C-n") 'company-select-next)
-      (define-key company-active-map (kbd "C-p") 'company-select-previous))
-    )
+(use-package company
+  :diminish company-mode
+  :config
+  (global-company-mode)
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.1)
+  (setq company-require-match nil)
+  (setq company-tooltip-align-annotations t)
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous))
+  )
 #+end_src
 
 ** company-quickhelp
 Documentation popups for company
 #+begin_src emacs-lisp
-  (use-package company-quickhelp
-    :ensure t
-    :defer t
-    :init
-    (add-hook 'global-company-mode-hook 'company-quickhelp-mode))
+(use-package company-quickhelp
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'global-company-mode-hook 'company-quickhelp-mode))
 #+end_src
 ** flycheck
 #+begin_src emacs-lisp
-  (use-package flycheck
-    :ensure t
-    :init (global-flycheck-mode)
-    :config
-    (flycheck-add-mode 'javascript-eslint 'js-mode)
-    )
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode)
+  :config
+  (flycheck-add-mode 'javascript-eslint 'js-mode)
+  )
 #+end_src
 ** protobuf-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package protobuf-mode
-    :ensure t
-    :mode ("\\.proto\\'" . protobuf-mode))
+(use-package protobuf-mode
+  :ensure t
+  :mode ("\\.proto\\'" . protobuf-mode))
 #+END_SRC
 ** markdown
 #+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :hook (markdown-mode . visual-line-mode)
-    :mode (("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode)))
+(use-package markdown-mode
+  :hook (markdown-mode . visual-line-mode)
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode)))
 #+END_SRC
 ** restart-emacs
 #+BEGIN_SRC emacs-lisp
-  (use-package restart-emacs :ensure t)
+(use-package restart-emacs :ensure t)
 #+END_SRC
 ** doom-themes
 #+BEGIN_SRC emacs-lisp
-  (use-package doom-themes
-    :config
-    (setq doom-themes-enable-bold t
-          doom-themes-enable-italic t
-          )
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t
+        )
 
-    (doom-themes-org-config)
-    (load-theme 'doom-one t)
-    )
+  (doom-themes-org-config)
+  (load-theme 'doom-molokai t)
+  )
 #+END_SRC
+** git-messenger
+#+begin_src emacs-lisp
+(use-package git-messenger
+  :bind ("C-c m" . git-messenger:popup-message)
+  :config
+  (setq git-messenger:show-detail t
+        git-messenger:use-magit-popup t))
+#+end_src
 ** gitignore-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package gitignore-mode :ensure t)
+  (use-package gitignore-mode)
 #+END_SRC
 ** dockerfile-mode and docker-compose-mode
 #+begin_src emacs-lisp
@@ -442,9 +449,9 @@ Documentation popups for company
        )
    #+end_src
 ** py-isort
-   #+begin_src emacs-lisp
-     (use-package py-isort :ensure t)
-   #+end_src
+#+begin_src emacs-lisp
+    (use-package py-isort)
+#+end_src
 ** python-docstring
    #+begin_src emacs-lisp
           (use-package python-docstring
@@ -458,14 +465,19 @@ Documentation popups for company
 ** blacken
    #+begin_src emacs-lisp
      (use-package blacken
-       :ensure t
        :config
        (add-hook 'python-mode-hook 'blacken-mode))
    #+end_src
-* Reload init.el
-#+BEGIN_SRC emacs-lisp
-  (defun khzaw/load-init()
-    "Reload .emacs.d/init.el"
-    (interactive)
-    (load-file "~/.emacs.d/init.el"))
-#+END_SRC
+** undo-tree
+#+begin_src emacs-lisp
+(use-package undo-tree)
+#+end_src
+** haskell-mode
+#+begin_src emacs-lisp
+(use-package haskell-mode)
+#+end_src
+** minions
+#+begin_src emacs-lisp
+(use-package minions
+:config (minions-mode 1))
+#+end_src
