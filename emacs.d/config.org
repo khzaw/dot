@@ -142,14 +142,24 @@ Cleanup whitespace on save
 ** doom-modeline
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
-  :custom
-  (inhibit-compacting-font-caches t)
-  (doom-modeline-minor-modes t)
-  (doom-modeline-icon t)
-  (doom-modeline-major-mode-color-icon t)
-  (doom-modeline-minor-modes t)
-  :config (doom-modeline-mode))
+  :config
+    (setq doom-modeline-icon t
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t
+        doom-modeline-buffer-state-icon t
+        doom-modeline-buffer-modification-icon t
+        doom-modeline-minor-modes t
+        doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
+        doom-modeline-buffer-encoding t
+        doom-modeline-indent-info t
+        doom-modeline-vsc-max-length 50
+        doom-modeline-lsp t
+        doom-modeline-modal-icon t
+        doom-modeline-env-version t
+        inhibit-compacting-font-caches t)
+    (doom-modeline-mode))
 #+END_SRC
+
 ** fancy-battery
 #+BEGIN_SRC emacs-lisp
 (use-package fancy-battery
