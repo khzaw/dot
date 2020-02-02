@@ -86,114 +86,114 @@ Replease the active region just by typing test, just like modern text editors
 ** whitespace
 Cleanup whitespace on save
 #+begin_src emacs-lisp
-  (use-package whitespace :ensure nil :hook (before-save . whitespace-cleanup))
+(use-package whitespace :ensure nil :hook (before-save . whitespace-cleanup))
 #+end_src
 ** dired
 #+begin_src emacs-lisp
-  (use-package dired
-    :ensure nil
-    :config
-    (setq delete-by-moving-to-trash t)
-    (eval-after-load "dired"
-      #'(lambda ()
-          (put 'dired-find-alternate-file 'disabled nil)
-          (define-key dired-mode-map (kbd "RET") #'dired-find-alternate-file))))
+(use-package dired
+  :ensure nil
+  :config
+  (setq delete-by-moving-to-trash t)
+  (eval-after-load "dired"
+    #'(lambda ()
+        (put 'dired-find-alternate-file 'disabled nil)
+        (define-key dired-mode-map (kbd "RET") #'dired-find-alternate-file))))
 #+end_src
 * Third-party packages
 ** all-the-icons
 #+begin_src emacs-lisp
-  (use-package all-the-icons)
+(use-package all-the-icons)
 #+end_src
 
 ** all-the-icons-dired
 #+begin_src emacs-lisp
-  (use-package all-the-icons-dired
-    :after all-the-icons
-    :diminish
-    :hook (dired-mode . all-the-icons-dired-mode)
-    )
+(use-package all-the-icons-dired
+  :after all-the-icons
+  :diminish
+  :hook (dired-mode . all-the-icons-dired-mode)
+  )
 #+end_src
 ** diminish
 #+begin_src emacs-lisp
-  (use-package diminish :demand t)
+(use-package diminish :demand t)
 #+end_src
 ** highlight-numbers + highlight-operators + highlight-escape-sequences
 #+begin_src emacs-lisp
-  (use-package highlight-numbers
-    :hook (prog-mode . highlight-numbers-mode))
+(use-package highlight-numbers
+  :hook (prog-mode . highlight-numbers-mode))
 
-  (use-package highlight-operators
-    :hook (prog-mode . highlight-operators-mode))
+(use-package highlight-operators
+  :hook (prog-mode . highlight-operators-mode))
 
-  (use-package highlight-escape-sequences :hook (prog-mode . hes-mode))
+(use-package highlight-escape-sequences :hook (prog-mode . hes-mode))
 #+end_src
 ** exec-path-from-shell
 #+begin_src emacs-lisp
-  (use-package exec-path-from-shell
-    :ensure t
-    :if (memq window-system '(mac ns x))
-    :config
-    (setenv "SHELL" "/usr/local/bin/zsh")
-    (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
-    (exec-path-from-shell-initialize)
-    )
+(use-package exec-path-from-shell
+  :ensure t
+  :if (memq window-system '(mac ns x))
+  :config
+  (setenv "SHELL" "/usr/local/bin/zsh")
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
+  (exec-path-from-shell-initialize)
+  )
 
 #+end_src
 ** doom-modeline
 #+BEGIN_SRC emacs-lisp
-  (use-package doom-modeline
-    :custom
-    (inhibit-compacting-font-caches t)
-    (doom-modeline-minor-modes t)
-    (doom-modeline-icon t)
-    (doom-modeline-major-mode-color-icon t)
-    (doom-modeline-minor-modes t)
-    :config (doom-modeline-mode))
+(use-package doom-modeline
+  :custom
+  (inhibit-compacting-font-caches t)
+  (doom-modeline-minor-modes t)
+  (doom-modeline-icon t)
+  (doom-modeline-major-mode-color-icon t)
+  (doom-modeline-minor-modes t)
+  :config (doom-modeline-mode))
 #+END_SRC
 ** fancy-battery
 #+BEGIN_SRC emacs-lisp
-  (use-package fancy-battery
-    :ensure t
-    :config
-    (setq fancy-battery-show-percentage t)
-    (setq battery-update-interval 15)
-    (fancy-battery-mode)
-    (display-battery-mode))
+(use-package fancy-battery
+  :ensure t
+  :config
+  (setq fancy-battery-show-percentage t)
+  (setq battery-update-interval 15)
+  (fancy-battery-mode)
+  (display-battery-mode))
 #+END_SRC
 ** which-key
 #+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :diminish which-key-mode
-    :config
-    (which-key-mode t)
-    (setq which-key-idle-delay 0.4
-          which-key-idle-secondary-delay 0.4))
+(use-package which-key
+  :diminish which-key-mode
+  :config
+  (which-key-mode t)
+  (setq which-key-idle-delay 0.4
+        which-key-idle-secondary-delay 0.4))
 #+END_SRC
 ** editorconfig
 #+BEGIN_SRC emacs-lisp
-  (use-package editorconfig
-    :ensure t
-    :config
-    (editorconfig-mode 1)
-    )
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1)
+  )
 #+END_SRC
 ** evil
 #+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :ensure t
-    :defer .1 ;; don't block emacs when starting, load evil immediately after startup
-    :init
-    (setq evil-vsplit-window-right t) ;; like vim's 'splitright'
-    (setq evil-split-window-below t) ;; like vim's 'splitbelow'
-    (evil-mode 1)
-    )
-  (use-package key-chord
-    :ensure t
-    :demand key-chord
-    :init (key-chord-mode 1)
-    :config
-    (progn
-      (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)))
+(use-package evil
+  :ensure t
+  :defer .1 ;; don't block emacs when starting, load evil immediately after startup
+  :init
+  (setq evil-vsplit-window-right t) ;; like vim's 'splitright'
+  (setq evil-split-window-below t) ;; like vim's 'splitbelow'
+  (evil-mode 1)
+  )
+(use-package key-chord
+  :ensure t
+  :demand key-chord
+  :init (key-chord-mode 1)
+  :config
+  (progn
+    (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)))
 #+END_SRC
 
 ** magit
@@ -206,106 +206,107 @@ Cleanup whitespace on save
 #+END_SRC
 ** evil-magit
 #+begin_src emacs-lisp
-  (use-package evil-magit)
+(use-package evil-magit)
 #+end_src
 ** forge
 #+begin_src emacs-lisp
 (use-package forge
   :after magit
-)
+  )
 #+end_src
 
 ** smooth-scrolling
 Override Emacs' default scrolling design: jumping half-page. Added "-aggressively" to prevent the cursor to jump around when user scrolls.
 #+BEGIN_SRC emacs-lisp
-  (use-package smooth-scrolling
-    :config
-    (setq scroll-margin 1
-          smooth-scroll-margin 1
-          scroll-conservatively 0
-          scroll-up-aggressively 0.01
-          scroll-down-aggressively 0.01)
-    (smooth-scrolling-mode 1))
+(use-package smooth-scrolling
+  :config
+  (setq scroll-margin 1
+        smooth-scroll-margin 1
+        scroll-conservatively 0
+        scroll-up-aggressively 0.01
+        scroll-down-aggressively 0.01)
+  (smooth-scrolling-mode 1))
 #+END_SRC
 ** web-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package web-mode
-    :ensure t
-    :defer 2
-    ;; :after (add-node-modules-path)
-    :config
-    (progn
-      (setq web-mode-markup-indent-offset 2
-            web-mode-code-indent-offset 2
-            web-mode-css-indent-offset 2
-            web-mode-style-padding 2
-            web-mode-script-padding 2
-            web-mode-block-padding 2))
-    )
+(use-package web-mode
+  :ensure t
+  :defer 2
+  ;; :after (add-node-modules-path)
+  :config
+  (progn
+    (setq web-mode-markup-indent-offset 2
+          web-mode-code-indent-offset 2
+          web-mode-css-indent-offset 2
+          web-mode-style-padding 2
+          web-mode-script-padding 2
+          web-mode-block-padding 2))
+  )
 #+END_SRC
 ** prettier-js
 #+BEGIN_SRC emacs-lisp
-  (use-package prettier-js
-    :ensure t
-    :config
-    (add-hook 'js-mode-hook 'prettier-js-mode)
-    (add-hook 'web-mode-hook 'prettier-js-mode)
-    )
+(use-package prettier-js
+  :ensure t
+  :config
+  (add-hook 'js-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  )
 #+END_SRC
 ** js2-mode
 #+begin_src emacs-lisp
-  (use-package js2-mode
-    :ensure t
-    :config
-    (add-hook 'js-mode-hook 'js2-minor-mode)
-    (setq js2-strict-missing-semi-warning nil)
-    (setq js2-missing-semi-one-line-override t)
-    )
+(use-package js2-mode
+  :ensure t
+  :config
+  (add-hook 'js-mode-hook 'js2-minor-mode)
+  (setq js2-strict-missing-semi-warning nil)
+  (setq js2-missing-semi-one-line-override t)
+  )
 #+end_src
 ** add-node-modules-path
 #+BEGIN_SRC emacs-lisp
-  (use-package add-node-modules-path
-    :ensure t
-    :config
-    (add-hook 'js-mode-hook 'add-node-modules-path)
-    (add-hook 'web-mode-hook 'add-node-modules-path))
+(use-package add-node-modules-path
+  :ensure t
+  :config
+  (add-hook 'js-mode-hook 'add-node-modules-path)
+  (add-hook 'web-mode-hook 'add-node-modules-path))
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
-  (use-package org
-    :hook (org-mode . org-indent-mode)
-    :config
-    (require 'org-tempo)
-    (setq org-src-fontify-natively t) ;; fontify code in code blocks
-    (setq org-src-tab-acts-natively t)
-    (setq org-pretty-entities t)
-    (setq org-src-preserve-indentation t) ;; Tangligh should preserve indentation
-    (setq org-catch-invisible-edits 'show) ;; Avoid accidentally editing folded regions
-    (setq org-use-speed-commands t)
-    (setq org-confirm-babel-evaluate nil)
-    (setq org-edit-src-content-indentation 0)
-    )
+(use-package org
+  :hook (org-mode . org-indent-mode)
+  :config
+  (require 'org-tempo)
+  (setq org-src-fontify-natively t) ;; fontify code in code blocks
+  (setq org-src-tab-acts-natively t)
+  (setq org-pretty-entities t)
+  (setq org-src-preserve-indentation t) ;; Tangligh should preserve indentation
+  (setq org-catch-invisible-edits 'show) ;; Avoid accidentally editing folded regions
+  (setq org-use-speed-commands t)
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-edit-src-content-indentation 0)
+  )
 #+END_SRC
 ** org-bullets
 #+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook 'org-bullets-mode))
+(use-package org-bullets
+  :config
+  (add-hook 'org-mode-hook 'org-bullets-mode))
 #+END_SRC
 
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp
-  (use-package aggressive-indent :ensure t)
+(use-package aggressive-indent :ensure t)
 #+END_SRC
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
   :config
-    (ivy-mode 1) ; globally at startup
-    (setq ivy-use-virtual-buffers t)
-    (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (ivy-mode 1) ; globally at startup
+  (setq ivy-use-virtual-buffers t
+        ivy-display-style 'fancy)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
   )
-  #+end_src
+#+end_src
 ** swiper
 #+begin_src emacs-lisp
 (use-package swiper
@@ -315,7 +316,6 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 ** counsel
 #+begin_src emacs-lisp
 (use-package counsel
-  :ensure t
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-c g" . counsel-git)
@@ -340,7 +340,7 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 #+END_SRC
 ** counsel-projectile
 #+begin_src emacs-lisp
-(use-package counsel-projectile :config (counsel-projectile-mode))
+(use-package counsel-projectile :after projectile :config (counsel-projectile-mode))
 #+end_src
 ** company
 #+begin_src emacs-lisp
@@ -375,6 +375,20 @@ Documentation popups for company
   :config
   (flycheck-add-mode 'javascript-eslint 'js-mode)
   )
+#+end_src
+** lsp-mode + lsp-ui + company-lsp + lsp-ivy
+#+begin_src emacs-lisp
+(use-package lsp-mode
+  ;; set prefix for lsp-command-key
+  :init (setq lsp-keymap-prefix "s-l")
+  :hook ((python-mode . lsp)
+         (js-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package company-lsp :commands company-lsp)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 #+end_src
 ** protobuf-mode
 #+BEGIN_SRC emacs-lisp
@@ -415,59 +429,73 @@ Documentation popups for company
 #+end_src
 ** gitignore-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package gitignore-mode)
+(use-package gitignore-mode)
 #+END_SRC
 ** dockerfile-mode and docker-compose-mode
 #+begin_src emacs-lisp
-  (use-package dockerfile-mode :defer t)
-  (use-package docker-compose-mode :defer t)
+(use-package dockerfile-mode :defer t)
+(use-package docker-compose-mode :defer t)
 #+end_src
 ** pyenv-mode
-   #+begin_src emacs-lisp
-     (use-package pyenv-mode
-          :ensure t
-          :config
-          (add-hook 'python-mode-hook 'pyenv-mode))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package pyenv-mode
+  :config
+  (add-hook 'python-mode-hook 'pyenv-mode)
+  (defun projectile-pyenv-mode-set ()
+    "Set pyenv version matching project name."
+    (let ((project (projectile-project-name)))
+      (if (member project (pyenv-mode-versions))
+          (pyenv-mode-set project)
+        (pyenv-mode-unset))))
+   (add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
+  )
+#+end_src
 ** pyenv-mode-auto
-   #+begin_src emacs-lisp
-    (use-package pyenv-mode-auto :ensure t)
-   #+end_src
+#+begin_src emacs-lisp
+(use-package pyenv-mode-auto :ensure t)
+#+end_src
 ** python
-   #+begin_src emacs-lisp
-     (use-package python
-       :interpreter ("python" . python-mode)
-       :init
-       (defun python-setup-shell ()
-         (if (executable-find "ipython")
-             (progn (setq python-shell-interpreter "ipython")) (setq python-shell-interpreter "python3")))
-       :config
-       (add-hook 'python-mode-hook 'python-setup-shell)
-       (setq python-indent-guess-indent-offset nil) ;; don't try to guess python indent offset
-       (setq py-shell-name "python3")
-       (setq py-python-command "python3")
-       )
-   #+end_src
+#+begin_src emacs-lisp
+(use-package python
+  :interpreter ("python" . python-mode)
+  :init
+  (defun python-setup-shell ()
+    (if (executable-find "ipython")
+        (progn (setq python-shell-interpreter "ipython")) (setq python-shell-interpreter "python3")))
+  :config
+  (add-hook 'python-mode-hook 'python-setup-shell)
+  (setq python-indent-guess-indent-offset nil) ;; don't try to guess python indent offset
+  )
+#+end_src
 ** py-isort
 #+begin_src emacs-lisp
-    (use-package py-isort)
+(use-package py-isort)
 #+end_src
 ** python-docstring
-   #+begin_src emacs-lisp
-          (use-package python-docstring
-     :hook ((python-mode . python-docstring-mode)))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package python-docstring
+  :hook ((python-mode . python-docstring-mode)))
+#+end_src
 
 ** py-autopep8
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (use-package py-autopep8 :hook ((python-mode . py-autopep8-enable-on-save))
-   #+end_src
+#+end_src
 ** blacken
-   #+begin_src emacs-lisp
-     (use-package blacken
-       :config
-       (add-hook 'python-mode-hook 'blacken-mode))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package blacken
+  :config
+  (add-hook 'python-mode-hook 'blacken-mode))
+#+end_src
+** pipenv
+#+begin_src emacs-lisp
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
+#+end_src
 ** undo-tree
 #+begin_src emacs-lisp
 (use-package undo-tree)
@@ -479,5 +507,5 @@ Documentation popups for company
 ** minions
 #+begin_src emacs-lisp
 (use-package minions
-:config (minions-mode 1))
+  :config (minions-mode 1))
 #+end_src
