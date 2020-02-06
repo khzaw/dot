@@ -162,19 +162,20 @@ Cleanup whitespace on save
         doom-modeline-major-mode-icon t
         doom-modeline-major-mode-color-icon t
         doom-modeline-buffer-state-icon t
+        doom-modeline-buffer-encoding nil
         doom-modeline-buffer-modification-icon t
-        doom-modeline-minor-modes t
+        doom-modeline-minor-modes nil
         doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
         doom-modeline-buffer-encoding t
         doom-modeline-indent-info t
         doom-modeline-vsc-max-length 50
         doom-modeline-lsp t
+        doom-modeline-indent-info nil
         doom-modeline-modal-icon t
         doom-modeline-env-version t
         inhibit-compacting-font-caches t)
   (doom-modeline-mode))
         #+END_SRC
-
 ** fancy-battery
 #+BEGIN_SRC emacs-lisp
 (use-package fancy-battery
@@ -197,7 +198,6 @@ Cleanup whitespace on save
 ** editorconfig
 #+BEGIN_SRC emacs-lisp
 (use-package editorconfig
-  :ensure t
   :config
   (editorconfig-mode 1)
   )
@@ -237,8 +237,7 @@ Cleanup whitespace on save
 ** forge
 #+begin_src emacs-lisp
 (use-package forge
-  :after magit
-  )
+  :after magit)
 #+end_src
 
 ** smooth-scrolling
@@ -281,9 +280,8 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 ** js2-mode
 #+begin_src emacs-lisp
 (use-package js2-mode
-  :ensure t
   :config
-  (add-hook 'js-mode-hook 'js2-minor-mode)
+  ;; (add-hook 'js-mode-hook 'js2-minor-mode)
   (setq js2-strict-missing-semi-warning nil)
   (setq js2-missing-semi-one-line-override t)
   )
@@ -292,10 +290,12 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 #+begin_src emacs-lisp
 (use-package tide
   :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
+  :hook (
+         (js-mode . tide-setup)
+         (typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          (before-save . tide-format-before-save)))
-#+end_src
+  #+end_src
 ** typescript-mode
 #+begin_src emacs-lisp
 (use-package typescript-mode)
@@ -304,11 +304,11 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 #+begin_src emacs-lisp
 (use-package emmet-mode
   :hook ((html-mode . emmet-mode)
-        (css-mode . emmet-mode)
-        (web-mode . emmet-mode))
+         (css-mode . emmet-mode)
+         (web-mode . emmet-mode))
   :custom
   (setq emmet-insert-flash-time 0.001)
-)
+  )
 #+end_src
 ** add-node-modules-path
 #+BEGIN_SRC emacs-lisp
@@ -431,13 +431,18 @@ Documentation popups for company
 (use-package lsp-mode
   ;; set prefix for lsp-command-key
   :init (setq lsp-keymap-prefix "s-l")
-  :hook ((python-mode . lsp)
+  :hook (
+         (prog-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-print-performance t)
-  :commands lsp)
+  :commands (lsp lsp-deferred)
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-prefer-flymake nil)
+  )
 
-(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ui :hook (lsp-mode . lsp-ui-mode) :commands lsp-ui-mode :custom (lsp-ui-flycheck t) (lsp-ui-doc-delay 0.2) (lsp-ui-eoc-include-signature t) (lsp-ui-doc-position 'top) (lsp-ui-doc-alignment 'window))
 (use-package company-lsp :after (company lsp-mode) :commands company-lsp :init (push 'company-lsp company-backends) :config (setq company-lsp-cache-candidates 'auto))
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 #+end_src
@@ -463,12 +468,9 @@ Documentation popups for company
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t
-        )
-
+        doom-themes-enable-italic t)
   (doom-themes-org-config)
-  (load-theme 'doom-molokai t)
-  )
+  (load-theme 'doom-horizon t))
 #+END_SRC
 ** git-messenger
 #+begin_src emacs-lisp
@@ -558,11 +560,13 @@ Documentation popups for company
 ** minions
 #+begin_src emacs-lisp
 (use-package minions
+  :ensure t
   :config (minions-mode 1))
 #+end_src
 ** auto-package-update
 #+begin_src emacs-lisp
 (use-package auto-package-update
+  :ensure t
   :config
     (setq auto-package-update-delete-old-versions t)
     (setq auto-package-update-interval 4)
