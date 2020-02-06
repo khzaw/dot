@@ -1,2 +1,5 @@
 custom.el
 projectile-bookmarks.eld
+elpy/
+forge-database.sqlite
+transient/
