@@ -38,12 +38,29 @@ Replease the active region just by typing test, just like modern text editors
 #+begin_src emacs-lisp
   (use-package delsel :ensure nil :config (delete-selection-mode +1))
 #+end_src
+** ui
+#+begin_src emacs-lisp
+(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
+(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+ (defun toggle-transparency ()
+   (interactive)
+   (let ((alpha (frame-parameter nil 'alpha)))
+     (set-frame-parameter
+      nil 'alpha
+      (if (eql (cond ((numberp alpha) alpha)
+                     ((numberp (cdr alpha)) (cdr alpha))
+                     ;; Also handle undocumented (<active> <inactive>) form.
+                     ((numberp (cadr alpha)) (cadr alpha)))
+               100)
+          '(95 . 95) '(100 . 100)))))
+ (global-set-key (kbd "C-c t") 'toggle-transparency)
+#+end_src
 ** font
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil :family "Iosevka Term" :height 180)
-  (set-face-attribute 'fixed-pitch nil :family "Iosevka Term")
-  (set-face-attribute 'variable-pitch nil :family "Iosevka Term")
-  (setq-default line-spacing 1)
+  (set-face-attribute 'default nil :family "JetBrains Mono" :height 170)
+  (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono")
+  (set-face-attribute 'variable-pitch nil :family "JetBrains Mono")
+  (setq-default line-spacing 5)
 #+END_SRC
 ** scroll-bar
 #+begin_src emacs-lisp
@@ -100,6 +117,16 @@ Cleanup whitespace on save
         (define-key dired-mode-map (kbd "RET") #'dired-find-alternate-file))))
 #+end_src
 * Third-party packages
+** exec-path-from-shell
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :config
+  (setenv "SHELL" "/usr/local/bin/zsh")
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
+  (exec-path-from-shell-initialize)
+  )
+#+end_src
 ** all-the-icons
 #+begin_src emacs-lisp
 (use-package all-the-icons)
@@ -127,23 +154,11 @@ Cleanup whitespace on save
 
 (use-package highlight-escape-sequences :hook (prog-mode . hes-mode))
 #+end_src
-** exec-path-from-shell
-#+begin_src emacs-lisp
-(use-package exec-path-from-shell
-  :ensure t
-  :if (memq window-system '(mac ns x))
-  :config
-  (setenv "SHELL" "/usr/local/bin/zsh")
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
-  (exec-path-from-shell-initialize)
-  )
-
-#+end_src
 ** doom-modeline
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :config
-    (setq doom-modeline-icon t
+  (setq doom-modeline-icon t
         doom-modeline-major-mode-icon t
         doom-modeline-major-mode-color-icon t
         doom-modeline-buffer-state-icon t
@@ -157,8 +172,8 @@ Cleanup whitespace on save
         doom-modeline-modal-icon t
         doom-modeline-env-version t
         inhibit-compacting-font-caches t)
-    (doom-modeline-mode))
-#+END_SRC
+  (doom-modeline-mode))
+        #+END_SRC
 
 ** fancy-battery
 #+BEGIN_SRC emacs-lisp
@@ -187,7 +202,7 @@ Cleanup whitespace on save
   (editorconfig-mode 1)
   )
 #+END_SRC
-** evil
+** evil + evil-escape
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :ensure t
@@ -196,14 +211,14 @@ Cleanup whitespace on save
   (setq evil-vsplit-window-right t) ;; like vim's 'splitright'
   (setq evil-split-window-below t) ;; like vim's 'splitbelow'
   (evil-mode 1)
-  )
-(use-package key-chord
-  :ensure t
-  :demand key-chord
-  :init (key-chord-mode 1)
   :config
-  (progn
-    (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)))
+  (evil-set-initial-state 'help-mode 'emacs))
+
+(use-package evil-escape
+  :ensure t
+  :init (setq-default evil-escape-key-sequence "kj")
+  :config
+  (evil-escape-mode 1))
 #+END_SRC
 
 ** magit
@@ -212,6 +227,7 @@ Cleanup whitespace on save
   :bind ("C-x g" . magit-status)
   :init
   (setq magit-revision-show-gravatars t)
+  (add-hook 'after-save-hook 'magit-after-save-refresh-status t)
   )
 #+END_SRC
 ** evil-magit
@@ -272,6 +288,28 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   (setq js2-missing-semi-one-line-override t)
   )
 #+end_src
+** tide
+#+begin_src emacs-lisp
+(use-package tide
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
+#+end_src
+** typescript-mode
+#+begin_src emacs-lisp
+(use-package typescript-mode)
+#+end_src
+** emmet-mode
+#+begin_src emacs-lisp
+(use-package emmet-mode
+  :hook ((html-mode . emmet-mode)
+        (css-mode . emmet-mode)
+        (web-mode . emmet-mode))
+  :custom
+  (setq emmet-insert-flash-time 0.001)
+)
+#+end_src
 ** add-node-modules-path
 #+BEGIN_SRC emacs-lisp
 (use-package add-node-modules-path
@@ -313,6 +351,7 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   :config
   (ivy-mode 1) ; globally at startup
   (setq ivy-use-virtual-buffers t
+        ivy-height 15
         ivy-display-style 'fancy)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   )
@@ -320,6 +359,7 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 ** swiper
 #+begin_src emacs-lisp
 (use-package swiper
+  :after ivy
   :bind (("C-s" . 'swiper))
   )
 #+end_src
@@ -392,12 +432,13 @@ Documentation popups for company
   ;; set prefix for lsp-command-key
   :init (setq lsp-keymap-prefix "s-l")
   :hook ((python-mode . lsp)
-         (js-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
+  :config
+  (setq lsp-print-performance t)
   :commands lsp)
 
 (use-package lsp-ui :commands lsp-ui-mode)
-(use-package company-lsp :commands company-lsp)
+(use-package company-lsp :after (company lsp-mode) :commands company-lsp :init (push 'company-lsp company-backends) :config (setq company-lsp-cache-candidates 'auto))
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 #+end_src
 ** protobuf-mode
@@ -518,4 +559,12 @@ Documentation popups for company
 #+begin_src emacs-lisp
 (use-package minions
   :config (minions-mode 1))
+#+end_src
+** auto-package-update
+#+begin_src emacs-lisp
+(use-package auto-package-update
+  :config
+    (setq auto-package-update-delete-old-versions t)
+    (setq auto-package-update-interval 4)
+    (auto-package-update-maybe))
 #+end_src
