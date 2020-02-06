@@ -57,7 +57,7 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil :family "JetBrains Mono" :height 170)
+  (set-face-attribute 'default nil :family "JetBrains Mono" :height 140)
   (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono")
   (set-face-attribute 'variable-pitch nil :family "JetBrains Mono")
   (setq-default line-spacing 5)
@@ -313,7 +313,6 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 ** add-node-modules-path
 #+BEGIN_SRC emacs-lisp
 (use-package add-node-modules-path
-  :ensure t
   :config
   (add-hook 'js-mode-hook 'add-node-modules-path)
   (add-hook 'web-mode-hook 'add-node-modules-path))
@@ -436,6 +435,8 @@ Documentation popups for company
          (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-print-performance t)
+  (setq lsp-clients-typescript-server "typescript-language-server"
+        lsp-clients-typescript-server-args '("--stdio"))
   :commands (lsp lsp-deferred)
   :custom
   (lsp-auto-guess-root t)
