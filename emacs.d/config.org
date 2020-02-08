@@ -302,13 +302,13 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 #+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
-(use-package emmet-mode
-  :hook ((html-mode . emmet-mode)
-         (css-mode . emmet-mode)
-         (web-mode . emmet-mode))
-  :custom
-  (setq emmet-insert-flash-time 0.001)
-  )
+;; (use-package emmet-mode
+;;   :hook ((html-mode . emmet-mode)
+;;          (css-mode . emmet-mode)
+;;          (web-mode . emmet-mode))
+;;   :custom
+;;   (setq emmet-insert-flash-time 0.001)
+;;   )
 #+end_src
 ** add-node-modules-path
 #+BEGIN_SRC emacs-lisp
@@ -563,6 +563,11 @@ Documentation popups for company
 (use-package minions
   :ensure t
   :config (minions-mode 1))
+#+end_src
+** rainbow-mode
+To preview hex colors
+#+begin_src emacs-lisp
+(use-package rainbow-mode :config (add-hook 'prog-mode-hook #'rainbow-mode))
 #+end_src
 ** auto-package-update
 #+begin_src emacs-lisp
