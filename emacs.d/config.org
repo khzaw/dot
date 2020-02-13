@@ -370,12 +370,12 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   (require 'org-tempo)
   (setq org-src-fontify-natively t) ;; fontify code in code blocks
   (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'current-window)
   (setq org-pretty-entities t)
-  (setq org-src-preserve-indentation t) ;; Tangligh should preserve indentation
+  (setq org-src-preserve-indentation t) ;; should preserve indentation
   (setq org-catch-invisible-edits 'show) ;; Avoid accidentally editing folded regions
   (setq org-use-speed-commands t)
   (setq org-confirm-babel-evaluate nil)
-  (setq org-edit-src-content-indentation 0)
   )
 #+END_SRC
 ** org-bullets
