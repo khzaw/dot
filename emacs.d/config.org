@@ -64,8 +64,8 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** ui
 #+begin_src emacs-lisp
-(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
-(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+(set-frame-parameter (selected-frame) 'alpha '(97 . 97))
+(add-to-list 'default-frame-alist '(alpha . (97 . 97)))
  (defun toggle-transparency ()
    (interactive)
    (let ((alpha (frame-parameter nil 'alpha)))
@@ -76,7 +76,7 @@ Replease the active region just by typing test, just like modern text editors
                      ;; Also handle undocumented (<active> <inactive>) form.
                      ((numberp (cadr alpha)) (cadr alpha)))
                100)
-          '(95 . 95) '(100 . 100)))))
+          '(97 . 97) '(100 . 100)))))
  (global-set-key (kbd "C-c t") 'toggle-transparency)
 #+end_src
 ** font
@@ -169,7 +169,6 @@ Cleanup whitespace on save
 (use-package centaur-tabs
   :demand
   :config
-    (centaur-tabs-mode t)
     (setq centaur-tabs-close-button nil)
     (centaur-tabs-group-by-projectile-project)
   :bind
@@ -691,15 +690,27 @@ Documentation popups for company
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (doom-themes-org-config)
-  (load-theme 'doom-horizon t))
+  (doom-themes-org-config))
 #+END_SRC
 ** kaolin-themes
 #+begin_src emacs-lisp
 (use-package kaolin-themes
   :config
-    (kaolin-treemacs-theme))
+  (kaolin-treemacs-theme)
+  (load-theme 'kaolin-light t))
 #+end_src
+** ample-theme
+#+begin_src emacs-lisp
+(use-package ample-theme
+  :init (progn (load-theme 'ample t t)
+               (load-theme 'ample-flat t t)
+               (load-theme 'ample-light t t)
+               (enable-theme 'ample-light))
+  :defer t)
+#+end_src
+
+#+RESULTS:
+
 ** ace-window
 #+begin_src emacs-lisp
 (use-package ace-window
