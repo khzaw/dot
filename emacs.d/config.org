@@ -27,7 +27,31 @@
      (setq blink-cursor-blinks 0) ;; blink forever
      (setq-default indicate-empty-lines t)
        #+end_src
+** prettify symbols
+#+begin_src emacs-lisp
+(global-prettify-symbols-mode t)
+;; Pretty symbols
+(add-hook 'prog-mode-hook (lambda ()
+                            (setq prettify-symbols-alist '(("===" . ?≡)
+                                                           ("!==" . ?≢) (">=" . ?≥) ("<=" . ?≤)
+                                                           ("alpha" . ?α) ("beta" . ?β) ("gamma" . ?γ)
+                                                           ("delta" . Δ) ("epsilon" . ?ε) ("zeta" . ?ζ)
+                                                           ("eta" . ?η) ("theta" . ?θ) ("lambda" . ?λ)
+                                                           ("micro" . ?μ) ("pi" . ?π) ("rho" . ?ρ)
+                                                           ("sigma" . ?σ) ("phi" . ?φ) ("omega" . ?Ω)
+                                                           ("sqrt" . ?√) ("sum" . ∑) ("infinity" . ∞)
+                                                           ("Infinity" . ∞) ("=>" . ?⇒) ("->" . ?→)))))
 
+(defconst javascript--prettify-symbols-alist '(("function" . ?λ)
+                                               ("null" . ?∅)))
+(add-hook 'js-mode-hook (lambda ()
+                          (turn-on-prettify-symbols-mode)
+                          (append prettify-symbols-alist javascript--prettify-symbols-alist)))
+
+(add-hook 'js2-mode-hook (lambda ()
+                           (turn-on-prettify-symbols-mode)
+                           (append prettify-symbols-alist javascript--prettify-symbols-alist)))
+#+end_src
 ** startup
 The option ~use-package-always-ensure~ is turned on in ~init.el~, let's add ~:ensure nil~ when configuring the built-in packages.
 #+begin_src emacs-lisp
@@ -139,6 +163,18 @@ Cleanup whitespace on save
   :diminish
   :hook (dired-mode . all-the-icons-dired-mode)
   )
+#+end_src
+** centaur-tabs
+#+begin_src emacs-lisp
+(use-package centaur-tabs
+  :demand
+  :config
+    (centaur-tabs-mode t)
+    (setq centaur-tabs-close-button nil)
+    (centaur-tabs-group-by-projectile-project)
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward))
 #+end_src
 ** diminish
 #+begin_src emacs-lisp
@@ -300,6 +336,7 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   :after (typescript-mode company flycheck)
   :hook (
          (js-mode . tide-setup)
+         (js2-mode . tide-setup)
          (typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          (before-save . tide-format-before-save)))
@@ -347,10 +384,23 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   :config
   (add-hook 'org-mode-hook 'org-bullets-mode))
 #+END_SRC
-
+** midnight
+By default it closes a bunch of unused buffers.
+#+begin_src emacs-lisp
+(use-package midnight
+  :ensure nil
+  :config
+  (setq clean-buffer-list-kill-never-buffer-names '("*scratch*"
+                                                    "*Messages*"
+                                                    "*dashboard*")))
+#+end_src
+** spinner
+#+begin_src emacs-lisp
+(use-package spinner)
+#+end_src
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp
-(use-package aggressive-indent :ensure t)
+(use-package aggressive-indent)
 #+END_SRC
 ** ivy
 #+begin_src emacs-lisp
@@ -398,6 +448,19 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
 ** counsel-projectile
 #+begin_src emacs-lisp
 (use-package counsel-projectile :defer t :after projectile :config (counsel-projectile-mode))
+#+end_src
+** org-projectile
+#+begin_src emacs-lisp
+(use-package org-projectile
+  :after (:all projectile org)
+  :defer t
+  :bind
+  (:map projectile-command-map
+   ("n" . org-projectile-project-todo-completing-read))
+  :custom
+  (org-projectile-projects-file (expand-file-name "projects.org" org-directory))
+  :config
+  (push (org-projectile-project-todo-entry) org-capture-templates))
 #+end_src
 ** treemacs
 #+begin_src emacs-lisp
@@ -488,6 +551,32 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 #+end_src
+** dashboard
+#+begin_src emacs-lisp
+(use-package dashboard
+  :after
+  projectile
+  :config
+  (add-to-list 'dashboard-items '(projects . 5) t)
+  (dashboard-setup-startup-hook))
+#+end_src
+** sr-speedbar
+#+begin_src emacs-lisp
+(use-package sr-speedbar :after speedbar)
+#+end_src
+
+** projectile-speedbar
+#+begin_src emacs-lisp
+(use-package projectile-speedbar
+  :after (:all projectile sr-speedbar)
+  :bind
+  (:map projectile-mode-map
+    ("C-c p B" . projectile-speedbar-toggle)))
+#+end_src
+** focus
+#+begin_src emacs-lisp
+(use-package focus :bind (([f8] . focus-mode)))
+#+end_src
 ** company
 #+begin_src emacs-lisp
 (use-package company
@@ -504,6 +593,10 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   )
 #+end_src
 
+** fancy-narrow
+#+begin_src emacs-lisp
+(use-package fancy-narrow :config (fancy-narrow-mode))
+#+end_src
 ** company-quickhelp
 Documentation popups for company
 #+begin_src emacs-lisp
@@ -512,6 +605,12 @@ Documentation popups for company
   :defer t
   :init
   (add-hook 'global-company-mode-hook 'company-quickhelp-mode))
+#+end_src
+** company-emoji
+#+begin_src emacs-lisp
+(use-package company-emoji
+  :defer t
+  :init (setq company-emoji-insert-unicode nil))
 #+end_src
 ** flycheck
 #+begin_src emacs-lisp
@@ -528,7 +627,6 @@ Documentation popups for company
   ;; set prefix for lsp-command-key
   :init (setq lsp-keymap-prefix "s-l")
   :hook (
-         (prog-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-print-performance t)
@@ -540,27 +638,53 @@ Documentation popups for company
   (lsp-prefer-flymake nil)
   )
 
-(use-package lsp-ui :hook (lsp-mode . lsp-ui-mode) :commands lsp-ui-mode :custom (lsp-ui-flycheck t) (lsp-ui-doc-delay 0.2) (lsp-ui-eoc-include-signature t) (lsp-ui-doc-position 'top) (lsp-ui-doc-alignment 'window))
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :commands lsp-ui-mode
+  :custom
+  (lsp-ui-flycheck t)
+  (lsp-ui-doc-delay 0.2)
+  (lsp-ui-eoc-include-signature t)
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-doc-alignment 'window)
+  )
 (use-package company-lsp :after (company lsp-mode) :commands company-lsp :init (push 'company-lsp company-backends) :config (setq company-lsp-cache-candidates 'auto))
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 #+end_src
-** protobuf-mode
-#+BEGIN_SRC emacs-lisp
-(use-package protobuf-mode
-  :ensure t
-  :mode ("\\.proto\\'" . protobuf-mode))
-#+END_SRC
 ** markdown
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package markdown-mode
   :hook (markdown-mode . visual-line-mode)
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
-#+END_SRC
+#+end_src
 ** restart-emacs
 #+BEGIN_SRC emacs-lisp
-(use-package restart-emacs :ensure t)
+(use-package restart-emacs)
 #+END_SRC
+** origami
+#+begin_src emacs-lisp
+(use-package origami
+  :demand
+  :config
+  (define-prefix-command 'origami-mode-map)
+  (global-set-key (kbd "C-x C-z") 'origami-mode-map)
+  (global-origami-mode)
+  :bind
+  (:map origami-mode-map
+   ("o" . origami-open-node)
+   ("O" . origami-open-node-recursively)
+   ("c" . origami-close-node)
+   ("C" . origami-close-node-recursively)
+   ("a" . origami-toggle-node)
+   ("A" . origami-recursively-toggle-node)
+   ("R" . origami-open-all-nodes)
+   ("M" . origami-close-all-nodes)
+   ("v" . origami-show-only-node)
+   ("k" . origami-previous-fold)
+   ("j" . origami-forward-fold)
+   ("x" . origami-reset)))
+#+end_src
 ** doom-themes
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
@@ -570,6 +694,27 @@ Documentation popups for company
   (doom-themes-org-config)
   (load-theme 'doom-horizon t))
 #+END_SRC
+** kaolin-themes
+#+begin_src emacs-lisp
+(use-package kaolin-themes
+  :config
+    (kaolin-treemacs-theme))
+#+end_src
+** ace-window
+#+begin_src emacs-lisp
+(use-package ace-window
+  :config
+    (global-set-key (kbd "s-w") 'ace-window)
+    (global-set-key [rempa other-window] 'ace-window))
+#+end_src
+** avy
+#+begin_src emacs-lisp
+(use-package avy
+  :bind (("s-." . avy-goto-word-or-subword-1)
+         ("s-," . avy-goto-char))
+  :config
+    (setq avy-background t))
+#+end_src
 ** git-messenger
 #+begin_src emacs-lisp
 (use-package git-messenger
@@ -578,6 +723,16 @@ Documentation popups for company
   (setq git-messenger:show-detail t
         git-messenger:use-magit-popup t))
 #+end_src
+** git-timemachine
+#+begin_src emacs-lisp
+(use-package git-timemachine
+  :bind
+  (([f6] . git-timemachine-toggle)))
+#+end_src
+
+#+RESULTS:
+: git-timemachine-toggle
+
 ** gitignore-mode
 #+BEGIN_SRC emacs-lisp
 (use-package gitignore-mode)
@@ -603,7 +758,7 @@ Documentation popups for company
 #+end_src
 ** pyenv-mode-auto
 #+begin_src emacs-lisp
-(use-package pyenv-mode-auto :ensure t)
+(use-package pyenv-mode-auto)
 #+end_src
 ** python
 #+begin_src emacs-lisp
@@ -612,7 +767,7 @@ Documentation popups for company
   :init
   (defun python-setup-shell ()
     (if (executable-find "ipython")
-        (progn (setq python-shell-interpreter "ipython")) (setq python-shell-interpreter "python3")))
+        (progn (setq python-shell-interpreter "ipython") (setq python-shell-interpreter "python3"))))
   :config
   (add-hook 'python-mode-hook 'python-setup-shell)
   (setq python-indent-guess-indent-offset nil) ;; don't try to guess python indent offset
@@ -625,12 +780,12 @@ Documentation popups for company
 ** python-docstring
 #+begin_src emacs-lisp
 (use-package python-docstring
-  :hook ((python-mode . python-docstring-mode)))
+  :hook (python-mode . python-docstring-mode))
 #+end_src
 
 ** py-autopep8
 #+begin_src emacs-lisp
-(use-package py-autopep8 :hook ((python-mode . py-autopep8-enable-on-save))
+(use-package py-autopep8 :hook (python-mode . py-autopep8-enable-on-save))
 #+end_src
 ** blacken
 #+begin_src emacs-lisp
@@ -647,6 +802,10 @@ Documentation popups for company
    pipenv-projectile-after-switch-function
    #'pipenv-projectile-after-switch-extended))
 #+end_src
+** poetry
+#+begin_src emacs-lisp
+(use-package poetry :config (poetry-tracking-mode))
+#+end_src
 ** undo-tree
 #+begin_src emacs-lisp
 (use-package undo-tree)
@@ -658,7 +817,6 @@ Documentation popups for company
 ** minions
 #+begin_src emacs-lisp
 (use-package minions
-  :ensure t
   :config (minions-mode 1))
 #+end_src
 ** rainbow-mode
@@ -677,5 +835,5 @@ To preview hex colors
 #+end_src
 ** nyan-mode
 #+begin_src emacs-lisp
-(use-package nyan-mode)
+(use-package nyan-mode)                 ;
 #+end_src
