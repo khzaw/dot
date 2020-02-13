@@ -553,10 +553,12 @@ By default it closes a bunch of unused buffers.
 ** dashboard
 #+begin_src emacs-lisp
 (use-package dashboard
-  :after
-  projectile
+  :after projectile
   :config
   (add-to-list 'dashboard-items '(projects . 5) t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-startup-banner 'logo)
   (dashboard-setup-startup-hook))
 #+end_src
 ** sr-speedbar
