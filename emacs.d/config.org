@@ -275,18 +275,15 @@ Cleanup whitespace on save
   :after magit)
 #+end_src
 
-** smooth-scrolling
-Override Emacs' default scrolling design: jumping half-page. Added "-aggressively" to prevent the cursor to jump around when user scrolls.
-#+BEGIN_SRC emacs-lisp
-(use-package smooth-scrolling
-  :config
-  (setq scroll-margin 1
-        smooth-scroll-margin 1
-        scroll-conservatively 0
-        scroll-up-aggressively 0.01
-        scroll-down-aggressively 0.01)
-  (smooth-scrolling-mode 1))
-#+END_SRC
+** sublimity
+#+begin_src emacs-lisp
+(use-package sublimity
+  :config (require 'sublimity)
+  (require 'sublimity-scroll)
+  (require 'sublimity-map)
+  (sublimity-mode 1)
+  (sublimity-map-set-delay 5))
+#+end_src
 ** web-mode
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
@@ -328,6 +325,13 @@ Override Emacs' default scrolling design: jumping half-page. Added "-aggressivel
   (setq js2-strict-missing-semi-warning nil)
   (setq js2-missing-semi-one-line-override t)
   )
+#+end_src
+** rjsx-mode
+#+begin_src emacs-lisp
+(use-package rjsx-mode
+  :defer t
+  :config
+    (add-hook 'js-mode-hook 'rjsx-minor-mode))
 #+end_src
 ** tide
 #+begin_src emacs-lisp
@@ -691,28 +695,18 @@ Documentation popups for company
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (doom-themes-org-config))
+        doom-themes-enable-italic t
+        doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config)
+  (load-theme 'doom-molokai t))
 #+END_SRC
 ** kaolin-themes
 #+begin_src emacs-lisp
 (use-package kaolin-themes
   :config
-  (kaolin-treemacs-theme)
-  (load-theme 'kaolin-light t))
+  (kaolin-treemacs-theme))
 #+end_src
-** ample-theme
-#+begin_src emacs-lisp
-(use-package ample-theme
-  :init (progn (load-theme 'ample t t)
-               (load-theme 'ample-flat t t)
-               (load-theme 'ample-light t t)
-               (enable-theme 'ample-light))
-  :defer t)
-#+end_src
-
-#+RESULTS:
-
 ** ace-window
 #+begin_src emacs-lisp
 (use-package ace-window
