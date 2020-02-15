@@ -227,7 +227,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 (use-package highlight-escape-sequences :hook (prog-mode . hes-mode))
 #+end_src
 ** doom-modeline
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package doom-modeline
   :config
   (setq doom-modeline-icon t
@@ -236,18 +236,20 @@ Show native line numbers if possible, otherwise use ~linum~.
         doom-modeline-buffer-state-icon t
         doom-modeline-buffer-encoding nil
         doom-modeline-buffer-modification-icon t
+        doom-modeline-buffer-file-name-style 'truncate-upto-root
         doom-modeline-minor-modes nil
         doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
-        doom-modeline-buffer-encoding t
-        doom-modeline-indent-info t
+        doom-modeline-buffer-encoding nil
         doom-modeline-vsc-max-length 50
+        doom-modeline-height 1
         doom-modeline-lsp t
         doom-modeline-indent-info nil
         doom-modeline-modal-icon t
-        doom-modeline-env-version t
-        inhibit-compacting-font-caches t)
+        doom-modeline-env-version t)
+  (set-face-attribute 'mode-line nil :family "Iosevka" :height 150)
+  (set-face-attribute 'mode-line-inactive nil :family "Iosevka" :height 150)
   (doom-modeline-mode))
-        #+END_SRC
+#+end_src
 ** solaire-mode
 #+begin_src emacs-lisp
 (use-package solaire-mode
@@ -373,6 +375,7 @@ Show native line numbers if possible, otherwise use ~linum~.
   :hook (
          (js-mode . tide-setup)
          (js2-mode . tide-setup)
+         (rjsx-mode . tie-setup)
          (typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          (before-save . tide-format-before-save)))
@@ -768,6 +771,9 @@ Return a list of strings as the completion candidates."
     :bind (:map lsp-mode-map
         ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
         ("C-s-." . lsp-ivy-global-workspace-symbol)))
+
+(use-package lsp-origami
+  :hook (lsp-after-open . lsp-origami-mode))
 #+end_src
 ** markdown
 #+begin_src emacs-lisp
@@ -812,7 +818,7 @@ Return a list of strings as the completion candidates."
         doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config)
   (doom-themes-org-config)
-  (load-theme 'doom-molokai t))
+  (load-theme 'doom-tomorrow-night t))
 #+END_SRC
 ** kaolin-themes
 #+begin_src emacs-lisp
