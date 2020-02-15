@@ -48,6 +48,10 @@
                           (turn-on-prettify-symbols-mode)
                           (append prettify-symbols-alist javascript--prettify-symbols-alist)))
 
+(add-hook 'rjsx-mode-hook (lambda ()
+                          (turn-on-prettify-symbols-mode)
+                          (append prettify-symbols-alist javascript--prettify-symbols-alist)))
+
 (add-hook 'js2-mode-hook (lambda ()
                            (turn-on-prettify-symbols-mode)
                            (append prettify-symbols-alist javascript--prettify-symbols-alist)))
@@ -84,7 +88,7 @@ Replease the active region just by typing test, just like modern text editors
   (set-face-attribute 'default nil :family "JetBrains Mono" :height 140)
   (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono")
   (set-face-attribute 'variable-pitch nil :family "JetBrains Mono")
-  (setq-default line-spacing 5)
+  (setq-default line-spacing 3)
 #+END_SRC
 ** scroll-bar
 #+begin_src emacs-lisp
@@ -139,6 +143,39 @@ Cleanup whitespace on save
     #'(lambda ()
         (put 'dired-find-alternate-file 'disabled nil)
         (define-key dired-mode-map (kbd "RET") #'dired-find-alternate-file))))
+#+end_src
+** line-numbers
+Show native line numbers if possible, otherwise use ~linum~.
+#+begin_src emacs-lisp
+(if (fboundp 'display-line-numbers-mode)
+    (use-package display-line-numbers :ensure nil)
+  (use-package linum-off
+    :demand
+    :defines linum-format
+    :hook (after-init . global-linum-mode)
+    :init (setq linum-format "%4d ")
+    :config
+    ;; Highlight current line number
+    (use-package hlinum
+      :defines linum-highlight-in-all-buffersp
+      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
+      :hook (global-linum-mode . hlinum-activate)
+      :init (setq linum-highlight-in-all-buffersp t))))
+#+end_src
+
+** imenu
+#+begin_src emacs-lisp
+(use-package imenu
+  :ensure nil
+  :bind ("C-." . imenu))
+#+end_src
+** hideshow
+#+begin_src emacs-lisp
+(use-package hideshow
+  :ensure nil
+  :diminish hs-minor-mode
+  :bind (:map hs-minor-mode-map
+              ("C-`" . hs-toggle-hiding)))
 #+end_src
 * Third-party packages
 ** exec-path-from-shell
@@ -214,13 +251,27 @@ Cleanup whitespace on save
 ** fancy-battery
 #+BEGIN_SRC emacs-lisp
 (use-package fancy-battery
-  :ensure t
   :config
   (setq fancy-battery-show-percentage t)
   (setq battery-update-interval 15)
   (fancy-battery-mode)
   (display-battery-mode))
 #+END_SRC
+** solaire-mode
+#+begin_src emacs-lisp
+(use-package solaire-mode
+  :hook
+  ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+  (minibuffer-setup . solaire-mode-in-minibuffer)
+  :config
+  (solaire-global-mode +1)
+  (solaire-mode-swap-bg))
+#+end_src
+** hide-mode-line
+#+begin_src emacs-lisp
+(use-package hide-mode-line
+  :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
+#+end_src
 ** which-key
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
@@ -275,15 +326,6 @@ Cleanup whitespace on save
   :after magit)
 #+end_src
 
-** sublimity
-#+begin_src emacs-lisp
-(use-package sublimity
-  :config (require 'sublimity)
-  (require 'sublimity-scroll)
-  (require 'sublimity-map)
-  (sublimity-mode 1)
-  (sublimity-map-set-delay 5))
-#+end_src
 ** web-mode
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
@@ -402,9 +444,28 @@ By default it closes a bunch of unused buffers.
 (use-package spinner)
 #+end_src
 ** aggressive-indent
-#+BEGIN_SRC emacs-lisp
-(use-package aggressive-indent)
-#+END_SRC
+#+begin_src emacs-lisp
+(use-package aggressive-indent
+  :diminish
+  :hook ((after-init . global-aggressive-indent-mode)
+         ;; Disable in big files due to the performance issues
+         (find-file . (lambda ()
+                        (if (> (buffer-size) (* 3000 80))
+                            (aggressive-indent-mode -1)))))
+  :config
+  (dolist (mode '(asm-mode web-mode html-mode css-mode go-mode prolog-inferior-mode))
+    (push mode aggressive-indent-excluded-modes))
+  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
+  (add-to-list 'aggressive-indent-dont-indent-if
+               '(and (derived-mode-p 'c-mode 'c++mode 'csharp-mode
+                                     'java-mode 'go-mode 'swift-mode)
+                     (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)" (thing-at-point 'line))))))
+#+end_src
+** smart-region
+#+begin_src emacs-lisp
+(use-package smart-region
+  :hook (after-init . smart-region-on))
+#+end_src
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
@@ -468,6 +529,10 @@ By default it closes a bunch of unused buffers.
 ** treemacs
 #+begin_src emacs-lisp
 (use-package treemacs
+  :commands (treemacs-follow-mode
+             treemacs-filewatch-mode
+             treemacs-fringe-indicator-mode
+             treemacs-git-mode)
   :defer t
   :init
   (with-eval-after-load 'winum
@@ -488,7 +553,7 @@ By default it closes a bunch of unused buffers.
           treemacs-goto-tag-strategy             'refetch-index
           treemacs-indentation                   2
           treemacs-indentation-string            " "
-          treemacs-is-never-other-window         nil
+          treemacs-is-never-other-window         t
           treemacs-max-git-entries               5000
           treemacs-missing-project-action        'ask
           treemacs-no-png-images                 nil
@@ -503,13 +568,13 @@ By default it closes a bunch of unused buffers.
           treemacs-recenter-after-project-expand 'on-distance
           treemacs-show-cursor                   nil
           treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-asc
+          treemacs-silent-filewatch              t
+          treemacs-silent-refresh                t
+          treemacs-sorting                       'alphabetic-case-insensitive-desc
           treemacs-space-between-root-nodes      t
           treemacs-tag-follow-cleanup            t
           treemacs-tag-follow-delay              1.5
-          treemacs-width                         35)
+          treemacs-width                         30)
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
@@ -533,21 +598,23 @@ By default it closes a bunch of unused buffers.
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-evil
-  :after treemacs evil
-  :ensure t)
+  :after treemacs evil)
 
 (use-package treemacs-projectile
-  :after treemacs projectile
-  :ensure t)
+  :after treemacs projectile)
 
 (use-package treemacs-icons-dired
   :after treemacs dired
-  :ensure t
   :config (treemacs-icons-dired-mode))
 
 (use-package treemacs-magit
   :after treemacs magit
-  :ensure t)
+  :commands treemacs-magit--schedule-update
+  :hook ((magit-post-commit
+          git-commit-post-finish-hook
+          magit-post-stage
+          magit-post-unstage)
+         . treemacs-magit--schedule-update))
 
 (use-package treemacs-persp
   :after treemacs persp-mode
@@ -559,10 +626,13 @@ By default it closes a bunch of unused buffers.
 (use-package dashboard
   :after projectile
   :config
-  (add-to-list 'dashboard-items '(projects . 5) t)
   (setq dashboard-set-heading-icons t)
+  (setq dashboard-center-content t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-startup-banner 'logo)
+  (setq dashboard-items '((projects . 5)
+                          (recents . 5)
+                          (agenda . 5)))
   (dashboard-setup-startup-hook))
 #+end_src
 ** sr-speedbar
@@ -600,7 +670,9 @@ By default it closes a bunch of unused buffers.
 
 ** fancy-narrow
 #+begin_src emacs-lisp
-(use-package fancy-narrow :config (fancy-narrow-mode))
+(use-package fancy-narrow
+  :diminish
+  :hook (after-init . fancy-narrow-mode))
 #+end_src
 ** company-quickhelp
 Documentation popups for company
@@ -630,17 +702,24 @@ Documentation popups for company
 #+begin_src emacs-lisp
 (use-package lsp-mode
   ;; set prefix for lsp-command-key
-  :init (setq lsp-keymap-prefix "s-l")
+  :init (setq lsp-keymap-prefix "s-l"
+              lsp-keep-workspace-alive nil
+              lsp-auto-guess-root t
+              lsp-prefer-flymake nil)
   :hook (
          (lsp-mode . lsp-enable-which-key-integration))
   :config
-  (setq lsp-print-performance t)
-  (setq lsp-clients-typescript-server "typescript-language-server"
-        lsp-clients-typescript-server-args '("--stdio"))
+    (setq lsp-clients-typescript-server "typescript-language-server"
+            lsp-clients-typescript-server-args '("--stdio"))
+    (use-package lsp-clients
+      :ensure nil
+      :functions (lsp-format-buffer lsp-organize-imports)
+      :hook (go-mode . (lambda ()
+                         "Format and add/delete imports."
+                         (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                         (add-hook 'before-save-hook #'lsp-organize-imports t t)))
+      )
   :commands (lsp lsp-deferred)
-  :custom
-  (lsp-auto-guess-root t)
-  (lsp-prefer-flymake nil)
   )
 
 (use-package lsp-ui
@@ -650,11 +729,54 @@ Documentation popups for company
   (lsp-ui-flycheck t)
   (lsp-ui-doc-delay 0.2)
   (lsp-ui-eoc-include-signature t)
-  (lsp-ui-doc-position 'top)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-border (face-foreground 'default))
+  (lsp-ui-imenu-enable t)
+  (lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
+                                       ,(face-foreground 'font-lock-string-face)
+                                       ,(face-foreground 'font-lock-constant-face)
+                                       ,(face-foreground 'font-lock-variable-name-face)))
   (lsp-ui-doc-alignment 'window)
   )
-(use-package company-lsp :after (company lsp-mode) :commands company-lsp :init (push 'company-lsp company-backends) :config (setq company-lsp-cache-candidates 'auto))
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+
+(use-package company-lsp
+  :after (company lsp-mode)
+  :commands company-lsp
+  :init (push 'company-lsp company-backends)
+  :config (setq company-lsp-cache-candidates 'auto)
+  (add-to-list 'company-lsp-filter-candidates '(mspyls))
+  (with-no-warnings
+       (defun my-company-lsp--on-completion (response prefix)
+         "Handle completion RESPONSE.
+PREFIX is a string of the prefix when the completion is requested.
+Return a list of strings as the completion candidates."
+         (let* ((incomplete (and (hash-table-p response) (gethash "isIncomplete" response)))
+                (items (cond ((hash-table-p response) (gethash "items" response))
+                             ((sequencep response) response)))
+                (candidates (mapcar (lambda (item)
+                                      (company-lsp--make-candidate item prefix))
+                                    (lsp--sort-completions items)))
+                (server-id (lsp--client-server-id (lsp--workspace-client lsp--cur-workspace)))
+                (should-filter (or (eq company-lsp-cache-candidates 'auto)
+                                   (and (null company-lsp-cache-candidates)
+                                        (company-lsp--get-config company-lsp-filter-candidates server-id)))))
+           (when (null company-lsp--completion-cache)
+             (add-hook 'company-completion-cancelled-hook #'company-lsp--cleanup-cache nil t)
+             (add-hook 'company-completion-finished-hook #'company-lsp--cleanup-cache nil t))
+           (when (eq company-lsp-cache-candidates 'auto)
+             ;; Only cache candidates on auto mode. If it's t company caches the
+             ;; candidates for us.
+             (company-lsp--cache-put prefix (company-lsp--cache-item-new candidates incomplete)))
+           (if should-filter
+               (company-lsp--filter-candidates candidates prefix)
+             candidates)))
+       (advice-add #'company-lsp--on-completion :override #'my-company-lsp--on-completion)))
+
+(use-package lsp-ivy
+    :after lsp-mode
+    :bind (:map lsp-mode-map
+        ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
+        ("C-s-." . lsp-ivy-global-workspace-symbol)))
 #+end_src
 ** markdown
 #+begin_src emacs-lisp
@@ -717,10 +839,17 @@ Documentation popups for company
 ** avy
 #+begin_src emacs-lisp
 (use-package avy
-  :bind (("s-." . avy-goto-word-or-subword-1)
-         ("s-," . avy-goto-char))
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2)
+          ("M-g f" . avy-goto-line)
+          ("M-g w" . avy-goto-word-1)
+          ("M-g e" . avy-goto-word-0))
+  :hook (after-init . avy-setup-default)
   :config
-    (setq avy-background t))
+  (setq avy-background t
+        avy-all-windows nil
+        avy-all-windows-alt t
+        avy-style 'pre))
 #+end_src
 ** git-messenger
 #+begin_src emacs-lisp
@@ -736,10 +865,6 @@ Documentation popups for company
   :bind
   (([f6] . git-timemachine-toggle)))
 #+end_src
-
-#+RESULTS:
-: git-timemachine-toggle
-
 ** gitignore-mode
 #+BEGIN_SRC emacs-lisp
 (use-package gitignore-mode)
@@ -815,7 +940,18 @@ Documentation popups for company
 #+end_src
 ** undo-tree
 #+begin_src emacs-lisp
-(use-package undo-tree)
+(use-package undo-tree
+  :diminish
+  :hook (after-init . global-undo-tree-mode)
+  :init
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-enable-undo-in-region nil
+        undo-tree-auto-save-history nil)
+
+        ;; keep the diff window
+        (with-no-warnings
+          (make-variable-buffer-local 'undo-tree-visualizer-diff)
+          (setq-default undo-tree-visualizer-diff t)))
 #+end_src
 ** haskell-mode
 #+begin_src emacs-lisp
