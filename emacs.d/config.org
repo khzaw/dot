@@ -248,15 +248,6 @@ Show native line numbers if possible, otherwise use ~linum~.
         inhibit-compacting-font-caches t)
   (doom-modeline-mode))
         #+END_SRC
-** fancy-battery
-#+BEGIN_SRC emacs-lisp
-(use-package fancy-battery
-  :config
-  (setq fancy-battery-show-percentage t)
-  (setq battery-update-interval 15)
-  (fancy-battery-mode)
-  (display-battery-mode))
-#+END_SRC
 ** solaire-mode
 #+begin_src emacs-lisp
 (use-package solaire-mode
