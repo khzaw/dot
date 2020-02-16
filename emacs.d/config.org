@@ -335,15 +335,6 @@ Show native line numbers if possible, otherwise use ~linum~.
           web-mode-block-padding 2))
   )
   #+END_SRC
-** js-mode
-#+begin_src emacs-lisp
-;; (use-package js-mode
-;;   :defer t
-;;   :config
-;;   (progn (add-hook 'js-mode-hook #'add-node-modules-path)
-;;          (add-hook 'js-mode-hook #'prettier-js-mode))
-;;   )
-#+end_src
 ** prettier-js
 #+BEGIN_SRC emacs-lisp
 (use-package prettier-js
@@ -374,10 +365,9 @@ Show native line numbers if possible, otherwise use ~linum~.
   :hook (
          (js-mode . tide-setup)
          (js2-mode . tide-setup)
-         (rjsx-mode . tie-setup)
+         (rjsx-mode . tide-setup)
          (typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
+         (typescript-mode . tide-hl-identifier-mode)))
   #+end_src
 ** typescript-mode
 #+begin_src emacs-lisp
