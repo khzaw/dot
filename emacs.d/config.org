@@ -85,9 +85,9 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil :family "JetBrains Mono" :height 140)
-  (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono")
-  (set-face-attribute 'variable-pitch nil :family "JetBrains Mono")
+  (set-face-attribute 'default nil :family "IosevkaCC" :height 150)
+  (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :height 150)
+  (set-face-attribute 'variable-pitch nil :family "IosevkaCC" :height 150)
   (setq-default line-spacing 3)
 #+END_SRC
 ** scroll-bar
@@ -246,8 +246,8 @@ Show native line numbers if possible, otherwise use ~linum~.
         doom-modeline-indent-info nil
         doom-modeline-modal-icon t
         doom-modeline-env-version t)
-  (set-face-attribute 'mode-line nil :family "Iosevka" :height 150)
-  (set-face-attribute 'mode-line-inactive nil :family "Iosevka" :height 150)
+  (set-face-attribute 'mode-line nil :family "Iosevka Type" :height 150)
+  (set-face-attribute 'mode-line-inactive nil :family "Iosevka Type" :height 150)
   (doom-modeline-mode))
 #+end_src
 ** solaire-mode
@@ -365,8 +365,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+begin_src emacs-lisp
 (use-package rjsx-mode
   :defer t
-  :config
-    (add-hook 'js-mode-hook 'rjsx-minor-mode))
+  :mode ("\\.js\\'" . rjsx-mode))
 #+end_src
 ** tide
 #+begin_src emacs-lisp
@@ -399,6 +398,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 (use-package add-node-modules-path
   :config
   (add-hook 'js-mode-hook 'add-node-modules-path)
+  (add-hook 'rjsx-mode-hook 'add-node-modules-path)
   (add-hook 'web-mode-hook 'add-node-modules-path))
 #+END_SRC
 ** org
