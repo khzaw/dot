@@ -364,7 +364,6 @@ Show native line numbers if possible, otherwise use ~linum~.
   :after (typescript-mode company flycheck)
   :hook (
          (js-mode . tide-setup)
-         (js2-mode . tide-setup)
          (rjsx-mode . tide-setup)
          (typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)))
@@ -923,7 +922,7 @@ Return a list of strings as the completion candidates."
 #+end_src
 ** poetry
 #+begin_src emacs-lisp
-(use-package poetry :config (poetry-tracking-mode))
+(use-package poetry :defer t :config (poetry-tracking-mode))
 #+end_src
 ** undo-tree
 #+begin_src emacs-lisp
