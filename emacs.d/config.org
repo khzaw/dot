@@ -639,15 +639,27 @@ By default it closes a bunch of unused buffers.
 #+begin_src emacs-lisp
 (use-package company
   :diminish company-mode
+  :defer 5
+  :init
+  (setq company-minimum-prefix-length 2
+        company-tooltip-limit 14
+        company-dabbrev-downcase nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-code-other-buffers t
+        company-tooltip-align-annotations t
+        company-require-match 'never
+        company-global-modes
+        '(not erc-mode message-mode help-mode gud-mode eshell-mode)
+        company-backends '(company-capf)
+        company-frontends
+        '(company-pseudo-tooltip-frontend
+          company-echo-metadata-frontend))
   :config
-  (global-company-mode)
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.1)
-  (setq company-require-match nil)
-  (setq company-tooltip-align-annotations t)
+  (add-hook 'company-mode-hook #'evil-normalize-keymaps)
   (with-eval-after-load 'company
     (define-key company-active-map (kbd "C-n") 'company-select-next)
     (define-key company-active-map (kbd "C-p") 'company-select-previous))
+  (global-company-mode +1)
   )
 #+end_src
 
@@ -661,7 +673,6 @@ By default it closes a bunch of unused buffers.
 Documentation popups for company
 #+begin_src emacs-lisp
 (use-package company-quickhelp
-  :ensure t
   :defer t
   :init
   (add-hook 'global-company-mode-hook 'company-quickhelp-mode))
@@ -760,9 +771,6 @@ Return a list of strings as the completion candidates."
     :bind (:map lsp-mode-map
         ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
         ("C-s-." . lsp-ivy-global-workspace-symbol)))
-
-(use-package lsp-origami
-  :hook (lsp-after-open . lsp-origami-mode))
 #+end_src
 ** markdown
 #+begin_src emacs-lisp
