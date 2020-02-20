@@ -366,6 +366,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+BEGIN_SRC emacs-lisp
 (use-package prettier-js
   :config
+  (add-hook 'typescript-mode-hook 'prettier-js-mode)
   (add-hook 'js-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode)
   )
@@ -417,6 +418,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 (use-package add-node-modules-path
   :config
   (add-hook 'js-mode-hook 'add-node-modules-path)
+  (add-hook 'typescript-mode-hook 'add-node-modules-path)
   (add-hook 'rjsx-mode-hook 'add-node-modules-path)
   (add-hook 'web-mode-hook 'add-node-modules-path))
 #+END_SRC
