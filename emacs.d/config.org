@@ -444,6 +444,15 @@ By default it closes a bunch of unused buffers.
                                      'java-mode 'go-mode 'swift-mode)
                      (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)" (thing-at-point 'line))))))
 #+end_src
+** window-numbering
+Allows switching between buffers using meta-(#key)
+#+begin_src emacs-lisp
+(use-package window-numbering
+  :config
+  (eval-when-compile
+    (declare-function window-numbering-mode "window-numbering.el"))
+  (window-numbering-mode t))
+#+end_src
 ** smart-region
 #+begin_src emacs-lisp
 (use-package smart-region
@@ -475,6 +484,7 @@ By default it closes a bunch of unused buffers.
          ("C-c g" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c a" . counsel-ag)
+         ("C-c f" . counsel-fzf)
          ("C-x l" . counsel-locate)
          )
   )
@@ -607,6 +617,7 @@ By default it closes a bunch of unused buffers.
 ** dashboard
 #+begin_src emacs-lisp
 (use-package dashboard
+  :diminish (dashboard-mode)
   :after projectile
   :config
   (setq dashboard-set-heading-icons t)
@@ -643,6 +654,7 @@ By default it closes a bunch of unused buffers.
   :init
   (setq company-minimum-prefix-length 2
         company-tooltip-limit 14
+        company-idle-delay 0  ;; Zero delay when pressing tab
         company-dabbrev-downcase nil
         company-dabbrev-ignore-case nil
         company-dabbrev-code-other-buffers t
@@ -789,7 +801,8 @@ Return a list of strings as the completion candidates."
   :demand
   :config
   (define-prefix-command 'origami-mode-map)
-  (global-set-key (kbd "C-x C-z") 'origami-mode-map)
+  (setq origami-show-fold-header t)
+  (global-set-key (kbd "C-c o") 'origami-mode-map)
   (global-origami-mode)
   :bind
   (:map origami-mode-map
