@@ -3,32 +3,45 @@
 #+begin_src emacs-lisp
 (setq frame-inhibit-implied-resize k)
 (setq initial-major-mode 'fundamental-mode)
-    (defalias 'yes-or-no-p 'y-or-n-p)
-     (setq frame-title-format '("Emacs")
-           ring-bell-function 'ignore
-           frame-resize-pixelwise t
-           default-directory "~/"
-           use-dialog-box nil
-           vc-follow-symlinks t              ;; don't ask for confirmation when operating symlinked files
-           inhibit-compacting-font-caches t  ;;  don't compact font caches during GC
-           find-file-visit-truename t)       ;; display true names for symlink files
-     (tool-bar-mode -1)
-     (menu-bar-mode -1)
 
-     ;; better scrolling
-     (setq scroll-margin 0
-           scroll-conservatively 10000
-           scroll-preserve-screen-position t
-           auto-window-vscroll nil)
+(setq ansi-color-for-comint-mode t)
+;; Don't resize windows & frames in steps;
+(setq window-resize-pixelwise t
+      frame-resize-pixelwise t)
 
-     ;; Spaces > Tabs
-     (setq-default indent-tabs-mode nil
-                   tab-width 2)
+;; Favor vertical splits over horizontal ones
+(setq split-width-threshold 160
+      split-height-threshold nil)
 
-     (blink-cursor-mode t)
-     (setq blink-cursor-blinks 0) ;; blink forever
-     (setq-default indicate-empty-lines t)
-       #+end_src
+;; Show current keystrokes in minibuffer
+(setq echo-keystrokes 0.02)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+(setq frame-title-format '("Emacs")
+      ring-bell-function 'ignore
+      frame-resize-pixelwise t
+      default-directory "~/"
+      use-dialog-box nil
+      vc-follow-symlinks t              ;; don't ask for confirmation when operating symlinked files
+      inhibit-compacting-font-caches t  ;;  don't compact font caches during GC
+      find-file-visit-truename t)       ;; display true names for symlink files
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+;; better scrolling
+(setq scroll-margin 0
+      scroll-conservatively 10000
+      scroll-preserve-screen-position t
+      auto-window-vscroll nil)
+
+;; Spaces > Tabs
+(setq-default indent-tabs-mode nil
+              tab-width 2)
+
+(blink-cursor-mode t)
+(setq blink-cursor-blinks 0) ;; blink forever
+(setq-default indicate-empty-lines t)
+#+end_src
 ** prettify symbols
 #+begin_src emacs-lisp
 (global-prettify-symbols-mode t)
@@ -84,11 +97,15 @@ Replease the active region just by typing test, just like modern text editors
                100)
           '(97 . 97) '(100 . 100)))))
  (global-set-key (kbd "C-c t") 'toggle-transparency)
+
 #+end_src
 ** font
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Iosevka-14"))
   (setq-default line-spacing 3)
+
+;; Underline looks a bit better when drawn lower
+(setq x-underline-at-descent-line t)
 #+END_SRC
 ** scroll-bar
 #+begin_src emacs-lisp
@@ -117,10 +134,15 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** paren
 #+begin_src emacs-lisp
-  (use-package paren
-    :ensure nil
-    :init (setq show-paren-delay 0)
-    :config (show-paren-mode t))
+(use-package paren
+  :ensure nil
+  :init (setq show-paren-delay 0
+              show-paren-highlight-openparen t
+              show-paren-when-point-inside-paren t
+              show-paren-when-point-in-periphery t)
+  :config (show-paren-mode t))
+
+(setq rainbow-delimiters-max-face-count 3)
 #+end_src
 ** elec-pair
 #+begin_src emacs-lisp
@@ -176,6 +198,11 @@ Show native line numbers if possible, otherwise use ~linum~.
   :diminish hs-minor-mode
   :bind (:map hs-minor-mode-map
               ("C-`" . hs-toggle-hiding)))
+#+end_src
+** shell
+#+begin_src emacs-lisp
+(add-hook 'shell-mode-hook #'hide-mode-line-mode)
+(add-hook 'term-mode-hook #'hide-mode-line-mode)
 #+end_src
 * Third-party packages
 ** exec-path-from-shell
@@ -366,7 +393,10 @@ Show native line numbers if possible, otherwise use ~linum~.
          (js-mode . tide-setup)
          (rjsx-mode . tide-setup)
          (typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)))
+         (typescript-mode . tide-hl-identifier-mode))
+:config
+(setq tide-completion-detailed t
+      tide-always-show-documentation t))
   #+end_src
 ** typescript-mode
 #+begin_src emacs-lisp
@@ -495,6 +525,7 @@ Allows switching between buffers using meta-(#key)
          ("C-c a" . counsel-ag)
          ("C-c f" . counsel-fzf)
          ("C-x l" . counsel-locate)
+
          )
   :config
   (setq ivy-initial-inputs-alist nil)
@@ -835,7 +866,7 @@ Return a list of strings as the completion candidates."
    ("x" . origami-reset)))
 #+end_src
 ** doom-themes
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
@@ -843,8 +874,8 @@ Return a list of strings as the completion candidates."
         doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config)
   (doom-themes-org-config)
-  (load-theme 'doom-tomorrow-night t))
-#+END_SRC
+  (load-theme 'doom-horizon t))
+#+end_src
 ** kaolin-themes
 #+begin_src emacs-lisp
 (use-package kaolin-themes
@@ -1001,4 +1032,36 @@ To preview hex colors
 ** nyan-mode
 #+begin_src emacs-lisp
 (use-package nyan-mode)                 ;
+#+end_src
+** kurecolor
+#+begin_src emacs-lisp
+(use-package kurecolor)
+#+end_src
+** spotify
+#+begin_src emacs-lisp
+(use-package counsel-spotify
+  :after counsel
+  :init
+  (setq counsel-spotify-client-id "531328dc75c640eca9dca6b397021b2b"
+        counsel-spotify-client-secret "6256c0ba609a42a1881f69f4893454e1"))
+#+end_src
+** writeroom-mode
+#+begin_src emacs-lisp
+(use-package writeroom-mode
+  :commands (writeroom-mode)
+  :config
+  (add-to-list 'writeroom-global-effects 'visual-line-mode)
+  (setq writeroom-restore-window-config t
+        writeroom-width 100))
+#+end_src
+** beacon
+#+begin_src emacs-lisp
+(use-package beacon
+  :defer 2
+  :diminish beacon-mode
+  :config (beacon-mode 1))
+#+end_src
+** zen-mode
+#+begin_src emacs-lisp
+(use-package zen-mode :config (global-set-key (kbd "C-M-z") 'zen-mode))
 #+end_src
