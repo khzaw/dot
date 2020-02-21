@@ -1,7 +1,7 @@
 * Packages
 ** sanity
 #+begin_src emacs-lisp
-(setq frame-inhibit-implied-resize k)
+(setq frame-inhibit-implied-resize t)
 (setq initial-major-mode 'fundamental-mode)
 
 (setq ansi-color-for-comint-mode t)
@@ -318,7 +318,8 @@ Show native line numbers if possible, otherwise use ~linum~.
   (setq evil-split-window-below t) ;; like vim's 'splitbelow'
   (evil-mode 1)
   :config
-  (evil-set-initial-state 'help-mode 'emacs))
+  (evil-set-initial-state 'help-mode 'emacs)
+  (evil-set-initial-state 'dashboard-mode 'emacs))
 
 (use-package evil-escape
   :ensure t
@@ -326,7 +327,6 @@ Show native line numbers if possible, otherwise use ~linum~.
   :config
   (evil-escape-mode 1))
 #+END_SRC
-
 ** magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
