@@ -519,6 +519,10 @@ Allows switching between buffers using meta-(#key)
   :config
   (push (org-projectile-project-todo-entry) org-capture-templates))
 #+end_src
+** amx
+#+begin_src emacs-lisp
+(use-package amx :defer 0.5 :config (amx-mode))
+#+end_src
 ** treemacs
 #+begin_src emacs-lisp
 (use-package treemacs
