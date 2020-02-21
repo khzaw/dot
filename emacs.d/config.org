@@ -139,10 +139,9 @@ Replease the active region just by typing test, just like modern text editors
   :init (setq show-paren-delay 0
               show-paren-highlight-openparen t
               show-paren-when-point-inside-paren t
-              show-paren-when-point-in-periphery t)
+              show-paren-when-point-in-periphery t
+              show-paren-style 'mixed)
   :config (show-paren-mode t))
-
-(setq rainbow-delimiters-max-face-count 3)
 #+end_src
 ** elec-pair
 #+begin_src emacs-lisp
@@ -500,7 +499,8 @@ Allows switching between buffers using meta-(#key)
   (setq ivy-use-virtual-buffers t
         ivy-height 15
         ivy-display-style 'fancy)
-  )
+  :custom
+  (ivy-format-function 'ivy-format-function))
 #+end_src
 ** ivy-rich
 #+begin_src emacs-lisp
@@ -527,11 +527,12 @@ Allows switching between buffers using meta-(#key)
          ("C-c a" . counsel-ag)
          ("C-c f" . counsel-fzf)
          ("C-x l" . counsel-locate)
-
          )
   :config
-  (setq ivy-initial-inputs-alist nil)
-  )
+    (setq ivy-initial-inputs-alist nil)
+  :custom
+    (ivy-format-function 'ivy-format-function-arrow)
+    (counsel-yank-pop-separator "\n-------\n"))
 #+end_src
 ** projectile
 #+BEGIN_SRC emacs-lisp
@@ -759,20 +760,16 @@ Documentation popups for company
   :init (setq lsp-keymap-prefix "s-l"
               lsp-keep-workspace-alive nil
               lsp-auto-guess-root t
-              lsp-prefer-flymake nil)
+              lsp-document-sync-method 'incremental
+              lsp-response-timeout 5
+              lsp-prefer-flymake 'flymake)
   :hook (
+         (prog-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
-    (setq lsp-clients-typescript-server "typescript-language-server"
-            lsp-clients-typescript-server-args '("--stdio"))
-    (use-package lsp-clients
-      :ensure nil
-      :functions (lsp-format-buffer lsp-organize-imports)
-      :hook (go-mode . (lambda ()
-                         "Format and add/delete imports."
-                         (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                         (add-hook 'before-save-hook #'lsp-organize-imports t t)))
-      )
+  (setq lsp-clients-typescript-server "typescript-language-server"
+        lsp-clients-typescript-server-args '("--stdio"))
+  (require 'lsp-clients)
   :commands (lsp lsp-deferred)
   )
 
@@ -781,56 +778,112 @@ Documentation popups for company
   :commands lsp-ui-mode
   :custom
   (lsp-ui-flycheck t)
-  (lsp-ui-doc-delay 0.2)
-  (lsp-ui-eoc-include-signature t)
-  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-header t)
   (lsp-ui-doc-border (face-foreground 'default))
-  (lsp-ui-imenu-enable t)
-  (lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
-                                       ,(face-foreground 'font-lock-string-face)
-                                       ,(face-foreground 'font-lock-constant-face)
-                                       ,(face-foreground 'font-lock-variable-name-face)))
+  (lsp-ui-doc-include-signature t)
+  (lsp-ui-doc-max-width 150)
+  (lsp-ui-doc-max-height 30)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-use-childframe t)
+  (lsp-ui-doc-use-webkit t)
   (lsp-ui-doc-alignment 'window)
+  ;; lsp-ui-flycheck
+  (lsp-ui-flycheck-enable nil)
+  ;; lsp-ui-imenu
+  (lsp-ui-imenu-enable t)
+  ;; lsp-ui-peek
+  (lsp-ui-peek-enable t)
+  (lsp-ui-peek-peek-height 20)
+  (lsp-ui-peek-list-width 50)
+  (lsp-ui-peek-fontify 'on-demand)
+  :bind
+  (:map lsp-mode-map
+        ("C-c C-r" . lsp-ui-peek-find-references)
+        ("C-c C-d" . lsp-ui-peek-find-definitions)
+        ("C-c m" . lsp-ui-imenu)
+        ("C-c s" . lsp-ui-sideline-mode))
   )
 
 (use-package company-lsp
   :after (company lsp-mode)
   :commands company-lsp
   :init (push 'company-lsp company-backends)
-  :config (setq company-lsp-cache-candidates 'auto)
+  :config (setq company-lsp-cache-candidates t)
+  (setq company-lsp-async t)
+  (setq company-lsp-enable-recompletion nil)
   (add-to-list 'company-lsp-filter-candidates '(mspyls))
   (with-no-warnings
-       (defun my-company-lsp--on-completion (response prefix)
-         "Handle completion RESPONSE.
+    (defun my-company-lsp--on-completion (response prefix)
+      "Handle completion RESPONSE.
 PREFIX is a string of the prefix when the completion is requested.
 Return a list of strings as the completion candidates."
-         (let* ((incomplete (and (hash-table-p response) (gethash "isIncomplete" response)))
-                (items (cond ((hash-table-p response) (gethash "items" response))
-                             ((sequencep response) response)))
-                (candidates (mapcar (lambda (item)
-                                      (company-lsp--make-candidate item prefix))
-                                    (lsp--sort-completions items)))
-                (server-id (lsp--client-server-id (lsp--workspace-client lsp--cur-workspace)))
-                (should-filter (or (eq company-lsp-cache-candidates 'auto)
-                                   (and (null company-lsp-cache-candidates)
-                                        (company-lsp--get-config company-lsp-filter-candidates server-id)))))
-           (when (null company-lsp--completion-cache)
-             (add-hook 'company-completion-cancelled-hook #'company-lsp--cleanup-cache nil t)
-             (add-hook 'company-completion-finished-hook #'company-lsp--cleanup-cache nil t))
-           (when (eq company-lsp-cache-candidates 'auto)
-             ;; Only cache candidates on auto mode. If it's t company caches the
-             ;; candidates for us.
-             (company-lsp--cache-put prefix (company-lsp--cache-item-new candidates incomplete)))
-           (if should-filter
-               (company-lsp--filter-candidates candidates prefix)
-             candidates)))
-       (advice-add #'company-lsp--on-completion :override #'my-company-lsp--on-completion)))
+      (let* ((incomplete (and (hash-table-p response) (gethash "isIncomplete" response)))
+             (items (cond ((hash-table-p response) (gethash "items" response))
+                          ((sequencep response) response)))
+             (candidates (mapcar (lambda (item)
+                                   (company-lsp--make-candidate item prefix))
+                                 (lsp--sort-completions items)))
+             (server-id (lsp--client-server-id (lsp--workspace-client lsp--cur-workspace)))
+             (should-filter (or (eq company-lsp-cache-candidates 'auto)
+                                (and (null company-lsp-cache-candidates)
+                                     (company-lsp--get-config company-lsp-filter-candidates server-id)))))
+        (when (null company-lsp--completion-cache)
+          (add-hook 'company-completion-cancelled-hook #'company-lsp--cleanup-cache nil t)
+          (add-hook 'company-completion-finished-hook #'company-lsp--cleanup-cache nil t))
+        (when (eq company-lsp-cache-candidates 'auto)
+          ;; Only cache candidates on auto mode. If it's t company caches the
+          ;; candidates for us.
+          (company-lsp--cache-put prefix (company-lsp--cache-item-new candidates incomplete)))
+        (if should-filter
+            (company-lsp--filter-candidates candidates prefix)
+          candidates)))
+    (advice-add #'company-lsp--on-completion :override #'my-company-lsp--on-completion)))
 
 (use-package lsp-ivy
     :after lsp-mode
     :bind (:map lsp-mode-map
         ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
         ("C-s-." . lsp-ivy-global-workspace-symbol)))
+#+end_src
+** imenu-list
+#+begin_src emacs-lisp
+(use-package imenu-list
+  :bind
+  ("<f10>" . imenu-list-smart-toggle)
+  :custom-face
+  (imenu-list-entry-face-1 ((t (:foreground "white"))))
+  :custom
+  (imenu-list-focus-after-activation t)
+  (imenu-list-auto-resize nil))
+#+end_src
+** highlight-indent-guides
+#+begin_src emacs-lisp
+(use-package highlight-indent-guides
+  :diminish
+  :hook
+  ((prog-mode yaml-mode) . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guites-auto-enabled t)
+  (highlight-indent-guides-responsive t)
+  (highlight-indent-guides-method 'character)) ; column
+#+end_src
+** volatile-highlights
+#+begin_src emacs-lisp
+(use-package volatile-highlights
+  :diminish
+  :hook
+  (after-init . volatile-highlights-mode))
+#+end_src
+** rainbow-delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
+#+end_src
+** posframe
+#+begin_src emacs-lisp
+(use-package posframe)
 #+end_src
 ** markdown
 #+begin_src emacs-lisp
@@ -840,9 +893,9 @@ Return a list of strings as the completion candidates."
          ("\\.markdown\\'" . markdown-mode)))
 #+end_src
 ** restart-emacs
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package restart-emacs)
-#+END_SRC
+#+end_src
 ** origami
 #+begin_src emacs-lisp
 (use-package origami
@@ -889,8 +942,12 @@ Return a list of strings as the completion candidates."
 (use-package ace-window
   :config
     (global-set-key (kbd "s-w") 'ace-window)
-    (global-set-key [rempa other-window] 'ace-window))
+    (global-set-key [remap other-window] 'ace-window))
 #+end_src
+
+#+RESULTS:
+: t
+
 ** avy
 #+begin_src emacs-lisp
 (use-package avy
@@ -920,10 +977,31 @@ Return a list of strings as the completion candidates."
   :bind
   (([f6] . git-timemachine-toggle)))
 #+end_src
+** git-gutter
+#+begin_src emacs-lisp
+(use-package git-gutter
+  :custom
+  (git-gutter:modified-sign "~")
+  (git-gutter:added-sign "+")
+  (git-gutter:deleted-sign "-")
+  :custom-face
+  (git-gutter:modified ((t (:background "#f1fa8c"))))
+  (git-gutter:added ((t (:background "#50fa7b"))))
+  (git-gutter:deleted ((t (:background "#ff79c6"))))
+  :config
+  (global-git-gutter-mode +1))
+#+end_src
 ** gitignore-mode
 #+BEGIN_SRC emacs-lisp
 (use-package gitignore-mode)
 #+END_SRC
+** fill-column-indicator
+Nice to have something to show if it exceeds recommended line length
+#+begin_src emacs-lisp
+(use-package fill-column-indicator
+  :hook
+  ((python-mode git-commit-mode) . fci-mode))
+#+end_src
 ** dockerfile-mode and docker-compose-mode
 #+begin_src emacs-lisp
 (use-package dockerfile-mode :defer t)
