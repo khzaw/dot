@@ -3,3 +3,11 @@ projectile-bookmarks.eld
 elpy/
 forge-database.sqlite
 transient/
+.cache/
+.last-package-update-day
+.lsp-session-v1
+.mc-lists.el
+amx-items
+bookmarks
+recentf
+url/
