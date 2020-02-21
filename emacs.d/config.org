@@ -1,6 +1,8 @@
 * Packages
 ** sanity
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
+(setq frame-inhibit-implied-resize k)
+(setq initial-major-mode 'fundamental-mode)
     (defalias 'yes-or-no-p 'y-or-n-p)
      (setq frame-title-format '("Emacs")
            ring-bell-function 'ignore
@@ -85,9 +87,7 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil :family "IosevkaCC" :height 150)
-  (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :height 150)
-  (set-face-attribute 'variable-pitch nil :family "IosevkaCC" :height 150)
+  (add-to-list 'default-frame-alist '(font . "Iosevka-14"))
   (setq-default line-spacing 3)
 #+END_SRC
 ** scroll-bar
@@ -461,13 +461,19 @@ Allows switching between buffers using meta-(#key)
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
+  :bind ("C-c C-r". ivy-resume)
+  :defer 0.5
   :config
   (ivy-mode 1) ; globally at startup
   (setq ivy-use-virtual-buffers t
         ivy-height 15
         ivy-display-style 'fancy)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
   )
+#+end_src
+** ivy-rich
+#+begin_src emacs-lisp
+(use-package ivy-rich :init (ivy-rich-mode 1))
+(use-package all-the-icons-ivy-rich :init (all-the-icons-ivy-rich-mode 1))
 #+end_src
 ** swiper
 #+begin_src emacs-lisp
@@ -480,6 +486,9 @@ Allows switching between buffers using meta-(#key)
 #+begin_src emacs-lisp
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
+         ("<f2> u" . counsel-unicode-char)
+         ("<f1> f" . counsel-describe-function)
+         ("<f1> v" . counsel-describe-variable)
          ("C-x C-f" . counsel-find-file)
          ("C-c g" . counsel-git)
          ("C-c j" . counsel-git-grep)
@@ -487,6 +496,8 @@ Allows switching between buffers using meta-(#key)
          ("C-c f" . counsel-fzf)
          ("C-x l" . counsel-locate)
          )
+  :config
+  (setq ivy-initial-inputs-alist nil)
   )
 #+end_src
 ** projectile
