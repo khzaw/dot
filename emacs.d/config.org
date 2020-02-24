@@ -1,6 +1,18 @@
 * Packages
+** osx
+#+begin_src emacs-lisp
+;; Both command keys are "super"
+(setq mac-right-command-modifier 'super)
+(setq mac-command-modifier 'super)
+
+;; Opiton or Alt is 'meta'
+(setq mac-option-modifier 'meta)
+;; Right Alt is not meta, used to type symbols and shit
+(setq mac-right-option-modifier 'nil)
+#+end_src
 ** sanity
 #+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(fullscreen . fullheight))
 (setq frame-inhibit-implied-resize t)
 (setq initial-major-mode 'fundamental-mode)
 
@@ -16,6 +28,8 @@
 ;; Show current keystrokes in minibuffer
 (setq echo-keystrokes 0.02)
 
+(global-auto-revert-mode t)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq frame-title-format '("Emacs")
       ring-bell-function 'ignore
@@ -29,7 +43,9 @@
 (menu-bar-mode -1)
 
 ;; better scrolling
-(setq scroll-margin 0
+(setq scroll-margin 10
+      scroll-step 1
+      next-line-add-newlines nil
       scroll-conservatively 10000
       scroll-preserve-screen-position t
       auto-window-vscroll nil)
@@ -42,6 +58,7 @@
 (setq blink-cursor-blinks 0) ;; blink forever
 (setq-default indicate-empty-lines t)
 #+end_src
+
 ** prettify symbols
 #+begin_src emacs-lisp
 (global-prettify-symbols-mode t)
@@ -401,8 +418,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+begin_src emacs-lisp
 (use-package tide
   :after (typescript-mode company flycheck)
-  :hook (
-         (js-mode . tide-setup)
+  :hook ((js-mode . tide-setup)
          (rjsx-mode . tide-setup)
          (typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode))
@@ -412,7 +428,9 @@ Show native line numbers if possible, otherwise use ~linum~.
   #+end_src
 ** typescript-mode
 #+begin_src emacs-lisp
-(use-package typescript-mode)
+(use-package typescript-mode
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode)))
 #+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
@@ -596,6 +614,7 @@ Allows switching between buffers using meta-(#key)
 ** amx
 #+begin_src emacs-lisp
 (use-package amx :defer 0.5 :config (amx-mode))
+(use-package flx)
 #+end_src
 ** treemacs
 #+begin_src emacs-lisp
@@ -730,7 +749,7 @@ Allows switching between buffers using meta-(#key)
   :diminish company-mode
   :defer 5
   :init
-  (setq company-minimum-prefix-length 2
+  (setq company-minimum-prefix-length 1
         company-tooltip-limit 14
         company-idle-delay 0  ;; Zero delay when pressing tab
         company-dabbrev-downcase nil
@@ -752,7 +771,6 @@ Allows switching between buffers using meta-(#key)
   (global-company-mode +1)
   )
 #+end_src
-
 ** fancy-narrow
 #+begin_src emacs-lisp
 (use-package fancy-narrow
