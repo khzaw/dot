@@ -12,7 +12,7 @@
 #+end_src
 ** sanity
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(fullscreen . fullheight))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq frame-inhibit-implied-resize t)
 (setq initial-major-mode 'fundamental-mode)
 
@@ -58,6 +58,9 @@
 (setq blink-cursor-blinks 0) ;; blink forever
 (setq-default indicate-empty-lines t)
 #+end_src
+
+#+RESULTS:
+: t
 
 ** prettify symbols
 #+begin_src emacs-lisp
@@ -117,13 +120,13 @@ Replease the active region just by typing test, just like modern text editors
 
 #+end_src
 ** font
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Iosevka-14"))
   (setq-default line-spacing 3)
 
 ;; Underline looks a bit better when drawn lower
 (setq x-underline-at-descent-line t)
-#+END_SRC
+#+end_src
 ** scroll-bar
 #+begin_src emacs-lisp
   (use-package scroll-bar :ensure nil :config (scroll-bar-mode -1))
@@ -1181,7 +1184,7 @@ To preview hex colors
         doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config)
   (doom-themes-org-config)
-  (load-theme 'doom-horizon t))
+  (load-theme 'doom-tomorrow-day t))
 #+end_src
 ** kaolin-themes
 #+begin_src emacs-lisp
