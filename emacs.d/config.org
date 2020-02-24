@@ -58,10 +58,6 @@
 (setq blink-cursor-blinks 0) ;; blink forever
 (setq-default indicate-empty-lines t)
 #+end_src
-
-#+RESULTS:
-: t
-
 ** prettify symbols
 #+begin_src emacs-lisp
 (global-prettify-symbols-mode t)
@@ -236,7 +232,14 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+end_src
 ** all-the-icons
 #+begin_src emacs-lisp
-(use-package all-the-icons)
+(use-package all-the-icons
+  :config
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.tsx$"
+                 all-the-icons-fileicon "tsx"
+                 :height 1.0
+                 :v-adjust -0.1
+                 :face all-the-icons-cyan-alt)))
 #+end_src
 
 ** all-the-icons-dired
