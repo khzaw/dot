@@ -359,6 +359,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 ** magit-todos
 #+begin_src emacs-lisp
 (use-package magit-todos
+  :disabled
   :hook (magit-mode . magit-todos-mode))
 #+end_src
 ** elm-mode
@@ -377,7 +378,6 @@ Show native line numbers if possible, otherwise use ~linum~.
 ** web-mode
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
-  :ensure t
   :defer 2
   ;; :after (add-node-modules-path)
   :config
