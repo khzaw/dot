@@ -156,7 +156,7 @@ Replease the active region just by typing test, just like modern text editors
               show-paren-highlight-openparen t
               show-paren-when-point-inside-paren t
               show-paren-when-point-in-periphery t
-              show-paren-style 'mixed)
+              show-paren-style 'parenthesis)
   :config (show-paren-mode t))
 #+end_src
 ** elec-pair
