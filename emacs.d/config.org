@@ -99,8 +99,8 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** ui
 #+begin_src emacs-lisp
-(set-frame-parameter (selected-frame) 'alpha '(97 . 97))
-(add-to-list 'default-frame-alist '(alpha . (97 . 97)))
+(set-frame-parameter (selected-frame) 'alpha '(98 . 98))
+(add-to-list 'default-frame-alist '(alpha . (98 . 98)))
  (defun toggle-transparency ()
    (interactive)
    (let ((alpha (frame-parameter nil 'alpha)))
@@ -111,7 +111,7 @@ Replease the active region just by typing test, just like modern text editors
                      ;; Also handle undocumented (<active> <inactive>) form.
                      ((numberp (cadr alpha)) (cadr alpha)))
                100)
-          '(97 . 97) '(100 . 100)))))
+          '(98 . 98) '(100 . 100)))))
  (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 #+end_src
