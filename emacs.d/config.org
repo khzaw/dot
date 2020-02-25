@@ -805,8 +805,8 @@ Documentation popups for company
               lsp-document-sync-method 'incremental
               lsp-response-timeout 5
               lsp-prefer-flymake 'flymake)
-  :hook (
-         (prog-mode . lsp-deferred)
+  :hook ((rjsx-mode . lsp-deferred)
+         (python-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-clients-typescript-server "typescript-language-server"
