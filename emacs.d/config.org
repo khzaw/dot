@@ -383,9 +383,20 @@ Show native line numbers if possible, otherwise use ~linum~.
 
 ** web-mode
 #+BEGIN_SRC emacs-lisp
+(defun my-web-mode-hook ())
+(defun setup-tide-mode-hook ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
 (use-package web-mode
-  :defer 2
-  ;; :after (add-node-modules-path)
+  :mode ("\\.tsx\\'")
+  :init
+  (add-hook 'web-mode-hook (lambda () (pcase (file-name-extension buffer-file-name)
+                                   ("tsx" (setup-tide-mode-hook))
+                                   (_ (my-web-mode-hook)))))
   :config
   (progn
     (setq web-mode-markup-indent-offset 2
@@ -393,21 +404,26 @@ Show native line numbers if possible, otherwise use ~linum~.
           web-mode-css-indent-offset 2
           web-mode-style-padding 2
           web-mode-script-padding 2
-          web-mode-block-padding 2))
-  )
-  #+END_SRC
-** prettier-js
-#+BEGIN_SRC emacs-lisp
-(use-package prettier-js
+          web-mode-block-padding 2)))
+
+(use-package typescript-mode
+  :mode ("\\.ts\\'" . typescript-mode)
+  :init
+  (add-hook 'typescript-mode-hook 'setup-tide-mode-hook)
+  (add-hook 'typescript-mode-hook 'company-mode)
   :config
-  (add-hook 'typescript-mode-hook 'prettier-js-mode)
-  (add-hook 'js-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
-  )
+  (setq typescript-indent-level 2))
+
+(use-package add-node-modules-path
+  :hook ((js-mode js2-mode rjsx-mode web-mode typescript-mode) . add-node-modules-path))
+
+(use-package prettier-js
+  :hook ((js-mode js2-mode rjsx-mode web-mode typescript-mode) . prettier-js-mode))
 #+END_SRC
 ** js2-mode
 #+begin_src emacs-lisp
 (use-package js2-mode
+  :defer t
   :config
   ;; (add-hook 'js-mode-hook 'js2-minor-mode)
   (setq js2-strict-missing-semi-warning nil)
@@ -418,25 +434,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+begin_src emacs-lisp
 (use-package rjsx-mode
   :defer t
-  :mode ("\\.js\\'" . rjsx-mode))
-#+end_src
-** tide
-#+begin_src emacs-lisp
-(use-package tide
-  :after (typescript-mode company flycheck)
-  :hook ((js-mode . tide-setup)
-         (rjsx-mode . tide-setup)
-         (typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode))
-:config
-(setq tide-completion-detailed t
-      tide-always-show-documentation t))
-  #+end_src
-** typescript-mode
-#+begin_src emacs-lisp
-(use-package typescript-mode
-  :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . typescript-mode)))
+  :mode ("\\.jsx?\\'" . rjsx-mode))
 #+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
@@ -448,15 +446,6 @@ Show native line numbers if possible, otherwise use ~linum~.
 ;;   (setq emmet-insert-flash-time 0.001)
 ;;   )
 #+end_src
-** add-node-modules-path
-#+BEGIN_SRC emacs-lisp
-(use-package add-node-modules-path
-  :config
-  (add-hook 'js-mode-hook 'add-node-modules-path)
-  (add-hook 'typescript-mode-hook 'add-node-modules-path)
-  (add-hook 'rjsx-mode-hook 'add-node-modules-path)
-  (add-hook 'web-mode-hook 'add-node-modules-path))
-#+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
 (use-package org
