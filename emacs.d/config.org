@@ -1168,6 +1168,18 @@ To preview hex colors
     (auto-package-update-maybe))
 #+end_src
 * Themes
+** ability to switch theme
+#+begin_src emacs-lisp
+(defun switch-theme (theme)
+  ;; taken from load-theme
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapcar 'symbol-name
+                                     (custom-available-themes))))))
+  (mapcar #'disable-theme custom-enabled-themes)
+  (load-theme theme t))
+#+end_src
 ** doom-themes
 #+begin_src emacs-lisp
 (use-package doom-themes
