@@ -789,6 +789,7 @@ Documentation popups for company
 ** flycheck
 #+begin_src emacs-lisp
 (use-package flycheck
+  :ensure t
   :init (global-flycheck-mode)
   :config
   (flycheck-add-mode 'javascript-eslint 'js-mode)
@@ -797,6 +798,7 @@ Documentation popups for company
   (flycheck-idle-change-delay 4)
   (flycheck-display-errors-delay .3))
 #+end_src
+
 ** lsp-mode + lsp-ui + company-lsp + lsp-ivy
 #+begin_src emacs-lisp
 (use-package lsp-mode
@@ -812,7 +814,9 @@ Documentation popups for company
          (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-clients-typescript-server "typescript-language-server"
-        lsp-clients-typescript-server-args '("--stdio"))
+        lsp-clients-typescript-server-args '("--stdio")
+        lsp-clients-typescript-javascript-server "typescript-language-server"
+        lsp-clients-typescript-javascript-args '("--stdio"))
   (require 'lsp-clients)
   :commands (lsp lsp-deferred)
   )
@@ -1176,9 +1180,9 @@ To preview hex colors
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t
         doom-themes-treemacs-theme "doom-colors")
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config)
-  (load-theme 'doom-tomorrow-day t))
+  ;; (doom-themes-treemacs-config)
+  ;; (doom-themes-org-config)
+  (load-theme 'doom-horizon t))
 #+end_src
 ** kaolin-themes
 #+begin_src emacs-lisp
