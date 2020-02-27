@@ -389,7 +389,6 @@ Show native line numbers if possible, otherwise use ~linum~.
   (flycheck-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1)
-  (web-mode-set-content-type "jsx")
   ;; Don't auto quote attribute values
   (setq-local web-mode-enable-auto-quoting nil))
 
@@ -1178,7 +1177,7 @@ To preview hex colors
         doom-themes-treemacs-theme "doom-colors")
   ;; (doom-themes-treemacs-config)
   ;; (doom-themes-org-config)
-  (load-theme 'doom-horizon t))
+  )
 #+end_src
 ** kaolin-themes
 #+begin_src emacs-lisp
@@ -1201,4 +1200,20 @@ To preview hex colors
 ** monotropic-theme
 #+begin_src emacs-lisp
 (use-package monotropic-theme :defer t)
+#+end_src
+** badwolf-theme
+#+begin_src emacs-lisp
+(use-package badwolf-theme
+  :init
+  (setq badwolf-diff-hl-inverse t)
+  :config
+  (load-theme 'badwolf t))
+#+end_src
+** moe-theme
+#+begin_src emacs-lisp
+(use-package moe-theme)
+#+end_src
+** cyberpunk-theme
+#+begin_src emacs-lisp
+(use-package flatui-theme)
 #+end_src
