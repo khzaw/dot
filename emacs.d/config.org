@@ -333,7 +333,6 @@ Show native line numbers if possible, otherwise use ~linum~.
 ** evil + evil-escape
 #+BEGIN_SRC emacs-lisp
 (use-package evil
-  :ensure t
   :defer .1 ;; don't block emacs when starting, load evil immediately after startup
   :init
   (setq evil-vsplit-window-right t) ;; like vim's 'splitright'
@@ -341,10 +340,10 @@ Show native line numbers if possible, otherwise use ~linum~.
   (evil-mode 1)
   :config
   (evil-set-initial-state 'help-mode 'emacs)
-  (evil-set-initial-state 'dashboard-mode 'emacs))
+  (evil-set-initial-state 'dashboard-mode 'emacs)
+  (evil-set-initial-state 'fundamental-mode 'emacs))
 
 (use-package evil-escape
-  :ensure t
   :init (setq-default evil-escape-key-sequence "kj")
   :config
   (evil-escape-mode 1))
@@ -436,7 +435,9 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+begin_src emacs-lisp
 (use-package rjsx-mode
   :defer t
-  :mode ("\\.jsx?\\'" . rjsx-mode))
+  :mode ("\\.jsx?\\'" . rjsx-mode)
+  :init
+    (add-hook 'rjsx-mode-hook 'setup-tide-mode-hook))
 #+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
@@ -808,10 +809,8 @@ Documentation popups for company
               lsp-keep-workspace-alive nil
               lsp-auto-guess-root t
               lsp-document-sync-method 'incremental
-              lsp-response-timeout 5
-              lsp-prefer-flymake 'flymake)
-  :hook ((rjsx-mode . lsp-deferred)
-         (python-mode . lsp-deferred)
+              lsp-response-timeout 5)
+  :hook ((python-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-clients-typescript-server "typescript-language-server"
@@ -1128,15 +1127,6 @@ To preview hex colors
 #+begin_src emacs-lisp
 (use-package rainbow-mode :config (add-hook 'prog-mode-hook #'rainbow-mode))
 #+end_src
-** auto-package-update
-#+begin_src emacs-lisp
-(use-package auto-package-update
-  :ensure t
-  :config
-    (setq auto-package-update-delete-old-versions t)
-    (setq auto-package-update-interval 4)
-    (auto-package-update-maybe))
-#+end_src
 ** nyan-mode
 #+begin_src emacs-lisp
 (use-package nyan-mode)                 ;
@@ -1172,6 +1162,15 @@ To preview hex colors
 ** zen-mode
 #+begin_src emacs-lisp
 (use-package zen-mode :config (global-set-key (kbd "C-M-z") 'zen-mode))
+#+end_src
+** auto-package-update
+#+begin_src emacs-lisp
+(use-package auto-package-update
+  :ensure t
+  :config
+    (setq auto-package-update-delete-old-versions t)
+    (setq auto-package-update-interval 4)
+    (auto-package-update-maybe))
 #+end_src
 * Themes
 ** doom-themes
