@@ -381,14 +381,17 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+end_src
 
 ** web-mode
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun my-web-mode-hook ())
 (defun setup-tide-mode-hook ()
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
   (tide-hl-identifier-mode +1)
-  (company-mode +1))
+  (company-mode +1)
+  (web-mode-set-content-type "jsx")
+  ;; Don't auto quote attribute values
+  (setq-local web-mode-enable-auto-quoting nil))
 
 (use-package web-mode
   :mode ("\\.tsx\\'")
@@ -420,7 +423,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 
 (use-package prettier-js
   :hook ((js-mode js2-mode rjsx-mode web-mode typescript-mode) . prettier-js-mode))
-#+END_SRC
+#+end_src
 ** js2-mode
 #+begin_src emacs-lisp
 (use-package js2-mode
@@ -805,7 +808,7 @@ Documentation popups for company
 #+begin_src emacs-lisp
 (use-package lsp-mode
   ;; set prefix for lsp-command-key
-  :init (setq lsp-keymap-prefix "s-l"
+  :init (setq lsp-keymap-prefix "C-c l"
               lsp-keep-workspace-alive nil
               lsp-auto-guess-root t
               lsp-document-sync-method 'incremental
@@ -822,10 +825,8 @@ Documentation popups for company
   )
 
 (use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
   :commands lsp-ui-mode
   :custom
-  (lsp-ui-flycheck t)
   (lsp-ui-doc-enable t)
   (lsp-ui-doc-header t)
   (lsp-ui-doc-border (face-foreground 'default))
@@ -836,21 +837,16 @@ Documentation popups for company
   (lsp-ui-doc-use-childframe t)
   (lsp-ui-doc-use-webkit t)
   (lsp-ui-doc-alignment 'window)
-  ;; lsp-ui-flycheck
-  (lsp-ui-flycheck-enable nil)
-  ;; lsp-ui-imenu
-  (lsp-ui-imenu-enable t)
-  ;; lsp-ui-peek
   (lsp-ui-peek-enable t)
   (lsp-ui-peek-peek-height 20)
   (lsp-ui-peek-list-width 50)
   (lsp-ui-peek-fontify 'on-demand)
-  :bind
-  (:map lsp-mode-map
-        ("C-c C-r" . lsp-ui-peek-find-references)
-        ("C-c C-d" . lsp-ui-peek-find-definitions)
-        ("C-c m" . lsp-ui-imenu)
-        ("C-c s" . lsp-ui-sideline-mode))
+  ;; :bind
+  ;; (:map lsp-mode-map
+  ;;       ("C-c C-r" . lsp-ui-peek-find-references)
+  ;;       ("C-c C-d" . lsp-ui-peek-find-definitions)
+  ;;       ("C-c m" . lsp-ui-imenu)
+  ;;       ("C-c s" . lsp-ui-sideline-mode))
   )
 
 (use-package company-lsp

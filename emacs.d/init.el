@@ -2,6 +2,9 @@
 ;;; Commentary:
 ;;; Emacs Startup File --- initialization for Emacs
 ;;; Code:
+(setq gs-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
+
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
