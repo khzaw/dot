@@ -911,7 +911,7 @@ Return a list of strings as the completion candidates."
 (use-package highlight-indent-guides
   :diminish
   :hook
-  ((prog-mode yaml-mode) . highlight-indent-guides-mode)
+  (yaml-mode . highlight-indent-guides-mode)
   :custom
   (highlight-indent-guites-auto-enabled t)
   (highlight-indent-guides-responsive t)
