@@ -406,6 +406,8 @@ Show native line numbers if possible, otherwise use ~linum~.
           web-mode-script-padding 2
           web-mode-block-padding 2)))
 
+(use-package tide)
+
 (use-package typescript-mode
   :mode ("\\.ts\\'" . typescript-mode)
   :init
