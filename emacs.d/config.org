@@ -1229,3 +1229,7 @@ To preview hex colors
 #+begin_src emacs-lisp
 (use-package flatui-theme)
 #+end_src
+** color-theme-sanityinc-tomorrow
+#+begin_src emacs-lisp
+(use-package color-theme-sanityinc-tomorrow)
+#+end_src
