@@ -117,7 +117,7 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Iosevka-14"))
+(add-to-list 'default-frame-alist '(font . "Dank Mono-14"))
 (setq-default line-spacing 1)
 
 ;; Underline looks a bit better when drawn lower
@@ -407,7 +407,9 @@ Show native line numbers if possible, otherwise use ~linum~.
           web-mode-script-padding 2
           web-mode-block-padding 2)))
 
-(use-package tide)
+(use-package tide
+  :config
+  (local-set-key (kbd "M-,") 'tide-jump-to-definition))
 
 (use-package typescript-mode
   :mode ("\\.ts\\'" . typescript-mode)
@@ -1189,6 +1191,7 @@ To preview hex colors
         doom-themes-treemacs-theme "doom-colors")
   ;; (doom-themes-treemacs-config)
   ;; (doom-themes-org-config)
+(load-theme 'doom-horizon t)
   )
 #+end_src
 ** kaolin-themes
@@ -1217,9 +1220,7 @@ To preview hex colors
 #+begin_src emacs-lisp
 (use-package badwolf-theme
   :init
-  (setq badwolf-diff-hl-inverse t)
-  :config
-  (load-theme 'badwolf t))
+  (setq badwolf-diff-hl-inverse t))
 #+end_src
 ** moe-theme
 #+begin_src emacs-lisp
