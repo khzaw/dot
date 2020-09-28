@@ -117,7 +117,7 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Dank Mono-14"))
+(add-to-list 'default-frame-alist '(font . "Code Saver-15"))
 (setq-default line-spacing 1)
 
 ;; Underline looks a bit better when drawn lower
@@ -295,8 +295,8 @@ Show native line numbers if possible, otherwise use ~linum~.
         doom-modeline-indent-info nil
         doom-modeline-modal-icon t
         doom-modeline-env-version t)
-  (set-face-attribute 'mode-line nil :family "Iosevka Type" :height 150)
-  (set-face-attribute 'mode-line-inactive nil :family "Iosevka Type" :height 150)
+  (set-face-attribute 'mode-line nil :family "Iosevka" :height 150)
+  (set-face-attribute 'mode-line-inactive nil :family "Iosevka" :height 150)
   (doom-modeline-mode))
 #+end_src
 ** solaire-mode
@@ -1191,7 +1191,7 @@ To preview hex colors
         doom-themes-treemacs-theme "doom-colors")
   ;; (doom-themes-treemacs-config)
   ;; (doom-themes-org-config)
-(load-theme 'doom-horizon t)
+(load-theme 'doom-tomorrow-night t)
   )
 #+end_src
 ** kaolin-themes
