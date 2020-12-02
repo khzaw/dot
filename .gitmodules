@@ -1,0 +1,3 @@
+[submodule "emacs.d/fence-edit.el"]
+	path = emacs.d/fence-edit.el
+	url = git@github.com:aaronbieber/fence-edit.el.git

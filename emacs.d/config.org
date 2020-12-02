@@ -117,7 +117,7 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Code Saver-15"))
+(add-to-list 'default-frame-alist '(font . "Iosevka-15"))
 (setq-default line-spacing 1)
 
 ;; Underline looks a bit better when drawn lower
@@ -443,6 +443,15 @@ Show native line numbers if possible, otherwise use ~linum~.
   :init
     (add-hook 'rjsx-mode-hook 'setup-tide-mode-hook))
 #+end_src
+** graphql-mode
+#+begin_src emacs-lisp
+(use-package graphql-mode
+  :mode (("\\.q\\'" . graphql-mode)))
+#+end_src
+** go-mode
+#+begin_src emacs-lisp
+(use-package go-mode)
+#+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
 ;; (use-package emmet-mode
@@ -479,7 +488,6 @@ Show native line numbers if possible, otherwise use ~linum~.
 By default it closes a bunch of unused buffers.
 #+begin_src emacs-lisp
 (use-package midnight
-  :ensure nil
   :config
   (setq clean-buffer-list-kill-never-buffer-names '("*scratch*"
                                                     "*Messages*"
@@ -507,6 +515,27 @@ By default it closes a bunch of unused buffers.
                                      'java-mode 'go-mode 'swift-mode)
                      (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)" (thing-at-point 'line))))))
 #+end_src
+** fence-edit
+#+begin_src emacs-lisp
+(use-package fence-edit
+  :defer t
+  :load-path (lambda () (expand-file-name "fence-edit.el/" user-emacs-directory))
+  :diminish fence-edit-mode
+  :commands (fence-edit-code-at-point fence-edit-dwim)
+  :config
+  (setq fence-edit-blocks
+        (append '(("graphql[ \t\n]*(?`" "`" graphql)
+                  ("gql[ \t\n]*(?`" "`" graphql)
+                  ("---" "---" yaml)
+                  ("+++" "+++" toml))
+                fence-edit-blocks))
+  :bind
+  ("C-c '" . fence-edit-dwim))
+#+end_src
+
+#+RESULTS:
+: fence-edit-dwim
+
 ** paredit
 #+begin_src emacs-lisp
 (use-package paredit
@@ -778,6 +807,13 @@ Allows switching between buffers using meta-(#key)
 (use-package fancy-narrow
   :diminish
   :hook (after-init . fancy-narrow-mode))
+#+end_src
+** focus
+#+begin_src emacs-lisp
+(use-package focus
+  :ensure t
+  :bind
+    ("C-c f" . focus-mode))
 #+end_src
 ** company-quickhelp
 Documentation popups for company
