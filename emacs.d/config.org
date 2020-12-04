@@ -181,6 +181,11 @@ Cleanup whitespace on save
         (put 'dired-find-alternate-file 'disabled nil)
         (define-key dired-mode-map (kbd "RET") #'dired-find-alternate-file))))
 #+end_src
+** dired-sidebar
+#+begin_src emacs-lisp
+(use-package dired-sidebar
+  :commands (dired-sidebar-toggle-sidebar))
+#+end_src
 ** line-numbers
 Show native line numbers if possible, otherwise use ~linum~.
 #+begin_src emacs-lisp
