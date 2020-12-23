@@ -455,7 +455,9 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+end_src
 ** go-mode
 #+begin_src emacs-lisp
-(use-package go-mode)
+(use-package go-mode
+  :hook ((before-save . lsp-format-buffer)
+         (before-save . lsp-organize-imports)))
 #+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
@@ -850,19 +852,19 @@ Documentation popups for company
 #+begin_src emacs-lisp
 (use-package lsp-mode
   ;; set prefix for lsp-command-key
-  :init (setq lsp-keymap-prefix "C-c l"
+  :init (setq lsp-keymap-prefix "C-l"
               lsp-keep-workspace-alive nil
               lsp-auto-guess-root t
               lsp-document-sync-method 'incremental
               lsp-response-timeout 5)
   :hook ((python-mode . lsp-deferred)
+         (go-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
   (setq lsp-clients-typescript-server "typescript-language-server"
         lsp-clients-typescript-server-args '("--stdio")
         lsp-clients-typescript-javascript-server "typescript-language-server"
         lsp-clients-typescript-javascript-args '("--stdio"))
-  (require 'lsp-clients)
   :commands (lsp lsp-deferred)
   )
 
@@ -891,46 +893,7 @@ Documentation popups for company
   ;;       ("C-c s" . lsp-ui-sideline-mode))
   )
 
-(use-package company-lsp
-  :after (company lsp-mode)
-  :commands company-lsp
-  :init (push 'company-lsp company-backends)
-  :config (setq company-lsp-cache-candidates t)
-  (setq company-lsp-async t)
-  (setq company-lsp-enable-recompletion nil)
-  (add-to-list 'company-lsp-filter-candidates '(mspyls))
-  (with-no-warnings
-    (defun my-company-lsp--on-completion (response prefix)
-      "Handle completion RESPONSE.
-PREFIX is a string of the prefix when the completion is requested.
-Return a list of strings as the completion candidates."
-      (let* ((incomplete (and (hash-table-p response) (gethash "isIncomplete" response)))
-             (items (cond ((hash-table-p response) (gethash "items" response))
-                          ((sequencep response) response)))
-             (candidates (mapcar (lambda (item)
-                                   (company-lsp--make-candidate item prefix))
-                                 (lsp--sort-completions items)))
-             (server-id (lsp--client-server-id (lsp--workspace-client lsp--cur-workspace)))
-             (should-filter (or (eq company-lsp-cache-candidates 'auto)
-                                (and (null company-lsp-cache-candidates)
-                                     (company-lsp--get-config company-lsp-filter-candidates server-id)))))
-        (when (null company-lsp--completion-cache)
-          (add-hook 'company-completion-cancelled-hook #'company-lsp--cleanup-cache nil t)
-          (add-hook 'company-completion-finished-hook #'company-lsp--cleanup-cache nil t))
-        (when (eq company-lsp-cache-candidates 'auto)
-          ;; Only cache candidates on auto mode. If it's t company caches the
-          ;; candidates for us.
-          (company-lsp--cache-put prefix (company-lsp--cache-item-new candidates incomplete)))
-        (if should-filter
-            (company-lsp--filter-candidates candidates prefix)
-          candidates)))
-    (advice-add #'company-lsp--on-completion :override #'my-company-lsp--on-completion)))
-
-(use-package lsp-ivy
-    :after lsp-mode
-    :bind (:map lsp-mode-map
-        ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
-        ("C-s-." . lsp-ivy-global-workspace-symbol)))
+(use-package lsp-ivy :after lsp-mode :commands lsp-ivy-workspace-symbol)
 #+end_src
 ** imenu-list
 #+begin_src emacs-lisp
