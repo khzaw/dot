@@ -117,7 +117,7 @@ Replease the active region just by typing test, just like modern text editors
 #+end_src
 ** font
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Iosevka-15"))
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono-15"))
 (setq-default line-spacing 1)
 
 ;; Underline looks a bit better when drawn lower
@@ -457,7 +457,7 @@ Show native line numbers if possible, otherwise use ~linum~.
 #+begin_src emacs-lisp
 (use-package go-mode
   :hook ((before-save . lsp-format-buffer)
-         (before-save . lsp-organize-imports)))
+         ))
 #+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
@@ -865,6 +865,12 @@ Documentation popups for company
         lsp-clients-typescript-server-args '("--stdio")
         lsp-clients-typescript-javascript-server "typescript-language-server"
         lsp-clients-typescript-javascript-args '("--stdio"))
+  (lsp-register-custom-settings
+   '(("gopls.experimentalWorkspaceModule" t t)
+     ("gopls.usePlaceholders" lsp-go-use-placeholders t)
+     ("gopls.env" lsp-go-env)
+     ("gopls.codelenses" lsp-go-codelenses)
+     ("gopls.hoverKind" lsp-go-hover-kind)))
   :commands (lsp lsp-deferred)
   )
 
@@ -1172,6 +1178,19 @@ To preview hex colors
     (setq auto-package-update-delete-old-versions t)
     (setq auto-package-update-interval 4)
     (auto-package-update-maybe))
+#+end_src
+** terraform-mode
+#+begin_src emacs-lisp
+(use-package terraform-mode
+  :hook
+  (terraform-mode . company-mode)
+  (terraform-mode . (lambda ()
+                      (when (and (stringp buffer-file-name)
+                                 (string-match "\\.tf\\(vars\\)?\\'" buffer-file-name))
+                        (aggressive-indent-mode 0))))
+  (before-save . terraform-format-buffer))
+
+(use-package terraform-doc)
 #+end_src
 * Themes
 ** ability to switch theme
