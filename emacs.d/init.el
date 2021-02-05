@@ -7,6 +7,16 @@
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(set-face-attribute 'default nil
+                    :family "JetBrains Mono"
+                    :height 150
+                    :weight 'normal
+                    :width 'normal)
+(setq-default line-spacing 3)
+(set-window-margins (selected-window) 5 5)
+;; Underline looks a bit better when drawn lower
+(setq x-underline-at-descent-line t)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (ignore-errors (load custom-file))

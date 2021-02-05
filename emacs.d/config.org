@@ -12,8 +12,7 @@
 #+end_src
 ** sanity
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(setq frame-inhibit-implied-resize t)
+(setq frame-pnhibit-implied-resize t)
 (setq initial-major-mode 'fundamental-mode)
 
 (setq ansi-color-for-comint-mode t)
@@ -114,14 +113,6 @@ Replease the active region just by typing test, just like modern text editors
           '(98 . 98) '(100 . 100)))))
  (global-set-key (kbd "C-c t") 'toggle-transparency)
 
-#+end_src
-** font
-#+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "JetBrains Mono-15"))
-(setq-default line-spacing 1)
-
-;; Underline looks a bit better when drawn lower
-(setq x-underline-at-descent-line t)
 #+end_src
 ** scroll-bar
 #+begin_src emacs-lisp
@@ -335,13 +326,14 @@ Show native line numbers if possible, otherwise use ~linum~.
   (editorconfig-mode 1)
   )
 #+END_SRC
-** evil + evil-escape
-#+BEGIN_SRC emacs-lisp
+** evil + evil-escape + evil-collection
+#+begin_src emacs-lisp
 (use-package evil
   :defer .1 ;; don't block emacs when starting, load evil immediately after startup
   :init
   (setq evil-vsplit-window-right t) ;; like vim's 'splitright'
   (setq evil-split-window-below t) ;; like vim's 'splitbelow'
+  (setq evil-want-keybinding nil)
   (evil-mode 1)
   :config
   (evil-set-initial-state 'help-mode 'emacs)
@@ -352,7 +344,13 @@ Show native line numbers if possible, otherwise use ~linum~.
   :init (setq-default evil-escape-key-sequence "kj")
   :config
   (evil-escape-mode 1))
-#+END_SRC
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+#+end_src
 ** magit
 #+begin_src emacs-lisp
 (use-package magit
@@ -361,10 +359,6 @@ Show native line numbers if possible, otherwise use ~linum~.
   (setq magit-revision-show-gravatars t)
   (add-hook 'after-save-hook 'magit-after-save-refresh-status t)
   )
-#+end_src
-** evil-magit
-#+begin_src emacs-lisp
-(use-package evil-magit)
 #+end_src
 ** magit-todos
 #+begin_src emacs-lisp
@@ -456,8 +450,9 @@ Show native line numbers if possible, otherwise use ~linum~.
 ** go-mode
 #+begin_src emacs-lisp
 (use-package go-mode
-  :hook ((before-save . lsp-format-buffer)
-         ))
+  :config
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook #'gofmt-before-save))
 #+end_src
 ** emmet-mode
 #+begin_src emacs-lisp
@@ -854,21 +849,33 @@ Documentation popups for company
   ;; set prefix for lsp-command-key
   :init (setq lsp-keymap-prefix "C-l"
               lsp-keep-workspace-alive nil
-              lsp-auto-guess-root t
               lsp-document-sync-method 'incremental
+              lsp-eldoc-render-all t
+              lsp-enable-completion-at-point t
+              lsp-enable-indentation t
               lsp-response-timeout 5)
+  (setq lsp-completion-provider :capf)
+  (setq lsp-idle-delay 0.500)
   :hook ((python-mode . lsp-deferred)
          (go-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
+  :custom
+  (lsp-go-use-placeholders t)
   :config
   (setq lsp-clients-typescript-server "typescript-language-server"
         lsp-clients-typescript-server-args '("--stdio")
         lsp-clients-typescript-javascript-server "typescript-language-server"
         lsp-clients-typescript-javascript-args '("--stdio"))
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("terraform-ls" "serve"))
+                    :major-modes '(terraform-mode)
+                    :server-id 'terraform-ls))
   (lsp-register-custom-settings
    '(("gopls.experimentalWorkspaceModule" t t)
      ("gopls.usePlaceholders" lsp-go-use-placeholders t)
      ("gopls.env" lsp-go-env)
+     ("gopls.completeUnimported" t t)
+     ("gopls.staticcheck" t t)
      ("gopls.codelenses" lsp-go-codelenses)
      ("gopls.hoverKind" lsp-go-hover-kind)))
   :commands (lsp lsp-deferred)
@@ -985,7 +992,7 @@ Documentation popups for company
 ** avy
 #+begin_src emacs-lisp
 (use-package avy
-  :bind (("C-:" . avy-goto-char)
+  :bind (("C-;" . avy-goto-char)
          ("C-'" . avy-goto-char-2)
           ("M-g f" . avy-goto-line)
           ("M-g w" . avy-goto-word-1)
@@ -1183,6 +1190,7 @@ To preview hex colors
 #+begin_src emacs-lisp
 (use-package terraform-mode
   :hook
+  (terraform-mode . lsp-deferred)
   (terraform-mode . company-mode)
   (terraform-mode . (lambda ()
                       (when (and (stringp buffer-file-name)
@@ -1214,7 +1222,7 @@ To preview hex colors
         doom-themes-treemacs-theme "doom-colors")
   ;; (doom-themes-treemacs-config)
   ;; (doom-themes-org-config)
-(load-theme 'doom-tomorrow-night t)
+(load-theme 'doom-one t)
   )
 #+end_src
 ** kaolin-themes
