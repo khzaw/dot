@@ -12,18 +12,50 @@
 #+end_src
 ** sanity
 #+begin_src emacs-lisp
-(setq frame-pnhibit-implied-resize t)
-(setq initial-major-mode 'fundamental-my 10000
-      scroll-preserve-screen-position t
-      auto-window-vscroll nil)
+  (setq frame-pnhibit-implied-resize t)
+(setq initial-major-mode 'fundamental-mode)
 
-;; Spaces > Tabs
-(setq-default indent-tabs-mode nil
-              tab-width 2)
+(setq ansi-color-for-comint-mode t)
+;; Don't resize windows & frames in steps;
+(setq window-resize-pixelwise t
+      frame-resize-pixelwise t)
 
-(blink-cursor-mode t)
-(setq blink-cursor-blinks 0) ;; blink forever
-(setq-default indicate-empty-lines t)
+;; Favor vertical splits over horizontal ones
+(setq split-width-threshold 160
+      split-height-threshold nil)
+
+;; Show current keystrokes in minibuffer
+(setq echo-keystrokes 0.02)
+
+(global-auto-revert-mode t)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+(setq frame-title-format '("Emacs")
+      ring-bell-function 'ignore
+      frame-resize-pixelwise t
+      default-directory "~/"
+      use-dialog-box nil
+      vc-follow-symlinks t              ;; don't ask for confirmation when operating symlinked files
+      inhibit-compacting-font-caches t  ;;  don't compact font caches during GC
+      find-file-visit-truename t)       ;; display true names for symlink files
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+;; better scrolling
+(setq scroll-margin 10
+      scroll-step 1
+      next-line-add-newlines nil
+      scroll-conservatively 10000
+	scroll-preserve-screen-position t
+	auto-window-vscroll nil)
+
+  ;; Spaces > Tabs
+  (setq-default indent-tabs-mode nil
+		tab-width 2)
+
+  (blink-cursor-mode t)
+  (setq blink-cursor-blinks 0) ;; blink forever
+  (setq-default indicate-empty-lines t)
 #+end_src
 ** prettify symbols
 #+begin_src emacs-lisp
