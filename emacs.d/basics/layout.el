@@ -1,6 +1,6 @@
 (setq default-frame-alist
       (append (list
-	       '(font . "Fira Code:style=Light:size=14")
+	       '(font . "JetBrains Mono:style=Light:size=14")
 	       ;; '(font . "Roboto Mono Emacs Regular:size=14")
 	       '(min-height . 1)  '(height     . 45)
 	       '(min-width  . 1) '(width      . 81)
@@ -20,11 +20,6 @@
 (menu-bar-mode 0)
 ;; (global-hl-line-mode 1)
 (setq x-underline-at-descent-line t)
-
-;; Vertical window divider
-(setq window-divider-default-right-width 24)
-(setq window-divider-default-places 'right-only)
-(window-divider-mode 1)
 
 ;; No ugly button for checkboxes
 (setq widget-image-enable nil)

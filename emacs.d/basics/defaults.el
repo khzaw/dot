@@ -1,4 +1,10 @@
-;; No startup  screen
+(setq make-backup-files nil)
+
+(setq auto-save-default nil)
+
+(setq inhibit-compacting-font-caches t)
+
+;; No startup screen
 (setq inhibit-startup-screen t)
 
 ;; No startup message
