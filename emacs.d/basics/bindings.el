@@ -26,4 +26,7 @@
 ;; Open recent files 
 (global-set-key (kbd "C-c r") 'recentf-open-files)
 
+(setq mac-command-modifier 'meta
+      mac-option-modifier 'meta)
+
 (provide 'bindings)
