@@ -141,7 +141,7 @@
 (use-package git-timemachine)
 
 (use-package undo-tree
-  :diminish 
+  :diminish
   :hook
   (after-init . global-undo-tree-mode))
 
@@ -207,7 +207,7 @@
   :hook (go-mode . lsp-deferred))
 
 (use-package go-playground
-  :dimpnish
+  :dimnish
   :commands (go-playground-mode))
 
 (use-package yaml-mode)
