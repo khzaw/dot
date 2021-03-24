@@ -14,7 +14,7 @@
 ;; No message in scratch buffer
 (setq initial-scratch-message nil)
 
-;; Initial buffer 
+;; Initial buffer
 (setq initial-buffer-choice nil)
 
 ;; No frame title
@@ -102,7 +102,7 @@
 ;; Mac specific
 (when (eq system-type 'darwin)
   (setq ns-use-native-fullscreen t
-        mac-option-key-is-meta nil
+        mac-option-key-is-meta t
         mac-command-key-is-meta t
         mac-command-modifier 'meta
         mac-option-modifier nil
