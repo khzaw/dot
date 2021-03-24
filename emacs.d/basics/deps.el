@@ -18,6 +18,15 @@
   :config
   (which-key-mode t))
 
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump))
+  :custom ((dired-listing-switches "-agho --group-directories-first")))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -32,17 +41,59 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
+(use-package treemacs
+  :commands treemacs
+  :defer t
+  :config
+  (progn
+    (treemacs-follow-mode t)))
+
+(use-package treemacs-magit
+  :after (treemacs magit))
+
+(use-package treemacs-icons-dired
+  :after (treemacs dired)
+  :config
+  (treemacs-icons-dired-mode))
+
+
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
   :hook
   (lsp-mode . lsp-enable-which-key-integration)
+  :config
+  (lsp-register-custom-settings
+   '(("gopls.experimentalWorkspaceModule" t t)))
   :commands (lsp lsp-deferred))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-doc-position 'bottom))
+
+(use-package lsp-ivy
+  :after (lsp-mode ivy))
+
+(use-package lsp-treemacs
+  :after (treemacs lsp-mode))
+
+
+
+(use-package yasnippet)
+
+(use-package dap-mode
+  :hook
+  (lsp-mode . dap-mode)
+  (lsp-mode . dap-ui-mode)
+  :commands dap-mode
+  :config (dap-mode 1)
+  (require 'dap-ui)
+  (dap-ui-mode 1))
+
+(use-package flymake)
+
+(use-package posframe)
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
@@ -51,11 +102,6 @@
   (setq typescript-indent-level 2))
 
 (use-package fzf)
-
-(use-package bufler
-  :disabled
-  :bind (("C-x b" . #'bufler-switch-buffer)
-         ("C-x B" . #'counsel-switch-buffer)))
 
 (use-package ivy
   :defer 0.1
@@ -77,13 +123,22 @@
   :bind
   ("M-x" . counsel-M-x)
   ("C-x b" . counsel-ibuffer)
-  ("C-x C-f" . counsel-find-file))
+  ("C-x C-f" . counsel-find-file)
+  :config
+  (setq ivy-initial-inputs-alist nil))
+
+(use-package amx
+  :defer 0.5
+  :config (amx-mode))
+
 
 (use-package editorconfig
   :config (editorconfig-mode 1))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
+
+(use-package git-timemachine)
 
 (use-package undo-tree
   :diminish 
@@ -107,9 +162,14 @@
 
 (use-package rjsx-mode
   :defer t
-  :mode ("\\.jsx?\\'" . rjsx-mode)
-  :hook
-  (rjsx-mode . setup-tide-mode-hook))
+  :mode ("\\.jsx?\\'" . rjsx-mode))
+
+(use-package add-node-modules-path)
+
+(use-package prettier-js
+  :after (add-node-modules-path rjsx-mode web-mode)
+  :hook ((rjsx-mode . add-node-modules-path)
+         (rjsx-mode . prettier-js-mode)))
 
 (use-package restclient)
 
@@ -143,10 +203,11 @@
   :config
   (evil-collection-init))
 
-(use-package go-mode)
+(use-package go-mode
+  :hook (go-mode . lsp-deferred))
 
 (use-package go-playground
-  :diminish
+  :dimpnish
   :commands (go-playground-mode))
 
 (use-package yaml-mode)
@@ -158,8 +219,7 @@
 
 (use-package ace-window)
 
-(use-package ace-jump-mode
-  :hook (prog-mode . ace-jump-mode))
+(use-package ag)
 
 (use-package projectile
   :init
@@ -175,7 +235,7 @@
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (load-theme 'doom-ayu-mirage t)
+  (load-theme 'doom-monokai-pro t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 
