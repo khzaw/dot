@@ -38,6 +38,7 @@
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
 
+
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
@@ -78,8 +79,6 @@
 (use-package lsp-treemacs
   :after (treemacs lsp-mode))
 
-
-
 (use-package yasnippet)
 
 (use-package dap-mode
@@ -94,6 +93,9 @@
 (use-package flymake)
 
 (use-package posframe)
+
+(use-package ivy-posframe
+  :after (ivy posframe))
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
@@ -195,19 +197,17 @@
 
 (use-package evil-escape
   :init (setq-default evil-escape-key-sequence "kj")
-  :config
-  (evil-escape-mode 1))
+  :config (evil-escape-mode 1))
 
 (use-package evil-collection
   :after evil
-  :config
-  (evil-collection-init))
+  :config (evil-collection-init))
 
 (use-package go-mode
   :hook (go-mode . lsp-deferred))
 
 (use-package go-playground
-  :dimnish
+  :diminish
   :commands (go-playground-mode))
 
 (use-package yaml-mode)
@@ -220,6 +220,8 @@
 (use-package ace-window)
 
 (use-package ag)
+
+(use-package terraform-mode)
 
 (use-package projectile
   :init
@@ -235,7 +237,7 @@
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (load-theme 'doom-challenger-deep t)
+  (load-theme 'doom-horizon t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 

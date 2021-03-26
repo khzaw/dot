@@ -1,6 +1,6 @@
 (setq default-frame-alist
       (append (list
-	       '(font . "Victor Mono:style=Light:size=14")
+	       '(font . "Victor Mono:size=14")
 	       ;; '(font . "Roboto Mono Emacs Regular:size=14")
 	       '(min-height . 1)  '(height     . 45)
 	       '(min-width  . 1) '(width      . 81)
@@ -10,6 +10,13 @@
                '(right-fringe   . 0)
                '(tool-bar-lines . 0)
                '(menu-bar-lines . 0))))
+
+(defun transparency (value)
+  "Sets the transparency of the frame window 0=transparent/100=opaque"
+  (interactive "nTransparency Value (0 - 100) :")
+  (set-frame-parameter (selected-frame) 'alpha value))
+(transparency 97)
+
 
 (setq inhibit-startup-screen t
       inhibit-startup-message t
