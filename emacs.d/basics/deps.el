@@ -38,7 +38,6 @@
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
 
-
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
@@ -56,7 +55,6 @@
   :after (treemacs dired)
   :config
   (treemacs-icons-dired-mode))
-
 
 (use-package lsp-mode
   :init
@@ -90,13 +88,19 @@
   (require 'dap-ui)
   (dap-ui-mode 1))
 
-(use-package flymake)
+(use-package flycheck
+  :init (global-flycheck-mode))
 
 (use-package posframe)
 
 (use-package ivy-posframe
   :after (ivy posframe))
 
+(use-package plantuml-mode
+  :mode "\\.plu\\'"
+  :custom
+  (plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
+  (plantuml-default-exec-mode 'jar))
 (use-package typescript-mode
   :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
