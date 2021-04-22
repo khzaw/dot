@@ -1,27 +1,11 @@
-source $(brew --prefix)/share/antigen/antigen.zsh
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fpath=(/usr/local/share/zsh-completions $fpath)
-
-antigen use oh-my-zsh
-antigen bundle git
-antigen bundle pip
-antigen bundle colorize
-antigen bundle history
-antigen bundle lukechilds/zsh-nvm
-antigen theme lambda
-antigen apply
-
-for file in ~/Code/dotfiles/{aliases.zsh,functions};
+for file in ~/Code/dotfiles/{aliases.zsh,functions,history.zsh,key-bindings.zsh,directories.zsh};
 do
   [ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
 unset file
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source '/usr/local/Cellar/pyenv/1.2.11/libexec/../completions/pyenv.zsh'
+export V="$(pyenv -v | awk 'NF{ print $NF }')"
+source "/usr/local/Cellar/pyenv/$V/libexec/../completions/pyenv.zsh"
 command pyenv rehash 2>/dev/null
 pyenv() {
   local command
@@ -37,4 +21,27 @@ pyenv() {
     command pyenv "$command" "$@";;
   esac
 }
-neofetch
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+
+
+eval "$(register-python-argcomplete pipx)"
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+
+# poetry completions zsh > ~/.zfunc/_poetry
+# fpath+=~/.zfunc
+
+source "$HOME/.local/share/miniplug.zsh"
+miniplug plugin 'agkozak/zsh-z'
+miniplug plugin 'zsh-users/zsh-completions'
+miniplug plugin 'zsh-users/zsh-history-substring-search'
+miniplug plugin 'zsh-users/zsh-autosuggestions'
+miniplug plugin 'zdharma/fast-syntax-highlighting'
+miniplug theme 'dracula/zsh'
+miniplug load
+
+export AWS_SDK_LOAD_CONFIG=1
