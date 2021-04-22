@@ -1,8 +1,4 @@
-for file in ~/Code/dotfiles/{aliases.zsh,functions,history.zsh,key-bindings.zsh,directories.zsh};
-do
-  [ -r "$file" ] && [ -f "$file" ] && source "$file"
-done
-unset file
+
 
 export V="$(pyenv -v | awk 'NF{ print $NF }')"
 source "/usr/local/Cellar/pyenv/$V/libexec/../completions/pyenv.zsh"
@@ -45,3 +41,10 @@ miniplug theme 'dracula/zsh'
 miniplug load
 
 export AWS_SDK_LOAD_CONFIG=1
+
+
+for file in ~/Code/dot/zsh/{aliases.zsh,functions,history.zsh,key-bindings.zsh,directories.zsh};
+do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+done
+unset file
