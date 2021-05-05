@@ -1,7 +1,5 @@
-
-
-export V="$(pyenv -v | awk 'NF{ print $NF }')"
-source "/usr/local/Cellar/pyenv/$V/libexec/../completions/pyenv.zsh"
+# export V="$(pyenv -v | awk 'NF{ print $NF }')"
+source "/usr/local/Cellar/pyenv/1.2.26_1/libexec/../completions/pyenv.zsh"
 command pyenv rehash 2>/dev/null
 pyenv() {
   local command
@@ -34,9 +32,9 @@ eval "$(register-python-argcomplete pipx)"
 source "$HOME/.local/share/miniplug.zsh"
 miniplug plugin 'agkozak/zsh-z'
 miniplug plugin 'zsh-users/zsh-completions'
+miniplug plugin 'zdharma/fast-syntax-highlighting'
 miniplug plugin 'zsh-users/zsh-history-substring-search'
 miniplug plugin 'zsh-users/zsh-autosuggestions'
-miniplug plugin 'zdharma/fast-syntax-highlighting'
 miniplug theme 'dracula/zsh'
 miniplug load
 
