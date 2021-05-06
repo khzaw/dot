@@ -97,10 +97,11 @@
   :after (ivy posframe))
 
 (use-package plantuml-mode
-  :mode "\\.plu\\'"
+  :mode "\\.puml\\'"
   :custom
-  (plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
-  (plantuml-default-exec-mode 'jar))
+  (plantuml-jar-path "/usr/local/bin/plantuml")
+  (plantuml-default-exec-mode 'executable))
+
 (use-package typescript-mode
   :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
