@@ -1,5 +1,5 @@
-# export V="$(pyenv -v | awk 'NF{ print $NF }')"
-source "/usr/local/Cellar/pyenv/1.2.26_1/libexec/../completions/pyenv.zsh"
+export V="$(pyenv -v | awk 'NF{ print $NF }')"
+source "/usr/local/Cellar/pyenv/$V/libexec/../completions/pyenv.zsh"
 command pyenv rehash 2>/dev/null
 pyenv() {
   local command
@@ -40,9 +40,14 @@ miniplug load
 
 export AWS_SDK_LOAD_CONFIG=1
 
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 
 for file in ~/Code/dot/zsh/{aliases.zsh,functions,history.zsh,key-bindings.zsh,directories.zsh};
 do
   [ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
 unset file
+
+
