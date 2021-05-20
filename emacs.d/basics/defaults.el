@@ -1,13 +1,17 @@
+;; Stop creating backup~ files
 (setq make-backup-files nil)
 
+;; Stop creating #autosave# files
 (setq auto-save-default nil)
+
+;; Stop creating .# files
+(setq create-lockfiles nil)
+
 
 (setq inhibit-compacting-font-caches t)
 
-;; No startup screen
+;; No startup message and screen
 (setq inhibit-startup-screen t)
-
-;; No startup message
 (setq inhibit-startup-message t)
 (setq inhibit-startup-echo-area-message t)
 
@@ -19,6 +23,8 @@
 
 ;; No frame title
 (setq frame-title-format nil)
+
+(setq frame-resize-pixelwise t)
 
 ;; No file dialog
 (setq use-file-dialog nil)
@@ -96,30 +102,29 @@
 ;; (define-key company-mode-map [remap indent-for-tab-command]
 ;;   #'company-indent-or-complete-common)
 
-;; Pixel scroll (as opposed to char scrool)
-(pixel-scroll-mode t)
+;; Better scrolling
+(setq scroll-margin 10
+  scroll-step 1
+  next-line-add-newlines nil
+  scroll-conservatively 10000
+  scroll-preserve-screen-position t
+  auto-window-vscroll nil)
+
+
+(blink-cursor-mode t)
+;; blinks cursor forever
+(setq blink-cursor-blinks 0)
 
 ;; Mac specific
 (when (eq system-type 'darwin)
   (setq ns-use-native-fullscreen t
-        mac-option-key-is-meta t
-        mac-command-key-is-meta t
-        mac-command-modifier 'meta
-        mac-option-modifier nil
-        mac-use-title-bar nil))
-
-;; Make sure clipboard works properly in tty mode on OSX
-(defun copy-from-osx ()
-  (shell-command-to-string "pbpaste"))
-(defun paste-to-osx (text &optional push)
-  (let ((process-connection-type nil))
-    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-      (process-send-string proc text)
-      (process-send-eof proc))))
-(when (and (not (display-graphic-p))
-           (eq system-type 'darwin))
-    (setq interprogram-cut-function 'paste-to-osx)
-    (setq interprogram-paste-function 'copy-from-osx))
+    ;; Both command keys are super
+    mac-command-modifier 'meta
+    mac-right-command-modifier 'super
+    ;; Option is meta
+    mac-option-modifier 'meta
+    ;; Right Alt is not meta, used to type symbols and shit
+    mac-right-option-modifier nil))
 
 ;; y/n for  answering yes/no questions
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -144,6 +149,9 @@
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment   'utf-8)
 
+;; Revert (updatet) buffers automatically when underlying files are changed externally.
+(global-auto-revert-mode t)
+
 ;; Unique buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse
@@ -153,8 +161,8 @@
 
 ;; Default shell in term
 (unless (eq system-type 'windows-nt)
-  (setq-default shell-file-name "/bin/zsh")
-  (setq explicit-shell-file-name "/bin/zsh"))
+  (setq-default shell-file-name "/usr/local/bin/zsh")
+  (setq explicit-shell-file-name "/usr/local/bin/zsh"))
 
 ;; Kill term buffer when exiting
 (defadvice term-sentinel (around my-advice-term-sentinel (proc msg))

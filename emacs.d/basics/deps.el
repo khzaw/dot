@@ -1,9 +1,38 @@
+;;; package --- deps.el
+
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config
   (setenv "SHELL" "/usr/local/bin/zsh")
   (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
   (exec-path-from-shell-initialize))
+
+(use-package restart-emacs)
+
+;; (use-package aggressive-indent
+;;   :diminish
+;;   :hook ((after-init . global-aggressive-indent-mode)
+;;           ;; Disable in big files due to performance issues
+;;           (find-file . (lambda ()
+;;                          (if (> (buffer-size) (* 3000 80))
+;;                            (aggressive-indent-mode -1)))))
+;;   :config
+;;   (dolist (mode '(go-mode prolog-inferior-mode))
+;;     (push mode aggressive-indent-excluded-modes))
+;;   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
+;;   (add-to-list 'aggressive-indent-dont-indent-if
+;;     '(and (derived-mode-p 'c-mode 'c++mode 'csharp-mode
+;;             'java-mode 'go-mode 'swift-mode)
+;;        (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)" (thing-at-point 'line))))))
+
+(use-package paredit
+  :hook ((clojure-mode emacs-lisp-mode) . paredit-mode)
+  :diminish (paredit paredit-mode))
+
+(use-package magit
+  :bind ("C-x g" . magit-status))
+
+(use-package git-timemachine)
 
 (use-package keyfreq
   :config
@@ -23,6 +52,28 @@
   :commands (dired dired-jump)
   :bind (("C-x C-j" . dired-jump))
   :custom ((dired-listing-switches "-agho --group-directories-first")))
+
+(use-package shackle
+  :init
+  (setq
+    shackle-default-alignment 'below
+    shackle-default-size 0.4
+    shackle-rules '((help-mode :align below :select t)
+                     (helpful-mode :align below)
+                     (compilation-mode :select t :size 0.25)
+                     ("*compilation*" :select nil :size 0.25)
+                     ("*ag search*" :select nil :size 0.25)
+                     ("*Flycheck errors*" :select nil :size 0.25)
+                     ("*Warnings*" :select nil :size 0.25)
+                     ("*Error*" :select nil :size 0.25)
+                     (magit-status-mode :align bottom :size 0.5 :inhibit-window-quit t)
+                     (magit-log-mode :same t :inhibit-window-quit t)
+                     (magit-commit-mode :ignore t)
+                     (magit-diff-mode :select nil :align left :size 0.5)
+                     (git-commit-mode :same t)
+                     (vc-annotate-mode :same t)))
+  :config
+  (shackle-mode 1))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
@@ -51,6 +102,10 @@
 (use-package treemacs-magit
   :after (treemacs magit))
 
+(use-package move-text
+  :config
+  (move-text-default-bindings))
+
 (use-package treemacs-icons-dired
   :after (treemacs dired)
   :config
@@ -59,11 +114,7 @@
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook
-  (lsp-mode . lsp-enable-which-key-integration)
-  :config
-  (lsp-register-custom-settings
-   '(("gopls.experimentalWorkspaceModule" t t)))
+  :hook (lsp-mode . lsp-enable-which-key-integration)
   :commands (lsp lsp-deferred))
 
 (use-package lsp-ui
@@ -77,7 +128,8 @@
 (use-package lsp-treemacs
   :after (treemacs lsp-mode))
 
-(use-package yasnippet)
+(use-package yasnippet
+  :config (yas-global-mode 1))
 
 (use-package dap-mode
   :hook
@@ -102,19 +154,17 @@
   (plantuml-jar-path "/usr/local/bin/plantuml")
   (plantuml-default-exec-mode 'executable))
 
-(use-package typescript-mode
-  :mode "\\.ts\\'"
-  :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-indent-level 2))
+(use-package ag :ensure-system-package ag)
 
-(use-package fzf)
+(use-package fzf :ensure-system-package fzf)
 
 (use-package ivy
   :defer 0.1
   :diminish
   :custom
   (ivy-use-virtual-buffers t)
+  (ivy-height 15)
+  (ivy-display-style 'fancy)
   :config (ivy-mode))
 
 (use-package ivy-rich
@@ -124,13 +174,17 @@
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+          ("C-r" . swiper)))
 
 (use-package counsel
   :bind
   ("M-x" . counsel-M-x)
   ("C-x b" . counsel-ibuffer)
   ("C-x C-f" . counsel-find-file)
+  ("C-c f" . fzf-find-file)
+  ("C-c a" . counsel-ag)
+  ("C-c g" . counsel-git)
+  ("C-c l t" . counsel-load-theme)
   :config
   (setq ivy-initial-inputs-alist nil))
 
@@ -138,14 +192,8 @@
   :defer 0.5
   :config (amx-mode))
 
-
 (use-package editorconfig
   :config (editorconfig-mode 1))
-
-(use-package magit
-  :bind ("C-x g" . magit-status))
-
-(use-package git-timemachine)
 
 (use-package undo-tree
   :diminish
@@ -157,37 +205,17 @@
 
 (use-package avy
   :bind (("C-;"   . avy-goto-char)
-         ("C-'"   . avy-goto-char-2)
-         ("M-g f" . avy-goto-line)
-         ("M-g w" . avy-goto-word-0)
-         ("M-g e" . avy-goto-word-1))
+          ("C-'"   . avy-goto-char-2)
+          ("M-g f" . avy-goto-line)
+          ("M-g w" . avy-goto-word-0)
+          ("M-g e" . avy-goto-word-1))
   :hook (after-init . avy-setup-default)
   :config (setq avy-background t
-                avy-all-windows nil
-                avy-all-windows-alt t
-                avy-style 'pre))
+            avy-all-windows nil
+            avy-all-windows-alt t
+            avy-style 'pre))
 
-(use-package rjsx-mode
-  :defer t
-  :mode ("\\.jsx?\\'" . rjsx-mode))
-
-(use-package add-node-modules-path)
-
-(use-package prettier-js
-  :after (add-node-modules-path rjsx-mode web-mode)
-  :hook ((rjsx-mode . add-node-modules-path)
-         (rjsx-mode . prettier-js-mode)))
-
-(use-package restclient)
-
-(use-package all-the-icons
-  :config
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.tsx$"
-                 all-the-icons-fileicon "tsx"
-                 :height 1.v
-                 :0-adjust -0.1
-                 :face all-the-icons-cyan-alt)))
+(use-package all-the-icons)
 
 (use-package hydra)
 
@@ -208,32 +236,20 @@
   :after evil
   :config (evil-collection-init))
 
-(use-package go-mode
-  :hook (go-mode . lsp-deferred))
-
-(use-package go-playground
-  :diminish
-  :commands (go-playground-mode))
-
 (use-package yaml-mode)
-
-(use-package web-mode
-  :mode "\\.html?\\'")
-
-(use-package css-mode)
 
 (use-package ace-window)
 
-(use-package ag)
-
 (use-package terraform-mode)
+
+(use-package haskell-mode)
 
 (use-package projectile
   :init
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-              ("s-p" . projectile-command-map)
-              ("C-c p" . projectile-command-map)))
+          ("s-p" . projectile-command-map)
+          ("C-c p" . projectile-command-map)))
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -241,9 +257,23 @@
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (load-theme 'doom-horizon t)
+    doom-themes-enable-italic t)
+  ;; (load-theme 'doom-one-light t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
+
+(defun apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'doom-solarized-light t))
+    ('dark (load-theme 'doom-solarized-dark t))))
+
+(add-hook 'ns-system-appearance-change-functions #'apply-theme)
+
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t
+    auto-package-update-interval 4))
 
 (provide 'deps)

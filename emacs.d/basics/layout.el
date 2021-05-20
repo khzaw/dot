@@ -1,27 +1,32 @@
 (setq default-frame-alist
-      (append (list
-	       '(font . "Victor Mono:size=14")
-	       ;; '(font . "Roboto Mono Emacs Regular:size=14")
-	       '(min-height . 1)  '(height     . 45)
-	       '(min-width  . 1) '(width      . 81)
-               '(vertical-scroll-bars . nil)
-               '(internal-border-width . 24)
-               '(left-fringe    . 0)
-               '(right-fringe   . 0)
-               '(tool-bar-lines . 0)
-               '(menu-bar-lines . 0))))
+  (append (list
+	          '(font . "Iosevka:size=14")
+	          '(min-height . 1)  '(height     . 45)
+	          '(min-width  . 1) '(width      . 90)
+            '(vertical-scroll-bars . nil)
+            '(internal-border-width . 24)
+            '(left-fringe    . 0)
+            '(right-fringe   . 0)
+            '(tool-bar-lines . 0)
+            '(menu-bar-lines . 0))))
+(setq-default line-spacing 2)
 
 (defun transparency (value)
-  "Sets the transparency of the frame window 0=transparent/100=opaque"
+  "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 97)
+(transparency 92)
+
+;; Enable transparent title bar on macOS
+(when (memq window-system '(mac ns))
+  (add-to-list 'default-frame-alist '(ns-appearance . light)) ;; {light, dark}
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
 
 
 (setq inhibit-startup-screen t
-      inhibit-startup-message t
-      inhibit-startup-echo-area-message t
-      initial-scratch-message nil)
+  inhibit-startup-message t
+  inhibit-startup-echo-area-message t
+  initial-scratch-message nil)
 (tool-bar-mode 0)
 (tooltip-mode 0)
 (menu-bar-mode 0)
@@ -33,5 +38,9 @@
 
 ;; Hide org markup for README
 (setq org-hide-emphasis-markers t)
+
+;; When split is automatic, always split windows vertically
+(setq split-height-threshold 0)
+(setq split-width-threshold nil)
 
 (provide 'layout)

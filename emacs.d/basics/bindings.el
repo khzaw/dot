@@ -1,6 +1,9 @@
 ;; Kill current buffer (instead of asking first buffer name)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
+;; Always newline-and-indent
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
 ;; M-n for new frame (M-n is unbound in vanilla emacs)
 (defun new-frame ()
   (interactive)
