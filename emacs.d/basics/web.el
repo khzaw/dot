@@ -1,13 +1,21 @@
 (use-package restclient)
 
 (use-package web-mode
+  :mode ("\\.html?\\'"
+          "\\.tsx\\'"
+          "\\.ejs?\\'")
   :config
   (setq web-mode-code-indent-offset 2
         web-mode-css-indent-offset 2
         web-mode-markup-indent-offset 2
         web-mode-auto-close-style 2
-        web-mode-enable-current-element-highlight t)
-  :hook (before-save-hook . delete-trailing-whitespace))
+        web-mode-enable-current-element-highlight t
+        web-mode-enable-css-colorization t
+        web-mode-enable-auto-pairing t)
+  (add-hook 'web-mode-hook
+    (lambda ()
+      (when (string-equal "tsx" (file-name-extension buffer-file-name))
+        (setup-tide-mode)))))
 
 (use-package css-mode)
 
@@ -21,7 +29,7 @@
 
 (use-package rjsx-mode
   :defer t
-  :mode ("\\.jsx?\\'" "\\.tsx\\'"))
+  :mode ("\\.jsx?\\'"))
 
 (defun setup-tide-mode ()
   (interactive)

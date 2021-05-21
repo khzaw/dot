@@ -57,12 +57,6 @@
 ;; Text mode is default major mode
 (setq default-major-mode 'text-mode)
 
-;; Moderate font lock
-(setq font-lock-maximum-decoration nil)
-
-;; No limit on font lock
-(setq font-lock-maximum-size nil)
-
 ;; No line break space points
 (setq auto-fill-mode nil)
 
@@ -71,10 +65,6 @@
 
 ;; No confirmation for visiting non-existent files
 (setq confirm-nonexistent-file-or-buffer nil)
-
-;; Completion style, see
-;; gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html
-(setq completion-styles '(basic substring))
 
 ;; Mouse active in terminal
 (unless (display-graphic-p)
