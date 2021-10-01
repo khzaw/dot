@@ -1,20 +1,31 @@
-:: default  : chunkc border::color 0xff61afef
+
+# move managed window
+shift + cmd - h : yabai -m window --warp east
+
+# balance size of windows
+shift + alt - 0 : yabai -m space --balance
+
+# increase window size
+shift + cmd - l : yabai -m window --resize right:-20:0
+shift + cmd - h : yabai -m window --resize left:-20:0
 
 # workspaces
-alt - j   : chunkc tiling::window --focus next
-alt - k   : chunkc tiling::window --focus prev
+cmd - h : yabai -m window --focus west
+cmd - j : yabai -m window --focus south
+cmd - k : yabai -m window --focus north
+cmd - l : yabai -m window --focus east
 
-# swap window
-shift + alt - h : chunkc tiling::window --swap west
-shift + alt - j : chunkc tiling::window --swap south
-shift + alt - k : chunkc tiling::window --swap north
-shift + alt - l : chunkc tiling::window --swap east
+# swap managed window
+shift + cmd - h : yabai -m window --swap west
+shift + cmd - j : yabai -m window --swap south
+shift + cmd - k : yabai -m window --swap north
+shift + cmd - l : yabai -m window --swap east
 
 # move window
-shift + ctrl - h : chunkc tiling::window --warp west
-shift + ctrl - j : chunkc tiling::window --warp south
-shift + ctrl - k : chunkc tiling::window --warp north
-shift + ctrl - l : chunkc tiling::window --warp east
+# shift + ctrl - h : chunkc tiling::window --warp west
+# shift + ctrl - j : chunkc tiling::window --warp south
+# shift + ctrl - k : chunkc tiling::window --warp north
+# shift + ctrl - l : chunkc tiling::window --warp east
 
 # toggle window fullscreen
 alt - f : chunkc tiling::window --toggle fullscreen
@@ -35,7 +46,7 @@ ctrl + alt - d : chunkc tiling::desktop --layout float
 cmd + shift - l : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
 cmd + shift - h : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
 
-default                   < ctrl - return       : open -na iTerm
+default  < ctrl - return       : open -na iTerm
 
 cmd + shift - space : chunkc tiling::window --toggle float; chunkc tiling::window --grid-layout 4:4:1:1:2:2
 
@@ -44,6 +55,8 @@ cmd + shift + alt - j : chunkc tiling::window --use-temporary-ratio -0.05 --adju
 cmd + shift + alt - k : chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge south
 cmd + shift + alt - l : chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge west;  chunkc tiling::window --use-temporary-ratio  0.05 --adjust-window-edge east
 
+# restart
+ctrl + alt + cmd - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
 
 
