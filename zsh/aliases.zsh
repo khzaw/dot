@@ -395,3 +395,5 @@ function grename() {
 }
 
 unset git_version
+
+alias ls="exa"
