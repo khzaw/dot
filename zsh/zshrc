@@ -1,3 +1,21 @@
+source /usr/local/share/antigen/antigen.zsh
+
+antigen use oh-my-zsh
+antigen bundle git
+antigen bundle git-extras
+antigen bundle github
+antigen bundle fzf
+antigen bundle z
+antigen bundle command-not-found
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-history-substring-search
+antigen theme lambda
+antigen apply
+
+zmodload zsh/zprof
+
 export V="$(pyenv -v | awk 'NF{ print $NF }')"
 source "/usr/local/Cellar/pyenv/$V/libexec/../completions/pyenv.zsh"
 command pyenv rehash 2>/dev/null
@@ -29,14 +47,6 @@ eval "$(register-python-argcomplete pipx)"
 # poetry completions zsh > ~/.zfunc/_poetry
 # fpath+=~/.zfunc
 
-source "$HOME/.local/share/miniplug.zsh"
-miniplug plugin 'agkozak/zsh-z'
-miniplug plugin 'zsh-users/zsh-completions'
-miniplug plugin 'zdharma/fast-syntax-highlighting'
-miniplug plugin 'zsh-users/zsh-history-substring-search'
-miniplug plugin 'zsh-users/zsh-autosuggestions'
-miniplug theme 'dracula/zsh'
-miniplug load
 
 export AWS_SDK_LOAD_CONFIG=1
 
@@ -44,10 +54,11 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 
-for file in ~/Code/dot/zsh/{aliases.zsh,functions,history.zsh,key-bindings.zsh,directories.zsh};
+for file in ~/Code/dot/zsh/{aliases.zsh,functions};
 do
   [ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
 unset file
 
 eval "$(pyenv virtualenv-init -)"
+
