@@ -51,6 +51,7 @@ PATH="$PATH:$PYENV_ROOT/shims"
 PATH="$PATH:$HOME/.fastlane/bin"															# Fastlane
 PATH="$PATH:/usr/texbin"                                     # LaTeX
 PATH="$PATH:$HOME/.local/bin"                                # Pipsi
+PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
 PATH="$PATH:/usr/local/opt/sqlite/bin"
 PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
 PATH="$PATH:/usr/local/bin:/usr/local/sbin"                  # homebrew
