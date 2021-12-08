@@ -39,7 +39,7 @@ export ANDROID_PLATFORM_TOOLS="$ANDROID_SDK/platform-tools"
 
 # go
 export GOPATH=$HOME/.go
-export GOROOT="$(brew --prefix golang)"/libexec
+# export GOROOT="$(brew --prefix golang)"/libexec
 export GO111MODULE=on
 export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
@@ -87,9 +87,10 @@ export MANPATH="$MANPATH:/Library/TeX/Distributions/.DefaultTeX/Contents/Man"
 export NVM_LAZY_LOAD=true
 export NVM_DIR="$HOME/.nvm"
 [ -e "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
