@@ -1,0 +1,123 @@
+[user]
+	name = Kaung Htet Zaw
+	email = kayhzaw@gmail.com
+	# signingkey = 475D8C1DC2D4C9AC
+[credential]
+	helper = osxkeychain
+[github]
+	user = khzaw
+[mergetool]
+	keepBackup = true
+[color]
+	ui = true
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red
+  new = green
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[pager]
+  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX
+[alias]
+	co = checkout
+	ci = commit
+	st = status -s
+	br = branch
+	undo = reset --soft HEAD^
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%Creset' --abbrev-commit --all
+	# Show the diff between the latest commit and the current state
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+	# Clone a repository including all submodules
+	c = clone --recursive
+	g = grep --break --heading --line-number
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+	amend = commit --amend --resue-message=HEAD
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
+	# Credit an author on the latest commit
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+	# Remove branches that have already been merged with master
+	# a.k.a. ‘delete merged’
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+	# Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+
+	# Find commits by source code
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+	# Find commits by commit message
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	standup = log --author=\"Kaung Htet Zaw\" --oneline --no-merges --since=1.day
+  dif = diff -w --word-diff-regex=[^[:space:]]
+[web]
+	browser = open
+[apply]
+	whitespace = fix
+[help]
+	format = web
+[core]
+	excludesfile = ~/.gitignore_global
+	attributesfile = ~/.gitattributes
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+	trustctime = false
+	commitGraph = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true
+[push]
+	default = matching
+	followTags = true
+[grep]
+	lineNumber = true
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
+[diff]
+	renames = copies
+[help]
+	autocorrect = 1
+[merge]
+	log = 1000
+[rebase]
+  autosquash = true
+[fetch]
+  prune = true
+# [gpg]
+	# program = /usr/local/MacGPG2/bin/gpg2
+[commit]
+	template = ~/.stCommitMsg
+[rerere]
+	enabled = true
+[http]
+	sslVerify = false
+[pull]
+	rebase = preserve
