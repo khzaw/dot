@@ -26,7 +26,7 @@ myConfig = def
   { terminal   = "alacritty"
   , modMask    = mod4Mask
   , borderWidth = 2
-  , layoutHook = spacingRaw True (Border 0 50 50 50) True (Border 50 50 50 50) True $ layoutHook def
+  , layoutHook = spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True $ layoutHook def
   , workspaces = myWorkspaces
   }
   `additionalKeysP`
