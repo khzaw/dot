@@ -29,12 +29,6 @@
   :hook ((clojure-mode emacs-lisp-mode) . paredit-mode)
   :diminish (paredit paredit-mode))
 
-(use-package magit
-  :init
-  (setq magit-save-some-buffers nil) ; don't ask to save buffers
-  :bind ("C-x g" . magit-status))
-
-(use-package git-timemachine)
 
 (use-package keyfreq
   :config
@@ -79,6 +73,10 @@
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
+
+(use-package rust-mode)
+
+(use-package solidity-mode)
 
 (use-package company
   :after lsp-mode
@@ -260,7 +258,7 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic t)
-  ;; (load-theme 'doom-one-light t)
+  ;; (load-theme 'doom-opera-light t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 
@@ -268,8 +266,8 @@
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
   (pcase appearance
-    ('light (load-theme 'doom-solarized-light t))
-    ('dark (load-theme 'doom-solarized-dark t))))
+    ('light (load-theme 'doom-tomorrow-day t))
+    ('dark (load-theme 'doom-tomorrow-night t))))
 
 (add-hook 'ns-system-appearance-change-functions #'apply-theme)
 

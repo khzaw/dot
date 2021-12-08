@@ -10,9 +10,13 @@
 (setq gs-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 
+(setq insert-directory-program "/usr/local/bin/gls")
+(setq dired-listing-switches "-aBhl --group-directories-first")
+
 (require 'defaults)
 (require 'layout)
 (require 'bindings)
+
 
 (require 'package)
 (add-to-list 'package-archives
@@ -38,6 +42,7 @@
 (require 'quelpa-use-package)
 
 (require 'deps)
+(require 'git)
 (require 'python)
 (require 'go)
 (require 'web)

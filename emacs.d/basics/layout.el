@@ -1,6 +1,6 @@
 (setq default-frame-alist
   (append (list
-	          '(font . "Iosevka:size=14")
+	          '(font . "Jetbrains Mono:size=14")
 	          '(min-height . 1)  '(height     . 45)
 	          '(min-width  . 1) '(width      . 90)
             '(vertical-scroll-bars . nil)
