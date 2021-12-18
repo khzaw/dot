@@ -26,23 +26,29 @@
 -- main :: IO ()
 -- main = xmonad . ewmh =<< myConfig
 
+import System.IO
+
 import XMonad
+import XMonad.Layout.Spacing
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+
 import XMonad.Util.Run
 import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
-import System.IO
 
 myManageHook = composeAll
-	[ className =? "1password"	--> doFloat
-	]
+	[ className =? "1Password"	--> doCenterFloat ]
 
+-- M1 - Left Alt
+-- M  - Mod Key (Cmd)
 main = do 
 	xmproc <- spawnPipe "xmobar"
 	xmonad $ docks defaultConfig 
 		{ manageHook = myManageHook <+> manageHook defaultConfig
-		, layoutHook = avoidStruts $ layoutHook defaultConfig
+		, layoutHook = avoidStruts $ spacingWithEdge 10 $ layoutHook defaultConfig
 		, logHook = dynamicLogWithPP xmobarPP
 			{ ppOutput = hPutStrLn xmproc
 			, ppTitle = xmobarColor "green" "" . shorten 50
@@ -51,7 +57,7 @@ main = do
 		, borderWidth = 1
 		, terminal = "alacritty"
 		} `additionalKeysP`
-		[ ("M-<Space>" , spawn "rofi -show run -dpi 164") 
+		[ ("M1-<Space>" , spawn "rofi -show run -dpi 164") 
 		-- , ("M-S-4"     , unGrab *> spawn "scrot -s")
 		]
 	
