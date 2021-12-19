@@ -58,7 +58,7 @@ main = do
 		, terminal = "alacritty"
 		} `additionalKeysP`
 		[ ("M1-<Space>" , spawn "rofi -show run -dpi 164") 
-		-- , ("M-S-4"     , unGrab *> spawn "scrot -s")
+		, ("M1-S-4"     , unGrab *> spawn "scrot -s")
 		]
 	
 

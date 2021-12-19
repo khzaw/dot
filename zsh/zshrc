@@ -5,7 +5,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source /usr/local/share/antigen/antigen.zsh
+if [[ `uname` == "Darwin" ]]; then
+    source /usr/local/share/antigen/antigen.zsh
+else
+    source /usr/share/zsh/share/antigen.zsh
+fi
 
 antigen use oh-my-zsh
 antigen bundle git
@@ -24,7 +28,10 @@ antigen apply
 zmodload zsh/zprof
 
 export V="$(pyenv -v | awk 'NF{ print $NF }')"
-source "/usr/local/Cellar/pyenv/$V/libexec/../completions/pyenv.zsh"
+
+if [[ `uname` == "Darwin" ]]; then
+    source "/usr/local/Cellar/pyenv/$V/libexec/../completions/pyenv.zsh"
+fi
 command pyenv rehash 2>/dev/null
 pyenv() {
   local command
@@ -42,7 +49,11 @@ pyenv() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+if [[ `uname` == "Darwin" ]]; then
+    source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+else
+    source /usr/share/doc/git-extras/git-extras-completion.zsh
+fi
 
 
 # eval "$(register-python-argcomplete pipx)"

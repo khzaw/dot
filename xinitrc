@@ -35,4 +35,6 @@ fi
 . ~/.screenlayout/screenlayout.sh
 nitrogen --restore &
 picom &
+# Caps lock -> Ctrl
+setxkbmap -option ctrl:nocaps
 exec xmonad
