@@ -40,7 +40,15 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
 
 myManageHook = composeAll
-	[ className =? "1Password"	--> doCenterFloat ]
+	[ className =? "1Password"	--> doCenterFloat
+        , className =? "Nitrogen"       --> doCenterFloat
+        , className =? "feh"            --> doFloat
+        , title     =? "Save As"        --> doCenterFloat
+        , title     =? "Save Image"     --> doCenterFloat
+        , title     =? "Enter name of file to save to"  --> doCenterFloat
+        ]
+
+myGap = 10
 
 -- M1 - Left Alt
 -- M  - Mod Key (Cmd)
@@ -48,10 +56,10 @@ main = do
 	xmproc <- spawnPipe "xmobar"
 	xmonad $ docks defaultConfig 
 		{ manageHook = myManageHook <+> manageHook defaultConfig
-		, layoutHook = avoidStruts $ spacingWithEdge 10 $ layoutHook defaultConfig
+		, layoutHook = avoidStruts $ spacingRaw True (Border myGap myGap myGap myGap) True (Border myGap myGap myGap myGap) True $ layoutHook defaultConfig
 		, logHook = dynamicLogWithPP xmobarPP
 			{ ppOutput = hPutStrLn xmproc
-			, ppTitle = xmobarColor "green" "" . shorten 50
+			, ppTitle = xmobarColor "green" "" . shorten 100
 			}
 		, modMask = mod4Mask
 		, borderWidth = 1
