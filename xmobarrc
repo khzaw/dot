@@ -1,23 +1,23 @@
 Config {
-    font   = "xft:Iosevka:size=11:antialias=true"
-  , bgColor = "black"
-  , fgColor = "grey"
-  , position = TopW L 100
-  , lowerOnStart = True
-  
+  font   = "xft:SanFranciscoText:weight=bold:pixelsize=26:antialias=true:hinting=true",
+  bgColor = "#000000",
+  fgColor = "#ffffff",
+  position = TopSize L 95 24,
+  -- position = Static { xpos = 0, ypos = 2160, width = 4940, height = 36 },
   -- general behavior
-  , allDesktops = True
-  , persistent = True
+  overrideRedirect = True,
+  lowerOnStart = False,
+  allDesktops = True,
+  persistent = True,
 
   -- plugins
-  , commands = [  Run Cpu [ "-L", "3" , "-H", "50" , "--high", "red" , "--normal", "green" ] 10
+  commands = [  Run Cpu [ "-L", "3" , "-H", "50" , "--high", "red" , "--normal", "green" ] 10
 	 	, Run Memory ["-t", "Mem: <usedratio>%"] 10
 	        , Run Swap [] 10
     		, Run Date "%a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 10
-		, Run Volume "default" "Master" ["-t", "<volumebar>"] 10
     		, Run StdinReader
-    		]
-   , sepChar = "%"
-   , alignSep = "}{"
-   , template = "%StdinReader% }{ %cpu% | %memory% | %swap% | %default:Master% | <fc=#ee9a00>%date%</fc>"
+    		],
+   sepChar = "%",
+   alignSep = "}{",
+   template = "%StdinReader% }{ %cpu% | %memory% | <fc=#ee9a00>%date%</fc>"
    }
