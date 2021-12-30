@@ -44,27 +44,27 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
 
 myManageHook = composeAll
-	[ className =? "1Password"			--> doCenterFloat
-        , className =? "Nitrogen"			--> doCenterFloat
-        , className =? "feh"				--> doCenterFloat
-        , className =? "Plugins"			--> doCenterFloat
-        , className =? "file_progress"			--> doFloat
-        , className =? "pinentry-gtk-2"			--> doFloat
-        , className =? "toolbar"			--> doFloat
-        , className =? "notification"			--> doFloat
-        , className =? "error"				--> doFloat
-	, className =? "stalonetray"			--> doIgnore
-	, className =? "trayer"				--> doIgnore
-        , className =? "calculator"	  		--> doFloat
-        , className =? "hl_linux"	  		--> doFloat
-        , title     =? "Volume Control"			--> doCenterFloat
-        , title     =? "Bluetooth Devices"		--> doCenterFloat
-        , title     =? "Save As"			--> doCenterFloat
-        , title     =? "Save Image"			--> doCenterFloat
-        , title     =? "Enter name of file to save to"  --> doCenterFloat
-        , title     =? "Picture in picture"  		--> doFloat
-        , title     =? "MetaMask Notification" 		--> doFloat
-        , title     =? "Media viewer"	 		--> doFloat
+	[ className =? "1Password"				--> doCenterFloat
+        , className =? "Nitrogen"				--> doCenterFloat
+        , className =? "feh"					--> doCenterFloat
+        , className =? "Plugins"				--> doCenterFloat
+        , className =? "file_progress"				--> doFloat
+        , className =? "pinentry-gtk-2"				--> doFloat
+        , className =? "toolbar"				--> doFloat
+        , className =? "notification"				--> doFloat
+        , className =? "error"					--> doFloat
+	, className =? "stalonetray"				--> doIgnore
+	, className =? "trayer"					--> doIgnore
+        , className =? "calculator"	  			--> doFloat
+        , className =? "hl_linux"	  			--> doFloat
+	, className =? "crx_nkbihfbeogaeaoehlefnkodbefgpgknn"	--> doFloat
+        , title     =? "Volume Control"				--> doCenterFloat
+        , title     =? "Bluetooth Devices"			--> doCenterFloat
+        , title     =? "Save As"				--> doCenterFloat
+        , title     =? "Save Image"				--> doCenterFloat
+        , title     =? "Enter name of file to save to"  	--> doCenterFloat
+        , title     =? "Picture in picture"  			--> doFloat
+        , title     =? "Media viewer"	 			--> doFloat
         ]
 
 -- StartupHook
@@ -76,7 +76,7 @@ myTerminal :: String
 myTerminal = "alacritty"
 
 myBrowser :: String
-myBrowser = "google-chrome-beta"
+myBrowser = "firefox"
 
 myLauncher :: String
 myLauncher = "rofi -show run -dpi 196 -show-icons"
