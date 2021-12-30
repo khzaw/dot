@@ -84,3 +84,8 @@ unset file
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source /usr/share/nvm/init-nvm.sh
+
+if [[ `uname` == "Linux" ]] then
+   alias pbcopy='xsel --clipboard --input'
+   alias pbpaste='xsel --clipboard --output'
+fi
