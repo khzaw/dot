@@ -1,14 +1,14 @@
 font:
   normal:
-    family: "Iosevka Term"
+    family: "JetBrains Mono"
     style: Regular
 
   bold:
-    family: "Iosevka Term"
+    family: "JetBrains Mono"
     style: Bold
 
   italic:
-    family: "Iosevka Term"
+    family: "JetBrains Mono"
     style: "Medium Italic"
 
   size: 11.0
@@ -19,8 +19,8 @@ background_opacity: 0.95
 
 window:
   padding:
-    x: 10
-    y: 10
+    x: 20
+    y: 20
   dynamic_padding: false
 
 cursor:
