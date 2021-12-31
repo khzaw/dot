@@ -58,3 +58,4 @@ emacs.d/config.el
 
 *.errors
 *.o
+emacs.d/quelpa/
