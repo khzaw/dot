@@ -116,6 +116,7 @@ mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 main = do 
 	xmproc <- spawnPipe "xmobar -d"
         tray <- spawnPipe "killall -q stalonetray; sleep 1; stalonetray"
+	spawn "pkill dunst ; dunst"
 	xmonad $ docks defaultConfig 
 		{ manageHook = myManageHook <+> manageHook defaultConfig
 		, layoutHook = avoidStruts $ mySpacing 10 $ layoutHook defaultConfig
