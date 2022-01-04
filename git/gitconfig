@@ -121,3 +121,5 @@
 	sslVerify = false
 [pull]
 	rebase = preserve
+[url "ssh://git@github.com/"]
+        insteadOf = https://github.com/
