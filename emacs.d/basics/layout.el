@@ -1,6 +1,6 @@
 (setq default-frame-alist
   (append (list
-	          '(font . "Jetbrains Mono:size=14")
+	          '(font . "Jetbrains Mono:size=15")
 	          '(min-height . 1)  '(height     . 45)
 	          '(min-width  . 1) '(width      . 90)
             '(vertical-scroll-bars . nil)
@@ -15,7 +15,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 92)
+(transparency 97)
 
 ;; Enable transparent title bar on macOS
 (when (memq window-system '(mac ns))

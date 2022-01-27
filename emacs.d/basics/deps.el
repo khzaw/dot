@@ -29,7 +29,6 @@
   :hook ((clojure-mode emacs-lisp-mode) . paredit-mode)
   :diminish (paredit paredit-mode))
 
-
 (use-package keyfreq
   :config
   (keyfreq-mode 1)
@@ -258,16 +257,17 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic t)
-  ;; (load-theme 'doom-opera-light t)
+  (load-theme 'doom-tokyo-night t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 
-(defun apply-theme (appearance)
-  "Load theme, taking current system APPEARANCE into consideration."
-  (mapc #'disable-theme custom-enabled-themes)
-  (pcase appearance
-    ('light (load-theme 'doom-tomorrow-day t))
-    ('dark (load-theme 'doom-tomorrow-night t))))
+;; (defun apply-theme (appearance)
+;;   "Load theme, taking current system APPEARANCE into consideration."
+;;   (mapc #'disable-theme custom-enabled-themes)
+;;   (pcase appearance
+;;     ('light (load-theme 'doom-tomorrow-day t))
+;;     ('dark (load-theme 'doom-tomorrow-night t))))
+
 
 (add-hook 'ns-system-appearance-change-functions #'apply-theme)
 

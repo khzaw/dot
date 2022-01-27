@@ -1,0 +1,19 @@
+" Game changer
+inoremap kj <esc>
+inoremap jj <esc>
+
+nnoremap <S-j> 5j
+nnoremap <S-k> 5k
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" Ideavim has a bug where the default keys
+" must be redefined for insert mode
+inoremap <S-j> J
+inoremap <S-k> K
+
+let mapleader = ","
+nnoremap <leader>iv :source ~/.ideavimrc<cr>
+
+set hlsearch
+set ignorecase
