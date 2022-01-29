@@ -44,6 +44,7 @@
 
 (require 'deps)
 (require 'git)
+(require 'org)
 (require 'python)
 (require 'go)
 (require 'web)
@@ -88,7 +89,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#16161c" "#6a6a6a"))
  '(objed-cursor-color "#e95678")
   '(package-selected-packages
-     '(quelpa pyenv move-text shackle restart-emacs all-the-icons-ivy-rich paredit aggressive-indent poetry auto-package-update tide flycheck plantuml-mode plantumi-mode python-mode ivy-posframe ag add-node-modules-path prettier-js smartparens-config treemacs-icons-dired yasnippet dap-mode bufler posframe git-timemachine amx all-the-icons-dired lsp-ivy company-box terraform-mode lsp-ui restclient typescript-mode lsp-mode fzf keyfreq counsel swiper ivy-rich ivy ace-jump-mode company doom-modeline elogt undo-tree projectile yaml-mode ace-window avy rjsx-mode magit js2-mode editorconfig which-key exec-path-from-shell go-mode all-the-icons evil-collection evil-escape evil use-package))
+     '(company-org-block origami company-go quelpa pyenv move-text shackle restart-emacs all-the-icons-ivy-rich paredit aggressive-indent poetry auto-package-update tide flycheck plantuml-mode plantumi-mode python-mode ivy-posframe ag add-node-modules-path prettier-js smartparens-config treemacs-icons-dired yasnippet dap-mode bufler posframe git-timemachine amx all-the-icons-dired lsp-ivy company-box terraform-mode lsp-ui restclient typescript-mode lsp-mode fzf keyfreq counsel swiper ivy-rich ivy ace-jump-mode company doom-modeline elogt undo-tree projectile yaml-mode ace-window avy rjsx-mode magit js2-mode editorconfig which-key exec-path-from-shell go-mode all-the-icons evil-collection evil-escape evil use-package))
  '(pdf-view-midnight-colors (cons "#c7c9cb" "#1c1e26"))
   '(rustic-ansi-faces
      ["#1c1e26" "#e95678" "#09f7a0" "#fab795" "#21bfc2" "#6c6f93" "#59e3e3" "#c7c9cb"])

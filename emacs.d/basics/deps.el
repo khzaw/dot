@@ -119,6 +119,7 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :custom
+  (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-position 'bottom))
 
 (use-package lsp-ivy
@@ -184,6 +185,9 @@
   ("C-c a" . counsel-ag)
   ("C-c g" . counsel-git)
   ("C-c l t" . counsel-load-theme)
+  ("C-h f" . counsel-describe-function)
+  ("C-h v" . counsel-describe-variable)
+  ("C-h o" . counsel-describe-symbol)
   :config
   (setq ivy-initial-inputs-alist nil))
 
@@ -249,6 +253,14 @@
   :bind (:map projectile-mode-map
           ("s-p" . projectile-command-map)
           ("C-c p" . projectile-command-map)))
+
+(use-package origami
+  :init (global-origami-mode))
+
+(use-package lsp-origami
+  :after (lsp origami)
+  :hook ((lsp-after-open . lsp-origami-mode)))
+
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))

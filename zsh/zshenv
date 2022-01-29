@@ -99,4 +99,5 @@ export NVM_DIR="$HOME/.nvm"
 # uninstall by removing these lines or running `tabtab uninstall sls`
 # [[ -f $HOME/.config/yarn/global/node_modules/tabtab/.completions/sls.zsh ]] && . $HOME/.config/yarn/global/node_modules/tabtab/.completions/sls.zsh
 
-export GITHUB_TOKEN=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
+# local config
+[[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"

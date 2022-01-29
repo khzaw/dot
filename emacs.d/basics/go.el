@@ -9,4 +9,11 @@
   :diminish
   :commands (go-playground-mode))
 
+(use-package company-go
+  :after (company)
+  :defer t
+  :init
+  (with-eval-after-load 'company
+    (add-to-list 'company-backends 'company-go)))
+
 (provide 'go)
