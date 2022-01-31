@@ -113,8 +113,6 @@
   prune = true
 # [gpg]
 	# program = /usr/local/MacGPG2/bin/gpg2
-[commit]
-	template = ~/.stCommitMsg
 [rerere]
 	enabled = true
 [http]
@@ -123,3 +121,5 @@
 	rebase = preserve
 [url "ssh://git@github.com/"]
         insteadOf = https://github.com/
+[init]
+	defaultBranch = master
