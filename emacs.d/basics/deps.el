@@ -3,9 +3,13 @@
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config
-  (setenv "SHELL" "/usr/local/bin/zsh")
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
-  (exec-path-from-shell-initialize))
+
+  (when (eq system-type 'gnu/linux)
+    (setenv "SHELL" "/usr/bin/zsh"))
+  (when (eq system-type 'darwin)
+    (setenv "SHELL" "/usr/local/bin/zsh"))
+    (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
+    (exec-path-from-shell-initialize))
 
 (use-package restart-emacs)
 

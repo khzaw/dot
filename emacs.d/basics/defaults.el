@@ -105,6 +105,10 @@
 ;; blinks cursor forever
 (setq blink-cursor-blinks 0)
 
+;; Linux specific
+(when (eq system-type 'gnu/linux)
+  (setq x-super-keysym 'meta))
+
 ;; Mac specific
 (when (eq system-type 'darwin)
   (setq ns-use-native-fullscreen t
@@ -114,7 +118,15 @@
     ;; Option is meta
     mac-option-modifier 'meta
     ;; Right Alt is not meta, used to type symbols and shit
-    mac-right-option-modifier nil))
+    mac-right-option-modifier nil)
+  ;; Default shell in term
+  (setq-default shell-file-name "/usr/local/bin/zsh")
+  (setq explicit-shell-file-name "/usr/local/bin/zsh"))
+
+;; Default shell in term
+(when (eq system-type 'gnu/linux)
+  (setq-default shell-file-name "/usr/bin/zsh")
+  (setq explicit-shell-file-name "/usr/bin/zsh"))
 
 ;; y/n for  answering yes/no questions
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -149,10 +161,6 @@
       uniquify-after-kill-buffer-p t
       uniquify-ignore-buffers-re "^\\*")
 
-;; Default shell in term
-(unless (eq system-type 'windows-nt)
-  (setq-default shell-file-name "/usr/local/bin/zsh")
-  (setq explicit-shell-file-name "/usr/local/bin/zsh"))
 
 ;; Kill term buffer when exiting
 (defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
