@@ -12,9 +12,9 @@ if [ -f $sysresources ]; then
 
 fi
 
-if [ -f $sysmodmap ]; then
-    xmodmap $sysmodmap
-fi
+# if [ -f $sysmodmap ]; then
+#     xmodmap $sysmodmap
+# fi
 
 if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
