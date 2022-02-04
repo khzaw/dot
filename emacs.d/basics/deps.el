@@ -3,9 +3,13 @@
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config
-  (setenv "SHELL" "/usr/local/bin/zsh")
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
-  (exec-path-from-shell-initialize))
+
+  (when (eq system-type 'gnu/linux)
+    (setenv "SHELL" "/usr/bin/zsh"))
+  (when (eq system-type 'darwin)
+    (setenv "SHELL" "/usr/local/bin/zsh"))
+    (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
+    (exec-path-from-shell-initialize))
 
 (use-package restart-emacs)
 
@@ -246,6 +250,13 @@
 (use-package terraform-mode)
 
 (use-package haskell-mode)
+
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+          ("\\.md\\'" . markdown-mode)
+          ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package projectile
   :init

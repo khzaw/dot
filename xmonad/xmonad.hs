@@ -29,6 +29,7 @@
 import System.IO
 
 import XMonad
+import qualified XMonad.StackSet as W
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
 import XMonad.Layout.LayoutModifier (ModifiedLayout)
@@ -47,6 +48,7 @@ myManageHook = composeAll
 	[ className =? "1Password"				--> doCenterFloat
         , className =? "Nitrogen"				--> doCenterFloat
         , className =? "feh"					--> doCenterFloat
+	, className =? "mpv"					--> doRectFloat (W.RationalRect (1 / 4) (1 / 4) (1 / 2) (1 / 2))
         , className =? "Plugins"				--> doCenterFloat
         , className =? "file_progress"				--> doFloat
         , className =? "pinentry-gtk-2"				--> doFloat
@@ -62,8 +64,9 @@ myManageHook = composeAll
         , title     =? "Bluetooth Devices"			--> doCenterFloat
         , title     =? "Save As"				--> doCenterFloat
         , title     =? "Save Image"				--> doCenterFloat
+        , title     =? "Save Folder to Upload"			--> doCenterFloat
         , title     =? "Enter name of file to save to"  	--> doCenterFloat
-        , title     =? "Picture in picture"  			--> doFloat
+        , title     =? "Picture-in-Picture"  			--> doFloat
         , title     =? "Media viewer"	 			--> doFloat
         ]
 

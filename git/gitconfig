@@ -77,12 +77,6 @@
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 	trustctime = false
 	commitGraph = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
@@ -113,13 +107,13 @@
   prune = true
 # [gpg]
 	# program = /usr/local/MacGPG2/bin/gpg2
+# [commit]
+# 	template = ~/.stCommitMsg
 [rerere]
 	enabled = true
 [http]
 	sslVerify = false
-[pull]
-	rebase = preserve
 [url "ssh://git@github.com/"]
-        insteadOf = https://github.com/
+  insteadOf = https://github.com/
 [init]
 	defaultBranch = master
