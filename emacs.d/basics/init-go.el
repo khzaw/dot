@@ -1,4 +1,4 @@
-;;; package --- go.el
+;;; package --- init-go.el
 
 (use-package go-mode
   :hook ((go-mode . lsp-deferred)
@@ -16,4 +16,4 @@
   (with-eval-after-load 'company
     (add-to-list 'company-backends 'company-go)))
 
-(provide 'go)
+(provide 'init-go)

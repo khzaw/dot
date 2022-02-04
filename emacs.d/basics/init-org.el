@@ -16,4 +16,4 @@
                        (setq-local company-backends '(company-org-block))
                        (company-mode +1)))))
 
-(provide 'org)
+(provide 'init-org)

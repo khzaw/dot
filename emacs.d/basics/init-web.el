@@ -58,4 +58,4 @@
           (html-mode . emmet-mode)))
 
 
-(provide 'web)
+(provide 'init-web)

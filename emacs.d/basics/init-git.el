@@ -8,4 +8,4 @@
 
 (use-package git-timemachine)
 
-(provide 'git)
+(provide 'init-git)

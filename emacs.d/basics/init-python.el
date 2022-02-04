@@ -18,4 +18,4 @@
   (setq poetry-tracking-strategy 'switch-buffer)
   (add-hook 'python-mode-hook #'poetry-tracking-mode))
 
-(provide 'python)
+(provide 'init-python)
