@@ -43,4 +43,7 @@
 (setq split-height-threshold 0)
 (setq split-width-threshold nil)
 
+(setq fast-but-imprecise-scrolling t)
+(setq redisplay-skip-fontification-on-input t)
+
 (provide 'layout)

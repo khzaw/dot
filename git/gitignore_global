@@ -19,7 +19,6 @@ Thumbs.db
 Thumbs.db
 Desktop.ini
 *.msi
-
 node_modules
 .dir-locals.el
 

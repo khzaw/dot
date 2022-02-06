@@ -1,5 +1,7 @@
 ;;; package --- deps.el
+;;; Commentary:
 
+;;; Code:
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config
@@ -12,6 +14,25 @@
     (exec-path-from-shell-initialize))
 
 (use-package restart-emacs)
+
+;; Show native line numbers if possible, otherwise use `linum`
+(if (fboundp 'display-line-numbers-mode)
+  (use-package display-line-numbers
+    :ensure nil
+    :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
+    :init (setq display-line-numbers-width-start t))
+  (use-package linum-off
+    :demand
+    :defines linum-format
+    :hook (after-init . global-linum-mode)
+    :init (setq linum-format "%4d")
+    :config
+    ;; Highlight current line number
+    (use-package hlinum
+      :defines linum-highlight-in-all-buffersp
+      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
+      :hook (global-linum-mode . hlinum-activate)
+      :init (setq linum-highlight-in-all-buffersp t))))
 
 ;; (use-package aggressive-indent
 ;;   :diminish
@@ -76,8 +97,6 @@
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
-
-(use-package rust-mode)
 
 (use-package solidity-mode)
 
@@ -249,12 +268,20 @@
 
 (use-package terraform-mode)
 
-(use-package haskell-mode)
+(use-package haskell-mode :defer t)
+
+(use-package protobuf-mode :defer t)
+
+(use-package restclient
+  :mode ("\\.restclient$" . restclient-mode))
+
+;; Curly quotes when writing in markup languages
+(use-package typo :defer t)
 
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
-          ("\\.md\\'" . markdown-mode)
+          ("\\.md\\'" . gfm-mode)
           ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
@@ -271,7 +298,6 @@
 (use-package lsp-origami
   :after (lsp origami)
   :hook ((lsp-after-open . lsp-origami-mode)))
-
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -290,9 +316,7 @@
 ;;   (pcase appearance
 ;;     ('light (load-theme 'doom-tomorrow-day t))
 ;;     ('dark (load-theme 'doom-tomorrow-night t))))
-
-
-(add-hook 'ns-system-appearance-change-functions #'apply-theme)
+;; (add-hook 'ns-system-appearance-change-functions #'apply-theme)
 
 (use-package auto-package-update
   :config
@@ -300,3 +324,4 @@
     auto-package-update-interval 4))
 
 (provide 'deps)
+;;; deps.el ends here

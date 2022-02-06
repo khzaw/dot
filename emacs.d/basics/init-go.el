@@ -3,7 +3,11 @@
 (use-package go-mode
   :hook ((go-mode . lsp-deferred)
           (before-save . lsp-format-buffer)
-          (before-save . lsp-organize-imports)))
+          (before-save . lsp-organize-imports))
+  :bind (:map go-mode-map
+          ("C-c a t" . #'go-test-current-test)))
+
+(use-package go-snippets :defer t)
 
 (use-package go-playground
   :diminish

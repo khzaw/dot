@@ -49,8 +49,10 @@
 (require 'deps)
 (require 'init-git)
 (require 'init-org)
+(require 'init-prog)
 (require 'init-python)
 (require 'init-go)
+(require 'init-rust)
 (require 'init-web)
 
 (provide 'init)
