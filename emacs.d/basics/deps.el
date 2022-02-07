@@ -19,7 +19,7 @@
 (if (fboundp 'display-line-numbers-mode)
   (use-package display-line-numbers
     :ensure nil
-    :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
+    :hook (yaml-mode . display-line-numbers-mode)
     :init (setq display-line-numbers-width-start t))
   (use-package linum-off
     :demand
@@ -79,6 +79,11 @@
 
 (use-package solidity-mode)
 
+(use-package prescient
+  :defer 1
+  :config
+  (prescient-persist-mode 1))
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -89,6 +94,12 @@
   :custom
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
+
+(use-package company-prescient
+  :defer 1
+  :after (company prescient)
+  :config
+  (company-prescient-mode 1))
 
 (use-package company-box
   :hook (company-mode . company-box-mode))
@@ -102,6 +113,14 @@
 
 (use-package treemacs-magit
   :after (treemacs magit))
+
+;; diff-hl shows uncommitted git changes on left side of the buffer.
+(use-package diff-hl
+  :defer 1
+  :hook
+  (dired-mode . diff-hl-dired-mode-unless-remote)
+  :config
+  (global-diff-hl-mode 1))
 
 (use-package move-text
   :config
@@ -123,7 +142,6 @@
   :custom
   (lsp-ui-sideline-show-hover nil)
   (lsp-ui-sideline-show-code-actions t)
-  (lsp-ui-doc-position 'bottom)
   (lsp-ui-doc-show-with-cursor t))
 
 (use-package lsp-ivy
@@ -145,7 +163,18 @@
   (dap-ui-mode 1))
 
 (use-package flycheck
+  :defer 1
   :init (global-flycheck-mode))
+
+(use-package flycheck-posframe
+  :defer 1
+  :after flycheck
+  :hook (flycheck-mode . flycheck-posframe-mode)
+  :config
+  (flycheck-posframe-configure-pretty-defaults)
+  (add-hook 'flycheck-posframe-inhibit-functions #'company--active-p)
+  (add-hook 'flycheck-posframe-inhibit-functions #'evil-insert-state-p)
+  (add-hook 'flycheck-posframe-inhibit-functions #'evil-replace-state-p))
 
 (use-package posframe)
 
@@ -200,6 +229,7 @@
   :config (amx-mode))
 
 (use-package editorconfig
+  :defer 1
   :config (editorconfig-mode 1))
 
 (use-package undo-tree
@@ -287,9 +317,27 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic t)
-  (load-theme 'doom-tokyo-night t)
-  (doom-themes-visual-bell-config)
+  (load-theme 'doom-moonlight t)
+  (doom-themes-treemacs-config)
   (doom-themes-org-config))
+
+(use-package solaire-mode
+  :defer 1
+  :hook
+  ;; Ensure solaire-mode is running in all solaire-mode buffers
+  (change-major-mode . turn-on-solaire-mode)
+  (after-revert . turn-on-solaire-mode)
+  (ediff-prepare-buffer . solaire-mode)
+  :custom
+  (solaire-mode-auto-swap-bg t)
+  :config
+  (solaire-global-mode +1))
+
+(use-package prescient
+  :defer 1
+  :config
+  (prescient-persist-mode 1))
+
 
 ;; (defun apply-theme (appearance)
 ;;   "Load theme, taking current system APPEARANCE into consideration."

@@ -1,3 +1,7 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+
 ;; Stop creating backup~ files
 (setq make-backup-files nil)
 
@@ -6,7 +10,6 @@
 
 ;; Stop creating .# files
 (setq create-lockfiles nil)
-
 
 (setq inhibit-compacting-font-caches t)
 
@@ -172,3 +175,4 @@
 (ad-activate 'term-sentinel)
 
 (provide 'defaults)
+;;; defaults.el ends here
