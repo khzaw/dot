@@ -85,7 +85,7 @@
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection))
         (:map lsp-mode-map
-              ("<tab>" . company-indent.or-complete-common))
+              ("<tab>" . company-indent-or-complete-common))
   :custom
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
@@ -121,8 +121,10 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :custom
-  (lsp-ui-sideline-show-hover t)
-  (lsp-ui-doc-position 'bottom))
+  (lsp-ui-sideline-show-hover nil)
+  (lsp-ui-sideline-show-code-actions t)
+  (lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-show-with-cursor t))
 
 (use-package lsp-ivy
   :after (lsp-mode ivy))
