@@ -90,4 +90,4 @@ if [[ `uname` == "Linux" ]] then
    alias pbpaste='xsel --clipboard --output'
 fi
 
-[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)"
+[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)" 1> /dev/null
