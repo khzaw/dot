@@ -47,6 +47,7 @@
 (require 'quelpa-use-package)
 
 (require 'deps)
+(require 'init-window)
 (require 'init-git)
 (require 'init-org)
 (require 'init-prog)
