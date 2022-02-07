@@ -1,0 +1,51 @@
+# PATH
+unset PATH
+PATH="$HOME/bin"
+PATH="$PATH:$HOME/.emacs.d/bin"
+PATH="$PATH:$PYENV_ROOT/shims"
+PATH="$PATH:$HOME/.fastlane/bin"															# Fastlane
+PATH="$PATH:/usr/texbin"                                     # LaTeX
+PATH="$PATH:$HOME/.local/bin"                                # Pipsi
+PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
+PATH="$PATH:/usr/local/opt/sqlite/bin"
+PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
+PATH="$PATH:/usr/local/bin:/usr/local/sbin"                  # homebrew
+PATH="$PATH:/usr/local/opt/openssl/bin"
+PATH="$PATH:/usr/bin:/usr/sbin"
+PATH="$PATH:$HOME/.cabal/bin"                                # Haskell
+PATH="$PATH:$HOME/.rbenv"                                    # Ruby
+PATH="$PATH:$HOME/Library/Android/sdk/tools"	                # Android
+PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"        # Android
+PATH="$PATH:/usr/local/heroku/bin"                           # Heroku Toolbet
+PATH="$PATH:/usr/local/go/bin"                               # Go
+PATH="$PATH:/usr/local/opt/go/libexec/bin"                   # Go
+PATH="$PATH:$GOPATH/bin"                                     # Go path
+PATH="$PATH:/usr/local/opt/mysql/bin"                        # mysql
+PATH="$PATH:/usr/local/smlnj/bin"                            # smlnj
+# PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"         # GNU stuffs
+PATH="$PATH:/bin:/sbin:/opt/X11/bin"                         # OSX built in
+PATH="$PATH:/usr/local/Cellar/smlnj/110.84/libexec/bin"      # smlnj
+PATH="$PATH:/usr/local/opt/openjdk/bin"
+PATH="$PATH:/usr/local/opt/openssl@1.1/bin"
+PATH="$PATH:$HOME/.local/bin"
+#export PATH="$PATH:/usr/local/opt/terraform@0.12/bin"               # terraform
+PATH="$PATH:/Developer/usr/bin"                              # Apple Developer
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH" # Postgres App
+
+MANPATH="$MANPATH:/usr/local/share/man"
+MANPATH="$MANPATH:/usr/share/man"
+MANPATH="$MANPATH:/opt/X11/share/man"
+MANPATH="$MANPATH:/Library/TeX/Distributions/.DefaultTeX/Contents/Man"
+MANPATH="$MANPATH:/usr/local/opt/erlang/lib/erlang/man"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export MANPATH="$MANPATH:/Library/TeX/Distributions/.DefaultTeX/Contents/Man"
+
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+# [[ -f $HOME/.config/yarn/global/node_modules/tabtab/.completions/serverless.zsh ]] && . $HOME/.config/yarn/global/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+# [[ -f $HOME/.config/yarn/global/node_modules/tabtab/.completions/sls.zsh ]] && . $HOME/.config/yarn/global/node_modules/tabtab/.completions/sls.zsh
