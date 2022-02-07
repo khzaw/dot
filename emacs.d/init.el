@@ -57,27 +57,4 @@
 (require 'init-web)
 
 (provide 'init)
-
-
-
-
-
-
-
-
-
-
-
-
-;; (package-initialize)
-
-;; (unless (package-installed-p 'use-package)
-;;   (package-install 'use-package))
-;; (require 'use-package)
-;; (require 'use-package-ensure)
-;; (setq use-package-always-ensure t)
-
-;; (require 'org)
-;; (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
-
-;; (provide 'init) ;;; init.el ends here
+;;; init.el ends here
