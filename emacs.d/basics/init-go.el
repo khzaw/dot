@@ -1,11 +1,12 @@
 ;;; package --- init-go.el
-
+;;; Commentary:
+;;; Code:
 (use-package go-mode
   :hook ((go-mode . lsp-deferred)
           (before-save . lsp-format-buffer)
           (before-save . lsp-organize-imports))
   :bind (:map go-mode-map
-          ("C-c a t" . #'go-test-current-test)))
+          ("C-x a t" . #'go-test-current-test)))
 
 (use-package go-snippets :defer t)
 
@@ -13,11 +14,5 @@
   :diminish
   :commands (go-playground-mode))
 
-(use-package company-go
-  :after (company)
-  :defer t
-  :init
-  (with-eval-after-load 'company
-    (add-to-list 'company-backends 'company-go)))
-
 (provide 'init-go)
+;;; init-go.el ends here
