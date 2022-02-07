@@ -61,3 +61,4 @@ emacs.d/config.el
 emacs.d/quelpa/
 
 *.local
+emacs.d/var
