@@ -1,8 +1,8 @@
 (setq default-frame-alist
   (append (list
-	          '(font . "Jetbrains Mono:size=15")
-	          '(min-height . 1)  '(height     . 45)
-	          '(min-width  . 1) '(width      . 90)
+	    '(font . "Jetbrains Mono:size=28")
+	    '(min-height . 1)  '(height     . 45)
+	    '(min-width  . 1) '(width      . 90)
             '(vertical-scroll-bars . nil)
             ;; '(internal-border-width . 24)
             '(tool-bar-lines . 0)
