@@ -349,8 +349,14 @@
 ;;     ('dark (load-theme 'doom-tomorrow-night t))))
 ;; (add-hook 'ns-system-appearance-change-functions #'apply-theme)
 
-(use-package zen-mode
-  :bind (("C-M-z" . zen-mode)))
+(use-package writeroom-mode
+  :bind (:map writeroom-mode-map
+          ("C-c C-w ,"   . #'writeroom-decrease-width)
+          ("C-c C-w ."   . #'writeroom-increase-width)
+          ("C-c C-w /"   . #'writeroom-adjust-width)
+          ("C-c C-w SPC" . #'writeroom-toggle-mode-line))
+  (:map global-map
+    ("C-c C-M-w" . #'writeroom-mode)))
 
 (use-package auto-package-update
   :config
