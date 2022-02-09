@@ -15,6 +15,7 @@
 
 (use-package restart-emacs)
 
+
 ;; Show native line numbers if possible, otherwise use `linum`
 (if (fboundp 'display-line-numbers-mode)
   (use-package display-line-numbers
@@ -33,6 +34,7 @@
       :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
       :hook (global-linum-mode . hlinum-activate)
       :init (setq linum-highlight-in-all-buffersp t))))
+
 
 ;; (use-package aggressive-indent
 ;;   :diminish
@@ -346,6 +348,9 @@
 ;;     ('light (load-theme 'doom-tomorrow-day t))
 ;;     ('dark (load-theme 'doom-tomorrow-night t))))
 ;; (add-hook 'ns-system-appearance-change-functions #'apply-theme)
+
+(use-package zen-mode
+  :bind (("C-M-z" . zen-mode)))
 
 (use-package auto-package-update
   :config
