@@ -142,7 +142,8 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :custom
-  (lsp-ui-sideline-show-hover nil)
+  (lsp-ui-peek-always-show t)
+  (lsp-ui-sideline-show-hover t)
   (lsp-ui-sideline-show-code-actions t)
   (lsp-ui-doc-show-with-cursor t))
 
@@ -153,6 +154,7 @@
   :after (treemacs lsp-mode))
 
 (use-package yasnippet
+  :hook ((lsp-mode . yas-minor-mode))
   :config (yas-global-mode 1))
 
 (use-package dap-mode
@@ -319,7 +321,7 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic t)
-  (load-theme 'doom-moonlight t)
+  (load-theme 'doom-badger t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 

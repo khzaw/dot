@@ -36,6 +36,7 @@
                                "Output\\*$"
                                "\\*Async Shell Command\\*"
                                "\\*xref\\*"
+                               "\\*compilation\\*"
                                help-mode
                                "\\*Warnings\\*"
                                compilation-mode)))

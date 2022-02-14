@@ -1,6 +1,8 @@
+
 # PATH
 unset PATH
 PATH="$HOME/bin"
+PATH="$PATH:$HOME/.cargo/bin"                                # rust
 PATH="$PATH:$HOME/.emacs.d/bin"
 PATH="$PATH:$PYENV_ROOT/shims"
 PATH="$PATH:$HOME/.fastlane/bin"															# Fastlane

@@ -46,4 +46,3 @@ fi
 
 # local config
 [[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"
-. "$HOME/.cargo/env"
