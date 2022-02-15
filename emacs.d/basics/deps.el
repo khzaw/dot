@@ -221,6 +221,7 @@
   ("C-c f" . fzf-find-file)
   ("C-c a" . counsel-ag)
   ("C-c g" . counsel-git)
+  ("C-c i" . counsel-imenu)
   ("C-c l t" . counsel-load-theme)
   ("C-h f" . counsel-describe-function)
   ("C-h v" . counsel-describe-variable)
