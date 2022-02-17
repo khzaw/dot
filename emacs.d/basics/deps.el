@@ -15,7 +15,6 @@
 
 (use-package restart-emacs)
 
-
 ;; Show native line numbers if possible, otherwise use `linum`
 (if (fboundp 'display-line-numbers-mode)
   (use-package display-line-numbers

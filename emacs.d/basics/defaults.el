@@ -116,7 +116,7 @@
 (when (eq system-type 'darwin)
   (setq ns-use-native-fullscreen t
     ;; Both command keys are super
-    mac-command-modifier 'meta
+    ;; mac-command-modifier 'meta
     mac-right-command-modifier 'super
     ;; Option is meta
     mac-option-modifier 'meta

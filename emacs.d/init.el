@@ -6,9 +6,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/basics")
 
-(require 'loadhist)
-(file-dependents (feature-file 'cl))
-
 (setq gs-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 
@@ -57,6 +54,7 @@
 (require 'init-python)
 (require 'init-go)
 (require 'init-rust)
+(require 'init-js)
 (require 'init-web)
 
 (provide 'init)
