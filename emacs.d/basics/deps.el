@@ -256,7 +256,8 @@
             avy-all-windows-alt t
             avy-style 'pre))
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :if (display-graphic-p))
 
 (use-package hydra)
 
@@ -324,6 +325,10 @@
   (load-theme 'doom-badger t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
+
+(use-package kaolin-themes
+  :config
+  (kaolin-treemacs-theme))
 
 (use-package solaire-mode
   :defer 1

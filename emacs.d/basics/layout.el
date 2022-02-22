@@ -1,12 +1,12 @@
 (setq default-frame-alist
   (append (list
-	    '(font . "Jetbrains Mono:size=28")
+	    '(font . "MonoLisa:size=14")
 	    '(min-height . 1)  '(height     . 45)
-	    '(min-width  . 1) '(width      . 90)
-            '(vertical-scroll-bars . nil)
-            ;; '(internal-border-width . 24)
-            '(tool-bar-lines . 0)
-            '(menu-bar-lines . 0))))
+	    '(min-width  . 1)  '(width      . 90)
+      '(vertical-scroll-bars . nil)
+   ;; '(internal-border-width . 24)
+      '(tool-bar-lines . 0)
+      '(menu-bar-lines . 0))))
 (setq-default line-spacing 2)
 
 (defun transparency (value)
