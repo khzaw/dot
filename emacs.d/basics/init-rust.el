@@ -1,4 +1,4 @@
-;;; package --- init-prog.el
+;;; package --- init-rust.el
 ;;; Commentary:
 
 ;;; Code:
