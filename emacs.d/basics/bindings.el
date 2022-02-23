@@ -4,13 +4,20 @@
 ;; Always newline-and-indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
-;; M-n for new frame (M-n is unbound in vanilla emacs)
 (defun new-frame ()
+  "M-n for new frame (M-n in unbound in vanilla emacs)"
   (interactive)
   (select-frame (make-frame))
   (switch-to-buffer "*scratch*"))
 (global-set-key (kbd "M-n") 'new-frame)
 (global-set-key (kbd "M-`") 'other-frame)
+
+(defun khz/tweak-emacs ()
+  "C-c e Tweak emacs"
+  (interactive)
+  (find-file-other-window user-init-file))
+
+(global-set-key (kbd "C-c e") 'khz/tweak-emacs)
 
 ;; M-return for frame maximization toggle
 (global-set-key (kbd "<M-return>") 'toggle-frame-maximized)
