@@ -1,16 +1,22 @@
-
-(use-package python-mode
-  :config (setq python-indent-offset 4))
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+(use-package python
+  :hook (python-mode . lsp-deferred)
+  :config
+    ;; Set iPython as default interpreter.
+  (when (executable-find "ipython")
+    (setq python-shell-interpreter "ipython"))
+    (setq python-shell-interpreter-args "")
+    (setq python-indent-guess-indent-offset-verbose nil))
 
 (use-package pyvenv
   :after python
   :config (pyvenv-mode t))
 
-(use-package lsp-python-ms
-  :after lsp-mode
-  :init (setq lsp-python-ms-auto-install-server t)
+(use-package lsp-pyright
   :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
+                         (require 'lsp-pyright)
                          (lsp-deferred))))
 (use-package poetry
   :after python
@@ -19,3 +25,4 @@
   (add-hook 'python-mode-hook #'poetry-tracking-mode))
 
 (provide 'init-python)
+;;; init-python.el ends here

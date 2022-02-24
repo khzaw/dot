@@ -136,7 +136,13 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :hook (lsp-mode . lsp-enable-which-key-integration)
-  :commands (lsp lsp-deferred))
+  :commands (lsp lsp-deferred)
+  :config
+  (setq
+    lsp-eldoc-hook nil
+    lsp-headerline-breadcrumb-enable nil
+    lsp-enable-imenu nil
+    lsp-idle-delay 0.5))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)

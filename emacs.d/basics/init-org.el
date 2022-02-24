@@ -1,4 +1,6 @@
-
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
 (use-package org
   :hook (org-mode . org-indent-mode)
   :config
@@ -7,7 +9,13 @@
   (setq org-pretty-entities t)
   (setq org-src-preserve-indentation t)
   (setq org-confirm-babel-evaluate t)
-  (setq org-src-fontify-natively t))
+  (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'other-window))
+
+(use-package org-bullets
+  :if is-gui
+  :after org
+  :hook (org-mode . org-bullets-mode))
 
 (use-package company-org-block
   :custom
