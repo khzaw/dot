@@ -112,8 +112,17 @@
   (progn
     (treemacs-follow-mode t)))
 
+(use-package treemacs-evil
+  :after (treemacs evil))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
 (use-package treemacs-magit
   :after (treemacs magit))
+
+(use-package treemacs-all-the-icons
+  :after (treemacs all-the-icons))
 
 ;; diff-hl shows uncommitted git changes on left side of the buffer.
 (use-package diff-hl
@@ -128,6 +137,7 @@
   (move-text-default-bindings))
 
 (use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once)
   :after (treemacs dired)
   :config
   (treemacs-icons-dired-mode))
@@ -328,6 +338,7 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic t)
+  (setq doom-theme-treemacs-theme "doom-atom")
   (load-theme 'doom-badger t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
