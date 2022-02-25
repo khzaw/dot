@@ -337,7 +337,8 @@
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
-    doom-themes-enable-italic t)
+    doom-themes-enable-italic t
+    doom-themes-treemacs-enable-variable-pitch nil)
   (setq doom-theme-treemacs-theme "doom-atom")
   (load-theme 'doom-badger t)
   (doom-themes-treemacs-config)
