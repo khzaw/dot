@@ -24,5 +24,7 @@
   (setq poetry-tracking-strategy 'switch-buffer)
   (add-hook 'python-mode-hook #'poetry-tracking-mode))
 
+(use-package jupyter)
+
 (provide 'init-python)
 ;;; init-python.el ends here

@@ -80,6 +80,7 @@
 
 (use-package solidity-mode)
 
+;; Save command history on disk, so the sorting gets more intelligent over time
 (use-package prescient
   :defer 1
   :config
