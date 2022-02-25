@@ -287,6 +287,7 @@
   (evil-mode 1))
 
 (use-package evil-escape
+  :after evil
   :init (setq-default evil-escape-key-sequence "kj")
   :config (evil-escape-mode 1))
 

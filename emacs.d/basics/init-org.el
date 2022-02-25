@@ -13,7 +13,7 @@
   (setq org-src-window-setup 'other-window))
 
 (use-package org-bullets
-  :if is-gui
+  :if (display-graphic-p)
   :after org
   :hook (org-mode . org-bullets-mode))
 
