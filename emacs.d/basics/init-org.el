@@ -17,6 +17,7 @@
   (org-fontify-quote-and-verse-blocks t)
   (org-fontify-whole-heading-line t)
   (org-hide-leading-starts t)
+  (org-startup-truncated nil)
   (org-imenu-depth 6)
   (org-tags-column 0)
   (org-startup-indented t)
