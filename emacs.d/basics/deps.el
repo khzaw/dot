@@ -207,9 +207,9 @@
   (plantuml-jar-path "/usr/local/bin/plantuml")
   (plantuml-default-exec-mode 'executable))
 
-(use-package ag :ensure-system-package ag)
+(use-package ag)
 
-(use-package fzf :ensure-system-package fzf)
+(use-package fzf)
 
 (use-package ivy
   :defer 0.1
@@ -278,9 +278,24 @@
 
 (use-package hydra)
 
+(use-package evil-leader
+  :commands (evil-leader-mode)
+  :init (global-evil-leader-mode)
+  :config
+  (progn
+    (evil-leader/set-leader ",")
+    (evil-leader/set-key "f" 'isearch-forward)
+    (evil-leader/set-key "b" 'counsel-ibuffer)
+    )
+  )
+
 (use-package evil
+  :after evil-leader
   :init
-  (setq evil-want-keybinding nil)
+  (setq
+    evil-want-keybinding nil
+    evil-split-window-below t
+    evil-vsplit-window-right t)
   :config
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)

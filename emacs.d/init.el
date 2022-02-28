@@ -4,46 +4,45 @@
 ;;; Code:
 (package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/basics")
-
 (setq gs-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
-
-(when (eq system-type 'darwin)
-  (setq insert-directory-program "/usr/local/bin/gls"))
-(setq dired-listing-switches "-aBhl --group-directories-first")
 
 ;;; custom files
 (setq custom-file "~/.emacs.d/custom.el")
 (ignore-errors (load custom-file))
 
+(when (eq system-type 'darwin)
+  (setq insert-directory-program "/usr/local/bin/gls"))
+(setq dired-listing-switches "-aBhl --group-directories-first")
+
+(add-to-list 'load-path "~/.emacs.d/basics")
 (require 'defaults)
 (require 'layout)
 (require 'bindings)
 
-
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org"   . "https://orgmode.org/elpa/")
-                         ("gnu"   . "https://elpa.gnu.org/packages")))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (unless package-archive-contents
   (package-refresh-contents))
+(package-install 'use-package)
+(use-package use-package-ensure
+  :config (setq use-package-always-ensure t))
 
 ;; bootstrap quelpa
-(unless (package-installed-p 'quelpa)
-  (with-temp-buffer
-    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-    (eval-buffer)
-    (quelpa-self-upgrade)))
+;; (unless (package-installed-p 'quelpa)
+;;   (with-temp-buffer
+;;     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+;;     (eval-buffer)
+;;     (quelpa-self-upgrade)))
+;; ;; then bootstrap quelpa-use-package which will pull in use-package
+;; (quelpa
+;;   '(quelpa-use-package
+;;      :fetcher git
+;;      :url "https://github.com/quelpa/quelpa-use-package.git"))
+;; (require 'quelpa-use-package)
+;; (setq use-package-ensure-function 'quelpa)
+;; (setq use-package-always-ensure t)
 
-;; then bootstrap quelpa-use-package which will pull in use-package
-(quelpa
-  '(quelpa-use-package
-     :fetcher git
-     :url "https://github.com/quelpa/quelpa-use-package.git"))
-(require 'quelpa-use-package)
-(setq use-package-ensure-function 'quelpa)
-(setq use-package-always-ensure t)
 
 (require 'deps)
 (require 'init-window)
