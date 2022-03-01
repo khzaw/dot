@@ -32,6 +32,8 @@
   (org-confirm-babel-evaluate nil)
   (org-link-elisp-confirm-function nil))
 
+(use-package evil-org)
+
 (use-package org-bullets
   :if (display-graphic-p)
   :after org
