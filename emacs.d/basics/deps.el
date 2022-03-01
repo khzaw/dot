@@ -273,6 +273,15 @@
             avy-all-windows-alt t
             avy-style 'pre))
 
+(use-package ace-window
+  :init (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
+              aw-char-position 'left
+              aw-ignore-current nil
+              aw-leading-char-style 'char
+              aw-scope 'frame)
+  :bind (("M-o" . ace-window)
+          ("M-O" . ace-swap-window)))
+
 (use-package all-the-icons
   :if (display-graphic-p))
 
@@ -312,8 +321,6 @@
   :config (evil-collection-init))
 
 (use-package yaml-mode)
-
-(use-package ace-window)
 
 (use-package terraform-mode)
 
@@ -404,6 +411,11 @@
   :config
   (setq auto-package-update-delete-old-versions t
     auto-package-update-interval 4))
+
+(use-package dockerfile-mode
+  :mode ("Dockerfile\\'" . dockerfile-mode))
+
+(use-package docker-compose-mode)
 
 (provide 'deps)
 ;;; deps.el ends here
