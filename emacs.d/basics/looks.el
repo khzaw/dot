@@ -173,5 +173,5 @@
     ad-do-it))
 (ad-activate 'term-sentinel)
 
-(provide 'defaults)
+(provide 'looks)
 ;;; defaults.el ends here

@@ -32,7 +32,9 @@
   (org-confirm-babel-evaluate nil)
   (org-link-elisp-confirm-function nil))
 
-(use-package evil-org)
+(use-package evil-org
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode)))
 
 (use-package org-bullets
   :if (display-graphic-p)
@@ -55,7 +57,8 @@
 (use-package org-roam
   :after org
   :init (setq org-roam-v2-ack t)
-  :custom (org-roam-directory (file-truename (concat (getenv "HOME") "/Dropbox/org/notes")))
+  :custom
+  (org-roam-directory "~/Dropbox/org/notes")
   :config
   (setq org-roam-capture-templates '(("d" "default" plain "%?"
                                        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -85,7 +88,8 @@
   (deft-recursive t)
   (deft-use-filter-string-for-filename t)
   (deft-default-extension "org")
-  (deft-directory org-roam-directory))
+  :config
+  (setq deft-directory "~/Dropbox/org"))
 
 (provide 'init-org)
 ;;; init-org.el ends here

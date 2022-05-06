@@ -5,7 +5,6 @@
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config
-
   (when (eq system-type 'gnu/linux)
     (setenv "SHELL" "/usr/bin/zsh"))
   (when (eq system-type 'darwin)
@@ -74,7 +73,6 @@
   :bind (("C-x C-j" . dired-jump))
   :custom ((dired-listing-switches "-agho --group-directories-first")))
 
-
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
@@ -125,13 +123,6 @@
 (use-package treemacs-all-the-icons
   :after (treemacs all-the-icons))
 
-;; diff-hl shows uncommitted git changes on left side of the buffer.
-(use-package diff-hl
-  :defer 1
-  :hook
-  (dired-mode . diff-hl-dired-mode-unless-remote)
-  :config
-  (global-diff-hl-mode 1))
 
 (use-package move-text
   :config
@@ -146,7 +137,8 @@
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook (lsp-mode . lsp-enable-which-key-integration)
+  :hook ((lsp-mode . lsp-enable-which-key-integration)
+          (lsp-after-open . lsp-origami-try-enable))
   :commands (lsp lsp-deferred)
   :config
   (setq
@@ -183,23 +175,26 @@
   (dap-ui-mode 1))
 
 (use-package flycheck
-  :defer 1
-  :init (global-flycheck-mode))
+ :defer 1
+ :init (global-flycheck-mode))
 
 (use-package flycheck-posframe
-  :defer 1
-  :after flycheck
-  :hook (flycheck-mode . flycheck-posframe-mode)
-  :config
-  (flycheck-posframe-configure-pretty-defaults)
-  (add-hook 'flycheck-posframe-inhibit-functions #'company--active-p)
-  (add-hook 'flycheck-posframe-inhibit-functions #'evil-insert-state-p)
-  (add-hook 'flycheck-posframe-inhibit-functions #'evil-replace-state-p))
+ :defer 1
+ :after flycheck
+ :hook (flycheck-mode . flycheck-posframe-mode)
+ :config
+ (flycheck-posframe-configure-pretty-defaults)
+ (add-hook 'flycheck-posframe-inhibit-functions #'company--active-p)
+ (add-hook 'flycheck-posframe-inhibit-functions #'evil-insert-state-p)
+ (add-hook 'flycheck-posframe-inhibit-functions #'evil-replace-state-p))
 
 (use-package posframe)
 
 (use-package ivy-posframe
-  :after (ivy posframe))
+  :after (ivy posframe)
+  :config
+  (setq ivy-posframe-parameters ''(internal-border-width . 10))
+  (ivy-posframe-mode 1))
 
 (use-package plantuml-mode
   :mode "\\.puml\\'"
@@ -236,7 +231,7 @@
   ("C-x C-f" . counsel-find-file)
   ("C-c f" . fzf-find-file)
   ("C-c a" . counsel-ag)
-  ("C-c g" . counsel-git)
+  ;; ("C-c f" . counsel-git)
   ("C-c i" . counsel-imenu)
   ("C-c l t" . counsel-load-theme)
   ("C-h f" . counsel-describe-function)
@@ -244,6 +239,19 @@
   ("C-h o" . counsel-describe-symbol)
   :config
   (setq ivy-initial-inputs-alist nil))
+
+(use-package counsel-spotify
+  :after counsel
+  :init
+  (setq counsel-spotify-client-id 'spotify-client-id
+    counsel-spotify-client-secret 'spotify-secret)
+  :bind
+  (("C-c C-s p" . counsel-spotify-toggle-play-pause)
+  ("C-c C-s n" . counsel-spotify-next)
+  ("C-c C-s r" . counsel-spotify-prev)
+  ("C-c C-s s" . counsel-spotify-search-track)
+  ("C-c C-s a" . counsel-spotify-search-artist)
+  ("C-c C-s l" . counsel-spotify-search-playlist)))
 
 (use-package amx
   :defer 0.5
@@ -255,6 +263,8 @@
 
 (use-package undo-tree
   :diminish
+  :config
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree")))
   :hook
   (after-init . global-undo-tree-mode))
 
@@ -287,6 +297,24 @@
 
 (use-package hydra)
 
+(use-package evil
+  :ensure t
+  :init
+  (progn
+    (setq evil-want-keybinding nil)
+    (setq evil-split-window-below t)
+    (setq evil-vsplit-window-right t))
+  :config
+  (evil-set-initial-state 'help-mode 'emacs)
+  (evil-set-initial-state 'dashboard-mode 'emacs)
+  (evil-set-initial-state 'fundamental-mode 'emacs)
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config (evil-collection-init))
+
 (use-package evil-leader
   :commands (evil-leader-mode)
   :init (global-evil-leader-mode)
@@ -294,31 +322,12 @@
   (progn
     (evil-leader/set-leader ",")
     (evil-leader/set-key "f" 'isearch-forward)
-    (evil-leader/set-key "b" 'counsel-ibuffer)
-    )
-  )
-
-(use-package evil
-  :after evil-leader
-  :init
-  (setq
-    evil-want-keybinding nil
-    evil-split-window-below t
-    evil-vsplit-window-right t)
-  :config
-  (evil-set-initial-state 'help-mode 'emacs)
-  (evil-set-initial-state 'dashboard-mode 'emacs)
-  (evil-set-initial-state 'fundamental-mode 'emacs)
-  (evil-mode 1))
+    (evil-leader/set-key "b" 'counsel-ibuffer)))
 
 (use-package evil-escape
-  :after evil
+  :after (evil evil-collection)
   :init (setq-default evil-escape-key-sequence "kj")
   :config (evil-escape-mode 1))
-
-(use-package evil-collection
-  :after evil
-  :config (evil-collection-init))
 
 (use-package yaml-mode)
 
@@ -353,7 +362,7 @@
 
 (use-package lsp-origami
   :after (lsp origami)
-  :hook ((lsp-after-open . lsp-origami-mode)))
+  :hook ((lsp-after-open . lsp-origami-try-enable)))
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -364,7 +373,7 @@
     doom-themes-enable-italic t
     doom-themes-treemacs-enable-variable-pitch nil)
   (setq doom-theme-treemacs-theme "doom-atom")
-  (load-theme 'doom-badger t)
+  (load-theme 'kaolin-dark t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
@@ -416,6 +425,13 @@
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
 (use-package docker-compose-mode)
+
+(use-package shell-pop
+  :bind ("s-t" . shell-pop))
+
+(use-package golden-ratio
+  :config
+  (setq golden-ratio-auto-scale 1))
 
 (provide 'deps)
 ;;; deps.el ends here
