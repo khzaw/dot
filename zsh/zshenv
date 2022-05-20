@@ -46,3 +46,5 @@ fi
 
 # local config
 [[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"
+
+export LSP_USE_PLISTS=true

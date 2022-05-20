@@ -149,6 +149,9 @@
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
+  :bind (:map lsp-ui-mode-map
+          ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+          ([remap xref-find-references] . lsp-ui-peek-find-references))
   :custom
   (lsp-ui-peek-always-show t)
   (lsp-ui-sideline-show-hover t)
@@ -193,8 +196,7 @@
 (use-package ivy-posframe
   :after (ivy posframe)
   :config
-  (setq ivy-posframe-parameters ''(internal-border-width . 10))
-  (ivy-posframe-mode 1))
+  (setq ivy-posframe-parameters ''(internal-border-width . 10)))
 
 (use-package plantuml-mode
   :mode "\\.puml\\'"
@@ -222,12 +224,12 @@
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
-          ("C-r" . swiper)))
+          ("C-c C-r" . ivy-resume)))
 
 (use-package counsel
   :bind
   ("M-x" . counsel-M-x)
-  ("C-x b" . counsel-ibuffer)
+  ("C-x b" . counsel-switch-buffer)
   ("C-x C-f" . counsel-find-file)
   ("C-c f" . fzf-find-file)
   ("C-c a" . counsel-ag)
@@ -360,9 +362,9 @@
 (use-package origami
   :init (global-origami-mode))
 
-(use-package lsp-origami
-  :after (lsp origami)
-  :hook ((lsp-after-open . lsp-origami-try-enable)))
+;; (use-package lsp-origami
+;;   :after (lsp origami)
+;;   :hook ((lsp-after-open . lsp-origami-try-enable)))
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -372,7 +374,6 @@
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic t
     doom-themes-treemacs-enable-variable-pitch nil)
-  (setq doom-theme-treemacs-theme "doom-atom")
   (load-theme 'kaolin-dark t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
