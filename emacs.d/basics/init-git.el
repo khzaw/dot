@@ -2,6 +2,9 @@
 ;;; Commentary
 ;;; Code:
 
+(setq vc-follow-symlinks t
+      find-file-visit-truename t)
+
 (use-package magit
   :config
   (setq magit-save-repository-buffers t)

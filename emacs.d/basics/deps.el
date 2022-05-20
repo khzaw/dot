@@ -76,7 +76,19 @@
 ;; (use-package all-the-icons-dired
 ;;   :hook (dired-mode . all-the-icons-dired-mode))
 
-(use-package solidity-mode)
+(use-package solidity-mode
+  :config
+  (setq solidity-comment-style 'slash)
+  (setq solidity-solc-path "/usr/local/bin/solc")
+  :bind
+  (:map solidity-mode-map
+    ("C-c s g" . solidity-estimate-gas-at-point)))
+
+(use-package solidity-flycheck
+  :after (solidity-mode flycheck))
+
+(use-package company-solidity
+  :after (solidity-mode company))
 
 ;; Save command history on disk, so the sorting gets more intelligent over time
 (use-package prescient
@@ -88,12 +100,20 @@
   :after lsp-mode
   :hook (lsp-mode . company-mode)
   :bind (:map company-active-map
-              ("<tab>" . company-complete-selection))
+          ([remap completion-at-point] . company-complete)
+          ("<tab>" . company-complete-selection)
+          ("C-n" . company-select-next)
+          ("C-p" . company-select-previous))
         (:map lsp-mode-map
               ("<tab>" . company-indent-or-complete-common))
+  :config
+  (progn
+    (setq company-tooltip-align-annotations t
+          company-show-numbers t))
   :custom
   (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
+  (company-idle-delay 0.0)
+  (global-company-mode t))
 
 (use-package company-prescient
   :defer 1
@@ -104,12 +124,32 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
+(use-package company-posframe
+  :after (company posframe))
+
+(use-package company-quickhelp
+  :after company
+  :config (company-quickhelp-mode 1))
+
 (use-package treemacs
-  :commands treemacs
   :defer t
   :config
   (progn
-    (treemacs-follow-mode t)))
+    (setq
+      treemacs-eldoc-display t
+      treemacs-silent-refresh t
+      treemacs-silent-filewatch t
+      treemacs-show-hidden-files t
+      treemacs-is-never-other-window t
+      treemacs-user-mode-line-format 'none
+      treemacs-is-never-other-window t))
+  :bind
+  (:map global-map
+    ("C-c t t" . treemacs)
+    ("C-c t d" . treemacs-select-directory)
+    ("C-c t C-f" . treemacs-find-file)
+    ("C-c t 1" . treemacs-delete-other-windows)
+    ("C-c t 0" . treemacs-select-window)))
 
 (use-package treemacs-evil
   :after (treemacs evil))
@@ -122,7 +162,6 @@
 
 (use-package treemacs-all-the-icons
   :after (treemacs all-the-icons))
-
 
 (use-package move-text
   :config
@@ -177,13 +216,16 @@
   (require 'dap-ui)
   (dap-ui-mode 1))
 
+(use-package format-all
+  :bind (:map prog-mode-map ("M-<f8>" . format-all-buffer)))
+
 (use-package flycheck
  :defer 1
  :init (global-flycheck-mode))
 
 (use-package flycheck-posframe
  :defer 1
- :after flycheck
+ :after (flycheck posframe)
  :hook (flycheck-mode . flycheck-posframe-mode)
  :config
  (flycheck-posframe-configure-pretty-defaults)
@@ -204,9 +246,9 @@
   (plantuml-jar-path "/usr/local/bin/plantuml")
   (plantuml-default-exec-mode 'executable))
 
-(use-package ag)
+(use-package ag :defer 0.1)
 
-(use-package fzf)
+(use-package fzf :defer 0.1)
 
 (use-package ivy
   :defer 0.1
@@ -355,8 +397,9 @@
 (use-package projectile
   :init
   (projectile-mode +1)
+  :config (setq projectile-enable-caching t
+            projectile-completion-system 'ivy)
   :bind (:map projectile-mode-map
-          ("s-p" . projectile-command-map)
           ("C-c p" . projectile-command-map)))
 
 (use-package origami
@@ -372,9 +415,8 @@
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
-    doom-themes-enable-italic t
-    doom-themes-treemacs-enable-variable-pitch nil)
-  (load-theme 'kaolin-dark t)
+        doom-themes-enable-italic t)
+  (load-theme 'doom-dracula t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
@@ -425,7 +467,8 @@
 (use-package dockerfile-mode
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
-(use-package docker-compose-mode)
+(use-package docker-compose-mode
+  :mode ("docker-compose.*\.yml\\'" . docker-compose-mode))
 
 (use-package shell-pop
   :bind ("s-t" . shell-pop))
@@ -433,6 +476,29 @@
 (use-package golden-ratio
   :config
   (setq golden-ratio-auto-scale 1))
+
+(use-package smart-tab
+  :init
+  (progn
+    (setq hippie-expand-try-functions-list '(yas-hippie-try-expand
+                                             try-complete-file-name-partially))
+                                        ;try-expand-dabbrev
+                                        ;try-expand-dabbrev-visible
+                                        ;try-expand-dabbrev-all-buffers
+                                        ;try-complete-lisp-symbol-partially
+                                        ;try-complete-lisp-symbol
+    (setq smart-tab-debug t)
+    (setq smart-tab-user-provided-completion-function 'company-complete)
+    (setq smart-tab-using-hippie-expand t)
+    (setq smart-tab-disabled-major-modes '(org-mode term-mode eshell-mode inferior-python-mode))
+    (global-smart-tab-mode 1)))
+
+(use-package presentation
+  :config
+  (global-set-key (kbd "<M-f5>") (lambda ()
+                                   (interactive)
+                                   (if presentation-mode (presentation-mode 0)
+                                     (presentation-mode 1)))))
 
 (provide 'deps)
 ;;; deps.el ends here
