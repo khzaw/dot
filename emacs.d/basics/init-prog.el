@@ -14,9 +14,5 @@
 (use-package paren
   :init (show-paren-mode))
 
-(use-package smartparens
-  :commands (smartparens-mode smartparens-strict-mode)
-  :config (require 'smartparens-config))
-
 (provide 'init-prog)
 ;;; init-prog.el ends here

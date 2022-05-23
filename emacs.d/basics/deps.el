@@ -308,7 +308,7 @@
 (use-package undo-tree
   :diminish
   :config
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree")))
+  (setq undo-tree-history-directory-alist '(("." . "~/Code/dot/emacs.d/undo-tree")))
   :hook
   (after-init . global-undo-tree-mode))
 
@@ -416,7 +416,7 @@
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (load-theme 'doom-dracula t)
+  (load-theme 'doom-moonlight t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
