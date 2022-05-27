@@ -194,8 +194,10 @@
   :custom
   (lsp-ui-peek-always-show t)
   (lsp-ui-sideline-show-hover t)
-  (lsp-ui-sideline-show-code-actions t)
-  (lsp-ui-doc-show-with-cursor t))
+  (lsp-ui-sideline-show-code-actions nil)
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-sideline-delay 2)
+  (lsp-ui-peek-show-directory nil))
 
 (use-package lsp-ivy
   :after (lsp-mode ivy))
@@ -215,9 +217,6 @@
   :config (dap-mode 1)
   (require 'dap-ui)
   (dap-ui-mode 1))
-
-(use-package format-all
-  :bind (:map prog-mode-map ("M-<f8>" . format-all-buffer)))
 
 (use-package flycheck
  :defer 1
@@ -270,17 +269,16 @@
 
 (use-package counsel
   :bind
-  ("M-x" . counsel-M-x)
-  ("C-x b" . counsel-switch-buffer)
+  ("M-x"     . counsel-M-x)
+  ("C-x b"   . counsel-switch-buffer)
   ("C-x C-f" . counsel-find-file)
-  ("C-c f" . fzf-find-file)
-  ("C-c a" . counsel-ag)
-  ;; ("C-c f" . counsel-git)
-  ("C-c i" . counsel-imenu)
+  ("C-c f"   . fzf-find-file)
+  ("C-c a"   . counsel-ag)
+  ("C-c i"   . counsel-imenu)
   ("C-c l t" . counsel-load-theme)
-  ("C-h f" . counsel-describe-function)
-  ("C-h v" . counsel-describe-variable)
-  ("C-h o" . counsel-describe-symbol)
+  ("C-h f"   . counsel-describe-function)
+  ("C-h v"   . counsel-describe-variable)
+  ("C-h o"   . counsel-describe-symbol)
   :config
   (setq ivy-initial-inputs-alist nil))
 
@@ -318,7 +316,7 @@
 (use-package avy
   :bind (("C-;"   . avy-goto-char)
           ("C-'"   . avy-goto-char-2)
-          ("M-g f" . avy-goto-line)
+          ("M-g l" . avy-goto-line)
           ("M-g w" . avy-goto-word-0)
           ("M-g e" . avy-goto-word-1))
   :hook (after-init . avy-setup-default)
@@ -366,7 +364,7 @@
   (progn
     (evil-leader/set-leader ",")
     (evil-leader/set-key "f" 'isearch-forward)
-    (evil-leader/set-key "b" 'counsel-ibuffer)))
+    (evil-leader/set-key "b" 'counsel-switch-buffer)))
 
 (use-package evil-escape
   :after (evil evil-collection)
@@ -405,10 +403,6 @@
 (use-package origami
   :init (global-origami-mode))
 
-;; (use-package lsp-origami
-;;   :after (lsp origami)
-;;   :hook ((lsp-after-open . lsp-origami-try-enable)))
-
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
 
@@ -423,6 +417,12 @@
 (use-package kaolin-themes
   :config
   (kaolin-treemacs-theme))
+
+(use-package sublime-themes :defer t)
+
+(use-package moe-theme :defer t)
+
+(use-package cyberpunk-theme :defer t)
 
 (use-package solaire-mode
   :defer 1
@@ -477,21 +477,23 @@
   :config
   (setq golden-ratio-auto-scale 1))
 
-(use-package smart-tab
-  :init
-  (progn
-    (setq hippie-expand-try-functions-list '(yas-hippie-try-expand
-                                             try-complete-file-name-partially))
-                                        ;try-expand-dabbrev
-                                        ;try-expand-dabbrev-visible
-                                        ;try-expand-dabbrev-all-buffers
-                                        ;try-complete-lisp-symbol-partially
-                                        ;try-complete-lisp-symbol
-    (setq smart-tab-debug t)
-    (setq smart-tab-user-provided-completion-function 'company-complete)
-    (setq smart-tab-using-hippie-expand t)
-    (setq smart-tab-disabled-major-modes '(org-mode term-mode eshell-mode inferior-python-mode))
-    (global-smart-tab-mode 1)))
+(use-package sr-speedbar)
+
+;; (use-package smart-tab
+;;   :init
+;;   (progn
+;;     (setq hippie-expand-try-functions-list '(yas-hippie-try-expand
+;;                                              try-complete-file-name-partially))
+;;                                         ;try-expand-dabbrev
+;;                                         ;try-expand-dabbrev-visible
+;;                                         ;try-expand-dabbrev-all-buffers
+;;                                         ;try-complete-lisp-symbol-partially
+;;                                         ;try-complete-lisp-symbol
+;;     (setq smart-tab-debug t)
+;;     (setq smart-tab-user-provided-completion-function 'company-complete)
+;;     (setq smart-tab-using-hippie-expand t)
+;;     (setq smart-tab-disabled-major-modes '(org-mode term-mode eshell-mode inferior-python-mode))
+;;     (global-smart-tab-mode 1)))
 
 (use-package presentation
   :config
@@ -499,6 +501,15 @@
                                    (interactive)
                                    (if presentation-mode (presentation-mode 0)
                                      (presentation-mode 1)))))
+
+(use-package beacon
+  :defer 2
+  :diminish beacon-mode
+  :config (beacon-mode 1))
+
+(use-package graphviz-dot-mode
+  :config (setq graphviz-dot-indent-width 4)
+  :mode ("\\.dot\\'" . graphviz-dot-mode))
 
 (provide 'deps)
 ;;; deps.el ends here

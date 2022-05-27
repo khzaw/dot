@@ -49,8 +49,10 @@
 (require 'init-python)
 (require 'init-go)
 (require 'init-rust)
+(require 'init-lsp)
 (require 'init-js)
 (require 'init-web)
+(require 'init-terminal)
 
 (provide 'init)
 

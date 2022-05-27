@@ -9,10 +9,14 @@
   (global-prettify-symbols-mode t)
   :hook (prog-mode . prettify-symbols-mode))
 
-(electric-pair-mode 1)
-
 (use-package paren
   :init (show-paren-mode))
+
+(use-package smartparens
+  :init (require 'smartparens-config)
+  :config
+  (smartparens-global-mode t)
+  (show-smartparens-global-mode t))
 
 (provide 'init-prog)
 ;;; init-prog.el ends here
