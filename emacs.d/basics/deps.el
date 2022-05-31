@@ -353,8 +353,8 @@
 
 (use-package hydra)
 
+(setq evil-want-keybinding nil)
 (use-package evil
-  :ensure t
   :init
   (progn
     (setq evil-want-keybinding nil)
@@ -368,7 +368,6 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config (evil-collection-init))
 
 (use-package evil-leader

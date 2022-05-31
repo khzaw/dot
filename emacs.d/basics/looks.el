@@ -174,4 +174,4 @@
 (ad-activate 'term-sentinel)
 
 (provide 'looks)
-;;; defaults.el ends here
+;;; looks.el ends here

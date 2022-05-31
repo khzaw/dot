@@ -1,14 +1,13 @@
-
 ;;; init.el --- Initialization file for Emacs
 ;;; Commentary:
 ;;; Emacs Startup File --- initialization for Emacs
 ;;; Code:
 
 ;;; load path
-(add-to-list 'load-path "~/.emacs.d/basics")
+(add-to-list 'load-path (expand-file-name "basics" user-emacs-directory))
 
 ;;; custom file
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file (locate-user-emacs-file "custom.el"))
 (ignore-errors (load custom-file))
 
 
@@ -41,17 +40,17 @@
 (require 'layout)
 (require 'bindings)
 (require 'deps)
-(require 'init-terminal)
 (require 'init-window)
+(require 'init-git)
 (require 'init-lsp)
 (require 'init-go)
-(require 'init-git)
 (require 'init-org)
 (require 'init-prog)
 (require 'init-python)
 (require 'init-rust)
 (require 'init-js)
 (require 'init-web)
+(require 'init-terminal)
 
 
 (provide 'init)
