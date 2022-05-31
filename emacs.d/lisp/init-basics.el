@@ -173,5 +173,22 @@
     ad-do-it))
 (ad-activate 'term-sentinel)
 
-(provide 'looks)
-;;; defaults.el ends here
+(use-package restart-emacs)
+
+(use-package which-key
+  :diminish
+  :init (setq which-key-idle-delay 0.1
+              which-key-idle-secondary-delay 0.1)
+  :config (which-key-mode t))
+
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump)))
+
+(use-package editorconfig
+  :defer 1
+  :config (editorconfig-mode 1))
+
+(provide 'init-basics)
+;;; init-basics.el ends here

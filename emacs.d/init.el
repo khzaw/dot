@@ -1,73 +1,53 @@
-
+;;; package --- Summary
 ;;; init.el --- Initialization file for Emacs
 ;;; Commentary:
 ;;; Emacs Startup File --- initialization for Emacs
 ;;; Code:
 
-;;; custom file
-(setq custom-file "~/.emacs.d/custom.el")
-(ignore-errors (load custom-file))
+;; Always load newest byte code
+(setq load-prefer-newer t)
 
-(setq package-check-signature nil)
-(when (eq system-type 'darwin)
-  (setq insert-directory-program "/usr/local/bin/gls"))
-(setq dired-listing-switches "-aBhl --group-directories-first")
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 ;;; gs-cons-threshold
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
-(setq read-process-output-max (* 1024 1024))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Recover GC values after startup."
+            (setq gc-cons-threshold 800000
+                  gc-cons-percentage 0.1)))
 
-;;; package archives
-(require 'package)
-(setq package-enable-at-startup nil)
-(setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
-         ("gnu" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
+;; custom-file
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(ignore-errors (load custom-file))
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-;;; load path
-(add-to-list 'load-path (expand-file-name "basics" user-emacs-directory))
+;; (setq package-check-signature nil)
+;; (when (eq system-type 'darwin)
+;;   (setq insert-directory-program "/usr/local/bin/gls"))
+;; (setq dired-listing-switches "-aBhl --group-directories-first")
 
-(require 'use-package)
-(setq use-package-always-ensure t)
-;; (setq use-package-always-defer t)
-(setq use-package-expand-minimally t)
-(setq use-package-enable-imenu-support t)
-
-(require 'looks)
-(require 'layout)
-(require 'bindings)
-(require 'deps)
-(require 'init-window)
-(require 'init-git)
-(require 'init-org)
-(require 'init-prog)
-(require 'init-python)
+(require 'init-package)
+(require 'init-exec-path)
+(require 'init-basics)
+;; (require 'init-layout)
+(require 'init-bindings)
+(require 'init-ui)
+(require 'init-edit)
+(require 'init-evil)
+(require 'init-ivy)
+(require 'init-lsp)
 (require 'init-go)
-(require 'init-rust)
-(require 'init-js)
-(require 'init-web)
+(require 'init-git)
+(require 'init-haskell)
+(require 'init-prog)
+(require 'init-projectile)
+(require 'init-window)
+;; (require 'init-org)
+;; (require 'init-python)
+;; (require 'init-rust)
+;; (require 'init-js)
+;; (require 'init-web)
 
 (provide 'init)
-
-;; bootstrap quelpa
-;; (unless (package-installed-p 'quelpa)
-;;   (with-temp-buffer
-;;     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-;;     (eval-buffer)
-;;     (quelpa-self-upgrade)))
-;; ;; then bootstrap quelpa-use-package which will pull in use-package
-;; (quelpa
-;;   '(quelpa-use-package
-;;      :fetcher git
-;;      :url "https://github.com/quelpa/quelpa-use-package.git"))
-;; (require 'quelpa-use-package)
-;; (setq use-package-ensure-function 'quelpa)
-;; (setq use-package-always-ensure t)
-
-
 ;;; init.el ends here

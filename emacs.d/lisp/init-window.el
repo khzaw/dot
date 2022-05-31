@@ -1,7 +1,13 @@
-;;; package --- init-window.el
-;;; Commentary:
 
-;;; Code:
+(use-package ace-window
+  :init (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
+              aw-char-position 'left
+              aw-ignore-current nil
+              aw-leading-char-style 'char
+              aw-scope 'frame)
+  :bind (("M-o" . ace-window)
+         ("M-O" . ace-swap-window)))
+
 (use-package shackle
   :init
   (setq
@@ -24,22 +30,22 @@
   :config
   (shackle-mode 1))
 
-(use-package popper
-  :bind (("C-\\"    . popper-toggle-latest)
-          ("M-\\"   . popper-cycle)
-          ("C-M-\\" . popper-toggle-type))
-  :config
-  (popper-mode +1)
-  (popper-echo-mode +1)
-  :custom
-  (popper-reference-buffers '("\\*Messages\\*"
-                               "Output\\*$"
-                               "\\*Async Shell Command\\*"
-                               "\\*xref\\*"
-                               "\\*compilation\\*"
-                               help-mode
-                               "\\*Warnings\\*"
-                               compilation-mode)))
+;; (use-package popper
+;;   :bind (("C-\\"    . popper-toggle-latest)
+;;           ("M-\\"   . popper-cycle)
+;;           ("C-M-\\" . popper-toggle-type))
+;;   :init
+;;   (setq popper-reference-buffers
+;;     '("\\*Messages\\*"
+;;        "Output\\*$"
+;;        "\\*Async Shell Command\\*"
+;;        "\\*xref\\*"
+;;        "\\*compilation\\*"
+;;        help-mode
+;;        "\\*Warnings\\*"
+;;        compilation-mode))
+;;   (popper-mode +1)
+;;   (popper-echo-mode +1))
 
 (provide 'init-window)
 ;;; init-window.el ends here

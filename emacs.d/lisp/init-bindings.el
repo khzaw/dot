@@ -36,4 +36,5 @@
 ;; Open recent files
 (global-set-key (kbd "C-c r") 'recentf-open-files)
 
-(provide 'bindings)
+(provide 'init-bindings)
+;;; init-bindings.el ends here
