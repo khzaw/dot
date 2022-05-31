@@ -12,6 +12,21 @@
     (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
     (exec-path-from-shell-initialize))
 
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Create illusions of effortless competence."
+    dashboard-startup-banner 'logo
+    dashboard-items '((recents . 7)
+                       (bookmarks . 5)
+                       (projects . 7)
+                       (agenda . 5)
+                       (registers . 5)))
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t))
+
 (use-package restart-emacs)
 
 ;; Show native line numbers if possible, otherwise use `linum`
@@ -176,8 +191,7 @@
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook ((lsp-mode . lsp-enable-which-key-integration)
-          (lsp-after-open . lsp-origami-try-enable))
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deferred)
   :config
   (setq
@@ -209,14 +223,14 @@
   :hook ((lsp-mode . yas-minor-mode))
   :config (yas-global-mode 1))
 
-(use-package dap-mode
-  :hook
-  (lsp-mode . dap-mode)
-  (lsp-mode . dap-ui-mode)
-  :commands dap-mode
-  :config (dap-mode 1)
-  (require 'dap-ui)
-  (dap-ui-mode 1))
+;; (use-package dap-mode
+;;   :hook
+;;   (lsp-mode . dap-mode)
+;;   (lsp-mode . dap-ui-mode)
+;;   :commands dap-mode
+;;   :config (dap-mode 1)
+;;   (require 'dap-ui)
+;;   (dap-ui-mode 1))
 
 (use-package flycheck
  :defer 1
@@ -303,12 +317,12 @@
   :defer 1
   :config (editorconfig-mode 1))
 
-(use-package undo-tree
-  :diminish
-  :config
-  (setq undo-tree-history-directory-alist '(("." . "~/Code/dot/emacs.d/undo-tree")))
-  :hook
-  (after-init . global-undo-tree-mode))
+;; (use-package undo-tree
+;;   :diminish
+;;   :config
+;;   (setq undo-tree-history-directory-alist '(("." . "~/Code/dot/emacs.d/undo-tree")))
+;;   :hook
+;;   (after-init . global-undo-tree-mode))
 
 (use-package eldoc
   :diminish eldoc-mode)
@@ -400,17 +414,11 @@
   :bind (:map projectile-mode-map
           ("C-c p" . projectile-command-map)))
 
-(use-package origami
-  :init (global-origami-mode))
-
-(use-package doom-modeline
-  :init (doom-modeline-mode 1))
-
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (load-theme 'doom-moonlight t)
+  (load-theme 'kaolin-dark t)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 

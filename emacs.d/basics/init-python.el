@@ -15,6 +15,8 @@
   :config (pyvenv-mode t))
 
 (use-package lsp-pyright
+  :defer t
+  :after (lsp-mode python)
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
                          (lsp-deferred))))
@@ -23,8 +25,6 @@
   :init
   (setq poetry-tracking-strategy 'switch-buffer)
   (add-hook 'python-mode-hook #'poetry-tracking-mode))
-
-(use-package jupyter)
 
 (provide 'init-python)
 ;;; init-python.el ends here

@@ -11,8 +11,6 @@
           ("C-c C-t p" . go-test-current-project))
   :config (setq gofmt-command "goimports"))
 
-(use-package go-snippets :defer t)
-
 (use-package go-playground
   :diminish
   :commands (go-playground-mode))

@@ -1,7 +1,6 @@
 (setq default-frame-alist
   (append (list
-	    ;; '(font . "JetBrains Mono:size=14")
-      '(font . "Iosevka:size=15")
+	    '(font . "JetBrains Mono:size=15")
 	    '(min-height . 1)  '(height     . 45)
 	    '(min-width  . 1)  '(width      . 90)
       '(vertical-scroll-bars . nil)
@@ -21,7 +20,6 @@
   (add-to-list 'default-frame-alist '(ns-appearance . light)) ;; {light, dark}
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
 
-
 (setq inhibit-startup-screen t
   inhibit-startup-message t
   inhibit-startup-echo-area-message t
@@ -29,7 +27,6 @@
 (tool-bar-mode 0)
 (tooltip-mode 0)
 (menu-bar-mode 0)
-;; (global-hl-line-mode 1)
 (setq x-underline-at-descent-line t)
 
 ;; No ugly button for checkboxes
