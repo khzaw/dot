@@ -188,6 +188,7 @@
 
 (use-package editorconfig
   :defer 1
+  :diminish
   :config (editorconfig-mode 1))
 
 ;; History
