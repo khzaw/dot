@@ -51,14 +51,17 @@
 (require 'init-org)
 
 ;; Programming
+(require 'init-docker)
 (require 'init-flycheck)
+(require 'init-vcs)
 (require 'init-lsp)
 (require 'init-projectile)
-(require 'init-git)
 
+(require 'init-elisp)
 (require 'init-go)
 (require 'init-haskell)
 (require 'init-markdown)
+(require 'init-solidity)
 (require 'init-prog)
 
 ;; (require 'init-python)

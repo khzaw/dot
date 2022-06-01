@@ -16,13 +16,21 @@
 ;; UI
 (setq default-frame-alist
   (append (list
-	    '(font . "JetBrains Mono:size=14")
-	    '(min-height . 1)  '(height     . 45)
-	    '(min-width  . 1)  '(width      . 90))))
+	          '(font . "JetBrains Mono:size=14")
+	          '(min-height . 1)  '(height     . 45)
+	          '(min-width  . 1)  '(width      . 90))))
+(setq-default line-spacing 2)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+
+(tool-bar-mode 0)
+(tooltip-mode 0)
+(menu-bar-mode 0)
+(setq x-underline-at-descent-line t)
 
 (use-package solaire-mode
   :defer 1
@@ -42,7 +50,7 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic t)
-  (load-theme 'kaolin-dark t)
+  (setq doom-themes-treemacs-variable-pitch-face nil)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   (doom-themes-org-config))
@@ -52,6 +60,7 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
+  (load-theme 'kaolin-dark t)
   (kaolin-treemacs-theme))
 
 (use-package minions)

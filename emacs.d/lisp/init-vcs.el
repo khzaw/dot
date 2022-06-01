@@ -1,9 +1,5 @@
-(setq vc-follow-symlinks t
-      find-file-visit-truename t)
-
 (use-package magit
-  :config
-  (setq magit-save-repository-buffers t)
+  :config (setq magit-save-repository-buffers t)
   :bind ("C-x g" . magit-status))
 
 (use-package git-timemachine
@@ -20,7 +16,9 @@
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote
   :bind (:map vc-prefix-map
-         ("B" . browse-at-remote)))
+          ("B" . browse-at-remote)))
 
-(provide 'init-git)
-;;; init-git.el ends here
+(use-package git-modes)
+
+(provide 'init-vcs)
+;;; init-vcs.el ends here

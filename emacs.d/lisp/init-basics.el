@@ -229,7 +229,5 @@
 (use-package so-long
   :hook (after-init . global-so-long-mode))
 
-(use-package eldoc :diminish)
-
 (provide 'init-basics)
 ;;; init-basics.el ends here

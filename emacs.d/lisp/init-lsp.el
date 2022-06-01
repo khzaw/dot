@@ -1,24 +1,17 @@
-(defcustom khz-lsp-format-on-save-ignore-modes
-  '(c-mode c++-mode python-mode markdown-mode)
-  "The modes that don't auto format and organize imports while saving the buffers.
-`prog-mode' means ignoring all derived modes.
-"
-  :type '(repeat (symbol :tag "Major-Mode")))
-
 (use-package lsp-mode
   :diminish
   :commands (lsp-enable-which-key-integration
               lsp-format-buffer
               lsp-organize-imports)
-  :hook ((prog-mode . (lambda ()
-                        (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
-                          (lsp-deferred))))
-          (markdown-mode . lsp-deferred)
+  :hook ((go-mode . lsp-deferred)
+          ;; (prog-mode . (lambda ()
+          ;;                (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
+          ;;                  (lsp-deferred))))
+          ;; (markdown-mode . lsp-deferred)
           (lsp-mode . (lambda ()
                         (lsp-enable-which-key-integration)
-                        (unless (apply #'derived-mode-p khz-lsp-format-on-save-ignore-modes)
-                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
+                        (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                        (add-hook 'before-save-hook #'lsp-organize-imports t t))))
   :bind (:map lsp-mode-map
           ("C-c C-d" . lsp-describe-thing-at-point)
           ([remap xref-find-definitions] . lsp-find-definitions)

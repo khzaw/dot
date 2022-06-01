@@ -15,4 +15,6 @@ url/
 .dap-breakpoints
 eln-cache
 diary
+history
+places
 *.db

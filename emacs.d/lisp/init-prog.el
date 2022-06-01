@@ -12,11 +12,6 @@
 
 (use-package terraform-mode)
 
-(use-package dockerfile-mode)
-
-(use-package docker-compose-mode
-  :mode ("docker-compose.*\.yml\\'" . docker-compose-mode))
-
 (use-package csv-mode)
 
 (use-package cask-mode)
@@ -33,6 +28,7 @@
   (plantuml-jar-path "/usr/local/bin/plantuml")
   (plantuml-default-exec-mode 'executable))
 
+(use-package graphviz-dot-mode)
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
-  
