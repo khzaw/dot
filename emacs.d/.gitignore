@@ -1,5 +1,6 @@
 custom.el
 projectile-bookmarks.eld
+projectile.cache
 elpy/
 forge-database.sqlite
 transient/
@@ -13,3 +14,5 @@ recentf
 url/
 .dap-breakpoints
 eln-cache
+diary
+*.db
