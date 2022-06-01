@@ -1,4 +1,4 @@
-(defcustom centaur-lsp-format-on-save-ignore-modes
+(defcustom khz-lsp-format-on-save-ignore-modes
   '(c-mode c++-mode python-mode markdown-mode)
   "The modes that don't auto format and organize imports while saving the buffers.
 `prog-mode' means ignoring all derived modes.
@@ -8,8 +8,8 @@
 (use-package lsp-mode
   :diminish
   :commands (lsp-enable-which-key-integration
-             lsp-format-buffer
-             lsp-organize-imports)
+              lsp-format-buffer
+              lsp-organize-imports)
   :hook ((prog-mode . (lambda ()
                         (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                           (lsp-deferred))))
@@ -24,19 +24,19 @@
           ([remap xref-find-definitions] . lsp-find-definitions)
           ([remap xref-find-references] . lsp-find-references))
   :init (setq lsp-keymap-prefix "C-c l"
-              lsp-keep-workspace-alive nil
-              lsp-signature-auto-activate nil
-              lsp-modeline-code-actions nil
-              lsp-modeline-diagnostics-enable nil
-              lsp-modeline-workspace-status-enable nil
-              lsp-headerline-breadcrumb-enable nil
-              lsp-enable-file-watchers nil
-              lsp-enable-folding nil
-              lsp-enable-symbol-highlighting nil
-              lsp-enable-text-document-color nil
-              lsp-enable-text-document-color nil
-              lsp-enable-indentation nil
-              lsp-enable-on-type-formatting nil))
+          lsp-keep-workspace-alive nil
+          lsp-signature-auto-activate nil
+          lsp-modeline-code-actions-enable nil
+          lsp-modeline-diagnostics-enable nil
+          lsp-modeline-workspace-status-enable nil
+          lsp-headerline-breadcrumb-enable nil
+          lsp-enable-file-watchers nil
+          lsp-enable-folding nil
+          lsp-enable-symbol-highlighting nil
+          lsp-enable-text-document-color nil
+          lsp-enable-text-document-color nil
+          lsp-enable-indentation nil
+          lsp-enable-on-type-formatting nil))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)

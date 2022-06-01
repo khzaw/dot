@@ -30,22 +30,23 @@
   :config
   (shackle-mode 1))
 
-;; (use-package popper
-;;   :bind (("C-\\"    . popper-toggle-latest)
-;;           ("M-\\"   . popper-cycle)
-;;           ("C-M-\\" . popper-toggle-type))
-;;   :init
-;;   (setq popper-reference-buffers
-;;     '("\\*Messages\\*"
-;;        "Output\\*$"
-;;        "\\*Async Shell Command\\*"
-;;        "\\*xref\\*"
-;;        "\\*compilation\\*"
-;;        help-mode
-;;        "\\*Warnings\\*"
-;;        compilation-mode))
-;;   (popper-mode +1)
-;;   (popper-echo-mode +1))
+(use-package popper
+  :bind (("C-\\" . popper-toggle-latest)
+          ("M-\\" . popper-cycle)
+          ("C-M-\\" . popper-toggle-type))
+  :config
+  (popper-mode +1)
+  (popper-echo-mode +1)
+  :custom
+  (popper-reference-buffers
+    '("\\*Messages\\*"
+       "Output\\*$"
+       "\\*Async Shell Command\\*"
+       "\\*xref\\*"
+       "\\*compilation\\*"
+       help-mode
+       "\\*Warnings\\*"
+       compilation-mode)))
 
 (provide 'init-window)
 ;;; init-window.el ends here

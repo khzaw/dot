@@ -13,10 +13,10 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
 (add-hook 'emacs-startup-hook
-          (lambda ()
-            "Recover GC values after startup."
-            (setq gc-cons-threshold 800000
-                  gc-cons-percentage 0.1)))
+  (lambda ()
+    "Recover GC values after startup."
+    (setq gc-cons-threshold 800000
+      gc-cons-percentage 0.1)))
 
 ;; custom-file
 (setq custom-file (locate-user-emacs-file "custom.el"))
@@ -27,23 +27,40 @@
 ;;   (setq insert-directory-program "/usr/local/bin/gls"))
 ;; (setq dired-listing-switches "-aBhl --group-directories-first")
 
+(require 'secrets)
 (require 'init-package)
 (require 'init-exec-path)
-(require 'init-basics)
-;; (require 'init-layout)
+
+(require 'init-layout)
 (require 'init-bindings)
+
+(require 'init-basics)
+
 (require 'init-ui)
-(require 'init-edit)
 (require 'init-evil)
+(require 'init-edit)
+(require 'init-highlight)
 (require 'init-ivy)
-(require 'init-lsp)
-(require 'init-go)
-(require 'init-git)
-(require 'init-haskell)
-(require 'init-prog)
-(require 'init-projectile)
+(require 'init-company)
+
+(require 'init-dashboard)
+(require 'init-dired)
 (require 'init-window)
-;; (require 'init-org)
+(require 'init-treemacs)
+
+(require 'init-org)
+
+;; Programming
+(require 'init-flycheck)
+(require 'init-lsp)
+(require 'init-projectile)
+(require 'init-git)
+
+(require 'init-go)
+(require 'init-haskell)
+(require 'init-markdown)
+(require 'init-prog)
+
 ;; (require 'init-python)
 ;; (require 'init-rust)
 ;; (require 'init-js)

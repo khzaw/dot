@@ -41,8 +41,8 @@
   :custom (doom-themes-treemacs-theme "doom-colors")
   :config
   (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (load-theme 'doom-dracula t)
+    doom-themes-enable-italic t)
+  (load-theme 'kaolin-dark t)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   (doom-themes-org-config))
@@ -58,10 +58,10 @@
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
-    (use-package display-line-numbers
-      :ensure nil
-      :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
-      :init (setq display-line-numbers-width-start t))
+  (use-package display-line-numbers
+    :ensure nil
+    ;; :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
+    :init (setq display-line-numbers-width-start t))
   (use-package linum-off
     :demand t
     :defines linum-format
@@ -123,6 +123,9 @@
 (use-package page-break-lines
   :diminish
   :hook (after-init . global-page-break-lines-mode))
+
+(use-package posframe
+  :hook ((after-load-theme . posframe-delete-all)))
 
 ;; Don't open a file in a new frame
 (setq ns-popup-frames nil)

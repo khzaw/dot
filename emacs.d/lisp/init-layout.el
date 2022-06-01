@@ -1,2 +1,3 @@
-(provide 'init-layout.el)
+
+(provide 'init-layout)
 ;;; init-layout.el ends here
