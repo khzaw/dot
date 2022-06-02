@@ -60,8 +60,10 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (load-theme 'kaolin-dark t)
+  (load-theme 'kaolin-aurora t)
   (kaolin-treemacs-theme))
+
+(use-package modus-themes)
 
 (use-package minions)
 

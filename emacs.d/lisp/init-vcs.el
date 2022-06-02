@@ -20,5 +20,7 @@
 
 (use-package git-modes)
 
+(use-package gitignore-templates)
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

@@ -178,13 +178,8 @@
 (use-package which-key
   :diminish
   :init (setq which-key-idle-delay 0.1
-              which-key-idle-secondary-delay 0.1)
+          which-key-idle-secondary-delay 0.1)
   :config (which-key-mode t))
-
-(use-package dired
-  :ensure nil
-  :commands (dired dired-jump)
-  :bind (("C-x C-j" . dired-jump)))
 
 (use-package editorconfig
   :defer 1

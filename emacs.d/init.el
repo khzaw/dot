@@ -61,14 +61,15 @@
 (require 'init-go)
 (require 'init-haskell)
 (require 'init-markdown)
+(require 'init-python)
+(require 'init-rust)
 (require 'init-solidity)
+(require 'init-tex)
 (require 'init-web)
 (require 'init-prog)
 
-;; (require 'init-python)
-;; (require 'init-rust)
-;; (require 'init-js)
-;; (require 'init-web)
+;; Others
+(require 'init-presentation)
 
 (provide 'init)
 ;;; init.el ends here

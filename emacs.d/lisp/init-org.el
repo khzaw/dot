@@ -38,6 +38,5 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
-
 (provide 'init-org)
 ;;; init-org.el ends here

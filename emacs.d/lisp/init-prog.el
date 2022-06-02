@@ -30,5 +30,9 @@
 
 (use-package graphviz-dot-mode)
 
+(use-package tree-sitter)
+
+(use-package tree-sitter-langs :after tree-sitter)
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
