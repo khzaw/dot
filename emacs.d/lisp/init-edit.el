@@ -19,33 +19,13 @@
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish
-  :hook ((after-init . global-aggressive-indent-mode)
-          ;; WORKAROUND: Disable in big files due to the performance issues
-          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-          (find-file . (lambda ()
-                         (if (> (buffer-size) (* 3000 80))
-                           (aggressive-indent-mode -1)))))
-  :config
-  ;; Disable in some modes
-  (dolist (mode '(gitconfig-mode asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
-    (push mode aggressive-indent-excluded-modes))
-
-  ;; Disable in some commands
-  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
-
-  ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
-  (add-to-list 'aggressive-indent-dont-indent-if
-    '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
-            'java-mode 'go-mode 'swift-mode)
-       (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
-               (thing-at-point 'line))))))
-
+  :hook ((clojure-mode . aggressive-indent-mode)
+          (emacs-lisp-mode . aggressive-indent-mode)))
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :ensure nil
-  :hook (after-init . electric-pair-mode)
-  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+  :hook (after-init . electric-pair-mode))
 
 (use-package undo-tree
   :diminish
@@ -81,6 +61,17 @@
             ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
     :init (setq flyspell-correct-interface #'flyspell-correct-ivy)))
 
+
+(use-package highlight-indent-guides
+  :diminish
+  :hook
+  (yaml-mode . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guites-auto-enabled t)
+  (highlight-indent-guides-responsive t)
+  (highlight-indent-guides-method 'character))
+
+(use-package undo-fu)
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

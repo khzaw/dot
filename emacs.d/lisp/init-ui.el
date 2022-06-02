@@ -143,5 +143,9 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
+(use-package beacon
+  :diminish
+  :config (beacon-mode 1))
+
 (provide 'init-ui)
 ;;; init-ui.el ends here

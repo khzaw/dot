@@ -62,6 +62,7 @@
 (require 'init-haskell)
 (require 'init-markdown)
 (require 'init-solidity)
+(require 'init-web)
 (require 'init-prog)
 
 ;; (require 'init-python)

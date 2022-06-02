@@ -13,14 +13,19 @@
   :after evil
   :config (evil-collection-init))
 
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
 (use-package evil-leader
   :commands (evil-leader-mode)
   :init (global-evil-leader-mode)
   :config
   (progn
-  (evil-leader/set-leader ",")
-  (evil-leader/set-key "f" 'isearch-forward)
-  (evil-leader/set-key "b" 'counsel-ibuffer)))
+    (evil-leader/set-leader ",")
+    (evil-leader/set-key "f" 'isearch-forward)
+    (evil-leader/set-key "b" 'counsel-ibuffer)))
 
 (use-package evil-escape
   :after (evil evil-collection)
