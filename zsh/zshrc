@@ -28,9 +28,9 @@ antigen apply
 zmodload zsh/zprof
 
 
-if [[ `uname` == "Darwin" ]]; then
-    pyenv init -i
-fi
+# if [[ `uname` == "Darwin" ]]; then
+    # pyenv init -i
+# fi
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
