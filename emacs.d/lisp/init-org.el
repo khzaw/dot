@@ -5,6 +5,7 @@
   :bind
   ("C-c C-c" . org-edit-src-exit)
   :custom
+  (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
   (org-pretty-entities t)
   (org-src-fontify-natively t)
   (org-src-preserve-indentation t)        ; use native major-mode indentation
@@ -37,6 +38,45 @@
   :if (display-graphic-p)
   :after org
   :hook (org-mode . org-bullets-mode))
+
+
+(use-package org-roam
+  :custom
+  (org-roam-directory (file-truename org-directory))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+          ("C-c n f" . org-roam-node-find)
+          ("C-c n g" . org-roam-graph)
+          ("C-c n i" . org-roam-node-insert)
+          ("C-c n c" . org-roam-capture)
+          ;; Dailies
+          ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (setq org-roam-capture-templates '(("d" "default" plain "%?"
+                                       :target (filed+head "${slug}.org"
+                                                 "#+title: ${title}\n#+date: %u\n#+lastmod: \n\n")
+                                       :unarrowed t))
+    time-stamp-start "#\\+lastmod: [\t]*")
+  (org-roam-db-autosync-mode)
+  (setq org-roam-dailies-directory "daily/")
+  (setq org-roam-dailies-capture-templates
+    '(("d" "default" entry
+        "* %?"
+        :target (file+head "%<%Y-%m-%d>.org"
+                  "#+title: %<%Y-%m-%d>\n"))))
+  ;; If using org-roam-protocol
+  (require 'org-roam-protocol)
+  (require 'org-roam-export))
+
+(use-package deft
+  :config
+  (setq deft-directory (file-truename org-directory)
+    deft-recursive t
+    deft-strip-summary-regexp  ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+    deft-use-filename-as-title t)
+  :bind
+  ("C-c n d" . deft))
+
 
 (provide 'init-org)
 ;;; init-org.el ends here
