@@ -42,8 +42,7 @@
     '("\\*Messages\\*"
        "Output\\*$"
        "\\*Async Shell Command\\*"
-       "\\*xref\\*"
-       "\\*compilation\\*"
+       xref--xref-buffer-mode
        help-mode
        "\\*Warnings\\*"
        compilation-mode)))

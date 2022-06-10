@@ -96,7 +96,7 @@
   :bind (:map ivy-minibuffer-map
           ("C-'" . ivy-avy)))
 
-(use-package all-the-icons-ivy-rich :after ivy)
+(use-package all-the-icons-ivy-rich :after ivy :config (all-the-icons-ivy-rich-mode))
 
 (use-package counsel-projectile
   :hook (counsel-mode . counsel-projectile-mode)

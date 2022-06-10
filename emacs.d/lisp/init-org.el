@@ -52,11 +52,6 @@
           ("C-c n j" . org-roam-dailies-capture-today))
   :config
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (setq org-roam-capture-templates '(("d" "default" plain "%?"
-                                       :target (filed+head "${slug}.org"
-                                                 "#+title: ${title}\n#+date: %u\n#+lastmod: \n\n")
-                                       :unarrowed t))
-    time-stamp-start "#\\+lastmod: [\t]*")
   (org-roam-db-autosync-mode)
   (setq org-roam-dailies-directory "daily/")
   (setq org-roam-dailies-capture-templates
