@@ -13,12 +13,16 @@
 
 (use-package gotest
   :bind (:map go-mode-map
-         ("C-c C-t f" . go-test-current-file)
-         ("C-c C-t t" . go-test-current-test)
-         ("C-c C-t p" . go-test-current-project)
-         ("C-c C-t c" . go-test-current-coverage)
-         ("C-c C-t b" . go-test-current-benchmark)
-         ("C-c C-t x" . go-run)))
+          ("C-c C-t f" . go-test-current-file)
+          ("C-c C-t t" . go-test-current-test)
+          ("C-c C-t p" . go-test-current-project)
+          ("C-c C-t c" . go-test-current-coverage)
+          ("C-c C-t b" . go-test-current-benchmark)
+          ("C-c C-t x" . go-run)))
+
+(use-package flycheck-golangci-lint
+  :after (flycheck go-mode)
+  :hook (go-mode . flycheck-golangci-lint-setup))
 
 (provide 'init-go)
 ;;; init-go.el ends here
