@@ -68,6 +68,8 @@
 (require 'init-web)
 (require 'init-prog)
 
+(require 'init-terminal)
+
 ;; Others
 (require 'init-presentation)
 
