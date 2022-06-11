@@ -45,6 +45,8 @@
        xref--xref-buffer-mode
        help-mode
        "\\*Warnings\\*"
+       "\\*eldoc.\*"
+       "\\*xref\\*"
        compilation-mode)))
 
 (provide 'init-window)

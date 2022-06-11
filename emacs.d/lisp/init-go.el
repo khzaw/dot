@@ -5,11 +5,11 @@
   :diminish
   :commands (go-playground-mode))
 
-(use-package go-dlv)
+;; (use-package go-dlv)
 
-(use-package go-fill-struct)
+;; (use-package go-fill-struct)
 
-(use-package go-impl)
+;; (use-package go-impl)
 
 (use-package gotest
   :bind (:map go-mode-map

@@ -32,6 +32,13 @@
 (menu-bar-mode 0)
 (setq x-underline-at-descent-line t)
 
+(defun transparency (value)
+  "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
+  (interactive "nTransparency Value (0 - 100) :")
+  (set-frame-parameter (selected-frame) 'alpha value))
+(transparency 97)
+
+
 (use-package solaire-mode
   :defer 1
   :hook
@@ -148,6 +155,17 @@
 (use-package beacon
   :diminish
   :config (beacon-mode 1))
+
+(use-package dimmer
+  :custom (dimmer-fraction 0.3)
+  :config (dimmer-mode))
+
+(use-package centaur-tabs
+  :config (centaur-tabs-mode t)
+  :custom
+  (centaur-tabs-set-icons nil)
+  (centaur-tabs-show-new-tab-button nil)
+  (centaur-tabs-set-close-button nil))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

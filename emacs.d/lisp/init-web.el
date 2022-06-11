@@ -43,10 +43,13 @@
   :hook (((typescript-mode js-mode js2-mode rjsx-mode) . setup-tide-mode)
           (before-save . tide-format-before-save)))
 
-(use-package emmet-mode)
+(use-package emmet-mode
+  :hook ((web-mode . emmet-mode)
+          (html-mode . emmet-mode)))
 
 (use-package restclient
-  :mode ("\\.http\\'" . restclient-mode)
+  :mode (("\\.http\\'" . restclient-mode)
+          ("\\.restclient$" . restclient-mode))
   :config
   (use-package restclient-test
     :diminish
@@ -55,6 +58,7 @@
   (with-eval-after-load 'company
     (use-package company-restclient
       :init (add-to-list 'company-backends 'company-restclient))))
+
 
 (provide 'init-web)
 ;;; init-web.el ends here

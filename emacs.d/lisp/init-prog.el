@@ -30,7 +30,10 @@
 
 (use-package graphviz-dot-mode)
 
-(use-package tree-sitter)
+(use-package tree-sitter
+  :hook ((go-mode python-mode rust-mode ruby-mode js-mode js2-mode rjsx-mode c-mode typescript-mode sh-mode) . tree-sitter-hl-mode)
+  :config
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package tree-sitter-langs :after tree-sitter)
 

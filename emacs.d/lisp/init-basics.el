@@ -138,7 +138,7 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Tab.space equivalence
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 
 ;; Size of temporary buffers
 (temp-buffer-resize-mode)
@@ -179,7 +179,9 @@
   :diminish
   :init (setq which-key-idle-delay 0.1
           which-key-idle-secondary-delay 0.1)
-  :config (which-key-mode t))
+  :config
+  (which-key-mode)
+  (which-key-setup-minibuffer))
 
 (use-package editorconfig
   :defer 1

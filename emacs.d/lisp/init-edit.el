@@ -20,12 +20,12 @@
 (use-package aggressive-indent
   :diminish
   :hook ((clojure-mode . aggressive-indent-mode)
-          (emacs-lisp-mode . aggressive-indent-mode)))
+         (emacs-lisp-mode . aggressive-indent-mode)))
 
 ;; Automatic parenthesis pairing
-(use-package elec-pair
-  :ensure nil
-  :hook (after-init . electric-pair-mode))
+;; (use-package elec-pair
+;;   :ensure nil
+;;   :hook (after-init . electric-pair-mode))
 
 (use-package undo-tree
   :diminish
@@ -51,8 +51,8 @@
                              (dolist (key '("C-;" "C-," "C-."))
                                (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
-          ispell-program-name "aspell"
-          ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
+              ispell-program-name "aspell"
+              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
   :config
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy

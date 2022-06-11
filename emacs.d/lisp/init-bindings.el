@@ -15,7 +15,7 @@
 (defun khz/tweak-emacs ()
   "C-c e Tweak emacs"
   (interactive)
-  (find-file-other-window "~/Code/dot/emacs.d/basics/deps.el"))
+  (find-file-other-window "~/Code/dot/emacs.d/init.el"))
 
 (global-set-key (kbd "C-c e") 'khz/tweak-emacs)
 
