@@ -13,7 +13,7 @@
                                  ":")
                                (car (file-expand-wildcards
                                       (expand-file-name "~/homebrew/opt/gcc/lib/gcc/*")))))
-      (setq comp-deferred-compilation t))
+      (setq native-comp-deferred-compilation t))
     (message "Native comp is *not* available")))
 
 (provide 'init-exec-path)
