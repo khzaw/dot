@@ -15,10 +15,19 @@
                             gud-mode eshell-mode shell-mode vterm-mode)
     company-backends '((company-capf :with company-yasnippet)
                         (company-dabbrev-code company-keywords company-files)
-                        company-dabbrev)))
+                        company-dabbrev))
+  :bind
+  (:map company-search-map
+    ("C-n" . company-select-next)
+    ("C-p" . company-select-previous)
+    ("C-t" . company-search-toggle-filtering)
+    :map company-active-map
+    ("C-n" . company-select-next)
+    ("C-p" . company-select-previous)))
 
 (use-package company-posframe
-  :after (company posframe))
+  :after (company posframe)
+  :config (company-posframe-mode))
 
 (use-package company-quickhelp
   :after company
@@ -28,6 +37,7 @@
 (use-package prescient
   :commands prescient-persist-mode
   :init (prescient-persist-mode 1))
+
 (use-package company-prescient
   :init (company-prescient-mode 1))
 

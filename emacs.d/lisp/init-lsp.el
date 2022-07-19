@@ -36,19 +36,18 @@
           :map lsp-ui-mode-map
           ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
           ([remap xref-find-references] . lsp-ui-peek-find-references))
-   :custom
-   (lsp-ui-peek-always-show t)
-   (lsp-ui-sideline-show-hover t)
-   (lsp-ui-sideline-show-diagnostics nil)
-   (lsp-ui-sideline-show-code-actions t)
-   (lsp-ui-sideline-ignore-duplicate t)
-   (lsp-ui-doc-delay 0.1)
-   (lsp-ui-doc-show-with-cursor t)
-   :init
-   (setq lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
-                                 ,(face-foreground 'font-lock-string-face)
-                                 ,(face-foreground 'font-lock-constant-face)
-                                 ,(face-foreground 'font-lock-variable-name-face))))
+  :custom
+  (lsp-ui-peek-always-show nil)
+  (lsp-ui-sideline-show-hover nil)
+  (lsp-ui-sideline-show-diagnostics nil)
+  (lsp-ui-sideline-show-code-actions nil)
+  (lsp-ui-sideline-ignore-duplicate t)
+  (lsp-ui-doc-delay 0.1)
+  :init
+  (setq lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
+                               ,(face-foreground 'font-lock-string-face)
+                               ,(face-foreground 'font-lock-constant-face)
+                               ,(face-foreground 'font-lock-variable-name-face))))
 
 
 (use-package lsp-ivy

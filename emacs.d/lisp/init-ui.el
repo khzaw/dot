@@ -16,7 +16,7 @@
 ;; UI
 (setq default-frame-alist
   (append (list
-	          '(font . "JetBrains Mono:size=14")
+	          '(font . "IBM Plex Mono:size=15")
 	          '(min-height . 1)  '(height     . 45)
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
@@ -36,7 +36,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 97)
+(transparency 94)
 
 
 (use-package solaire-mode
@@ -56,8 +56,9 @@
   :custom (doom-themes-treemacs-theme "doom-colors")
   :config
   (setq doom-themes-enable-bold t
-    doom-themes-enable-italic t)
+    doom-themes-enable-italic nil)
   (setq doom-themes-treemacs-variable-pitch-face nil)
+  (load-theme 'doom-material-dark t)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   (doom-themes-org-config))
@@ -67,7 +68,6 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (load-theme 'kaolin-aurora t)
   (kaolin-treemacs-theme))
 
 (use-package modus-themes)
@@ -155,10 +155,6 @@
 (use-package beacon
   :diminish
   :config (beacon-mode 1))
-
-(use-package dimmer
-  :custom (dimmer-fraction 0.3)
-  :config (dimmer-mode))
 
 (use-package mood-line :config (mood-line-mode))
 

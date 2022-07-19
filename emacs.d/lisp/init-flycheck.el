@@ -4,7 +4,7 @@
 
 (use-package flycheck-posframe
   :after (flycheck posframe)
-  :hook (flycheck-mode . flycheck-posframe-mode)
+  :hook (global-flycheck-mode . flycheck-posframe-mode)
   :init (setq flycheck-posframe-border-width 1)
   (add-hook 'flycheck-posframe-inhibit-functions
     (lambda (&rest _) (bound-and-true-p company-backend)))
