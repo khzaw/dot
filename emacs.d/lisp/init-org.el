@@ -39,6 +39,10 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
+(use-package org-superstar
+  :if (display-graphic-p)
+  :after org
+  :hook (org-mode . org-superstar-mode))
 
 (use-package org-roam
   :custom

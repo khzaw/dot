@@ -16,5 +16,10 @@
       (setq native-comp-deferred-compilation t))
     (message "Native comp is *not* available")))
 
+(use-package auto-compile
+  :config
+  (auto-compile-on-load-mode +1)
+  (auto-compile-on-save-mode +1))
+
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here
