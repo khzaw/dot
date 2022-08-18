@@ -39,5 +39,5 @@ nitrogen --restore &
 picom &
 # Caps lock -> Ctrl
 udiskie &
-setxkbmap -option ctrl:nocaps
+setxkbmap -model pc104 -option ctrl:nocaps
 exec xmonad
