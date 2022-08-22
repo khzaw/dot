@@ -33,11 +33,22 @@
        (?B . warning)
        (?C . success)))
   (org-confirm-babel-evaluate nil)
-  (org-link-elisp-confirm-function nil))
+  (org-link-elisp-confirm-function nil)
+  :config
+  (use-package ob-go
+    :if (executable-find "go")
+    :init (add-to-list 'org-babel-load-languages '(go . t)))
+  (use-package ob-rust
+    :if (executable-find "rustc")
+    :init (add-to-list 'org-babel-load-languages '(rust . t)))
+  (use-package org-web-tools))
 
 (use-package evil-org
   :after org
-  :hook (org-mode . (lambda () evil-org-mode)))
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package org-bullets
   :if (display-graphic-p)
@@ -52,6 +63,16 @@
 (use-package org-roam
   :custom
   (org-roam-directory (file-truename org-directory))
+  (org-roam-capture-templates
+    '(
+       ("d" "default" plain
+         "%?"
+         :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)
+       ("b" "book notes" plain
+         "\n* Source \n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
+         :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)))
   :bind (("C-c n l" . org-roam-buffer-toggle)
           ("C-c n f" . org-roam-node-find)
           ("C-c n g" . org-roam-graph)
@@ -63,11 +84,7 @@
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
   (setq org-roam-dailies-directory "daily/")
-  (setq org-roam-dailies-capture-templates
-    '(("d" "default" entry
-        "* %?"
-        :target (file+head "%<%Y-%m-%d>.org"
-                  "#+title: %<%Y-%m-%d>\n"))))
+
   ;; If using org-roam-protocol
   (require 'org-roam-protocol)
   (require 'org-roam-export))
