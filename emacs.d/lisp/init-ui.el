@@ -16,7 +16,7 @@
 ;; UI
 (setq default-frame-alist
   (append (list
-	          '(font . "IBM Plex Mono:size=15")
+	          '(font . "Iosevka Term:size=15")
 	          '(min-height . 1)  '(height     . 45)
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
@@ -36,7 +36,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 94)
+(transparency 98)
 
 
 (use-package solaire-mode
@@ -57,8 +57,7 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic nil)
-  (setq doom-themes-treemacs-variable-pitch-face nil)
-  (load-theme 'doom-material-dark t)
+  (load-theme 'doom-zenburn t)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   (doom-themes-org-config))
@@ -71,6 +70,8 @@
   (kaolin-treemacs-theme))
 
 (use-package modus-themes)
+
+(use-package ef-themes)
 
 (use-package minions)
 
@@ -144,9 +145,6 @@
 
 (use-package posframe
   :hook ((after-load-theme . posframe-delete-all)))
-
-;; Don't open a file in a new frame
-(setq ns-popup-frames nil)
 
 ;; Don't use GTK+ tooltip
 (when (boundp 'x-gtk-use-system-tooltips)

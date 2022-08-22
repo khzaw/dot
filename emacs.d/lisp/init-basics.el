@@ -181,7 +181,8 @@
           which-key-idle-secondary-delay 0.1)
   :config
   (which-key-mode)
-  (which-key-setup-minibuffer))
+  (which-key-setup-side-window-right-bottom)
+  (setq which-key-unicode-correction 5))
 
 (use-package editorconfig
   :defer 1

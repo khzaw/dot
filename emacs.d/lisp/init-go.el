@@ -5,7 +5,7 @@
   :diminish
   :commands (go-playground-mode))
 
-;; (use-package go-dlv)
+(use-package go-dlv)
 
 ;; (use-package go-fill-struct)
 
@@ -22,7 +22,9 @@
 
 (use-package flycheck-golangci-lint
   :after (flycheck go-mode)
-  :hook (go-mode . flycheck-golangci-lint-setup))
+  :hook (go-mode . flycheck-golangci-lint-setup)
+  :config
+  (setq flycheck-golangci-lint-fast t))
 
 (provide 'init-go)
 ;;; init-go.el ends here
