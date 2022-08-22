@@ -62,3 +62,5 @@ emacs.d/quelpa/
 
 *.local
 emacs.d/var
+*.sql
+projects
