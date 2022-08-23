@@ -57,7 +57,7 @@
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-italic nil)
-  (load-theme 'doom-zenburn t)
+  (load-theme 'doom-gruvbox t)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   (doom-themes-org-config))
