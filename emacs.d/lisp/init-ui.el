@@ -157,5 +157,7 @@
 
 (use-package mood-line :config (mood-line-mode))
 
+(use-package chronos)
+
 (provide 'init-ui)
 ;;; init-ui.el ends here
