@@ -16,10 +16,10 @@
 ;; UI
 (setq default-frame-alist
   (append (list
-	          '(font . "Iosevka Term:size=15")
 	          '(min-height . 1)  '(height     . 45)
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
+(set-frame-font "Iosevka SS08 15" nil t)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -52,11 +52,12 @@
   :config
   (solaire-global-mode +1))
 
-(use-package doom-themes
-  :custom (doom-themes-treemacs-theme "doom-colors")
+(use-package doom-theme
+  :custom
+  (doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic nil)
   :config
-  (setq doom-themes-enable-bold t
-    doom-themes-enable-italic nil)
   (load-theme 'doom-gruvbox t)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
