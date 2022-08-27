@@ -45,7 +45,7 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
 
 myManageHook = composeAll
-	[ className =? "1Password"				--> doCenterFloat
+        [ className =? "1Password"                              --> doCenterFloat
         , className =? "Nitrogen"				--> doCenterFloat
         , className =? "feh"					--> doCenterFloat
 	, className =? "mpv"					--> doRectFloat (W.RationalRect (1 / 4) (1 / 4) (1 / 2) (1 / 2))
@@ -120,9 +120,9 @@ main = do
 	xmproc <- spawnPipe "xmobar -d"
         tray <- spawnPipe "killall -q stalonetray; sleep 1; stalonetray"
 	spawn "pkill dunst ; dunst"
-	xmonad $ docks defaultConfig 
-		{ manageHook = myManageHook <+> manageHook defaultConfig
-		, layoutHook = avoidStruts $ mySpacing 10 $ layoutHook defaultConfig
+	xmonad $ docks def 
+		{ manageHook = myManageHook <+> manageHook def
+		, layoutHook = avoidStruts $ mySpacing 10 $ layoutHook def
 		, logHook = dynamicLogWithPP xmobarPP
 			{ ppOutput = hPutStrLn xmproc
 			, ppTitle = xmobarColor "#8bc34a" "" . shorten 50

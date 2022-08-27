@@ -52,7 +52,7 @@
   :config
   (solaire-global-mode +1))
 
-(use-package doom-theme
+(use-package doom-themes
   :custom
   (doom-themes-treemacs-theme "doom-colors")
   (doom-themes-enable-bold t)
