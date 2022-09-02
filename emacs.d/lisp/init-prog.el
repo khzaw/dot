@@ -38,5 +38,7 @@
 
 (use-package tree-sitter-langs :after tree-sitter)
 
+(use-package ssh-config-mode)
+
 (provide 'init-prog)
 ;;; init-prog.el ends here

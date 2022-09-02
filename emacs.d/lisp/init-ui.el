@@ -72,6 +72,8 @@
 
 (use-package ef-themes)
 
+(use-package sweet-theme)
+
 (use-package minions)
 
 ;; Show native line numbers if possible, otherwise use `linum'
