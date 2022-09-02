@@ -40,5 +40,7 @@
 
 (use-package ssh-config-mode)
 
+(use-package vyper-mode)
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
