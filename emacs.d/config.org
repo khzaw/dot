@@ -326,7 +326,7 @@ Show native line numbers if possible, otherwise use ~linum~.
   (editorconfig-mode 1)
   )
 #+END_SRC
-** evil + evil-escape + evil-collection
+* evil + evil-escape + evil-collection
 #+begin_src emacs-lisp
 (use-package evil
   :defer .1 ;; don't block emacs when starting, load evil immediately after startup
@@ -338,7 +338,8 @@ Show native line numbers if possible, otherwise use ~linum~.
   :config
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)
-  (evil-set-initial-state 'fundamental-mode 'emacs))
+  (evil-set-initial-state 'fundamental-mode 'emacs)
+  (evil-set-initial-state 'chornos-mode 'emacs))
 
 (use-package evil-escape
   :init (setq-default evil-escape-key-sequence "kj")

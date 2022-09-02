@@ -49,5 +49,14 @@
        "\\*xref\\*"
        compilation-mode)))
 
+(use-package winner-mode
+  :ensure nil
+  :after evil
+  :bind
+  (:map evil-window-map
+    ("u" . winner-undo)
+    ("U" . winner-redo))
+  :config (winner-mode))
+
 (provide 'init-window)
 ;;; init-window.el ends here

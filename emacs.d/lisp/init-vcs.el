@@ -2,9 +2,7 @@
   :config (setq magit-save-repository-buffers t)
   :bind ("C-x g" . magit-status))
 
-(use-package libgit :after magit)
-
-(use-package magit-libgit :after (magit libgit))
+(use-package magit-todos :after magit)
 
 (use-package forge :after magit)
 

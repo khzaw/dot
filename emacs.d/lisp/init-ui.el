@@ -19,13 +19,13 @@
 	          '(min-height . 1)  '(height     . 45)
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
-(set-frame-font "Iosevka SS08 15" nil t)
+(set-frame-font "Iosevka Comfy 15" nil t)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
+;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (tool-bar-mode 0)
 (tooltip-mode 0)
@@ -38,7 +38,6 @@
   (set-frame-parameter (selected-frame) 'alpha value))
 (transparency 98)
 
-
 (use-package solaire-mode
   :defer 1
   :hook
@@ -47,18 +46,17 @@
   (change-major-mode . turn-on-solaire-mode)
   (after-revert . turn-on-solaire-mode)
   (ediff-prepare-buffer . solaire-mode)
-  :custom
-  (solaire-mode-auto-swap-bg t)
   :config
   (solaire-global-mode +1))
 
 (use-package doom-themes
+  :after all-the-icons
   :custom
   (doom-themes-treemacs-theme "doom-colors")
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic nil)
   :config
-  (load-theme 'doom-gruvbox t)
+  (load-theme 'doom-vibrant t)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   (doom-themes-org-config))
