@@ -74,6 +74,8 @@
 
 (use-package sweet-theme)
 
+(use-package almost-mono-themes)
+
 (use-package minions)
 
 ;; Show native line numbers if possible, otherwise use `linum'
