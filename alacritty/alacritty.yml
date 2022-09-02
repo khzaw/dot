@@ -1,14 +1,14 @@
 font:
   normal:
-    family: "JetBrains Mono"
+    family: "Iosevka SS08"
     style: Regular
 
   bold:
-    family: "JetBrains Mono"
+    family: "Iosevka SS08"
     style: Bold
 
   italic:
-    family: "JetBrains Mono"
+    family: "Iosevka SS08"
     style: "Medium Italic"
 
   size: 11.0
