@@ -161,5 +161,9 @@
 
 (use-package chronos)
 
+(use-package ansi-color
+  ;; ANSI coloring in compilation buffer
+  :hook (compilation-filter-hook . ansi-color-compilation-filter))
+
 (provide 'init-ui)
 ;;; init-ui.el ends here
