@@ -60,5 +60,9 @@
   :after lsp-mode
   :init (lsp-treemacs-sync-mode 1))
 
+(use-package lsp-focus
+  :after (lsp-mode focus)
+  :hook (focus-mode . lsp-focus-mode))
+
 (provide 'init-lsp)
 ;;; init-lsp.el ends here

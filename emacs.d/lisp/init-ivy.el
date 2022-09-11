@@ -9,7 +9,7 @@
           ("C-c C-r" . ivy-resume)
 
           ("M-x" . counsel-M-x)
-          ("C-x b" . counsel-switch-buffer)
+          ;; ("C-x b" . counsel-switch-buffer)
           ("C-x C-f" . counsel-find-file)
           ("C-c i" . counsel-imenu)
           ("C-c l t" . counsel-load-theme)
@@ -29,6 +29,7 @@
           ("C-c P" . counsel-package)
           ("C-c a" . counsel-ag)
           ("C-c f" . fzf-find-file)
+          ("C-c g f" . fzf-git-files)
 
           :map ivy-minibuffer-map
           ("C-w" . ivy-yank-word)

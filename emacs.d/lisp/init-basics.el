@@ -181,8 +181,11 @@
           which-key-idle-secondary-delay 0.1)
   :config
   (which-key-mode)
-  (which-key-setup-side-window-right-bottom)
   (setq which-key-unicode-correction 5))
+
+(use-package which-key-posframe
+  :after (posframe which-key)
+  :config (setq which-key-posframe-border-width 15))
 
 (use-package editorconfig
   :defer 1
