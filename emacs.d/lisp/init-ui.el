@@ -56,7 +56,6 @@
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic nil)
   :config
-  (load-theme 'doom-vibrant t)
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   (doom-themes-org-config))
@@ -66,6 +65,7 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
+  (load-theme 'kaolin-dark t)
   (kaolin-treemacs-theme))
 
 (use-package modus-themes)
@@ -160,6 +160,14 @@
 (use-package mood-line :config (mood-line-mode))
 
 (use-package chronos)
+
+(use-package ansi-color
+  ;; ANSI coloring in compilation buffer
+  :hook (compilation-filter-hook . ansi-color-compilation-filter))
+
+(use-package redacted)
+
+(use-package focus)
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

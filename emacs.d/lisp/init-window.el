@@ -52,11 +52,11 @@
 (use-package winner-mode
   :ensure nil
   :after evil
+  :hook (after-init . winner-mode)
   :bind
   (:map evil-window-map
     ("u" . winner-undo)
-    ("U" . winner-redo))
-  :config (winner-mode))
+    ("U" . winner-redo)))
 
 (provide 'init-window)
 ;;; init-window.el ends here
