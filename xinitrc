@@ -36,8 +36,9 @@ fi
 
 . ~/.screenlayout/screenlayout.sh
 nitrogen --restore &
-picom &
-# Caps lock -> Ctrl
+picom -b &
+spotifyd &
+pulseaudio &
 udiskie &
-setxkbmap -model pc104 -option ctrl:nocaps
+setxkbmap -model pc104 -option ctrl:nocaps # Caps lock -> Ctrl
 exec xmonad
