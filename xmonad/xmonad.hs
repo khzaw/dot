@@ -85,7 +85,7 @@ myBrowser :: String
 myBrowser = "firefox"
 
 myLauncher :: String
-myLauncher = "rofi -show drun -dpi 196 -show-icons"
+myLauncher = "rofi -show run -dpi 196 -show-icons"
 
 myDiscord :: String
 myDiscord = "discord"

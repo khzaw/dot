@@ -38,7 +38,6 @@ fi
 nitrogen --restore &
 picom -b &
 spotifyd &
-pulseaudio &
 udiskie &
 setxkbmap -model pc104 -option ctrl:nocaps # Caps lock -> Ctrl
 exec xmonad
