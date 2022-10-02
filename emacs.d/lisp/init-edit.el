@@ -92,5 +92,13 @@
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode))
 
+(use-package yasnippet
+  :hook ((text-mode
+           prog-mode
+           conf-mode
+           snippet-mode) . yas-minor-mode-on)
+  :init
+  (setq yas-snippet-dir "~/.emacs.d/snippets"))
+
 (provide 'init-edit)
 ;;; init-edit.el ends here
