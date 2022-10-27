@@ -92,5 +92,13 @@
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode))
 
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+
+(use-package yasnippet-snippets
+  :after yasnippet
+  :config (yasnippet-snippets-initialize))
+
 (provide 'init-edit)
 ;;; init-edit.el ends here

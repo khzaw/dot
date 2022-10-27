@@ -54,7 +54,7 @@
   :after lsp-mode
   :bind (:map lsp-mode-map
         ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
-        ("C-s-." . lsp-ivy-global-workspace-symbol)))
+        ("C-c l s" . lsp-ivy-global-workspace-symbol)))
 
 (use-package lsp-treemacs
   :after lsp-mode
