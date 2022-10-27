@@ -5,8 +5,8 @@
   :bind
   ("C-c C-c" . org-edit-src-exit)
   :custom
-  (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
-  (org-agenda-files '("gsd.org"  "work.org"))
+  ;; (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
+  ;; (org-agenda-files '("gsd.org"  "work.org"))
   (org-todo-keywords '((sequence "TODO(t)" "DOING(n)" "|" "DONE(d)")))
   ;; (org-agenda-start-with-log-mode t)
   ;; (org-log-done 'time)
