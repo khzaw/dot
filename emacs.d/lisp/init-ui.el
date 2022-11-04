@@ -19,7 +19,7 @@
 	          '(min-height . 1)  '(height     . 45)
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
-(set-frame-font "Iosevka SS08 15" nil t)
+(set-frame-font "JetBrains Mono 14" nil t)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -65,10 +65,10 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  ;; (load-theme 'kaolin-dark t)
   (kaolin-treemacs-theme))
 
-(use-package modus-themes)
+(use-package modus-themes
+  :config (load-theme 'modus-vivendi t))
 
 (use-package ef-themes)
 
@@ -169,17 +169,18 @@
 
 (use-package focus)
 
-;; (use-package centaur-tabs
-;;   :config (centaur-tabs-mode t)
-;;   :bind
-;;   (:map evil-normal-state-map
-;;     ("g t" . centaur-tabs-forward)
-;;     ("g T" . centaur-tabs-backward)))
+(use-package centaur-tabs
+  :config (centaur-tabs-mode t)
+  :bind
+  (:map evil-normal-state-map
+    ("g t" . centaur-tabs-forward)
+    ("g T" . centaur-tabs-backward)))
 
 (use-package autothemer)
 
 (use-package catppuccin-theme
-  :config (load-theme 'catppuccin-mocha t))
+  ;; :config (load-theme 'catppuccin-macchiato t)
+  )
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

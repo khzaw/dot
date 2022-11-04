@@ -106,5 +106,11 @@
   :after yasnippet
   :config (yasnippet-snippets-initialize))
 
+(use-package writeroom-mode
+  :config
+  (setq writeroom-width 100
+    writeroom-fullscreen-effect nil
+    writeroom-maximize-window nil))
+
 (provide 'init-edit)
 ;;; init-edit.el ends here

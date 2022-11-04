@@ -1,5 +1,7 @@
 (use-package magit
-  :config (setq magit-save-repository-buffers t)
+  :config
+  (setq magit-save-repository-buffers t)
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   :bind ("C-x g" . magit-status))
 
 (use-package magit-todos :after magit)
@@ -35,6 +37,18 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+
+(use-package blamer
+  :bind ("C-c g b" . blamer-show-commit-posframe-info)
+  :defer 20
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                  :background nil
+                  :height 140
+                  :italic t))))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
