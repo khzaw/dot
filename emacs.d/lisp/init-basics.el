@@ -121,10 +121,7 @@
     ;; Option is meta
     mac-option-modifier 'meta
     ;; Right Alt is not meta, used to type symbols and shit
-    mac-right-option-modifier 'meta)
-  ;; Default shell in term
-  (setq-default shell-file-name "/usr/local/bin/zsh")
-  (setq explicit-shell-file-name "/usr/local/bin/zsh"))
+    mac-right-option-modifier 'meta))
 
 ;; Default shell in term
 (when (eq system-type 'gnu/linux)
