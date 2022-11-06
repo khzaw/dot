@@ -49,12 +49,17 @@
                                ,(face-foreground 'font-lock-constant-face)
                                ,(face-foreground 'font-lock-variable-name-face))))
 
+(use-package lsp-jedi
+  :config
+  (with-eval-after-load "lsp-mode"
+    (add-to-list 'lsp-disabled-clients 'pyls)
+    (add-to-list 'lsp-enabled-clients 'jedi)))
 
 (use-package lsp-ivy
   :after lsp-mode
   :bind (:map lsp-mode-map
-        ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
-        ("C-c l s" . lsp-ivy-global-workspace-symbol)))
+          ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
+          ("C-c l s" . lsp-ivy-global-workspace-symbol)))
 
 (use-package lsp-treemacs
   :after lsp-mode
