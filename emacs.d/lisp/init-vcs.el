@@ -39,7 +39,7 @@
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package blamer
-  :bind ("C-c g b" . blamer-show-commit-posframe-info)
+  :bind ("C-c g b" . blamer-show-posframe-commit-info)
   :defer 20
   :custom
   (blamer-idle-time 0.3)
