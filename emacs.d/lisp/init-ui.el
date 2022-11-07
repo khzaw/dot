@@ -68,7 +68,9 @@
   (kaolin-treemacs-theme))
 
 (use-package modus-themes
-  :config (load-theme 'modus-vivendi t))
+  :config
+  (setq modus-themes-fringes nil)
+  (load-theme 'modus-vivendi t))
 
 (use-package ef-themes)
 
