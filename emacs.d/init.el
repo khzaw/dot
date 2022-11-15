@@ -40,6 +40,7 @@
 (require 'init-evil)
 (require 'init-edit)
 (require 'init-highlight)
+(require 'init-consult)
 (require 'init-ivy)
 (require 'init-company)
 
