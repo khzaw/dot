@@ -41,7 +41,6 @@
 (require 'init-edit)
 (require 'init-highlight)
 (require 'init-consult)
-(require 'init-ivy)
 (require 'init-company)
 
 (require 'init-dashboard)

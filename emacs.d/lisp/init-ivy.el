@@ -22,7 +22,7 @@
           ([remap dired] . counsel-dired)
           ([remap set-variable] . counsel-set-variable)
           ([remap insert-char] . counsel-unicode-char)
-          ([remap recentf-open-files] . consel-recentf)
+          ([remap recentf-open-files] . counsel-recentf)
           ([remap org-capture] . counsel-org-capture)
 
           ("C-h F" . counsel-faces)
@@ -100,22 +100,17 @@
 
 (use-package all-the-icons-ivy-rich :after ivy :config (all-the-icons-ivy-rich-mode))
 
-(use-package counsel-projectile
-  :hook (counsel-mode . counsel-projectile-mode)
-  :init (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)))
-
-(use-package counsel-spotify
-  :after counsel
-  :init
-  (setq counsel-spotify-client-id 'spotify-client-id
-        counsel-spotify-client-secret 'spotify-secret)
-  :bind (("C-c C-s p" . counsel-spotify-toggle-play-pause)
-         ("C-c C-s n" . counsel-spotify-next)
-         ("C-c C-s r" . counsel-spotify-prev)
-         ("C-c C-s s" . counsel-spotify-search-track)
-         ("C-c C-s a" . counsel-spotify-search-artist)
-         ("C-c C-s l" . counsel-spotify-search-playlist)))
-
+;; (use-package counsel-spotify
+;;   :after counsel
+;;   :init
+;;   (setq counsel-spotify-client-id 'spotify-client-id
+;;     counsel-spotify-client-secret 'spotify-secret)
+;;   :bind (("C-c C-s p" . counsel-spotify-toggle-play-pause)
+;;           ("C-c C-s n" . counsel-spotify-next)
+;;           ("C-c C-s r" . counsel-spotify-prev)
+;;           ("C-c C-s s" . counsel-spotify-search-track)
+;;           ("C-c C-s a" . counsel-spotify-search-artist)
+;;           ("C-c C-s l" . counsel-spotify-search-playlist)))
 
 (provide 'init-ivy)
 ;;; init-ivy.el ends here
