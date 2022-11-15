@@ -49,16 +49,16 @@
   :config
   (solaire-global-mode +1))
 
-(use-package doom-themes
-  :after all-the-icons
-  :custom
-  (doom-themes-treemacs-theme "doom-colors")
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic nil)
-  :config
-  (with-eval-after-load 'lsp-treemacs
-    (doom-themes-treemacs-config))
-  (doom-themes-org-config))
+;; (use-package doom-themes
+;;   :after all-the-icons
+;;   :custom
+;;   (doom-themes-treemacs-theme "doom-colors")
+;;   (doom-themes-enable-bold t)
+;;   (doom-themes-enable-italic nil)
+;;   :config
+;;   (with-eval-after-load 'lsp-treemacs
+;;     (doom-themes-treemacs-config))
+;;   (doom-themes-org-config))
 
 (use-package all-the-icons :if (display-graphic-p))
 
@@ -69,8 +69,7 @@
 
 (use-package modus-themes
   :config
-  (setq modus-themes-fringes nil)
-  (load-theme 'modus-vivendi t))
+  (setq modus-themes-fringes nil))
 
 (use-package ef-themes)
 
@@ -181,8 +180,7 @@
 (use-package autothemer)
 
 (use-package catppuccin-theme
-  ;; :config (load-theme 'catppuccin-macchiato t)
-  )
+  :config (load-theme 'catppuccin-mocha t))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

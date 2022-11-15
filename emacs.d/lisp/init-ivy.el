@@ -28,7 +28,7 @@
           ("C-h F" . counsel-faces)
           ("C-c P" . counsel-package)
           ("C-c a" . counsel-ag)
-          ("C-c f" . fzf-find-file)
+          ("C-c f" . counsel-projectile-find-file)
           ("C-c g f" . fzf-git-files)
 
           :map ivy-minibuffer-map
@@ -40,6 +40,7 @@
           (ivy-mode . counsel-mode))
   :init
   (setq enable-recursive-minibuffers t) ; allow commands in minibuffers
+  (setq ivy-dynamic-exhibit-delay-ms 250)
 
   (setq ivy-height 12
     ivy-use-selectable-prompt t
