@@ -1,4 +1,5 @@
 (use-package consult
+  :config
   :bind (;; C-c bindings (mode-specific-map)
           ("C-c a" . consult-ag)
           ("C-c h" . consult-history)
@@ -35,7 +36,7 @@
           ("M-s g" . consult-grep)
           ("M-s G" . consult-git-grep)
           ("M-s r" . consult-ripgrep)
-          ("M-s l" . consult-line)
+          ("C-s" . consult-line)
           ("M-s L" . consult-line-multi)
           ("M-s m" . consult-multi-occur)
           ("M-s k" . consult-keep-lines)
@@ -78,6 +79,7 @@
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
   :config
+  (use-package consult-ag)
 
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
@@ -89,7 +91,7 @@
   (consult-customize
     consult-theme :preview-key '(:debounce 0.2 any)
     consult-ripgrep consult-git-grep consult-grep
-    consult-bookmark consult-recent-file consult-xref
+    consult-ag consult-bookmark consult-recent-file consult-xref
     consult--source-bookmark consult--source-file-register
     consult--source-recent-file consult--source-project-recent-file
     ;; preview-key (kdb "M-.")
@@ -113,8 +115,10 @@
   :ensure nil
   :hook (after-init . savehist-mode)
   :init
+  (setq-default prescient-history-length 1000)
   (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
     history-length 1000
+
     savehist-additional-variables '(mark-ring
                                      global-mark-ring
                                      search-ring
@@ -139,12 +143,14 @@
   (setq vertico-cycle t)
   )
 
-;; Enable rich annotations
+(use-package vertico-posframe
+  :after (vertico posframe)
+  :config (setq vertico-posframe-border-width 15))
+
+;; Enable rich annotations in completion UI
 (use-package marginalia
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
-  :bind (("M-A" . marginalia-cycle)
-          :map minibuffer-local-map
-          ("M-A" . marginalia-cycle))
+  :bind (:map minibuffer-local-map ("M-A" . marginalia-cycle))
   :init (marginalia-mode))
 
 (use-package embark
