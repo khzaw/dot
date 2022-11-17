@@ -1,6 +1,7 @@
 (use-package company
   :diminish
-  :hook (after-init . global-company-mode)
+  :hook ((after-init . global-company-mode)
+          (evil-normal-state . company-abort))
   :config
   (setq
     company-tooltip-align-annotations t
@@ -8,9 +9,10 @@
     company-tooltip-minimum-width 40
     company-idle-delay 0
     company-echo-delay (if (display-graphic-p) nil 0)
-    company-minimum-prefix-length 1
+    company-minimum-prefix-length 2
     company-icon-margin 3
     company-require-match nil
+    company-show-numbers t
     company-dabbrev-ignore-case nil
     company-dabbrev-downcase nil
     company-global-modes '(not erc-mode message-mode help-mode
@@ -32,6 +34,7 @@
   )
 
 (use-package company-restclient :after company)
+
 (use-package company-posframe
   :after (company posframe)
   :config (company-posframe-mode))
