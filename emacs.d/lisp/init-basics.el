@@ -174,9 +174,13 @@
 
 (use-package which-key
   :diminish
-  :init (setq which-key-idle-delay 0.1
-          which-key-idle-secondary-delay 0.1)
+  :init
+  (setq which-key-idle-delay 0.5)
+  (setq which-key-idle-secondary-delay 0.1)
+  (setq which-key-allow-multiple-replacements t)
   :config
+  (push '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1")) which-key-replacement-alist)
+  (push '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")) which-key-replacement-alist)
   (which-key-mode)
   (setq which-key-unicode-correction 5))
 
