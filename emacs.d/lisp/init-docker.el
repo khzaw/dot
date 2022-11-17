@@ -7,7 +7,5 @@
 (use-package docker-compose-mode
   :mode ("docker-compose.*\.yml\\'" . docker-compose-mode))
 
-(use-package docker-tramp)
-
 (provide 'init-docker)
 ;;; init-docker.el ends here

@@ -3,6 +3,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-split-window-below t)
   (setq evil-vsplit-window-right t)
+  (setq evil-kill-on-visual-paste nil) ; Don't put overwritten text in the kill ring
   :config
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)

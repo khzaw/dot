@@ -7,7 +7,7 @@
 (use-package avy
   :bind (("C-;"   . avy-goto-char)
           ("C-'"   . avy-goto-char-2)
-          ("M-g f" . avy-goto-line)
+          ("M-g g" . avy-goto-line)
           ("M-g w" . avy-goto-word-0)
           ("M-g e" . avy-goto-word-1))
   :hook (after-init . avy-setup-default)

@@ -160,7 +160,11 @@
 (use-package focus)
 
 (use-package centaur-tabs
-  :config (centaur-tabs-mode t)
+  :init
+  (setq centaur-tabs-height 32)
+  (setq centaur-tabs-gray-out-icons 'buffer)
+  :config
+  (centaur-tabs-mode t)
   :bind
   (:map evil-normal-state-map
     ("g t" . centaur-tabs-forward)
@@ -170,6 +174,12 @@
 
 (use-package catppuccin-theme
   :config (load-theme 'catppuccin-mocha t))
+
+;; Makes manual pages nicer to look at
+(use-package info-colors :commands (info-colors-fontify-node)
+  :hook (Info-selection-hook . info-colors-fontify-node))
+
+(use-package theme-magic)
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
