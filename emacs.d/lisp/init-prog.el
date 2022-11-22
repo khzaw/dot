@@ -28,7 +28,9 @@
   (plantuml-jar-path "/usr/local/bin/plantuml")
   (plantuml-default-exec-mode 'executable))
 
-(use-package graphviz-dot-mode)
+(use-package graphviz-dot-mode
+  :commands graphviz-dot-mode
+  :mode ("\\.dot'" . graphviz-dot-mode))
 
 (use-package tree-sitter
   :hook ((go-mode python-mode rust-mode ruby-mode js-mode js2-mode rjsx-mode c-mode typescript-mode sh-mode) . tree-sitter-hl-mode)

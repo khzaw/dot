@@ -1,8 +1,10 @@
 (use-package magit
   :config
   (setq magit-save-repository-buffers t)
-  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
-  :bind ("C-x g" . magit-status))
+  (customize-set-variable
+    'display-buffer-alist
+    '(("\\*magit: .*" display-buffer-same-window)))
+  :bind ("C-x g" . magit-status-quick))
 
 (use-package magit-todos :after magit)
 

@@ -3,6 +3,7 @@
   :bind (;; C-c bindings (mode-specific-map)
           ("C-c a" . consult-ag)
           ("C-c h" . consult-history)
+          ("C-c i" . imenu)
           ("C-c m" . consult-mode-command)
           ("C-c k" . consult-kmacro)
           ("C-c l t" . consult-theme)
@@ -32,6 +33,7 @@
           ("M-g I" . consult-imenu-multi)
           ;; M-s bindings (search-map)
           ("M-s d" . consult-find)
+          ("C-c f" . consult-find)
           ("M-s D" . consult-locate)
           ("M-s g" . consult-grep)
           ("M-s G" . consult-git-grep)
@@ -110,6 +112,9 @@
   (setq consult-project-function (lambda (_) (projectile-project-root)))
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
+
+(use-package consult-spotify
+  :after consult)
 
 (use-package savehist
   :ensure nil
@@ -190,6 +195,11 @@
   (setq completion-styles '(basic substring partial-completion flex)
     completion-category-defaults nil
     completion-category-overrides '((file (styles partial-completion)))))
+
+;; (use-package orderless
+;;   :init (icomplete-mode)
+;;   (setq orderless-style-dispatchers '(+orderless-dispatch))
+;;   :custom (completion-styles '(basic substring partial-completion flex orderless)))
 
 (provide 'init-consult)
 ;;; init-consult.el ends here

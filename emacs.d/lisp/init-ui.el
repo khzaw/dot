@@ -181,5 +181,9 @@
 
 (use-package theme-magic)
 
+(use-package elcord
+  :commands elcord-mode
+  :config (setq elcord-use-major-mode-as-main-icon t))
+
 (provide 'init-ui)
 ;;; init-ui.el ends here

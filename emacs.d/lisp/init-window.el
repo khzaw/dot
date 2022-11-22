@@ -47,6 +47,7 @@
        "\\*Warnings\\*"
        "\\*eldoc.\*"
        "\\*xref\\*"
+       vterm-mode
        compilation-mode)))
 
 (use-package winner-mode
