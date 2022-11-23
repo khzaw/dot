@@ -123,7 +123,6 @@
   (setq-default prescient-history-length 1000)
   (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
     history-length 1000
-
     savehist-additional-variables '(mark-ring
                                      global-mark-ring
                                      search-ring
@@ -134,19 +133,10 @@
 (use-package vertico
   :init
   (vertico-mode)
-
-  ;; different scroll margin
-  (setq vertico-scroll-margin 0)
-
-  ;; show more candidates
-  ;; (setq vertico-count 20)
-
-  ;; grow and shrink the vertico minibuffer
-  (setq vertico-resize t)
-
-  ;; optionally enable cycling for `vertico-next' and `vertico-previous'.
-  (setq vertico-cycle t)
-  )
+  :custom
+  (vertico-scroll-margin 0) ;; different scroll margin
+  (vertico-resize t)
+  (vertico-cycle t))
 
 (use-package vertico-posframe
   :after (vertico posframe)
@@ -154,15 +144,17 @@
 
 ;; Enable rich annotations in completion UI
 (use-package marginalia
+  :after vertico
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
   :bind (:map minibuffer-local-map ("M-A" . marginalia-cycle))
   :init (marginalia-mode))
 
 (use-package embark
-  :bind
-  (("C-." . embark-act)
-    ("C-;" . embark-dwim)
-    ("C-h B" . embark-bindings))
+  :bind (("C-c C-." . embark-act)
+          ("C-c C-;" . embark-dwim)
+          ("C-h B" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
