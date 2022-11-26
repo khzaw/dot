@@ -6,6 +6,10 @@
   :mode (("README\\.md\\'" . gfm-mode)
           ("\\.md\\'" . gfm-mode)
           ("\\.markdown\\'" . markdown-mode))
+  :bind ((:map markdown-mode-map
+           ("C-c v" . markdown-view-mode))
+          (:map markdown-view-mode-map
+            ("C-c v" . markdown-mode)))
   :init (setq markdown-command "multimarkdown"))
 
 (use-package impatient-mode)

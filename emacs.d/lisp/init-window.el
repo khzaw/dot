@@ -45,10 +45,15 @@
        xref--xref-buffer-mode
        help-mode
        "\\*Warnings\\*"
-       "\\*eldoc.\*"
+       "\\*eldoc\\*"
        "\\*xref\\*"
-       vterm-mode
-       compilation-mode)))
+       "\\*Go Test\\*"
+       "\\*Flycheck errors\\*"
+       compilation-mode
+       "^\\*vterm.*\\*$" vterm-mode
+       "^\\*eshell.*\\*$" eshell-mode
+       "^\\*term.*\\*$" term-mode
+       "^\\*shell.*\\*$" shell-mode)))
 
 (use-package winner-mode
   :ensure nil

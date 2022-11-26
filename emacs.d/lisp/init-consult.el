@@ -140,7 +140,8 @@
 
 (use-package vertico-posframe
   :after (vertico posframe)
-  :config (setq vertico-posframe-border-width 15))
+  :config (setq vertico-posframe-border-width 15)
+  (vertico-posframe-mode))
 
 ;; Enable rich annotations in completion UI
 (use-package marginalia
@@ -153,6 +154,8 @@
 
 (use-package embark
   :bind (("C-c C-." . embark-act)
+          ("C-." . embark-act)
+          ("C-;" . embark-dwim)
           ("C-c C-;" . embark-dwim)
           ("C-h B" . embark-bindings))
   :init

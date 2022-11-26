@@ -36,7 +36,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 98)
+(transparency 95)
 
 (use-package solaire-mode
   :defer 1
@@ -64,7 +64,8 @@
 
 (use-package sweet-theme)
 
-(use-package almost-mono-themes)
+(use-package almost-mono-themes
+  :config (load-theme 'almost-mono-white t))
 
 (use-package minions)
 
@@ -172,8 +173,7 @@
 
 (use-package autothemer)
 
-(use-package catppuccin-theme
-  :config (load-theme 'catppuccin-mocha t))
+(use-package catppuccin-theme)
 
 ;; Makes manual pages nicer to look at
 (use-package info-colors :commands (info-colors-fontify-node)
