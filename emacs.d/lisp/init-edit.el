@@ -112,5 +112,9 @@
     writeroom-fullscreen-effect nil
     writeroom-maximize-window nil))
 
+(use-package apheleia
+  :config
+  (apheleia-global-mode t))
+
 (provide 'init-edit)
 ;;; init-edit.el ends here

@@ -7,7 +7,7 @@
     company-tooltip-align-annotations t
     company-tooltip-limit 12
     company-tooltip-minimum-width 40
-    company-idle-delay 0
+    company-idle-delay 0.2
     company-echo-delay (if (display-graphic-p) nil 0)
     company-minimum-prefix-length 2
     company-icon-margin 3
@@ -23,13 +23,14 @@
                         company-restclient
                         company-dabbrev))
   :bind (
-          :map company-search-map
-          ("C-n" . company-select-next)
-          ("C-p" . company-select-previous)
-          ("C-t" . company-search-toggle-filtering)
-          :map company-active-map
-          ("C-n" . company-select-next)
-          ("C-p" . company-select-previous)
+          (:map company-search-map
+            ("C-n" . company-select-next)
+            ("C-p" . company-select-previous)
+            ("C-t" . company-search-toggle-filtering))
+          (:map company-active-map
+            ("TAB" . company-complete-selection)
+            ("C-n" . company-select-next)
+            ("C-p" . company-select-previous))
           )
   )
 
