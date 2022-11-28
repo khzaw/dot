@@ -9,7 +9,10 @@
 
 (use-package magit-todos :after magit)
 
-;; (use-package forge :after magit)
+
+(setq auth-sources '("~/.authinfo"))
+
+(use-package forge :after magit)
 
 (use-package git-timemachine
   :bind ("C-c g t" . git-timemachine-toggle))

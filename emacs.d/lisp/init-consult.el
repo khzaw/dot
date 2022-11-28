@@ -178,7 +178,7 @@
   (unless (bound-and-true-p consult--preview-function)
     (save-selected-window
       (let ((embark-quit-after-action nil))
-        (embrak-dwim)))))
+        (embark-dwim)))))
 
 
 (use-package orderless

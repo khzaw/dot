@@ -98,9 +98,9 @@
 
 ;; Display dividers between windows
 (setq window-divider-default-places t
-      window-divider-default-bottom-width 1
-      window-divider-default-right-width 1)
-(add-hook 'window-setup-hook #'window-divider-mode)
+  window-divider-default-bottom-width 1
+  window-divider-default-right-width 1)
+;; (add-hook 'window-setup-hook #'window-divider-mode)
 
 ;; Easily adjust the font size in all frames
 (use-package default-text-scale
@@ -156,7 +156,7 @@
   ;; ANSI coloring in compilation buffer
   :hook (compilation-filter-hook . ansi-color-compilation-filter))
 
-(use-package redacted)
+(use-package redacted :bind ("C-c C-d" . redacted-mode))
 
 (use-package focus)
 

@@ -6,6 +6,12 @@
   :config
   (global-prettify-symbols-mode t))
 
+(use-package hideshow
+  :ensure nil
+  :hook (prog-mode . hs-minor-mode)
+  :bind (:map hs-minor-mode-map
+          ("C-`" . hs-toggle-hiding)))
+
 (use-package protobuf-mode)
 
 (use-package yaml-mode)

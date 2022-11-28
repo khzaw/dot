@@ -24,7 +24,7 @@
           lsp-modeline-workspace-status-enable nil
           lsp-headerline-breadcrumb-enable nil
           lsp-enable-file-watchers nil
-          lsp-enable-folding nil
+          lsp-enable-folding t
           lsp-enable-symbol-highlighting t
           lsp-enable-text-document-color nil
           lsp-enable-indentation t
