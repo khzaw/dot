@@ -212,8 +212,7 @@
 
 (use-package vertico-posframe
   :after (vertico posframe)
-  :config (setq vertico-posframe-border-width 15)
-  (vertico-posframe-mode))
+  :config (setq vertico-posframe-border-width 15))
 
 ;; Enable rich annotations in completion UI
 (use-package marginalia

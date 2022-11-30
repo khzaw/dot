@@ -188,6 +188,8 @@
   :after (posframe which-key)
   :config (setq which-key-posframe-border-width 15))
 
+(use-package rg)
+
 (use-package editorconfig
   :defer 1
   :diminish
