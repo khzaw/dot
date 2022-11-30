@@ -36,7 +36,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 95)
+(transparency 94)
 
 (use-package solaire-mode
   :defer 1
@@ -54,7 +54,8 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme))
+  (kaolin-treemacs-theme)
+  (load-theme 'kaolin-galaxy t))
 
 (use-package modus-themes
   :config
@@ -64,8 +65,7 @@
 
 (use-package sweet-theme)
 
-(use-package almost-mono-themes
-  :config (load-theme 'almost-mono-white t))
+(use-package almost-mono-themes)
 
 (use-package minions)
 

@@ -4,6 +4,9 @@
   :diminish
   :hook (after-init . global-auto-revert-mode))
 
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
 (use-package avy
   :bind (("C-;"   . avy-goto-char)
           ("C-'"   . avy-goto-char-2)

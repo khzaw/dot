@@ -3,7 +3,8 @@
   :bind (;; C-c bindings (mode-specific-map)
           ("C-c a" . consult-ag)
           ("C-c h" . consult-history)
-          ("C-c i" . imenu)
+          ("C-c i" . consult-imenu)
+          ("C-c r". consult-recent-file)
           ("C-c m" . consult-mode-command)
           ("C-c k" . consult-kmacro)
           ("C-c l t" . consult-theme)
@@ -26,6 +27,7 @@
           ("M-g f" . consult-flycheck)
           ("M-g g" . consult-goto-line)
           ("M-g M-g" . consult-goto-line)
+          ("s-l" . consult-goto-line)
           ("M-g o" . consult-outline)
           ("M-g m" . consult-mark)
           ("M-g k" . consult-global-mark)
@@ -81,6 +83,12 @@
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
   :config
+  (defvar my-consult-line-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map "\C-s" #'previous-history-element)
+      map))
+
+  (consult-customize consult-line :keymap my-consult-line-map)
   (use-package consult-ag)
 
   ;; Optionally configure preview. The default value
@@ -97,7 +105,7 @@
     consult--source-bookmark consult--source-file-register
     consult--source-recent-file consult--source-project-recent-file
     ;; preview-key (kdb "M-.")
-    :preview-key '(:debounce 0.4 any)
+    :preview-key '(:debounce 0.2 any)
     )
 
   ;; Optionally configure the narrowing key.
@@ -112,6 +120,43 @@
   (setq consult-project-function (lambda (_) (projectile-project-root)))
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
+
+(defun down-from-outside ()
+  "Move to next candidate in minibuffer, even when minibuffer isn't selected."
+  (interactive)
+  (with-selected-window (active-minibuffer-window)
+    (execute-kbd-macro [down])))
+
+(defun up-from-outside ()
+  "Move to previous candidate in minibuffer, even when minibuffer isn't selected."
+  (interactive)
+  (with-selected-window (active-minibuffer-window)
+    (execute-kbd-macro [up])))
+
+(defun to-and-fro-minibuffer ()
+  "Go back and forth between minibuffer and other window."
+  (interactive)
+  (if (window-minibuffer-p (selected-window))
+    (select-window (minibuffer-selected-window))
+    (select-window (active-minibuffer-window))))
+
+(global-set-key (kbd "s-i") #'to-and-fro-minibuffer)
+(global-set-key (kbd "s-n") #'down-from-outside)
+(global-set-key (kbd "s-p") #'up-from-outside)
+
+(defun vertico-directory-delete-entry ()
+  "Delete directory or entire entry before point."
+  (interactive)
+  (when (and (> (point) (minibuffer-prompt-end))
+          ;; Check vertico--base for stepwise file path completion
+          (not (equal vertico--base ""))
+          (eq 'file (vertico--metadata-get 'category)))
+    (save-excursion
+      (goto-char (1- (point)))
+      (when (search-backward "/" (minibuffer-prompt-end) t)
+        (delete-region (1+ (point)) (point-max))
+        t))))
+
 
 (use-package consult-spotify
   :after consult)
@@ -130,13 +175,40 @@
                                      extended-command-history)
     savehist-autosave-interval 300))
 
+
 (use-package vertico
   :init
   (vertico-mode)
   :custom
   (vertico-scroll-margin 0) ;; different scroll margin
   (vertico-resize t)
-  (vertico-cycle t))
+  (vertico-cycle t)
+  :config
+  (define-advice vertico--update (:after (&rest _) choose-candidate)
+    "Pick the previous directory rather than the prompt after updating candidates."
+    (cond
+      (previous-directory ; select previous directory
+        (setq vertico--index (or (seq-position vertico--candidates previous-directory)
+                               vertico--index))
+        (setq previous-directory nil))))
+
+  (defvar previous-directory nil
+    "The directory that was just left. It is set when leaving a directory and
+    set back to nil once it is used in the parent directory.")
+
+  (defun set-previous-directory ()
+    "Set the directory that was just exited from within find-file."
+    (when (> (minibuffer-prompt-end) (point))
+      (save-excursion
+        (goto-char (1- (point)))
+        (when (search-backward "/" (minibuffer-prompt-end) t)
+          ;; set parent directory
+          (setq previous-directory (buffer-substring (1+ (point)) (point-max)))
+          ;; set back to nil if not sorting by directories or what was deleted is not a directory
+          (when (not (string-suffix-p "/" previous-directory))
+            (setq previous-directory nil))
+          t))))
+  (advice-add #'vertico-directory-up :before #'set-previous-directory))
 
 (use-package vertico-posframe
   :after (vertico posframe)
@@ -165,6 +237,16 @@
     '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
        nil
        (window-parameters (mode-line-format . none)))))
+
+(defun +embark-live-vertico()
+  "Shrink vertico minibuffer when `embark-live' is active."
+  (when-let (win (and (string-prefix-p "*Embark Live" (buffer-name))
+                   (active-minibuffer-window)))
+    (with-selected-window win
+      (when (and (bound-and-true-p vertico--input)
+              (fboundp 'vertico-multiform-unobtrusive))
+        (vertico-multiform-unobtrusive)))))
+(add-hook 'embark-collect-mode-hook #'+embark-live-vertico)
 
 (use-package embark-consult
   :hook
@@ -195,6 +277,16 @@
 ;;   :init (icomplete-mode)
 ;;   (setq orderless-style-dispatchers '(+orderless-dispatch))
 ;;   :custom (completion-styles '(basic substring partial-completion flex orderless)))
+
+(use-package consult-ls-git
+  :bind (("C-c g f" . consult-ls-git)
+          ("C-c g F" . consult-ls-git-other-window)))
+
+(use-package all-the-icons-completion
+  :after all-the-icons
+  :config (all-the-icons-completion-mode)
+  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
+
 
 (provide 'init-consult)
 ;;; init-consult.el ends here

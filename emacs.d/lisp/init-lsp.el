@@ -28,6 +28,7 @@
           lsp-enable-symbol-highlighting t
           lsp-enable-text-document-color nil
           lsp-enable-indentation t
+          lsp-eldoc-render-all t
           lsp-enable-on-type-formatting t))
 
 (use-package lsp-ui
@@ -35,14 +36,17 @@
   :bind (("C-c u" . lsp-ui-imenu)
           :map lsp-ui-mode-map
           ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-          ([remap xref-find-references] . lsp-ui-peek-find-references))
+          ([remap xref-find-references] . lsp-ui-peek-find-references)
+          ("C-c l g n" . lsp-ui-find-next-reference)
+          ("C-c l g p" . lsp-ui-find-prev-reference))
   :custom
   (lsp-ui-peek-always-show nil)
   (lsp-ui-sideline-show-hover nil)
   (lsp-ui-sideline-show-diagnostics nil)
   (lsp-ui-sideline-show-code-actions nil)
   (lsp-ui-sideline-ignore-duplicate t)
-  (lsp-ui-doc-delay 0.1)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-delay 0.3)
   :init
   (setq lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                ,(face-foreground 'font-lock-string-face)
@@ -56,11 +60,10 @@
     ;;(add-to-list 'lsp-enabled-clients 'jedi)
     ))
 
-(use-package lsp-ivy
-  :after lsp-mode
+(use-package consult-lsp
+  :after (lsp-mode consult)
   :bind (:map lsp-mode-map
-          ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
-          ("C-c l s" . lsp-ivy-global-workspace-symbol)))
+          ([remap xref-find-apropos] . consult-lsp-symbols)))
 
 (use-package lsp-treemacs
   :after lsp-mode

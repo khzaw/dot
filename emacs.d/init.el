@@ -41,7 +41,8 @@
 (require 'init-edit)
 (require 'init-highlight)
 (require 'init-consult)
-(require 'init-company)
+;; (require 'init-company)
+(require 'init-corfu)
 
 (require 'init-dashboard)
 (require 'init-dired)

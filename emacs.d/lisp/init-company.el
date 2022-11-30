@@ -16,7 +16,7 @@
     company-dabbrev-ignore-case nil
     company-dabbrev-downcase nil
     company-global-modes '(not erc-mode message-mode help-mode
-                            gud-mode eshell-mode shell-mode vterm-mode)
+                            gud-mode)
     company-backends '((company-capf :with company-yasnippet)
                         (company-dabbrev-code company-keywords company-files)
                         company-yasnippet
@@ -44,14 +44,14 @@
   :after company
   :config (company-quickhelp-mode 1))
 
-;; Better sorting
-(use-package prescient
-  :commands prescient-persist-mode
-  :init (prescient-persist-mode 1))
-
 (use-package company-prescient
-  :after company
+  :after (company prescient)
   :config (company-prescient-mode))
+
+(use-package consult-company
+  :after (consult company)
+  :bind (:map company-mode-map
+          ([remap completion-at-point] . consult-company)))
 
 (provide 'init-company)
 ;;; init-company.el ends here

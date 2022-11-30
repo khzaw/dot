@@ -213,13 +213,20 @@
   (push (expand-file-name recentf-save-file) recentf-exclude)
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
-
 (use-package time
   :ensure nil
   :init (setq display-time-24hr-format t))
 
 (use-package so-long
   :hook (after-init . global-so-long-mode))
+
+;; Better sorting
+(use-package prescient
+  :commands prescient-persist-mode
+  :init (prescient-persist-mode 1)
+  :config
+  (setq prescient-sort-full-matches-first t
+    prescient-sort-length-enable t))
 
 (provide 'init-basics)
 ;;; init-basics.el ends here
