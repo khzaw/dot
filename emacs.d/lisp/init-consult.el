@@ -268,7 +268,7 @@
   (setq orderless-style-dispatchers '(+orderless-dispatch)
     orderless-component-separator #'orderless-escapable-split-on-space)
 
-  (setq completion-styles '(basic substring partial-completion flex)
+  (setq completion-styles '(orderless basic substring partial-completion flex)
     completion-category-defaults nil
     completion-category-overrides '((file (styles partial-completion)))))
 

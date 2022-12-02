@@ -55,6 +55,7 @@
 (require 'init-docker)
 (require 'init-flycheck)
 (require 'init-vcs)
+(require 'init-eglot)
 (require 'init-lsp)
 (require 'init-projectile)
 

@@ -19,13 +19,15 @@
   (org-fontify-done-headline t)
   (org-fontify-quote-and-verse-blocks t)
   (org-fontify-whole-heading-line t)
-  (org-hide-leading-starts t)
+  (org-hide-leading-stars t)
+  (org-hide-emphasis-markers t)
   (org-startup-truncated nil)
   (org-imenu-depth 6)
   (org-tags-column 0)
   (org-startup-indented t)
   (org-startup-folded nil)
   (org-special-ctrl-a/e t)
+  (org-link-search-must-match-exact-headline nil)
   (org-M-RET-may-split-line nil)
   (org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
   (org-priority-faces
@@ -93,6 +95,8 @@
   (require 'org-roam-protocol)
   (require 'org-roam-export))
 
+(use-package ox-gfm :after org)
+
 (use-package deft
   :config
   (setq deft-directory (file-truename org-directory)
@@ -101,7 +105,6 @@
     deft-use-filename-as-title t)
   :bind
   ("C-c n d" . deft))
-
 
 (provide 'init-org)
 ;;; init-org.el ends here
