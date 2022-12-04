@@ -13,11 +13,11 @@
 (global-set-key (kbd "M-`") 'other-frame)
 
 (defun khz/tweak-emacs ()
-  "C-c e Tweak emacs"
+  "C-c e t Tweak emacs"
   (interactive)
   (find-file-other-window "~/Code/dot/emacs.d/init.el"))
 
-(global-set-key (kbd "C-c e") 'khz/tweak-emacs)
+(global-set-key (kbd "C-c e t") 'khz/tweak-emacs)
 
 ;; M-return for frame maximization toggle
 (global-set-key (kbd "<M-return>") 'toggle-frame-maximized)
