@@ -5,7 +5,8 @@
   :hook (after-init . global-auto-revert-mode))
 
 (use-package expand-region
-  :bind ("C-=" . er/expand-region))
+  :bind (("C-=" . er/expand-region)
+          ("C--" . er/contract-region)))
 
 (use-package avy
   :bind (("C-;"   . avy-goto-char)
@@ -16,7 +17,7 @@
   :hook (after-init . avy-setup-default)
   :config (setq avy-background t
             avy-all-windows nil
-            avy-all-windows-alt t
+            avy-all-windows-t
             avy-style 'pre))
 
 ;; Minor mode to aggressively keep your code always indented
@@ -24,6 +25,11 @@
   :diminish
   :hook ((clojure-mode . aggressive-indent-mode)
           (emacs-lisp-mode . aggressive-indent-mode)))
+
+(use-package symbol-overlay
+  :defer t
+  :commands (symbol-overlay-mode symbol-overlay-put))
+
 
 ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=55340
 (defun fix-electric-indent ()
@@ -118,6 +124,10 @@
 (use-package apheleia
   :config
   (apheleia-global-mode t))
+
+(use-package repeat-map
+  :ensure nil
+  :hook (after-init . repeat-mode))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

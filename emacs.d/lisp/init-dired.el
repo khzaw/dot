@@ -1,7 +1,9 @@
 (use-package dired
   :ensure nil
+  :defer t
   :custom
   (dired-listing-switches "-alh --group-directories-first")
+  (dired-dwim-target t)
   :config
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
