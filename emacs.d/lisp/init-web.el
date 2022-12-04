@@ -20,8 +20,8 @@
 (use-package js2-mode
   :init (setq js-indent-level 2))
 
-(use-package rjsx-mode
-  :mode ("\\.jsx?\\'"))
+;; (use-package rjsx-mode
+;;   :mode ("\\.jsx?\\'"))
 
 (use-package php-mode)
 
@@ -36,12 +36,17 @@
   (company-mode +1))
 
 (use-package typescript-mode
-  :mode ("\\.ts[x]\\'" . typescript-mode))
+  :init
+  (define-derived-mode typescript-tsx-mode typescript-mode "TSX")
+  (add-to-list 'auto-mode-alist `(,(rx ".tsx" eos) . typescript-tsx-mode))
+  :mode ("\\.ts[x]\\'" . typescript-mode)
+  :config
+  (add-hook 'typescript-tsx-mode #'sgml-electric-tag-pair-mode))
 
-(use-package tide
-  :after (typescript-mode company flycheck)
-  :hook (((typescript-mode js-mode js2-mode rjsx-mode) . setup-tide-mode)
-          (before-save . tide-format-before-save)))
+;; (use-package tide
+;;   :after (typescript-mode company flycheck)
+;;   :hook (((typescript-mode js-mode js2-mode rjsx-mode) . setup-tide-mode)
+;;           (before-save . tide-format-before-save)))
 
 (use-package emmet-mode
   :hook ((web-mode . emmet-mode)
