@@ -51,17 +51,27 @@
 (use-package orderless
   :init
   :custom
-  (completion-styles '(orderless basic substring partial-completion flex))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
+  (completion-styles '(orderless flex))
+  (completion-category-overrides '((eglot (styles orderless)))))
 
 (use-package corfu
   :init (global-corfu-mode)
-  :custom (corfu-auto t)
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (corfu-quit-no-match t)
+  (corfu-preselect-first nil)
+  (corfu-scroll-margin 5)
+  (corfu-auto-delay .5)
   :bind (:map corfu-map
           ("M-m" . corfu-move-to-minibuffer)
           ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
-          ([remap move-end-of-line] . corfu-end-of-prompt)))
+          ([remap move-end-of-line] . corfu-end-of-prompt))
+  :config
+  (corfu-popupinfo-mode)
+  (corfu-history-mode)
+  (set-face-attribute 'corfu-popupinfo nil :height 1.0)
+  (setq corfu-popupinfo-delay 0.2))
 
 (use-package kind-icon
   :after corfu
@@ -70,7 +80,9 @@
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package cape
-  :bind (("M-p p" . completion-at-point) ;; capf
+  ;; Bind dedicated completion commands
+  ;; Alternative prefix keys: C-c p, M-p, M-+, ...
+  :bind ( ("M-p p" . completion-at-point) ;; capf
           ("M-p t" . complete-tag)        ;; etags
           ("M-p d" . cape-dabbrev)        ;; or dabbrev-completion
           ("M-p h" . cape-history)
@@ -90,15 +102,16 @@
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-history)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
   ;;(add-to-list 'completion-at-point-functions #'cape-tex)
   ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
   ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
-  (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (add-to-list 'completion-at-point-functions #'cape-ispell)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-ispell)
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
   (add-to-list 'completion-at-point-functions #'cape-symbol)
-  (add-to-list 'completion-at-point-functions #'cape-line))
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  )
 
 (provide 'init-corfu)
