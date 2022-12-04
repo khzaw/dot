@@ -116,6 +116,7 @@
   :config (yasnippet-snippets-initialize))
 
 (use-package writeroom-mode
+  :bind (("C-c w r" . writeroom-mode))
   :config
   (setq writeroom-width 100
     writeroom-fullscreen-effect nil
