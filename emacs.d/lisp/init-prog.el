@@ -12,29 +12,31 @@
   :bind (:map hs-minor-mode-map
           ("C-`" . hs-toggle-hiding)))
 
-(use-package protobuf-mode)
+(use-package protobuf-mode :defer t)
 
-(use-package yaml-mode)
+(use-package yaml-mode :defer t)
 
-(use-package terraform-mode)
+(use-package terraform-mode :defer t)
 
-(use-package csv-mode)
+(use-package csv-mode :defer t)
 
-(use-package cask-mode)
+(use-package cask-mode :defer t)
 
-(use-package csharp-mode)
+(use-package csharp-mode :defer t)
 
-(use-package lua-mode)
+(use-package lua-mode :defer t)
 
-(use-package vimrc-mode)
+(use-package vimrc-mode :defer t)
 
 (use-package plantuml-mode
+  :defer t
   :mode "\\.puml\\'"
   :custom
   (plantuml-jar-path "/usr/local/bin/plantuml")
   (plantuml-default-exec-mode 'executable))
 
 (use-package graphviz-dot-mode
+  :defer t
   :commands graphviz-dot-mode
   :mode ("\\.dot'" . graphviz-dot-mode))
 
@@ -44,11 +46,23 @@
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-(use-package tree-sitter-langs :after tree-sitter)
+(use-package tree-sitter-langs :after tree-sitter :defer nil
+  :config
+  (tree-sitter-require 'tsx)
+  (add-to-list 'tree-sitter-major-mode-language-alist
+    '(typescript-tsx-mode . tsx)))
 
-(use-package ssh-config-mode)
+(use-package ssh-config-mode :defer t)
 
-(use-package vyper-mode)
+(use-package vyper-mode :defer t)
+
+(use-package conf-mode
+  :ensure nil
+  :mode (rx (or ".list"
+              "CODEOWNERS"
+              (and ".env" (* (and "." (+ word))))
+              (and "." (+ word) "rc"))
+          eos))
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

@@ -98,7 +98,6 @@
   :bind (:map ivy-minibuffer-map
           ("C-'" . ivy-avy)))
 
-
 ;; (use-package counsel-spotify
 ;;   :after counsel
 ;;   :init

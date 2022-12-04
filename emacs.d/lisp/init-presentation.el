@@ -26,44 +26,42 @@
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-
-(defun khz/org-present-start ()
-  (setq-local visual-fill-column-width 150)
-  (setq-local visual-fill-column-center-text t)
-  ;; Set a blank header line string to create blank space at the top
-  (setq-local header-line-format " ")
-  ;; Tweak font sizes in presentation
-  (setq-local face-mapping-alist '((default (:height 1.5) default)))
-  (visual-fill-column-mode 1)
-  (hide-mode-line-mode 1)
-  (visual-line-mode 1))
-
-(defun khz/org-present-end ()
-  ;; Reset font
-  (setq-local face-mapping-alist '((default variable-pitch default)))
-  (visual-fill-column-mode 0)
-  (hide-mode-line-mode 0)
-  (visual-line-mode 0))
-
-(defun khz/org-present-prepare-slide (buffer-name heading)
-  ;; Show only top-level headlines
-  (org-overview)
-
-  ;; Unfold the current entry
-  (org-show-entry)
-
-  ;; Show only direct subheadings of the slide but don't expand them
-  (org-show-children))
-
 (use-package org-tree-slide
   :custom
   (org-image-actual-width nil))
 
 (use-package org-present
+  :preface
+  (defun khz/org-present-start ()
+    "Configurations to run when `org-present-mode' starts."
+    (setq-local visual-fill-column-width 150)
+    (setq-local visual-fill-column-center-text t)
+    ;; Set a blank header line string to create blank space at the top
+    (setq-local header-line-format " ")
+    ;; Tweak font sizes in presentation
+    (setq-local face-mapping-alist '((default (:height 1.5) default)))
+    (visual-fill-column-mode 1)
+    (hide-mode-line-mode 1)
+    (visual-line-mode 1))
+  (defun khz/org-present-end ()
+    "Configurations to run when `org-present-mode' ends."
+    ;; Reset font
+    (setq-local face-mapping-alist '((default variable-pitch default)))
+    (visual-fill-column-mode 0)
+    (hide-mode-line-mode 0)
+    (visual-line-mode 0))
+  (defun khz/org-present-prepare-slide (buffer-name heading)
+    ;; Show only top-level headlines
+    (org-overview)
+
+    ;; Unfold the current entry
+    (org-show-entry)
+
+    ;; Show only direct subheadings of the slide but don't expand them
+    (org-show-children))
   :hook ((org-present-mode . khz/org-present-start)
           (org-present-mode-quit . khz/org-present-end)
           (org-present-after-navigate-functions . khz/org-present-prepare-slide)))
-
 
 (provide 'init-presentation)
 ;;; init-presentation.el ends here

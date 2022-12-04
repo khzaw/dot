@@ -17,21 +17,28 @@
     (apply #'consult-completion-in-region completion-in-region--data)))
 
 (use-package tempel
-  :bind (("M-+" . tempel-complete)
+  ;; Require trigger prefix before template name when completing.
+  ;; :custom
+  ;; (tempel-trigger-prefix "<")
+
+  :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
           ("M-*" . tempel-insert))
+
   :init
-  ;; setup completion at point
-  (defun tempel-setup-caf ()
+
+  ;; Setup completion at point
+  (defun tempel-setup-capf ()
     ;; Add the Tempel Capf to `completion-at-point-functions'.
     ;; `tempel-expand' only triggers on exact matches. Alternatively use
     ;; `tempel-complete' if you want to see all matches, but then you
     ;; should also configure `tempel-trigger-prefix', such that Tempel
-    ;; does not trigger too often when you don't expect it. NOTE: we add
+    ;; does not trigger too often when you don't expect it. NOTE: We add
     ;; `tempel-expand' *before* the main programming mode Capf, such
     ;; that it will be tried first.
     (setq-local completion-at-point-functions
       (cons #'tempel-expand
         completion-at-point-functions)))
+
   (add-hook 'prog-mode-hook 'tempel-setup-capf)
   (add-hook 'text-mode-hook 'tempel-setup-capf)
 
@@ -41,19 +48,24 @@
   ;; (global-tempel-abbrev-mode)
   )
 
-(use-package corfu
+(use-package orderless
   :init
-  (global-corfu-mode)
+  :custom
+  (completion-styles '(orderless basic substring partial-completion flex))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+
+(use-package corfu
+  :init (global-corfu-mode)
+  :custom (corfu-auto t)
   :bind (:map corfu-map
           ("M-m" . corfu-move-to-minibuffer)
           ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
           ([remap move-end-of-line] . corfu-end-of-prompt)))
 
 (use-package kind-icon
-  :ensure t
   :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :custom (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 

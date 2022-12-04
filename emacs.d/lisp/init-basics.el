@@ -144,6 +144,10 @@
 ;; Minimum window height
 (setq window-min-height 1)
 
+;; Native compilation
+(setq native-comp-async-report-warnings-errors nil) ;; silence compiler warnings
+(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
+
 ;; Buffer encoding
 (prefer-coding-system       'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -193,7 +197,8 @@
 (use-package editorconfig
   :defer 1
   :diminish
-  :config (editorconfig-mode 1))
+  :config (editorconfig-mode 1)
+  :custom (editorconfig-lisp-use-default-indent t))
 
 ;; History
 (use-package saveplace
