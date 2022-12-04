@@ -1,5 +1,4 @@
 (use-package consult
-  :config
   :bind (;; C-c bindings (mode-specific-map)
           ("C-c a" . consult-ag)
           ("C-c h" . consult-history)
@@ -70,6 +69,9 @@
   ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
     register-preview-function #'consult-register-format)
+
+  (setq completion-ignore-case t)
+  (setq read-file-name-completion-ignore-case t)
 
   ;; Optionally tweak the register preview window.
   ;; This adds thin lines, sorting and hides the mode line of the window.
@@ -160,6 +162,20 @@
 
 (use-package consult-spotify
   :after consult)
+
+(use-package flimenu
+  :defer t
+  :after imenu
+  :config (flimenu-global-mode 1))
+
+(use-package imenu-list
+  :defer t
+  :after (imenu consult)
+  :commands imenu-list-smart-toggle
+  :config
+  (setq imenu-list-focus-after-activation t)
+  (setq imenu-list-after-jump-hook nil)
+  (setq imenu-list-auto-resize t))
 
 (use-package savehist
   :ensure nil
