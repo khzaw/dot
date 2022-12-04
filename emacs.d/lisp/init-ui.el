@@ -20,8 +20,8 @@
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
 ;; (set-frame-font "JetBrains Mono 14" nil t)
-(set-face-attribute 'default nil :font "JetBrains Mono" :weight 'normal :height 140)
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'normal :height 140)
+(set-face-attribute 'default nil :font "Inconsolata" :weight 'normal :height 180)
+(set-face-attribute 'fixed-pitch nil :font "Inconsolata" :weight 'normal :height 180)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.25)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
