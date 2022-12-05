@@ -1,0 +1,83 @@
+* Keyboads keymaps
+** Setup QMK default config
+This will set a default keyboard. Don't do it. Just supply keyboard the parameter at subsequent commands.
+#+begin_src sh :session shared
+keyboard_name=ymdk/wingshs
+qmk_username=khzaw
+qmk config user.keymap=$qmk_username
+# qmk config user.keyboard=$keyboard_name
+#+end_src
+
+#+RESULTS:
+| user.keymap[36m:[39m | khzaw | [36m->[39m | khzaw[0m[0m |                                 |                           |
+| [34mΨ[0m[0m        | Wrote | configuration  | to              | '/Users/khz/Library/Application | Support/qmk/qmk.ini'[0m |
+| [0m[0m[0m[0m     |       |                |                 |                                 |                           |
+
+** Symlink the keymap file
+Symlink the file to `qmk_firmware/keyboards/<keyboard_name>/keymaps/khzaw/keymap.c`.
+#+begin_src sh :session shared
+keymap_file=ymdk_wingshs.c
+mkdir -p $HOME/Library/qmk_firmware/keyboards/${keyboard_name}/keymaps/${qmk_username}
+ln -s $HOME/Code/dot/keymaps/${keymap_file} $HOME/Library/qmk_firmware/keyboards/${keyboard_name}/keymaps/${qmk_username}/keymap.c
+#+end_src
+
+#+RESULTS:
+
+** Compile
+#+begin_src sh :session shared :results no
+qmk compile --keyboard $keyboard_name -km $qmk_username
+#+end_src
+
+#+RESULTS:
+| [34mΨ[0m[0m | Compiling              | keymap    | with        | [36mgmake          | --jobs=1             | ymdk/wingshs:khzaw[0m |             |         |             |                |       |    |
+| [0m             |                        |           |             |                      |                      |                         |             |         |             |                |       |    |
+| [0m[0m        |                        |           |             |                      |                      |                         |             |         |             |                |       |    |
+| QMK               | Firmware               | 0.19.2    |             |                      |                      |                         |             |         |             |                |       |    |
+| [33m⚠[0m     | ymdk/wingshs:          | LAYOUT_all | should      | be                   | LAYOUT               | unless                  | additional  | layouts | are         | provided.[0m |       |    |
+| [0mMaking       | [1mymdk/wingshs[0m | with      | keymap      | [1mkhzaw[0m      |                      |                         |             |         |             |                |       |    |
+|                   |                        |           |             |                      |                      |                         |             |         |             |                |       |    |
+| [33m⚠[0m     | ymdk/wingshs:          | LAYOUT_all | should      | be                   | LAYOUT               | unless                  | additional  | layouts | are         | provided.[0m |       |    |
+| [0mavr-gcc      | (Homebrew              | AVR       | GCC         | 8.5.0)               | 8.5.0                |                         |             |         |             |                |       |    |
+| Copyright         | (C)                    | 2018      | Free        | Software             | Foundation,          | Inc.                    |             |         |             |                |       |    |
+| This              | is                     | free      | software;   | see                  | the                  | source                  | for         | copying | conditions. | There          | is    | NO |
+| warranty;         | not                    | even      | for         | MERCHANTABILITY      | or                   | FITNESS                 | FOR         | A       | PARTICULAR  | PURPOSE.       |       |    |
+|                   |                        |           |             |                      |                      |                         |             |         |             |                |       |    |
+| Size              | before:                |           |             |                      |                      |                         |             |         |             |                |       |    |
+| text              | data                   | bss       | dec         | hex                  | filename             |                         |             |         |             |                |       |    |
+| 0                 | 22148                  | 0         | 22148       | 5684                 | ymdk_wingshs_khzaw.hex |                         |             |         |             |                |       |    |
+|                   |                        |           |             |                      |                      |                         |             |         |             |                |       |    |
+| Copying           | ymdk_wingshs_khzaw.hex   | to        | qmk_firmware | folder               | [32;01m[OK][0m   |                         |             |         |             |                |       |    |
+| Checking          | file                   | size      | of          | ymdk_wingshs_khzaw.hex | [32;01m[OK][0m   |                         |             |         |             |                |       |    |
+| *                 | The                    | firmware  | size        | is                   | fine                 | -                       | 22148/28672 | (77%,   | 6524        | bytes          | free) |    |
+| [0m[0m[0m   |                        |           |             |                      |                      |                         |             |         |             |                |       |    |
+
+** Put the keyboard in DFU mode
+Put keyboard into DFU mode
+- ymdk/wingshs - MO(1)+F
+** Flash
+#+begin_src sh :session shared :output no
+qmk flash --keyboard $keyboard_name -km $qmk_username
+#+end_src
+
+#+RESULTS:
+| [-h]            | [-c]          | [-e          | ENV]          | [-j       | PARALLEL]    | [-n]       | [-kb     | KEYBOARD] | [-km         | KEYMAP] | [-m          | MCU]         | [-bl   | BOOTLOADER]  | [-b]     | [filename] |      |    |              |      |    |           |
+|                 |               |              |               |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| positional      | arguments:    |              |               |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| filename        | A             | configurator | export        | JSON      | to           | be         | compiled | and       | flashed      | or      | a            | pre-compiled | binary | firmware     | file     | (bin/hex)  | to   | be | flashed.     |      |    |           |
+|                 |               |              |               |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| options:        |               |              |               |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| -h,             | --help        | show         | this          | help      | message      | and        | exit     |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| -c,             | --clean       | Remove       | object        | files     | before       | compiling. |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| -e              | ENV,          | --env        | ENV           | Set       | a            | variable   | to       | be        | passed       | to      | make.        | May          | be     | passed       | multiple | times.     |      |    |              |      |    |           |
+| -j              | PARALLEL,     | --parallel   | PARALLEL      |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| Set             | the           | number       | of            | parallel  | make         | jobs;      | 0        | means     | unlimited.   |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| -n,             | --dry-run     | Don't        | actually      | build,    | just         | show       | the      | make      | command      | to      | be           | run.         |        |              |          |            |      |    |              |      |    |           |
+| -kb             | KEYBOARD,     | --keyboard   | KEYBOARD      |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| The             | keyboard      | to           | build         | a         | firmware     | for.       | Use      | this      | if           | you     | dont         | have         | a      | configurator | file.    | Ignored    | when | a  | configurator | file | is | supplied. |
+| -km             | KEYMAP,       | --keymap     | KEYMAP        |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| The             | keymap        | to           | build         | a         | firmware     | for.       | Use      | this      | if           | you     | dont         | have         | a      | configurator | file.    | Ignored    | when | a  | configurator | file | is | supplied. |
+| -m              | MCU,          | --mcu        | MCU           | The       | MCU          | name.      | Required | for       | HalfKay,     | HID,    | USBAspLoader | and          | ISP    | flashing.    |          |            |      |    |              |      |    |           |
+| -bl             | BOOTLOADER,   | --bootloader | BOOTLOADER    |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| The             | flash         | command,     | corresponding | to        | qmk's        | make       | options  | of        | bootloaders. |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| -b,             | --bootloaders | List         | the           | available | bootloaders. |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
+| [0m[0m[0m |               |              |               |           |              |            |          |           |              |         |              |              |        |              |          |            |      |    |              |      |    |           |
