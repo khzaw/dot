@@ -234,28 +234,6 @@
   (setq prescient-sort-full-matches-first t
     prescient-sort-length-enable t))
 
-(use-package help-mode
-  :ensure nil
-  :bind
-  ("C-h K" . describe-keymap)
-  (:map help-mode-map
-    ("<" . help-go-back)
-    (">" . help-go-forward)))
-
-(use-package helpful
-  :bind
-  ([remap describe-command] . helpful-command)
-  ([remap describe-function] . helpful-callable)
-  ([remap describe-key] . helpful-key)
-  ([remap describe-symbol] . helpful-symbol)
-  ([remap describe-variable] . helpful-variable)
-  ("C-h F" . helpful-function)
-  :config
-  (with-eval-after-load 'evil
-    (evil-define-keys* 'motion helpful-mode-map
-      (kbd "gr") #'helpful-update
-      (kbd "<tab>") #'forward-button))
-  :custom (helpful-max-buffers 2))
 
 (provide 'init-basics)
 ;;; init-basics.el ends here

@@ -1,20 +1,17 @@
 (use-package go-mode
-  :defer t
   :config (setq gofmt-command "goimports"))
 
 (use-package go-playground
-  :defer t
   :diminish
   :commands (go-playground-mode))
 
-(use-package go-dlv :defer t)
+(use-package go-dlv)
 
 ;; (use-package go-fill-struct :defer t)
 
 ;; (use-package go-impl :defer t)
 
 (use-package gotest
-  :defer t
   :bind (:map go-mode-map
           ("C-c C-t f" . go-test-current-file)
           ("C-c C-t t" . go-test-current-test)
