@@ -13,7 +13,7 @@
   :config
   (setq eglot-strict-mode nil)
   (setq eglot-confirm-server-initiated-edits nil)
-  ;; (setq completion-category-overrides '((eglot (styles orderless))))
+  (setq completion-category-overrides '((eglot (styles orderless))))
 
   (defun eglot-capf ()
     (setq-local completion-at-point-functions
@@ -30,7 +30,6 @@
   (add-hook 'eglot-managed-mode-hook #'eglot-capf))
 
 (use-package consult-eglot
-  :defer t
   :after (consult eglot vertico))
 
 (provide 'init-eglot)
