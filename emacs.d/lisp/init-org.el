@@ -1,7 +1,5 @@
 (use-package org
   :hook (org-mode . org-indent-mode)
-  :config
-  (require 'org-tempo)
   :bind
   ("C-c C-c" . org-edit-src-exit)
   :custom
@@ -37,17 +35,84 @@
   (org-confirm-babel-evaluate nil)
   (org-link-elisp-confirm-function nil)
   :config
+  (require 'org-tempo)
+
+  (use-package org-modern
+    :hook ((org-mode . org-modern-mode)))
+
+  (use-package ox-gfm :after org)
+  (add-to-list 'org-export-backends 'md)
+
+  (defconst load-language-alist
+    '((emacs-lisp . t)
+       (perl . t)
+       (python . t)
+       (ruby . t)
+       (js . t)
+       (css . t)
+       (sass . t)
+       (plantuml . t))
+    "Alist of org ob languages.")
+
+  ;; ob-sh renamed to ob-shell since 26.1.
+  (cl-pushnew '(shell . t) load-language-alist)
+
   (use-package ob-go
     :if (executable-find "go")
-    :init (add-to-list 'org-babel-load-languages '(go . t)))
+    :init (cl-pushnew '(go . t) load-language-alist))
+
   (use-package ob-rust
     :if (executable-find "rustc")
-    :init (add-to-list 'org-babel-load-languages '(rust . t)))
-  (use-package org-web-tools))
+    :init (cl-pushnew '(rust . t) load-language-alist))
 
-(use-package org-modern
-  :after org
-  :hook (org-mode . org-modern-mode))
+  ;; npm install -g @mermaid-js/mermaid-cli
+  ;; (use-package ob-mermaid
+  ;;   :init (cl-pushnew '(mermaid . t) load-language-alist))
+  (org-babel-do-load-languages 'org-babel-load-languages load-language-alist)
+
+  (use-package org-rich-yank
+    :bind (:map org-mode-map
+            ("C-M-y" . org-rich-yank)))
+
+  (use-package org-preview-html
+    :diminish
+    :bind (:map org-mode-map
+            ("C-c C-h" . org-preview-html-mode))
+    :init (when (featurep 'xwidget-internal)
+            (setq org-preview-html-viewer 'xwidget)))
+
+  (use-package org-roam
+    :diminish
+    :custom
+    (org-roam-directory (file-truename org-directory))
+    (org-roam-capture-templates
+      '(
+         ("d" "default" plain
+           "%?"
+           :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+         ("b" "book notes" plain
+           "\n* Source \n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
+           :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+            ("C-c n f" . org-roam-node-find)
+            ("C-c n g" . org-roam-graph)
+            ("C-c n i" . org-roam-node-insert)
+            ("C-c n c" . org-roam-capture)
+            ;; Dailies
+            ("C-c n j" . org-roam-dailies-capture-today))
+    :config
+    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+    (org-roam-db-autosync-mode)
+    (setq org-roam-dailies-directory "daily/")
+
+    ;; If using org-roam-protocol
+    (require 'org-roam-protocol)
+    (require 'org-roam-export))
+
+  (use-package consult-org-roam :after (consult org-roam)))
+
 
 (use-package evil-org
   :after org
@@ -56,46 +121,6 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-(use-package org-bullets
-  :if (display-graphic-p)
-  :after org
-  :hook (org-mode . org-bullets-mode))
-
-(use-package org-superstar
-  :if (display-graphic-p)
-  :after org
-  :hook (org-mode . org-superstar-mode))
-
-(use-package org-roam
-  :custom
-  (org-roam-directory (file-truename org-directory))
-  (org-roam-capture-templates
-    '(
-       ("d" "default" plain
-         "%?"
-         :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)
-       ("b" "book notes" plain
-         "\n* Source \n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
-         :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t)))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-          ("C-c n f" . org-roam-node-find)
-          ("C-c n g" . org-roam-graph)
-          ("C-c n i" . org-roam-node-insert)
-          ("C-c n c" . org-roam-capture)
-          ;; Dailies
-          ("C-c n j" . org-roam-dailies-capture-today))
-  :config
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (org-roam-db-autosync-mode)
-  (setq org-roam-dailies-directory "daily/")
-
-  ;; If using org-roam-protocol
-  (require 'org-roam-protocol)
-  (require 'org-roam-export))
-
-(use-package ox-gfm :after org)
 
 (use-package deft
   :config
