@@ -1,6 +1,5 @@
 (use-package consult
-  :bind (;; C-c bindings (mode-specific-map)
-          ("C-c a" . consult-ag)
+  :bind (("C-c a" . consult-ag)
           ("C-c h" . consult-history)
           ("C-c i" . consult-imenu)
           ("C-c r". consult-recent-file)
@@ -78,8 +77,7 @@
   (advice-add #'register-preview :override #'consult-register-window)
 
   ;; Use Consult to select xref locations with preview
-  (setq
-    xref-show-xrefs-function #'consult-xref
+  (setq xref-show-xrefs-function #'consult-xref
     xref-show-definitions-function #'consult-xref)
 
   ;; Configure other variables and modes in the :config section,
@@ -92,6 +90,7 @@
 
   (consult-customize consult-line :keymap my-consult-line-map)
   (use-package consult-ag)
+  (use-package consult-dir)
 
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
