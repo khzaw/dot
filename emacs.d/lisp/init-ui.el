@@ -60,6 +60,8 @@
   (kaolin-treemacs-theme)
   (load-theme 'kaolin-galaxy t))
 
+(use-package doom-themes)
+
 (use-package modus-themes
   :config
   (setq modus-themes-fringes nil))
