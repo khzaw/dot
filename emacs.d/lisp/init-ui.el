@@ -161,7 +161,7 @@
 
 (use-package redacted :bind ("C-c C-d" . redacted-mode))
 
-(use-package focus)
+(use-package focus :defer t)
 
 (use-package centaur-tabs
   :init
@@ -184,9 +184,18 @@
 
 (use-package theme-magic)
 
+;; set discord status
 (use-package elcord
   :commands elcord-mode
   :config (setq elcord-use-major-mode-as-main-icon t))
+
+;; minimap
+(use-package sublimity
+  :defer t
+  :config
+  (require 'sublimity-scroll)
+  (require 'sublimity-map)
+  (require 'sublimity-attractive))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
