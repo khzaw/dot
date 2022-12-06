@@ -11,11 +11,22 @@
 (use-package json-mode)
 
 (use-package add-node-modules-path
-  :hook ((js-mode js2-mode rjsx-mode web-mode typescript-mode) . add-node-modules-path))
+  :hook ((js-mode
+           js2-mode
+           rjsx-mode
+           web-mode
+           typescript-mode
+           typescript-tsx-mode) . add-node-modules-path))
 
 (use-package prettier
   :after (add-node-modules-path)
-  :hook ((js-mode js2-mode rjsx-mode web-mode typescript-mode solidity-mode) . prettier-mode))
+  :hook ((js-mode
+           js2-mode
+           rjsx-mode
+           web-mode
+           typescript-mode
+           typescript-tsx-mode
+           solidity-mode) . prettier-mode))
 
 (use-package js2-mode
   :init (setq js-indent-level 2))
@@ -39,7 +50,7 @@
   :init
   (define-derived-mode typescript-tsx-mode typescript-mode "TSX")
   (add-to-list 'auto-mode-alist `(,(rx ".tsx" eos) . typescript-tsx-mode))
-  :mode ("\\.ts[x]\\'" . typescript-mode)
+  :mode ("\\.ts[x]\\'" . typescript-tsx-mode)
   :config
   (add-hook 'typescript-tsx-mode #'sgml-electric-tag-pair-mode))
 

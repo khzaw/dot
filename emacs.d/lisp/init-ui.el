@@ -57,10 +57,11 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme)
-  (load-theme 'kaolin-galaxy t))
+  (kaolin-treemacs-theme))
 
-(use-package doom-themes)
+(use-package doom-themes
+  :config
+  (load-theme 'doom-pine t))
 
 (use-package modus-themes
   :config
