@@ -78,7 +78,7 @@
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
   (use-package display-line-numbers
-    :ensure nil
+    :straight (:type built-in)
     ;; :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
     :init (setq display-line-numbers-width-start t))
   (use-package linum-off

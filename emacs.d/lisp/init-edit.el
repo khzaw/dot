@@ -1,6 +1,6 @@
 ;; Automatically reload files modified by external program
 (use-package autorevert
-  :ensure nil
+  :straight (:type built-in)
   :diminish
   :hook (after-init . global-auto-revert-mode))
 
@@ -49,7 +49,7 @@
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
-  :ensure nil
+  :straight (:type built-in)
   :hook (after-init . electric-pair-mode))
 
 (use-package undo-tree
@@ -67,17 +67,17 @@
 
 ;; On-the-fly spell checker
 (use-package flyspell
-  :ensure nil
+  :straight (:type built-in)
   :diminish
   :if (executable-find "aspell")
   :hook (((text-mode outline-mode) . flyspell-mode)
           (prog-mode . flyspell-prog-mode)
           (flyspell-mode . (lambda ()
                              (dolist (key '("C-;" "C-," "C-."))
-  (unbind-key key flyspell-mode-map)))))
+                               (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
-              ispell-program-name "aspell"
-              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
+          ispell-program-name "aspell"
+          ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
   :config
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy

@@ -201,7 +201,7 @@
 
 ;; History
 (use-package saveplace
-  :ensure nil
+  :straight (:type built-in)
   :hook (after-init . save-place-mode))
 
 (use-package recentf
@@ -219,7 +219,7 @@
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
 (use-package time
-  :ensure nil
+  :straight (:type built-in)
   :init (setq display-time-24hr-format t))
 
 (use-package so-long

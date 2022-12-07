@@ -107,8 +107,6 @@
       map))
 
   (consult-customize consult-line :keymap my-consult-line-map)
-  (use-package consult-ag)
-  (use-package consult-dir)
 
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
@@ -176,6 +174,9 @@
         (delete-region (1+ (point)) (point-max))
         t))))
 
+(use-package consult-ag)
+
+(use-package consult-dir)
 
 (use-package consult-spotify
   :after consult)
@@ -195,7 +196,7 @@
   (setq imenu-list-auto-resize t))
 
 (use-package savehist
-  :ensure nil
+  :straight (:type built-in)
   :hook (after-init . savehist-mode)
   :init
   (setq-default prescient-history-length 1000)

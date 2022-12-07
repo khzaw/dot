@@ -25,10 +25,6 @@
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-(use-package org-tree-slide
-  :custom
-  (org-image-actual-width nil))
-
 (use-package org-present
   :preface
   (defun khz/org-present-start ()

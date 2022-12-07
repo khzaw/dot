@@ -49,7 +49,11 @@
 (use-package auto-package-update
   :init
   (setq auto-package-update-delete-old-versions t
-        auto-package-update-hide-results t))
+    auto-package-update-hide-results t))
+
+
+;; profiler
+(use-package esup)
 
 (provide 'init-package)
 ;;; init-package.el ends here

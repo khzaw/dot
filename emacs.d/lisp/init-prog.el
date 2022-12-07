@@ -7,7 +7,7 @@
   (global-prettify-symbols-mode t))
 
 (use-package hideshow
-  :ensure nil
+  :straight (:type built-in)
   :hook (prog-mode . hs-minor-mode)
   :bind (:map hs-minor-mode-map
           ("C-`" . hs-toggle-hiding)))
@@ -71,7 +71,7 @@
 (use-package vyper-mode)
 
 (use-package conf-mode
-  :ensure nil
+  :straight (:type built-in)
   :mode (rx (or ".list"
               "CODEOWNERS"
               (and ".env" (* (and "." (+ word))))

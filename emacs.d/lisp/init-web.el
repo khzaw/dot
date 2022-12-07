@@ -5,7 +5,6 @@
   (setq web-mode-code-indent-offset 2))
 
 (use-package css-mode
-  :ensure nil
   :init (setq css-indent-offset 2))
 
 (use-package json-mode)
