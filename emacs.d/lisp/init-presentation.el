@@ -1,7 +1,6 @@
 (use-package hide-mode-line)
 
-(use-package org-faces
-  :ensure nil)
+(use-package org-faces :straight nil)
 
 (dolist (face '((org-level-1 . 1.3)
                  (org-level-2 . 1.1)
