@@ -57,10 +57,10 @@
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu"
               :files (:defaults "extensions/*"))
+  :init (global-corfu-mode)
   :custom
   (corfu-auto t)
-  (corfu-cycle t)
-  (corfu-quit-no-match t)
+  (corfu-quit-no-match 'separator)
   (corfu-preselect-first nil)
   (corfu-scroll-margin 5)
   :bind (:map corfu-map
@@ -68,8 +68,8 @@
           ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
           ([remap move-end-of-line] . corfu-end-of-prompt))
   :config
-  (global-corfu-mode)
   (corfu-popupinfo-mode)
+  (corfu-echo-mode) ;; show candidate doc in echo area
   (set-face-attribute 'corfu-popupinfo nil :height 1.0))
 
 (use-package corfu-history
@@ -80,6 +80,16 @@
   (corfu-history-mode 1)
   (savehist-mode 1)
   (add-to-list 'savehist-additional-variables 'corfu-history))
+
+(defun corfu-enable-always-in-minibuffer ()
+  "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+  (unless (or (bound-and-true-p mct--active)
+            (bound-and-true-p vertico--input))
+    ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+    (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+      corfu-popupinfo-delay nil)
+    (corfu-mode 1)))
+(add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
 (use-package kind-icon
   :after corfu

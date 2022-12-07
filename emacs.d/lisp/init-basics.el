@@ -89,11 +89,9 @@
 ;; Navigate windows using shift+direction
 (windmove-default-keybindings)
 
-;; Tab behavior
-;; (setq tab-always-indent 'complete)
-;; (global-company-mode)
-;; (define-key company-mode-map [remap indent-for-tab-command]
-;;   #'company-indent-or-complete-common)
+;; Enable indentation + completion using the TAB key
+;; `completion-at-point' is often bound to M-TAB.
+(setq tab-always-indent 'complete)
 
 ;; Better scrolling
 (setq scroll-margin 10

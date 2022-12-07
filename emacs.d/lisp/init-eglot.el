@@ -3,6 +3,7 @@
   :hook ((typescript-tsx-mode
            scss-mode
            css-mode
+           python-mode
            go-mode) . eglot-ensure)
   ;; :hook ((go-mode
   ;;          web-mode
