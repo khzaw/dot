@@ -1,3 +1,17 @@
+(use-package embark
+  :bind (("C-c C-." . embark-act)
+          ("C-." . embark-act)
+          ("C-;" . embark-dwim)
+          ("C-c C-;" . embark-dwim)
+          ("C-h B" . embark-bindings))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (add-to-list 'display-buffer-alist
+    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+       nil
+       (window-parameters (mode-line-format . none)))))
+
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
@@ -196,6 +210,15 @@
 
 
 (use-package vertico
+  :straight (:includes (vertico-buffer
+                         vertico-directory
+                         vertico-reverse
+                         vertico-flat
+                         vertico-repeat
+                         vertico-unobstrusive
+                         vertico-grid
+                         vertico-multiform)
+              :files (:defaults "extensions/*"))
   :init
   (vertico-mode)
   :custom
@@ -229,6 +252,14 @@
           t))))
   (advice-add #'vertico-directory-up :before #'set-previous-directory))
 
+;; repeat last vertico session
+(use-package vertico-repeat
+  :straight nil
+  :after vertico
+  :bind
+  ("M-r" . vertico-repeat))
+
+
 (use-package vertico-posframe
   :after (vertico posframe)
   :config (setq vertico-posframe-border-width 15))
@@ -242,19 +273,7 @@
   :bind (:map minibuffer-local-map ("M-A" . marginalia-cycle))
   :init (marginalia-mode))
 
-(use-package embark
-  :bind (("C-c C-." . embark-act)
-          ("C-." . embark-act)
-          ("C-;" . embark-dwim)
-          ("C-c C-;" . embark-dwim)
-          ("C-h B" . embark-bindings))
-  :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-  (add-to-list 'display-buffer-alist
-    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-       nil
-       (window-parameters (mode-line-format . none)))))
+
 
 (defun +embark-live-vertico()
   "Shrink vertico minibuffer when `embark-live' is active."

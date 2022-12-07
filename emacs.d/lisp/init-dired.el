@@ -1,5 +1,5 @@
 (use-package dired
-  :ensure nil
+  :straight (:type built-in)
   :defer t
   :custom
   (dired-listing-switches "-alh --group-directories-first")

@@ -1,5 +1,5 @@
 (use-package prog-mode
-  :ensure nil
+  :straight (:type built-in)
   :hook (prog-mode . prettify-symbols-mode)
   :init
   (setq prettify-symbols-unprettify-at-point 'right-edge)
@@ -12,47 +12,42 @@
   :bind (:map hs-minor-mode-map
           ("C-`" . hs-toggle-hiding)))
 
-(use-package protobuf-mode :defer t)
+(use-package protobuf-mode)
 
-(use-package yaml-mode :defer t)
+(use-package yaml-mode)
 
-(use-package terraform-mode :defer t)
+(use-package terraform-mode)
 
-(use-package csv-mode :defer t)
+(use-package csv-mode)
 
-(use-package cask-mode :defer t)
+(use-package cask-mode)
 
-(use-package csharp-mode :defer t)
+(use-package lua-mode)
 
-(use-package lua-mode :defer t)
-
-(use-package vimrc-mode :defer t)
+(use-package vimrc-mode)
 
 (use-package plantuml-mode
-  :defer t
   :mode "\\.puml\\'"
   :custom
   (plantuml-jar-path "/usr/local/bin/plantuml")
   (plantuml-default-exec-mode 'executable))
 
 (use-package graphviz-dot-mode
-  :defer t
   :commands graphviz-dot-mode
   :mode ("\\.dot'" . graphviz-dot-mode))
 
 ;; (use-package treesit
-;;   :disabled
+;;   :disabled t
 ;;   :if (executable-find "tree-sitter")
 ;;   :config
 ;;   (setq treesit-extra-load-path '("~/Code/dot/emacs.d/treesit-libs")))
 
+(use-package tree-sitter-langs)
 
 (use-package tree-sitter
+  :after (tree-sitter-langs)
   :config (global-tree-sitter-mode)
   :hook (tree-sitter-after-on . tree-sitter-hl-mode))
-
-(use-package tree-sitter-langs
-  :after (tree-sitter))
 
 ;; (use-package tree-sitter
 ;;   :hook ((go-mode
@@ -71,9 +66,9 @@
 ;;   (add-to-list 'tree-sitter-major-mode-language-alist
 ;;     '(typescript-tsx-mode . tsx)))
 
-(use-package ssh-config-mode :defer t)
+(use-package ssh-config-mode)
 
-(use-package vyper-mode :defer t)
+(use-package vyper-mode)
 
 (use-package conf-mode
   :ensure nil

@@ -42,7 +42,7 @@
 (transparency 94)
 
 (use-package solaire-mode
-  :defer 1
+  :straight t
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)

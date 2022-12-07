@@ -1,25 +1,41 @@
-; Initialize packages
-(require 'package)
+;; setup straight.el
+(setq straight-repository-branch "develop")
+(defvar bootstrap-version)
+(let ((bootstrap-file
+        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+      (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq package-enable-at-startup nil)          ; To prevent initializing twice
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; (require 'package)
+;; Initialize packages
 
-(package-initialize)
+
+;; (package-initialize)
 
 ;; Setup `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
 
-;; Should set before loading `use-package'
-(eval-and-compile
-  (setq use-package-always-ensure t)
-  (setq use-package-expand-minimally t)
-  (setq use-package-enable-imenu-support t))
+;; ;; Should set before loading `use-package'
+;; (eval-and-compile
+;;   (setq use-package-always-ensure t)
+;;   (setq use-package-expand-minimally t)
+;;   (setq use-package-enable-imenu-support t))
 
-(eval-when-compile
-  (require 'use-package))
+;; (eval-when-compile
+;;   (require 'use-package))
 
 
 ;; Required by `use-package'

@@ -56,9 +56,10 @@
 (require 'init-flycheck)
 (require 'init-vcs)
 (require 'init-eglot)
-(require 'init-lsp)
+;; (require 'init-lsp)
 (require 'init-projectile)
 
+(require 'init-prog)
 (require 'init-elisp)
 (require 'init-go)
 (require 'init-haskell)
@@ -68,7 +69,6 @@
 (require 'init-solidity)
 (require 'init-tex)
 (require 'init-web)
-(require 'init-prog)
 
 (require 'init-terminal)
 

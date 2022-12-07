@@ -46,15 +46,22 @@
   (prettier-mode)
   (company-mode +1))
 
-(use-package typescript-mode)
+(use-package typescript-mode
+  :after tree-sitter
+  :config
+  (define-derived-mode typescript-tsx-mode typescript-mode "Typescript TSX")
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-tsx-mode))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescript-tsx-mode . tsx)))
 
-;; (use-package typescript-mode
-;;   :init
-;;   (define-derived-mode typescript-tsx-mode typescript-mode "TSX")
-;;   (add-to-list 'auto-mode-alist `(,(rx ".tsx" eos) . typescript-tsx-mode))
-;;   :mode ("\\.ts[x]\\'" . typescript-tsx-mode)
-;;   :config
-;;   (add-hook 'typescript-tsx-mode #'sgml-electric-tag-pair-mode))
+(use-package tsi
+  :straight (tsi :type git :host github :repo "orzechowskid/tsi.el")
+  :after tree-sitter
+  ;; define autoload definitions which when actually invoked will cause package to be loaded
+  :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
+  :init
+  (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
+  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
+  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1))))
 
 ;; (use-package tide
 ;;   :after (typescript-mode company flycheck)
@@ -76,7 +83,6 @@
   (with-eval-after-load 'company
     (use-package company-restclient
       :init (add-to-list 'company-backends 'company-restclient))))
-
 
 (provide 'init-web)
 ;;; init-web.el ends here

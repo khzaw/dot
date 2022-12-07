@@ -1,10 +1,14 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
-  :hook ((go-mode
-           web-mode
-           js-mode
-           python-mode
-           rust-mode) . eglot-ensure)
+  :hook ((typescript-tsx-mode
+           scss-mode
+           css-mode
+           go-mode) . eglot-ensure)
+  ;; :hook ((go-mode
+  ;;          web-mode
+  ;;          js-mode
+  ;;          python-mode
+  ;;          rust-mode) . eglot-ensure)
   :custom (eglot-autoshutdown t)
   :bind (("C-c e f" . #'eglot-format)
           ("C-c e a" . #'eglot-code-actions)

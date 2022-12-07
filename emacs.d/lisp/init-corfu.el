@@ -55,7 +55,8 @@
   (completion-category-overrides '((eglot (styles orderless)))))
 
 (use-package corfu
-  :init (global-corfu-mode)
+  :straight (corfu :type git :host github :repo "minad/corfu"
+              :files (:defaults "extensions/*"))
   :custom
   (corfu-auto t)
   (corfu-cycle t)
@@ -67,10 +68,18 @@
           ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
           ([remap move-end-of-line] . corfu-end-of-prompt))
   :config
+  (global-corfu-mode)
   (corfu-popupinfo-mode)
-  (corfu-history-mode)
-  (set-face-attribute 'corfu-popupinfo nil :height 1.0)
-  (setq corfu-popupinfo-delay 0.2))
+  (set-face-attribute 'corfu-popupinfo nil :height 1.0))
+
+(use-package corfu-history
+  :straight nil
+  :after corfu
+  :demand
+  :config
+  (corfu-history-mode 1)
+  (savehist-mode 1)
+  (add-to-list 'savehist-additional-variables 'corfu-history))
 
 (use-package kind-icon
   :after corfu

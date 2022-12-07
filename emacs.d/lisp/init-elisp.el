@@ -1,5 +1,5 @@
 (use-package elisp-mode
-  :ensure nil
+  :straight (:type built-in)
   :bind (:map emacs-lisp-mode-map
           ("C-c C-x" . ielm)
           ("C-c C-c" . eval-defun)
@@ -90,7 +90,7 @@ Lisp function does not specify a special indentation."
 (use-package eldoc :ensure nil :diminish)
 
 (use-package help-mode
-  :ensure nil
+  :straight (:type built-in)
   :bind
   ("C-h K" . describe-keymap)
   (:map help-mode-map

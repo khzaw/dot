@@ -1,4 +1,6 @@
 (use-package org
+  ;; :straight (:files (:defaults "lisp/*"))
+  :straight (:type built-in)
   :hook (org-mode . org-indent-mode)
   :bind
   ("C-c C-c" . org-edit-src-exit)
@@ -127,7 +129,8 @@
   (setq deft-directory (file-truename org-directory)
     deft-recursive t
     deft-strip-summary-regexp  ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
-    deft-use-filename-as-title t)
+    deft-use-filename-as-title t
+    deft-auto-save-interval 0)
   :bind
   ("C-c n d" . deft))
 

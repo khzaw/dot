@@ -17,7 +17,7 @@
   :hook (after-init . avy-setup-default)
   :config (setq avy-background t
             avy-all-windows nil
-            avy-all-windows-t
+            avy-all-windows-alt t
             avy-style 'pre))
 
 ;; Minor mode to aggressively keep your code always indented
@@ -126,8 +126,8 @@
   :config
   (apheleia-global-mode t))
 
-(use-package repeat-map
-  :ensure nil
+(use-package repeat-mode
+  :straight (:type built-in)
   :hook (after-init . repeat-mode))
 
 (provide 'init-edit)

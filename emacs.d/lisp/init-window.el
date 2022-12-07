@@ -56,7 +56,7 @@
        "^\\*shell.*\\*$" shell-mode)))
 
 (use-package winner-mode
-  :ensure nil
+  :straight (:type built-in)
   :after evil
   :hook (after-init . winner-mode)
   :bind
