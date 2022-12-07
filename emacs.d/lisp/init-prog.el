@@ -40,17 +40,36 @@
   :commands graphviz-dot-mode
   :mode ("\\.dot'" . graphviz-dot-mode))
 
-(use-package tree-sitter
-  :hook ((go-mode python-mode rust-mode ruby-mode js-mode js2-mode rjsx-mode c-mode typescript-mode sh-mode) . tree-sitter-hl-mode)
-  :config
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+;; (use-package treesit
+;;   :disabled
+;;   :if (executable-find "tree-sitter")
+;;   :config
+;;   (setq treesit-extra-load-path '("~/Code/dot/emacs.d/treesit-libs")))
 
-(use-package tree-sitter-langs :after tree-sitter :defer nil
-  :config
-  (tree-sitter-require 'tsx)
-  (add-to-list 'tree-sitter-major-mode-language-alist
-    '(typescript-tsx-mode . tsx)))
+
+(use-package tree-sitter
+  :config (global-tree-sitter-mode)
+  :hook (tree-sitter-after-on . tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs
+  :after (tree-sitter))
+
+;; (use-package tree-sitter
+;;   :hook ((go-mode
+;;           python-mode
+;;           rust-mode
+;;           ruby-mode
+;;           js-mode js2-mode rjsx-mode typescript-mode typescript-ts-mode
+;;           sh-mode) . tree-sitter-hl-mode)
+;;   :config
+;;   (global-tree-sitter-mode)
+;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+;; (use-package tree-sitter-langs :after tree-sitter :defer nil
+;;   :config
+;;   (tree-sitter-require 'tsx)
+;;   (add-to-list 'tree-sitter-major-mode-language-alist
+;;     '(typescript-tsx-mode . tsx)))
 
 (use-package ssh-config-mode :defer t)
 

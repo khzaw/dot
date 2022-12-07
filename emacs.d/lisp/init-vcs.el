@@ -1,11 +1,12 @@
 (use-package magit
+  :bind ("C-x g" . magit-status)
+  :custom
+  (magit-auto-revert-mode t)
   :config
   (setq magit-save-repository-buffers 'dontask)
   (customize-set-variable
     'display-buffer-alist
-    '(("\\*magit: .*" display-buffer-same-window)))
-  :bind ("C-x g" . magit-status)
-  :hook (after-save . magit-after-save-refresh-buffers))
+    '(("\\*magit: .*" display-buffer-same-window))))
 
 (use-package magit-todos :after magit)
 

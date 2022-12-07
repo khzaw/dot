@@ -4,8 +4,7 @@
            web-mode
            js-mode
            python-mode
-           rust-mode
-           typescript-mode) . eglot-ensure)
+           rust-mode) . eglot-ensure)
   :custom (eglot-autoshutdown t)
   :bind (("C-c e f" . #'eglot-format)
           ("C-c e a" . #'eglot-code-actions)

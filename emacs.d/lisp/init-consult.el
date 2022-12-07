@@ -1,3 +1,7 @@
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package consult
   :bind (("C-c a" . consult-ag)
           ("C-c h" . consult-history)
@@ -262,9 +266,6 @@
         (vertico-multiform-unobtrusive)))))
 (add-hook 'embark-collect-mode-hook #'+embark-live-vertico)
 
-(use-package embark-consult
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; manual preview for non-consult commands using embark
 (define-key minibuffer-local-map (kbd "M-.") #'my-embark-preview)

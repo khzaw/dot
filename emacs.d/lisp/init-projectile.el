@@ -5,9 +5,9 @@
   :hook (after-init . projectile-mode)
   :init
   (setq projectile-sort-order 'recentf
-        projectile-use-git-grep t
-        projectile-enable-caching t
-        projectile-completion-system 'ivy))
+    projectile-use-git-grep t
+    projectile-enable-caching t
+    projectile-completion-system 'default))
 
 (provide 'init-projectile)
 ;;; init-projectile.el ends here
