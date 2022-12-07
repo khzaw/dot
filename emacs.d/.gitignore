@@ -18,3 +18,5 @@ diary
 history
 places
 *.db
+straight/
+*.swp
