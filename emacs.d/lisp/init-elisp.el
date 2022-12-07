@@ -87,7 +87,9 @@ Lisp function does not specify a special indentation."
     (add-hook 'emacs-lisp-mode-hook
       (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))))
 
-(use-package eldoc :ensure nil :diminish)
+(use-package eldoc
+  :straight (:type built-in)
+  :diminish)
 
 (use-package help-mode
   :straight (:type built-in)
@@ -97,18 +99,7 @@ Lisp function does not specify a special indentation."
     ("<" . help-go-back)
     (">" . help-go-forward)))
 
-(use-package helpful
-  :bind (([remap describe-function] . helpful-callable)
-          ([remap describe-command] . helpful-command)
-          ([remap describe-variable] . helpful-variable)
-          ([remap describe-key] . helpful-key)
-          ([remap describe-symbol] . helpful-symbol)
-          ("C-c C-d" . helpful-at-point)
-          :map helpful-mode-map
-          ("r" . remove-hook-at-point))
-  :hook (helpful-mode . cursor-sensor-mode)) ; for remove-advice button
-
-
+(use-package helpful)
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here
