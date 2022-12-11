@@ -1,5 +1,5 @@
 (use-package projectile
-  :diminish
+  :delight '(:eval (concat " " (projectile-projct-name)))
   :bind (:map projectile-mode-map
           ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)

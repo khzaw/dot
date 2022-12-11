@@ -1,4 +1,11 @@
+(use-package visual-fill-column
+  :hook (org-mode . visual-fill-column-mode)
+  :custom
+  (visual-fill-column-width 120)
+  (visual-fill-column-center-text t))
+
 (use-package org
+  :init
   :hook (org-mode . org-indent-mode)
   :bind
   ("C-c C-c" . org-edit-src-exit)
@@ -35,6 +42,7 @@
   (org-confirm-babel-evaluate nil)
   (org-link-elisp-confirm-function nil)
   :config
+
   (require 'org-tempo)
 
   (use-package org-modern
@@ -111,6 +119,16 @@
     (require 'org-roam-protocol)
     (require 'org-roam-export))
 
+  (use-package org-roam-ui
+    :after org-roam
+    :custom
+    (org-roam-ui-open-on-startup nil)
+    (org-roam-ui-sync-theme t)
+    (org-roam-ui-follow t)
+    (org-roam-ui-update-on-save t)
+    (org-roam-ui-open-on-start nil)
+    (org-roam-ui-browser-function #'xwidget-webkit-browse-url))
+
   (use-package consult-org-roam :after (consult org-roam)))
 
 (use-package org-contrib)
@@ -122,6 +140,7 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
+(use-package websocket :after (org-roam))
 
 (use-package deft
   :config
@@ -132,6 +151,88 @@
     deft-auto-save-interval 0)
   :bind
   ("C-c n d" . deft))
+
+(use-package svg-tag-mode
+  :commands svg-tag-mode
+  :hook (org-mode . svg-tag-mode)
+  :config
+  (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
+  (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
+  (defconst day-re "[A-Za-z]\\{3\\}")
+  (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
+
+  (defun svg-progress-percent (value)
+    (svg-image (svg-lib-concat
+                 (svg-lib-progress-bar (/ (string-to-number value) 100.0)
+                   nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+                 (svg-lib-tag (concat value "%")
+                   nil :stroke 0 :margin 0)) :ascent 'center))
+
+  (defun svg-progress-count (value)
+    (let* ((seq (mapcar #'string-to-number (split-string value "/")))
+            (count (float (car seq)))
+            (total (float (cadr seq))))
+      (svg-image (svg-lib-concat
+                   (svg-lib-progress-bar (/ count total) nil
+                     :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
+                   (svg-lib-tag value nil
+                     :stroke 0 :margin 0)) :ascent 'center)))
+
+  (setq svg-tag-tags
+    `(
+       ;; Org tags
+       (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
+       (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
+
+       ;; Task priority
+       ("\\[#[A-Z]\\]" . ( (lambda (tag)
+                             (svg-tag-make tag :face 'org-priority
+                               :beg 2 :end -1 :margin 0))))
+
+       ;; Progress
+       ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
+                                           (svg-progress-percent (substring tag 1 -2)))))
+       ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
+                                         (svg-progress-count (substring tag 1 -1)))))
+
+       ;; TODO / DONE
+       ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
+       ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
+
+
+       ;; Citation of the form [cite:@Knuth:1984]
+       ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
+                                         (svg-tag-make tag
+                                           :inverse t
+                                           :beg 7 :end -1
+                                           :crop-right t))))
+       ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
+                                                  (svg-tag-make tag
+                                                    :end -1
+                                                    :crop-left t))))
+
+
+       ;; Active date (with or without day name, with or without time)
+       (,(format "\\(<%s>\\)" date-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+       (,(format "\\(<%s \\)%s>" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+       (,(format "<%s \\(%s>\\)" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+
+       ;; Inactive date  (with or without day name, with or without time)
+       (,(format "\\(\\[%s\\]\\)" date-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+       (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
+       (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
+         ((lambda (tag)
+            (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

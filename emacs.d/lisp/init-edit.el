@@ -6,7 +6,14 @@
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)
-          ("C--" . er/contract-region)))
+          ("C--" . er/contract-region)
+          ("C-(" . er/mark-outside-pairs)))
+
+(use-package symbol-overlay
+  :diminish
+  :hook (prog-mode . symbol-overlay-mode)
+  :bind (("M-n" . symbol-overlay-jump-next)
+          ("M-p" . symbol-overlay-jump-prev)))
 
 (use-package avy
   :bind (("C-;"   . avy-goto-char)
@@ -92,8 +99,8 @@
   :hook
   (yaml-mode . highlight-indent-guides-mode)
   :custom
-  (highlight-indent-guites-auto-enabled t)
-  (highlight-indent-guides-responsive t)
+  (highlight-indent-guides-character ?\xFFE8)
+  (highlight-indent-guides-responsive 'top)
   (highlight-indent-guides-method 'character))
 
 (use-package undo-fu)
@@ -122,6 +129,20 @@
     writeroom-fullscreen-effect nil
     writeroom-maximize-window nil))
 
+(use-package olivetti
+  :hook ((text-mode . olivetti-mode)
+          (prog-mode . olivetti-mode)
+          (org-mode . olivetti-mode)
+          (fundamental-mode . olivetti-mode)
+          (elfeed-show-mode . olivetti-mode)
+          (Info-mode . olivetti-mode)
+          (markdown-mode . olivetti-mode))
+  :custom
+  (olivetti-margin-width 12)
+  (olivetti-body-width 100)
+  (olivetti-style 'fancy)
+  :delight "⊛")
+
 (use-package apheleia
   :config
   (apheleia-global-mode t))
@@ -129,6 +150,23 @@
 (use-package repeat-mode
   :straight (:type built-in)
   :hook (after-init . repeat-mode))
+
+(use-package hippie-exp
+  :straight (:type built-in)
+  :bind ("M-/" . hippie-expand)
+  :init
+  (setq hippie-expand-try-functions-list
+    '(try-expand-dabbrev
+       try-expand-dabbrev-visible
+       try-expand-dabbrev-all-buffers
+       try-expand-dabbrev-from-kill
+       try-complete-file-name-partially
+       try-complete-file-name
+       try-expand-all-abbrevs
+       try-expand-list
+       try-expand-line
+       try-complete-lisp-symbol-partially
+       try-complete-lisp-symbol)))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

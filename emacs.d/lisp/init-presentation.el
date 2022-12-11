@@ -29,13 +29,15 @@
   :preface
   (defun khz/org-present-start ()
     "Configurations to run when `org-present-mode' starts."
-    (setq-local visual-fill-column-width 150)
-    (setq-local visual-fill-column-center-text t)
     ;; Set a blank header line string to create blank space at the top
     (setq-local header-line-format " ")
     ;; Tweak font sizes in presentation
     (setq-local face-mapping-alist '((default (:height 1.5) default)))
+
+    (setq-local visual-fill-column-width 120)
+    (setq-local visual-fill-column-center-text t)
     (visual-fill-column-mode 1)
+
     (hide-mode-line-mode 1)
     (visual-line-mode 1))
   (defun khz/org-present-end ()

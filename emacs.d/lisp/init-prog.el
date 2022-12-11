@@ -36,36 +36,6 @@
   :commands graphviz-dot-mode
   :mode ("\\.dot'" . graphviz-dot-mode))
 
-;; (use-package treesit
-;;   :disabled t
-;;   :if (executable-find "tree-sitter")
-;;   :config
-;;   (setq treesit-extra-load-path '("~/Code/dot/emacs.d/treesit-libs")))
-
-(use-package tree-sitter-langs)
-
-(use-package tree-sitter
-  :after (tree-sitter-langs)
-  :config (global-tree-sitter-mode)
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode))
-
-;; (use-package tree-sitter
-;;   :hook ((go-mode
-;;           python-mode
-;;           rust-mode
-;;           ruby-mode
-;;           js-mode js2-mode rjsx-mode typescript-mode typescript-ts-mode
-;;           sh-mode) . tree-sitter-hl-mode)
-;;   :config
-;;   (global-tree-sitter-mode)
-;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-;; (use-package tree-sitter-langs :after tree-sitter :defer nil
-;;   :config
-;;   (tree-sitter-require 'tsx)
-;;   (add-to-list 'tree-sitter-major-mode-language-alist
-;;     '(typescript-tsx-mode . tsx)))
-
 (use-package ssh-config-mode)
 
 (use-package vyper-mode)
@@ -77,6 +47,17 @@
               (and ".env" (* (and "." (+ word))))
               (and "." (+ word) "rc"))
           eos))
+
+;; Enable colors in *compilation* buffer: https://stackoverflow.com/a/3072831/13215205
+(defun colorize-compilation-buffer ()
+  "Enable colors in the *compilation* buffer."
+  (require 'ansi-color)
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+(advice-add 'risky-local-variable-p :override #'ignore)
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

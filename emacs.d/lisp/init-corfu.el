@@ -61,7 +61,7 @@
   :custom
   (corfu-auto t)
   (corfu-quit-no-match 'separator)
-  (corfu-preselect-first nil)
+  (corfu-preselect-first t)
   (corfu-scroll-margin 5)
   :bind (:map corfu-map
           ("M-m" . corfu-move-to-minibuffer)
@@ -100,22 +100,22 @@
 (use-package cape
   ;; Bind dedicated completion commands
   ;; Alternative prefix keys: C-c p, M-p, M-+, ...
-  :bind ( ("M-p p" . completion-at-point) ;; capf
-          ("M-p t" . complete-tag)        ;; etags
-          ("M-p d" . cape-dabbrev)        ;; or dabbrev-completion
-          ("M-p h" . cape-history)
-          ("M-p f" . cape-file)
-          ("M-p k" . cape-keyword)
-          ("M-p s" . cape-symbol)
-          ("M-p a" . cape-abbrev)
-          ("M-p i" . cape-ispell)
-          ("M-p l" . cape-line)
-          ("M-p w" . cape-dict)
-          ("M-p \\" . cape-tex)
-          ("M-p _" . cape-tex)
-          ("M-p ^" . cape-tex)
-          ("M-p &" . cape-sgml)
-          ("M-p r" . cape-rfc1345))
+  :bind ( ("C-c c p" . completion-at-point) ;; capf
+          ("C-c c t" . complete-tag)        ;; etags
+          ("C-c c d" . cape-dabbrev)        ;; or dabbrev-completion
+          ("C-c c h" . cape-history)
+          ("C-c c f" . cape-file)
+          ("C-c c k" . cape-keyword)
+          ("C-c c s" . cape-symbol)
+          ("C-c c a" . cape-abbrev)
+          ("C-c c i" . cape-ispell)
+          ("C-c c l" . cape-line)
+          ("C-c c w" . cape-dict)
+          ("C-c c \\" . cape-tex)
+          ("C-c c _" . cape-tex)
+          ("C-c c ^" . cape-tex)
+          ("C-c c &" . cape-sgml)
+          ("C-c c r" . cape-rfc1345))
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)

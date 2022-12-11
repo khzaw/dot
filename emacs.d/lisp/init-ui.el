@@ -20,8 +20,8 @@
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
 ;; (set-frame-font "JetBrains Mono 14" nil t)
-(set-face-attribute 'default nil :font "Roboto Mono" :weight 'normal :height 160)
-(set-face-attribute 'fixed-pitch nil :font "Iosevka" :weight 'normal :height 160)
+(set-face-attribute 'default nil :font "JetBrains Mono" :weight 'normal :height 140)
+(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'normal :height 140)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.25)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
@@ -60,8 +60,19 @@
   (kaolin-treemacs-theme))
 
 (use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  :custom-face
+  (cursor ((t (:background "BlanchedAlmond"))))
   :config
-  (load-theme 'doom-pine t))
+  (doom-themes-visual-bell-config)
+  (load-theme 'doom-solarized-dark t)
+  (if (display-graphic-p)
+    (progn
+      (setq doom-themes-treemacs-theme "doom-colors")
+      (doom-themes-treemacs-config)))
+  (doom-themes-org-config))
 
 (use-package modus-themes
   :config
@@ -180,7 +191,6 @@
 (use-package autothemer)
 
 (use-package catppuccin-theme)
-
 ;; Makes manual pages nicer to look at
 (use-package info-colors :commands (info-colors-fontify-node)
   :hook (Info-selection-hook . info-colors-fontify-node))
@@ -199,6 +209,13 @@
   (require 'sublimity-scroll)
   (require 'sublimity-map)
   (require 'sublimity-attractive))
+
+(use-package nyan-mode
+  :custom
+  (nyan-animate-nyancat t)
+  (nyan-wavy-trail t)
+  (nyan-minimum-window-width 80)
+  (nyan-bar-length 20))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

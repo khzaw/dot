@@ -41,5 +41,9 @@
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :config (treemacs-icons-dired-mode))
 
+
+(setq-default speedbar t)
+(setq speedbar-show-unknown-files t)
+
 (provide 'init-treemacs)
 ;;; init-treemacs.el ends here

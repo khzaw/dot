@@ -4,6 +4,11 @@
 ;;; Emacs Startup File --- initialization for Emacs
 ;;; Code:
 
+(defun config-reload ()
+  "Uncle dev created a function to reload Emacs config."
+  (interactive)
+  (load-file (expand-file-name "~/.emacs.d/init.el")))
+
 ;; Always load newest byte code
 (setq load-prefer-newer t)
 
@@ -60,6 +65,7 @@
 (require 'init-projectile)
 
 (require 'init-prog)
+(require 'init-treesitter)
 (require 'init-elisp)
 (require 'init-go)
 (require 'init-haskell)

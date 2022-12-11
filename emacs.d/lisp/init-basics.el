@@ -112,7 +112,8 @@
 
 ;; Mac specific
 (when (eq system-type 'darwin)
-  (setq ns-use-native-fullscreen t
+  ;; Don't use native fullscreen
+  (setq ns-use-native-fullscreen nil
     ;; Both command keys are super
     ;; mac-command-modifier 'meta
     mac-right-command-modifier 'super
