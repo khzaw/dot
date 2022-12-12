@@ -14,14 +14,23 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-;;; gs-cons-threshold
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.5)
 (add-hook 'emacs-startup-hook
   (lambda ()
     "Recover GC values after startup."
-    (setq gc-cons-threshold 800000
+    (setq gc-cons-threshold 16777216 ; 16 mb
       gc-cons-percentage 0.1)))
+
+(defun doom-defer-garbage-collection-h ()
+  "Disable garbage collection."
+  (setq gs-cons-threshold most-positive-fixnum))
+
+(defun doom-restore-garbage-collection-h ()
+  "Restore garbage collection."
+  (run-at-time
+    1 nil (lambda () (setq gs-cons-threshold 16777216))))
+
+(add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
+(add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
 
 ;; custom-file
 (setq custom-file (locate-user-emacs-file "custom.el"))
@@ -65,6 +74,7 @@
 (require 'init-projectile)
 
 (require 'init-prog)
+(require 'init-compile)
 (require 'init-treesitter)
 (require 'init-elisp)
 (require 'init-go)

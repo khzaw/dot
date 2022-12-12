@@ -20,9 +20,9 @@
 	          '(min-width  . 1)  '(width      . 90))))
 (setq-default line-spacing 2)
 ;; (set-frame-font "JetBrains Mono 14" nil t)
-(set-face-attribute 'default nil :font "JetBrains Mono" :weight 'normal :height 140)
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'normal :height 140)
-(set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.25)
+(set-face-attribute 'default nil :font "Roboto Mono" :weight 'normal :height 140)
+(set-face-attribute 'fixed-pitch nil :font "Roboto Mono" :weight 'normal :height 140)
+(set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.1)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -179,10 +179,39 @@
 
 (use-package centaur-tabs
   :init
-  (setq centaur-tabs-height 32)
+  (setq centaur-tabs-height 16)
+  (setq centaur-tabs-style "box")
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-icon-scale-factor 0.7)
+  (setq centaur-tabs-set-bar 'nil)
+  (setq x-underline-at-descent-line t)
   (setq centaur-tabs-gray-out-icons 'buffer)
   :config
-  (centaur-tabs-mode t)
+  (defun contextual-tabs ()
+    (interactive)
+    (if (and (centaur-tabs-mode-on-p) (eq (derived-mode-p 'prog-mode) nil))
+      (centaur-tabs-local-mode)))
+  (defun centaur-tabs-hide-tab (x)
+    (let ((name (format "%s" x)))
+      (or
+        (window-dedicated-p (selected-window))
+        (string-match-p (regexp-quote "<") name)
+        (string-prefix-p "*lsp" name)
+        (string-prefix-p "*Compile-Log*" name)
+        (string-prefix-p "*company" name)
+        (string-prefix-p "*compilation" name)
+        (string-prefix-p "*Help" name)
+        (string-prefix-p "*straight" name)
+        (string-prefix-p "*Flycheck" name)
+        (string-prefix-p "*tramp" name)
+        (string-prefix-p "*help" name)
+        (and (string-prefix-p "magit" name)
+          (not (file-name-extension name)))
+        )))
+  (defun centaur-tabs-hide-tab-cached (x) (centaur-tabs-hide-tab x))
+  (centaur-tabs-mode)
+  :hook
+  (after-change-major-mode . contextual-tabs)
   :bind
   (:map evil-normal-state-map
     ("g t" . centaur-tabs-forward)

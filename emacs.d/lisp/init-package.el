@@ -1,3 +1,4 @@
+
 ;; setup straight.el
 (setq straight-repository-branch "develop")
 (defvar bootstrap-version)
@@ -15,6 +16,8 @@
 
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (straight-use-package 'use-package)
+(eval-when-compile
+  (require 'use-package))
 (setq straight-use-package-by-default t)
 
 ;; (require 'package)
@@ -51,9 +54,15 @@
   (setq auto-package-update-delete-old-versions t
     auto-package-update-hide-results t))
 
-
 ;; profiler
 (use-package esup)
+
+;; Garbage Collector Magic Hack
+(use-package gcmh
+  :init
+  (setq gcmh-idle-delay 5)
+  (setq gcmh-high-cons-threshold (* 16 1024 1024))
+  (gcmh-mode))
 
 (provide 'init-package)
 ;;; init-package.el ends here

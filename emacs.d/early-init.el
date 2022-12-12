@@ -10,14 +10,18 @@
     ;; Silence compiler warnings
     native-comp-async-report-warnings-errors nil
     ;; Compile loaded packages asynchronously
-    native-comp-deferred-compilation t))
+    native-comp-deferred-compilation t
+
+    warning-suppress-log-types '((comp))))
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum
   gc-cons-percentage 0.6)
 (add-hook 'emacs-startup-hook
   (lambda ()
-    (setq gc-cons-threshold 16777216 gc-cons-percentage 0.1)))
+    (setq gc-cons-threshold 16777216
+      gc-cons-percentage 0.1)))
+
 
 ;; Package initialize occurs automatically, before `user-init-file' is
 ;; loaded, but after `early-init-file'. We handle package

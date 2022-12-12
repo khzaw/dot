@@ -5,6 +5,9 @@
 ;; Stop creating backup~ files
 (setq make-backup-files nil)
 
+;; Unless something is exploding, I do not care.
+(setq warning-minimum-level :emergency)
+
 ;; Stop creating #autosave# files
 (setq auto-save-default nil)
 
@@ -28,6 +31,9 @@
 (setq frame-title-format nil)
 
 (setq frame-resize-pixelwise t)
+
+;; Prevent any attempts to resize the frame.
+(setq frame-inhibit-implied-resize t)
 
 ;; No file dialog
 (setq use-file-dialog nil)

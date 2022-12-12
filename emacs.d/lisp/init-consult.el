@@ -182,7 +182,7 @@
   :after consult)
 
 (use-package fzf
-  :if (executabale-find "fzf")
+  :if (executable-find "fzf")
   :bind (("C-c f" . fzf))
   :config
   ;; (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
