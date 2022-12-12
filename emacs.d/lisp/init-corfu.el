@@ -66,11 +66,21 @@
   :bind (:map corfu-map
           ("M-m" . corfu-move-to-minibuffer)
           ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
-          ([remap move-end-of-line] . corfu-end-of-prompt))
-  :config
-  (corfu-popupinfo-mode)
-  (corfu-echo-mode) ;; show candidate doc in echo area
-  (set-face-attribute 'corfu-popupinfo nil :height 1.0))
+          ([remap move-end-of-line] . corfu-end-of-prompt)))
+
+;; show candidate doc in echo area
+(use-package corfu-echo
+  :straight nil
+  :after (corfu)
+  :commands (corfu-echo-mode)
+  :init (corfu-echo-mode))
+
+(use-package corfu-popupinfo-mode
+  :straight nil
+  :after (corfu olivetti)
+  :hook (corfu-popupinfo-mode . olivetti-mode)
+  :commands corfu-popupinfo-mode
+  :init (corfu-popupinfo-mode))
 
 (use-package corfu-history
   :straight nil

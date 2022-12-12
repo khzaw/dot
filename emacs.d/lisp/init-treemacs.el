@@ -35,7 +35,7 @@
           . treemacs-magit--schedule-update))
 
 (use-package treemacs-all-the-icons
-  :after all-the-icons
+  :after (all-the-icons treemacs)
   :init (treemacs-load-theme "all-the-icons"))
 
 (use-package treemacs-icons-dired

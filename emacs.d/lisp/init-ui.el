@@ -161,10 +161,6 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
-(use-package beacon
-  :diminish
-  :config (beacon-mode 1))
-
 (use-package mood-line :config (mood-line-mode))
 
 (use-package chronos)
@@ -176,46 +172,6 @@
 (use-package redacted :bind ("C-c C-d" . redacted-mode))
 
 (use-package focus :defer t)
-
-(use-package centaur-tabs
-  :init
-  (setq centaur-tabs-height 16)
-  (setq centaur-tabs-style "box")
-  (setq centaur-tabs-set-icons t)
-  (setq centaur-tabs-icon-scale-factor 0.7)
-  (setq centaur-tabs-set-bar 'nil)
-  (setq x-underline-at-descent-line t)
-  (setq centaur-tabs-gray-out-icons 'buffer)
-  :config
-  (defun contextual-tabs ()
-    (interactive)
-    (if (and (centaur-tabs-mode-on-p) (eq (derived-mode-p 'prog-mode) nil))
-      (centaur-tabs-local-mode)))
-  (defun centaur-tabs-hide-tab (x)
-    (let ((name (format "%s" x)))
-      (or
-        (window-dedicated-p (selected-window))
-        (string-match-p (regexp-quote "<") name)
-        (string-prefix-p "*lsp" name)
-        (string-prefix-p "*Compile-Log*" name)
-        (string-prefix-p "*company" name)
-        (string-prefix-p "*compilation" name)
-        (string-prefix-p "*Help" name)
-        (string-prefix-p "*straight" name)
-        (string-prefix-p "*Flycheck" name)
-        (string-prefix-p "*tramp" name)
-        (string-prefix-p "*help" name)
-        (and (string-prefix-p "magit" name)
-          (not (file-name-extension name)))
-        )))
-  (defun centaur-tabs-hide-tab-cached (x) (centaur-tabs-hide-tab x))
-  (centaur-tabs-mode)
-  :hook
-  (after-change-major-mode . contextual-tabs)
-  :bind
-  (:map evil-normal-state-map
-    ("g t" . centaur-tabs-forward)
-    ("g T" . centaur-tabs-backward)))
 
 (use-package autothemer)
 

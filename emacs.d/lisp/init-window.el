@@ -64,17 +64,6 @@
     ("u" . winner-undo)
     ("U" . winner-redo)))
 
-(use-package dimmer
-  :hook (after-init . dimmer-mode)
-  :config
-  (setq dimmer-fraction 0.5
-    dimmer-adjustment-mode :foreground
-    dimmer-use-colorspace :rgb
-    dimmer-watch-frame-focus-events nil)
-  (dimmer-configure-which-key)
-  (dimmer-configure-magit)
-  (dimmer-configure-posframe))
-
 (defun margin-width-pixel (&optional right)
   "Return the width of the left or optionally right margin in pixels."
   (if (window-margins)
