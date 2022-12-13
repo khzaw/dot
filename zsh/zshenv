@@ -1,3 +1,9 @@
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source "$HOME/Code/dot/zsh/zshenv.mac"
+else
+  source "$HOME/Code/dot/zsh/zshenv.linux"
+fi
+
 setopt no_global_rcs
 
 # home
@@ -32,17 +38,7 @@ if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -
 export GOPATH=$HOME/.go
 export GO111MODULE=on
 
-# nvm
-export NVM_LAZY_LOAD=true
-export NVM_DIR="$HOME/.nvm"
-[ -e "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  source "$HOME/Code/dot/zsh/zshenv.mac"
-else
-  source "$HOME/Code/dot/zsh/zshenv.linux"
-fi
+alias go=go1.18.8
 
 # local config
 [[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"

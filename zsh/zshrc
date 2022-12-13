@@ -74,3 +74,7 @@ if [[ `uname` == "Linux" ]] then
    alias pbcopy='xsel --clipboard --input'
    alias pbpaste='xsel --clipboard --output'
 fi
+
+alias diff='/usr/local/bin/diff'
+
+eval "$(fnm env --use-on-cd)"
