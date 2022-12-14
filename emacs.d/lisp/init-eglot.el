@@ -1,7 +1,6 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
   :hook ((typescript-tsx-mode
-           scss-mode
            css-mode
            python-mode
            go-mode) . eglot-ensure)
@@ -16,6 +15,7 @@
           ("C-c e i " . #'eglot-code-action-organize-imports))
   :config
   (setq eglot-strict-mode nil)
+  (setq eglot-events-buffer-size 0)
   (setq eglot-confirm-server-initiated-edits nil)
   (setq completion-category-overrides '((eglot (styles orderless))))
 

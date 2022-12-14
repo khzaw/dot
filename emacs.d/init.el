@@ -73,7 +73,6 @@
 (require 'init-eglot)
 ;; (require 'init-lsp)
 
-(require 'init-prog)
 (require 'init-compile)
 (require 'init-treesitter)
 (require 'init-elisp)
@@ -85,6 +84,7 @@
 (require 'init-solidity)
 (require 'init-tex)
 (require 'init-web)
+(require 'init-prog)
 
 (require 'init-terminal)
 

@@ -58,7 +58,7 @@
 
   (use-package dired-sidebar))
 
-
+(use-package dirvish)
 
 (provide 'init-dired)
 ;;; init-dired.el ends here

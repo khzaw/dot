@@ -1,10 +1,39 @@
 (use-package prog-mode
   :straight (:type built-in)
-  :hook (prog-mode . prettify-symbols-mode)
+  :commands (prettify-symbols-mode global-prettify-symbols-mode)
   :init
+  (global-prettify-symbols-mode)
   (setq prettify-symbols-unprettify-at-point 'right-edge)
-  :config
-  (global-prettify-symbols-mode t))
+  (create-hook-helper prettify-symbols-prog ()
+    ""
+    :hooks (prog-mode-hook)
+    (push '(">=" . ?≥) prettify-symbols-alist)
+    (push '("<=" . ?≤) prettify-symbols-alist)
+    (push '("!=" . ?≠) prettify-symbols-alist)
+    (push '("&&" . ?∧) prettify-symbols-alist)
+    (push '("||" . ?∨) prettify-symbols-alist)
+    (push '("lambda" . ?λ) prettify-symbols-alist)
+    (push '("=>" . ?⇒) prettify-symbols-alist)
+    (push '("->" . ?→) prettify-symbols-alist)
+    (push '("nil" . ?∅) prettify-symbols-alist))
+  (create-hook-helper prettify-symbols-lisp ()
+    ""
+    :hooks (lisp-mode-hook)
+    (push '("/=" . ?≠) prettify-symbols-alist)
+    (push '("sqrt" . ?√) prettify-symbols-alist)
+    (push '("not" . ?¬) prettify-symbols-alist)
+    (push '("and" . ?∧) prettify-symbols-alist)
+    (push '("or" . ?∨) prettify-symbols-alist))
+  (create-hook-helper prettify-symbols-js ()
+    ""
+    :hooks (js2-mode-hook rjsx-mode-hook js-mode-hook typescript-mode-hook typescript-tsx-mode-hook)
+    (push '("function" . ?λ) prettify-symbols-alist)
+    (push '("null" . ?∅) prettify-symbols-alist))
+  (create-hook-helper prettify-symbols-python ()
+    ""
+    :hooks (python-mode-hook)
+    (push '("and" . ?∧) prettify-symbols-alist)
+    (push '("or" . ?∨) prettify-symbols-alist)))
 
 (use-package hideshow
   :straight (:type built-in)
@@ -26,10 +55,13 @@
 
 (use-package vimrc-mode)
 
+(setq homebrew-plantuml-jar-path
+  (expand-file-name
+    (string-trim (shell-command-to-string "brew list plantuml | grep jar"))))
 (use-package plantuml-mode
   :mode "\\.puml\\'"
   :custom
-  (plantuml-jar-path "/usr/local/bin/plantuml")
+  (plantuml-jar-path homebrew-plantuml-jar-path)
   (plantuml-default-exec-mode 'executable))
 
 (use-package graphviz-dot-mode

@@ -70,7 +70,6 @@
   (cursor ((t (:background "BlanchedAlmond"))))
   :config
   (doom-themes-visual-bell-config)
-  (load-theme 'doom-solarized-dark t)
   (if (display-graphic-p)
     (progn
       (setq doom-themes-treemacs-theme "doom-colors")
@@ -164,8 +163,6 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
-(use-package mood-line :config (mood-line-mode))
-
 (use-package chronos)
 
 (use-package ansi-color
@@ -204,6 +201,37 @@
   (nyan-wavy-trail t)
   (nyan-minimum-window-width 80)
   (nyan-bar-length 20))
+
+(use-package lambda-themes
+  :straight (:type git :host github :repo "lambda-emacs/lambda-themes")
+  :custom
+  (lambda-themes-set-italic-comments t)
+  (lambda-themes-set-italic-keywords nil)
+  (lambda-themes-set-variable-pitch t))
+
+(use-package mood-line :config (mood-line-mode))
+
+;; (use-package sideframe
+;;   :straight (:type git :host github :repo "rougier/sideframe")
+;;   :config
+;;   (sideframe-make 'left 32)
+;;   (sideframe-toggle-maximized))
+
+;; (use-package fontset
+;;   :straight (:type built-in)
+;;   :config
+;;   ;; Use symbola for proper unicode
+;;   (when (member "Symbola" (font-family-list))
+;;     (set-fontset-font
+;;       t 'symbol "Symbola" nil)))
+
+(use-package keycast)
+
+(use-package solo-jazz-theme
+  :ensure t
+  :config
+  (load-theme 'solo-jazz t))
+
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

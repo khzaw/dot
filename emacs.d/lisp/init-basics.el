@@ -189,8 +189,8 @@
   :config
   (push '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1")) which-key-replacement-alist)
   (push '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")) which-key-replacement-alist)
-  (which-key-mode)
-  (setq which-key-unicode-correction 5))
+  (setq which-key-unicode-correction 5)
+  (which-key-mode))
 
 (use-package which-key-posframe
   :after (posframe which-key)
@@ -212,7 +212,8 @@
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
   :hook (after-init . recentf-mode)
-  :init (setq recentf-max-saved-items 300
+  :init (setq
+          recentf-max-saved-items 300
           recentf-exclude
           '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
              "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
@@ -230,7 +231,7 @@
 (use-package so-long
   :hook (after-init . global-so-long-mode))
 
-;; Better sorting
+;; Persist results for better sorting
 (use-package prescient
   :commands prescient-persist-mode
   :init (prescient-persist-mode 1)
@@ -238,6 +239,13 @@
   (setq prescient-sort-full-matches-first t
     prescient-sort-length-enable t))
 
+(use-package hook-helpers
+  :commands (create-hook-helper
+              define-hook-helper
+              hkhlp-normalize-hook-spec)
+  :functions (make-hook-helper
+               add-hook-helper
+               hkhlp-update-helper))
 
 (provide 'init-basics)
 ;;; init-basics.el ends here
