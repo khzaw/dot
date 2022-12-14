@@ -168,5 +168,7 @@
        try-complete-lisp-symbol-partially
        try-complete-lisp-symbol)))
 
+(use-package coverlay)
+
 (provide 'init-edit)
 ;;; init-edit.el ends here
