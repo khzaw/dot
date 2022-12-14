@@ -139,7 +139,7 @@
           (markdown-mode . olivetti-mode))
   :custom
   (olivetti-margin-width 12)
-  (olivetti-body-width 100)
+  (olivetti-body-width 120)
   (olivetti-style 'fancy)
   :delight "⊛")
 

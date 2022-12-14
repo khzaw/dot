@@ -54,6 +54,9 @@
 
 (use-package all-the-icons :if (display-graphic-p))
 
+(use-package treemacs-all-the-icons
+  :after (all-the-icons treemacs))
+
 (use-package kaolin-themes
   :after all-the-icons
   :config

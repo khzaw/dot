@@ -4,6 +4,7 @@
               lsp-format-buffer
               lsp-organize-imports)
   :hook (
+          (typescript-tsx-mode . lsp-deferred)
           ;; ((go-mode sh-mode) . lsp-deferred)
           ;; (prog-mode . (lambda ()
           ;;                (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)

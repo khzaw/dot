@@ -48,16 +48,12 @@
               (and "." (+ word) "rc"))
           eos))
 
-;; Enable colors in *compilation* buffer: https://stackoverflow.com/a/3072831/13215205
-(defun colorize-compilation-buffer ()
-  "Enable colors in the *compilation* buffer."
-  (require 'ansi-color)
-  (let ((inhibit-read-only t))
-    (ansi-color-apply-on-region (point-min) (point-max))))
+(use-package mermaid-mode
+  :mode (("\\.mermaid\\'" . mermaid-mode)))
 
-(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 (advice-add 'risky-local-variable-p :override #'ignore)
+
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

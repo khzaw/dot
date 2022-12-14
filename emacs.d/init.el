@@ -58,6 +58,7 @@
 ;; (require 'init-company)
 (require 'init-corfu)
 
+(require 'init-projectile)
 (require 'init-dashboard)
 (require 'init-dired)
 (require 'init-window)
@@ -71,7 +72,6 @@
 (require 'init-vcs)
 (require 'init-eglot)
 ;; (require 'init-lsp)
-(require 'init-projectile)
 
 (require 'init-prog)
 (require 'init-compile)

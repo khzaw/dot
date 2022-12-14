@@ -12,4 +12,13 @@
   (compilation-mode . hide-mode-line-mode)
   (compilation-start . olivetti-mode))
 
+;; Enable colors in *compilation* buffer: https://stackoverflow.com/a/3072831/13215205
+(defun colorize-compilation-buffer ()
+  "Enable colors in the *compilation* buffer."
+  (require 'ansi-color)
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
 (provide 'init-compile)

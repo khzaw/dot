@@ -40,7 +40,7 @@
           ("<help> a" . consult-apropos)
           ;; M-g bindings (goto-map)
           ("M-g e" . consult-compile-error)
-          ("M-g f" . consult-flycheck)
+          ("M-g !" . consult-flycheck)
           ("M-g g" . consult-goto-line)
           ("M-g M-g" . consult-goto-line)
           ("s-l" . consult-goto-line)
@@ -50,7 +50,7 @@
           ("M-g i" . consult-imenu)
           ("M-g I" . consult-imenu-multi)
           ;; M-s bindings (search-map)
-          ("M-s d" . consult-find)
+          ("M-s f" . consult-find)
           ;; ("C-c f" . consult-find)
           ("M-s D" . consult-locate)
           ("M-s g" . consult-grep)
@@ -116,7 +116,7 @@
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
-    consult-theme :preview-key '(:debounce 0.2 any)
+    consult-theme :preview-key '(:debounce 0.5 any)
     consult-ripgrep consult-git-grep consult-grep
     consult-ag consult-bookmark consult-recent-file consult-xref
     consult--source-bookmark consult--source-file-register
@@ -128,6 +128,12 @@
   ;; Optionally configure the narrowing key.
   ;; Both < and C++ work resonably well.
   (setq consult-narrow-key "<") ;; (kbd "C-+")
+
+  (setq consult-line-numbers-widen t
+    consult-async-min-input 2
+    consult-async-refresh-delay 0.15
+    consult-async-input-throttle 0.2
+    consult-async-input-debounce 0.1)
 
   ;; Optinally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
@@ -183,7 +189,7 @@
 
 (use-package fzf
   :if (executable-find "fzf")
-  :bind (("C-c f" . fzf))
+  ;; :bind (("C-c f" . fzf))
   :config
   ;; (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
   (setq fzf/args "-x --print-query --margin=1,0 --no-hscroll"
@@ -284,6 +290,13 @@
 ;; Enable rich annotations in completion UI
 (use-package marginalia
   :after vertico
+  :config
+  (setq marginalia-command-categories (append marginalia-command-categories
+                                        '((projectile-find-file . project-file)
+                                           (projectile-find-dir . project-file)
+                                           (projectile-switch-project . file)
+                                           (persp-switch-to-buffer . buffer)
+                                           (flycheck-error-list-set-filter . builtin))))
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer

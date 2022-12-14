@@ -1,5 +1,6 @@
 (use-package dashboard
   :config
+  (dashboard-setup-startup-hook)
   (setq dashboard-banner-logo-title "Create illusions of effortless competence."
     dashboard-startup-banner 'logo
     dashboard-items '((recents . 5)
@@ -12,7 +13,6 @@
   (setq dashboard-set-file-icons t)
   (setq dashboard-projects-backend 'projectile)
   (setq dashboard-set-navigator t)
-  (dashboard-setup-startup-hook)
   :hook
   (dashboard-mode . hide-mode-line-mode)
   (dashboard-mode . turn-off-solaire-mode))
