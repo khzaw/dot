@@ -232,6 +232,8 @@
   :config
   (load-theme 'solo-jazz t))
 
+(use-package humanoid-themes)
+
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
