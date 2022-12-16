@@ -9,19 +9,13 @@
 
 (setq redisplay-skip-fontification-on-input t)
 
-;; Inhibit resizing frame
-(setq frame-inhibit-implied-resize t
-      frame-resize-pixelwise t)
-
 ;; UI
-(setq default-frame-alist
-  (append (list
-	          '(min-height . 1)  '(height     . 45)
-	          '(min-width  . 1)  '(width      . 90))))
-(setq-default line-spacing 2)
+(toggle-frame-maximized)
+
+;; (setq-default line-spacing 2)
 ;; (set-frame-font "JetBrains Mono 14" nil t)
-(set-face-attribute 'default nil :font "Roboto Mono" :weight 'normal :height 140)
-(set-face-attribute 'fixed-pitch nil :font "Roboto Mono" :weight 'normal :height 140)
+(set-face-attribute 'default nil :font "PragmataPro Liga" :weight 'normal :height 140)
+(set-face-attribute 'fixed-pitch nil :font "PragmataPro Liga" :weight 'normal :height 140)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.1)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
@@ -54,37 +48,6 @@
 
 (use-package all-the-icons :if (display-graphic-p))
 
-(use-package treemacs-all-the-icons
-  :after (all-the-icons treemacs))
-
-(use-package kaolin-themes
-  :after all-the-icons
-  :config
-  (kaolin-treemacs-theme))
-
-(use-package doom-themes
-  :custom
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic t)
-  :custom-face
-  (cursor ((t (:background "BlanchedAlmond"))))
-  :config
-  (doom-themes-visual-bell-config)
-  (if (display-graphic-p)
-    (progn
-      (setq doom-themes-treemacs-theme "doom-colors")
-      (doom-themes-treemacs-config)))
-  (doom-themes-org-config))
-
-(use-package modus-themes
-  :config
-  (setq modus-themes-fringes nil))
-
-(use-package ef-themes)
-
-(use-package sweet-theme)
-
-(use-package almost-mono-themes)
 
 (use-package minions)
 
@@ -109,17 +72,11 @@
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
-      use-dialog-box nil
-      inhibit-startup-screen t
-      inhibit-startup-echo-area-message user-login-name
-      inhibit-default-init t
-      initial-scratch-message nil)
+  use-dialog-box nil
+  inhibit-startup-screen t
+  inhibit-startup-echo-area-message user-login-name
+  inhibit-default-init t)
 
-;; Display dividers between windows
-(setq window-divider-default-places t
-  window-divider-default-bottom-width 1
-  window-divider-default-right-width 1)
-;; (add-hook 'window-setup-hook #'window-divider-mode)
 
 ;; Easily adjust the font size in all frames
 (use-package default-text-scale
@@ -175,7 +132,6 @@
 
 (use-package autothemer)
 
-(use-package catppuccin-theme)
 ;; Makes manual pages nicer to look at
 (use-package info-colors :commands (info-colors-fontify-node)
   :hook (Info-selection-hook . info-colors-fontify-node))
@@ -195,19 +151,6 @@
   (require 'sublimity-map)
   (require 'sublimity-attractive))
 
-(use-package nyan-mode
-  :custom
-  (nyan-animate-nyancat t)
-  (nyan-wavy-trail t)
-  (nyan-minimum-window-width 80)
-  (nyan-bar-length 20))
-
-(use-package lambda-themes
-  :straight (:type git :host github :repo "lambda-emacs/lambda-themes")
-  :custom
-  (lambda-themes-set-italic-comments t)
-  (lambda-themes-set-italic-keywords nil)
-  (lambda-themes-set-variable-pitch t))
 
 (use-package mood-line :config (mood-line-mode))
 
@@ -227,12 +170,11 @@
 
 (use-package keycast)
 
-(use-package solo-jazz-theme
-  :ensure t
+(use-package zone
+  :straight (:type built-in)
   :config
-  (load-theme 'solo-jazz t))
+  (zone-when-idle (* 5 60)))
 
-(use-package humanoid-themes)
 
 
 (provide 'init-ui)
