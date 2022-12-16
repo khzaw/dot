@@ -9,6 +9,8 @@
 (use-package tree-sitter
   :after (tree-sitter-langs)
   :config (global-tree-sitter-mode)
+  (setq tree-sitter-debug-jump-buttons t)
+  (setq tree-sitter-debug-highlight-jump-region nil)
   :hook (tree-sitter-after-on . tree-sitter-hl-mode))
 
 ;; (use-package tree-sitter
@@ -29,9 +31,28 @@
 ;;     '(typescript-tsx-mode . tsx)))
 
 (use-package ts-fold
-  :straight (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold"))
+  :after tree-sitter
+  :straight (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold")
+  :config (global-ts-fold-mode)
+  (defun khz/toggle-fold ()
+    (interactive)
+    (if (equal tree-sitter-mode nil)
+      (call-interactively 'evil-toggle-fold)
+      (call-interactively 'ts-fold-toggle)))
+  :hook (tree-sitter-after-on . (lambda ()
+                                  (tree-sitter-hl-mode)
+                                  (origami-mode -1)
+                                  (ts-fold-mode 1)
+                                  (evil-leader/set-key "o" 'khz/toggle-fold)))
+  :bind ("C-`" . ts-fold-toggle))
 
 (use-package ts-fold-indicators
   :straight (ts-fold-indicators :type git :host github :repo "emacs-tree-sitter/ts-fold"))
+
+(use-package evil-textobj-tree-sitter
+  :straight (evil-textobj-tree-sitter :type git
+              :host github
+              :repo "meain/evil-textobj-tree-sitter"
+              :files (:defaults "queries")))
 
 (provide 'init-treesitter)

@@ -36,10 +36,10 @@
     (push '("or" . ?∨) prettify-symbols-alist)))
 
 (use-package hideshow
-  :straight (:type built-in)
-  :hook (prog-mode . hs-minor-mode)
-  :bind (:map hs-minor-mode-map
-          ("C-`" . hs-toggle-hiding)))
+  :straight (:type built-in))
+;; :hook (prog-mode . hs-minor-mode)
+;; :bind (:map hs-minor-mode-map
+;;         ("C-`" . hs-toggle-hiding)))
 
 (use-package protobuf-mode)
 
