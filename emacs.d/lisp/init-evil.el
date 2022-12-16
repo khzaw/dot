@@ -1,9 +1,14 @@
 (use-package evil
   :init
+  (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  (setq evil-want-minibuffer nil)
+  (setq evil-undo-system 'undo-tree)
+  (setq evil-kill-on-visual-paste nil)
+  (setq evil-symbol-word-search t)
+  (setq evil-respect-visual-line-mode nil)
   (setq evil-split-window-below t)
   (setq evil-vsplit-window-right t)
-  (setq evil-kill-on-visual-paste nil) ; Don't put overwritten text in the kill ring
   :config
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)
@@ -28,7 +33,7 @@
   (progn
     (evil-leader/set-leader ",")
     (evil-leader/set-key "f" 'isearch-forward)
-    (evil-leader/set-key "b" 'counsel-ibuffer)))
+    (evil-leader/set-key "b" 'consult-buffer)))
 
 (use-package evil-escape
   :after (evil evil-collection)
@@ -36,5 +41,4 @@
   :config (evil-escape-mode 1))
 
 (provide 'init-evil)
-
 ;;; init-evil.el ends here

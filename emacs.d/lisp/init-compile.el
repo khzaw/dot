@@ -21,4 +21,7 @@
 
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
+(use-package recompile-on-save
+  :commands (recompile-on-save))
+
 (provide 'init-compile)
