@@ -46,4 +46,31 @@
 
 (use-package almost-mono-themes)
 
+(use-package rose-pine-emacs
+  :straight (:type git :host github :repo "thongpv87/rose-pine-emacs"))
+
+(use-package base16-theme)
+
+(use-package bespoke-themes
+  :straight (:host github :repo "mclear-tools/bespoke-themes")
+  :config
+  (setq bespoke-set-evil-cursors t)
+  (setq bespoke-set-italic-comments t)
+  (setq bespoke-set-italic-keywords t)
+  (setq bespoke-set-variable-pitch t)
+  (setq bespoke-set-theme 'dark)
+  ;; (load-theme 'bespoke t)
+  )
+
+(use-package stimmung-themes
+  :straight (stimmung-themes :host github :repo "motform/stimmung-themes") ; if you are a straight shooter
+  ;; (stimmung-themes-load-dark)
+  ) ; or (stimmung-themes-load-dark)
+
+(use-package nano-theme
+  :straight (nano-theme
+              :type git
+              :host github
+              :repo "rougier/nano-theme"))
+
 (provide 'init-themes)

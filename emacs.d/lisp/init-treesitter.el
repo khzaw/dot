@@ -42,8 +42,8 @@
   :hook (tree-sitter-after-on . (lambda ()
                                   (tree-sitter-hl-mode)
                                   (origami-mode -1)
-                                  (ts-fold-mode 1)
-                                  (evil-leader/set-key "o" 'khz/toggle-fold)))
+                                  (ts-fold-mode 1)))
+  ;; TODO <TAB> in normal mode should fold
   :bind ("C-`" . ts-fold-toggle))
 
 (use-package ts-fold-indicators

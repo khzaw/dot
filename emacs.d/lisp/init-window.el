@@ -15,10 +15,8 @@
     shackle-default-size 0.4
     shackle-rules '((help-mode :align below :select t)
                      (helpful-mode :align below)
-                     (compilation-mode :select t :size 0.25)
                      ("*compilation*" :select nil :size 0.25)
                      ("*ag search*" :select nil :size 0.25)
-                     ("*Flycheck errors*" :select nil :size 0.25)
                      ("*Warnings*" :select nil :size 0.25)
                      ("*Error*" :select nil :size 0.25)
                      (magit-status-mode :align bottom :size 0.5 :inhibit-window-quit t)
@@ -48,8 +46,9 @@
        "\\*eldoc\\*"
        "\\*xref\\*"
        "\\*Go Test\\*"
-       "\\*Flycheck errors\\*"
+       flycheck-error-list-mode
        compilation-mode
+       go-test-mode
        "^\\*vterm.*\\*$" vterm-mode
        "^\\*eshell.*\\*$" eshell-mode
        "^\\*term.*\\*$" term-mode

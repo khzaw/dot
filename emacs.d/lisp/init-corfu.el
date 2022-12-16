@@ -71,13 +71,13 @@
 ;; show candidate doc in echo area
 (use-package corfu-echo
   :straight nil
-  :after (corfu)
+  :after corfu
   :commands (corfu-echo-mode)
   :init (corfu-echo-mode))
 
 (use-package corfu-popupinfo-mode
   :straight nil
-  :after (corfu olivetti)
+  :after corfu
   :hook (corfu-popupinfo-mode . olivetti-mode)
   :commands corfu-popupinfo-mode
   :init (corfu-popupinfo-mode))
