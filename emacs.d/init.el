@@ -36,7 +36,8 @@
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (ignore-errors (load custom-file))
 
-;; (setq package-check-signature nil)
+(setq package-check-signature nil)
+
 ;; (when (eq system-type 'darwin)
 ;;   (setq insert-directory-program "/usr/local/bin/gls"))
 ;; (setq dired-listing-switches "-aBhl --group-directories-first")
@@ -50,7 +51,9 @@
 
 (require 'init-basics)
 
+(require 'init-font)
 (require 'init-ui)
+(require 'init-themes)
 (require 'init-evil)
 (require 'init-edit)
 (require 'init-highlight)
@@ -64,7 +67,6 @@
 (require 'init-window)
 (require 'init-treemacs)
 
-(require 'init-org)
 
 ;; Programming
 (require 'init-docker)
@@ -87,6 +89,9 @@
 (require 'init-prog)
 
 (require 'init-terminal)
+
+(require 'init-org)
+
 
 ;; Others
 (require 'init-presentation)
