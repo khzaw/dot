@@ -90,7 +90,8 @@
             (setq org-preview-html-viewer 'xwidget)))
 
   (use-package org-roam
-    :diminish
+    :straight (org-roam :type git :host github :repo "org-roam/org-roam"
+                :files (:defaults "extensions/*"))
     :custom
     (org-roam-directory (file-truename org-directory))
     (org-roam-capture-templates
@@ -113,11 +114,13 @@
     :config
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
     (org-roam-db-autosync-mode)
-    (setq org-roam-dailies-directory "daily/")
+    (setq org-roam-dailies-directory "daily/"))
 
-    ;; If using org-roam-protocol
-    (require 'org-roam-protocol)
-    (require 'org-roam-export))
+  (use-package org-roam-protocol
+    :straight nil
+    :after org-roam)
+
+  (use-package org-roam-export :straight nil :after org-roam)
 
   (use-package org-roam-ui
     :after org-roam
