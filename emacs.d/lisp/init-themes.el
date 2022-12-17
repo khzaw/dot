@@ -1,9 +1,7 @@
 
 (use-package solo-jazz-theme)
 
-(use-package humanoid-themes
-  :config
-  (load-theme 'humanoid-light t))
+(use-package humanoid-themes)
 
 (use-package lambda-themes
   :straight (:type git :host github :repo "lambda-emacs/lambda-themes")
@@ -28,7 +26,8 @@
     (progn
       (setq doom-themes-treemacs-theme "doom-colors")
       (doom-themes-treemacs-config)))
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (load-theme 'doom-badger t))
 
 (use-package modus-themes
   :config

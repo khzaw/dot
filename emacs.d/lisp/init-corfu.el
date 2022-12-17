@@ -78,8 +78,12 @@
 (use-package corfu-popupinfo-mode
   :straight nil
   :after corfu
-  :hook (corfu-popupinfo-mode . olivetti-mode)
   :commands corfu-popupinfo-mode
+  :custom
+  (corfu-popupinfo-delay 0)
+  (corfu-popupinfo-direction 'vertical)
+  :custom-face
+  (corfu-popupinfo ((t (:height 1.0))))
   :init (corfu-popupinfo-mode))
 
 (use-package corfu-history

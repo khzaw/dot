@@ -92,9 +92,9 @@
 
 (require 'init-org)
 
-
 ;; Others
 (require 'init-presentation)
+(require 'init-elfeed)
 
 (provide 'init)
 ;;; init.el ends here
