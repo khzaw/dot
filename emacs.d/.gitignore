@@ -20,3 +20,4 @@ places
 *.db
 straight/
 *.swp
+multisession
