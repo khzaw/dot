@@ -43,6 +43,10 @@
                                   (tree-sitter-hl-mode)
                                   (origami-mode -1)
                                   (ts-fold-mode 1)))
+  :custom-face
+  (tree-sitter-hl-face:property ((t (:slant normal))))
+  (tree-sitter-hl-face:function.call ((t (:weight normal))))
+  (tree-sitter-hl-face:method.call ((t (:weight normal))))
   ;; TODO <TAB> in normal mode should fold
   :bind ("C-`" . ts-fold-toggle))
 
