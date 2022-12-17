@@ -1,0 +1,13 @@
+* Generate keymap file
+** Via the ~keymacs.com~ UI
+** Generate and download firmware. If =.hex= file is not included, follow the step below
+* Compile HEX file (Firmware)
+** Copy the ~keymacs~ folder to ~qmk_firmware/keyboards~
+** Enter ~qmk_firmware~ directory.
+** Run =make keymacs/a620n88a/teensy_2:custom=
+The =make= argument compile the firmware for the A620N-88 Rev A. PCB, PJRC Teensy 2.0 and the keymap defined in the ~./a620n88a/keymaps/custom~ folder
+* Flashing HEX file using Teensy
+** Boot into program mode
+Press Left Shift + Right Shift + B
+** Locate the ~.hex~ file and flash it.
+** Reboot
