@@ -20,6 +20,10 @@
           ("C-c C-t b" . go-test-current-benchmark)
           ("C-c C-x" . go-run)))
 
+(use-package gorepl-mode
+  :if (executable-find "gore")
+  :hook (go-mode . gorepl-mode))
+
 (use-package flycheck-golangci-lint
   :after (flycheck go-mode)
   :hook (go-mode . flycheck-golangci-lint-setup)
