@@ -15,7 +15,7 @@
     shackle-default-size 0.4
     shackle-rules '((help-mode :align below :select t)
                      (helpful-mode :align below)
-                     ("*compilation*" :select nil :size 0.25)
+                     (compilation-mode :select nil :size 0.25)
                      ("*ag search*" :select nil :size 0.25)
                      ("*Warnings*" :select nil :size 0.25)
                      ("*Error*" :select nil :size 0.25)
@@ -42,6 +42,7 @@
        "\\*Async Shell Command\\*"
        xref--xref-buffer-mode
        help-mode
+       helpful-mode
        "\\*Warnings\\*"
        "\\*eldoc\\*"
        "\\*xref\\*"
@@ -62,14 +63,6 @@
   (:map evil-window-map
     ("u" . winner-undo)
     ("U" . winner-redo)))
-
-(defun margin-width-pixel (&optional right)
-  "Return the width of the left or optionally right margin in pixels."
-  (if (window-margins)
-    (if right
-      (* (frame-char-width) (cdr (window-margins))) ;;right margin
-      (* (frame-char-width) (car (window-margins))))
-    0))
 
 (provide 'init-window)
 ;;; init-window.el ends here

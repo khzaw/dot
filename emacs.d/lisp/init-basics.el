@@ -5,7 +5,7 @@
 ;; Stop creating backup~ files
 (setq make-backup-files nil)
 
-;; Unless something is exploding, I do not care.
+;; Warn only for emergencies
 (setq warning-minimum-level :emergency)
 
 ;; Stop creating #autosave# files

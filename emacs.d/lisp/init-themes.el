@@ -35,7 +35,6 @@
   (setq modus-themes-bold-constructs t)
   (setq
     modus-themes-mixed-fonts t
-    modus-themes-mode-line 'borderless
     modus-themes-mail-citations 'intense
     modus-themes-subtle-line-numbers t
     modus-themes-fringes 'subtle)
@@ -44,9 +43,6 @@
 (use-package ef-themes)
 
 (use-package almost-mono-themes)
-
-(use-package rose-pine-emacs
-  :straight (:type git :host github :repo "thongpv87/rose-pine-emacs"))
 
 (use-package base16-theme)
 

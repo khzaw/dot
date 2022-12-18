@@ -1,4 +1,4 @@
-;; Optimization
+;; Optimization  -*- lexical-binding: t; -*-
 (setq idle-update-delay 1.0)
 
 (setq-default cursor-in-non-selected-windows nil)
@@ -12,9 +12,8 @@
 ;; UI
 (toggle-frame-maximized)
 
-;; (setq-default line-spacing 2)
-;; (set-frame-font "JetBrains Mono 14" nil t)
-(set-face-attribute 'default nil :font "PragmataPro Liga" :weight 'normal :height 140)
+(setq-default line-spacing 2)
+(set-face-attribute 'default nil :font "PragmataPro Mono Liga" :weight 'normal :height 150)
 (set-face-attribute 'fixed-pitch nil :font "PragmataPro Liga" :weight 'normal :height 140)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.1)
 
@@ -22,7 +21,7 @@
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (tool-bar-mode 0)
 (tooltip-mode 0)
@@ -33,7 +32,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 94)
+(transparency 95)
 
 (use-package solaire-mode
   :straight t
@@ -47,7 +46,6 @@
   (solaire-global-mode +1))
 
 (use-package all-the-icons :if (display-graphic-p))
-
 
 (use-package minions)
 
@@ -132,6 +130,7 @@
 
 (use-package autothemer)
 
+
 ;; Makes manual pages nicer to look at
 (use-package info-colors :commands (info-colors-fontify-node)
   :hook (Info-selection-hook . info-colors-fontify-node))
@@ -143,16 +142,22 @@
   :commands elcord-mode
   :config (setq elcord-use-major-mode-as-main-icon t))
 
-;; minimap
-(use-package sublimity
-  :defer t
-  :config
-  (require 'sublimity-scroll)
-  (require 'sublimity-map)
-  (require 'sublimity-attractive))
-
-
-(use-package mood-line :config (mood-line-mode))
+(use-package telephone-line
+  :init
+  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+    telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+    telephone-line-primary-right-separator 'telephone-line-cubed-right
+    telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+  (telephone-line-defsegment s1 () "EMACS")
+  (setq telephone-line-lhs
+    '((evil . (s1))
+       (accent . (telephone-line-vc-segment
+                   telephone-line-erc-modified-channels-segment
+                   telephone-line-process-segment))
+       (nil . (telephone-line-projectile-segment
+              telephone-line-buffer-segment))))
+  (setq telephone-line-height 24)
+  (telephone-line-mode t))
 
 ;; (use-package sideframe
 ;;   :straight (:type git :host github :repo "rougier/sideframe")
@@ -175,6 +180,64 @@
   :config
   (zone-when-idle (* 5 60)))
 
+
+;; Make a clean & minimalist frame
+(use-package frame
+  :straight (:type built-in)
+  :custom
+  (window-divider-default-right-width 0)
+  (window-divider-default-bottom-width 0)
+  (window-divider-default-places 'right-only)
+  (window-divider-mode t)
+  :config
+  (setq-default default-frame-alist
+    (append (list
+              ;; '(internal-border-width . 10)
+              '(left-fringe . 0)
+              '(right-fringe . 0)
+              '(tool-bar-lines . 0)
+              '(menu-bar-lines . 0)
+              '(vertical-scroll-bars . nil))))
+  (setq-default window-resize-pixelwise t)
+  (setq-default frame-resize-pixelwise t))
+
+;; Make sure new frames use window-divider
+(add-hook 'before-make-frame-hook 'window-divider-mode)
+
+
+(use-package dimmer
+  :disabled
+  :commands dimmer-mode
+  :config
+  (setq dimmer-fraction 0.175)
+  (dimmer-configure-magit)
+  (dimmer-configure-posframe)
+
+  ;; make dimmer play nicely with corfu frames
+  (defun advise-dimmer-config-change-handler ()
+    "Advise to only force process if no predicate is truthy."
+    (let ((ignore (cl-some (lambda (f) (and (fboundp f) (funcall f)))
+                    dimmer-prevent-dimming-predicates)))
+      (unless ignore
+        (when (fboundp 'dimmer-process-all)
+          (dimmer-process-all t)))))
+
+  (defun corfu-frame-p ()
+    "Check if the buffer is a corfu frame buffer."
+    (string-match-p "\\` \\*corfu" (buffer-name)))
+
+  (defun dimmer-configure-corfu ()
+    "Convenience settings for corfu users."
+    (add-to-list
+      'dimmer-prevent-dimming-predicates
+      #'corfu-frame-p))
+
+  (advice-add
+    'dimmer-config-change-handler
+    :override 'advise-dimmer-config-change-handler)
+
+  (dimmer-configure-corfu)
+  (dimmer-mode))
 
 
 (provide 'init-ui)
