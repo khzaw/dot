@@ -2,7 +2,7 @@
   :straight (:type built-in)
   :commands (prettify-symbols-mode global-prettify-symbols-mode)
   :init
-  (global-prettify-symbols-mode)
+
   (setq prettify-symbols-unprettify-at-point 'right-edge)
   (create-hook-helper prettify-symbols-prog ()
     ""
@@ -27,13 +27,15 @@
   (create-hook-helper prettify-symbols-js ()
     ""
     :hooks (js2-mode-hook rjsx-mode-hook js-mode-hook typescript-mode-hook typescript-tsx-mode-hook)
-    (push '("function" . ?λ) prettify-symbols-alist)
+    (push '("function()" . ?λ) prettify-symbols-alist)
+    (push '(" () " . ?λ) prettify-symbols-alist)
     (push '("null" . ?∅) prettify-symbols-alist))
   (create-hook-helper prettify-symbols-python ()
     ""
     :hooks (python-mode-hook)
     (push '("and" . ?∧) prettify-symbols-alist)
-    (push '("or" . ?∨) prettify-symbols-alist)))
+    (push '("or" . ?∨) prettify-symbols-alist))
+  (global-prettify-symbols-mode))
 
 (use-package hideshow
   :straight (:type built-in))
@@ -55,11 +57,12 @@
 
 (use-package vimrc-mode)
 
-(setq homebrew-plantuml-jar-path
-  (expand-file-name
-    (string-trim (shell-command-to-string "brew list plantuml | grep jar"))))
 (use-package plantuml-mode
   :mode "\\.puml\\'"
+  :config
+  (setq homebrew-plantuml-jar-path
+    (expand-file-name
+      (string-trim (shell-command-to-string "brew list plantuml | grep jar"))))
   :custom
   (plantuml-jar-path homebrew-plantuml-jar-path)
   (plantuml-default-exec-mode 'executable))

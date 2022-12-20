@@ -17,6 +17,7 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package consult
+  :after projectile
   :bind (("C-c a" . consult-ag)
           ("C-c h" . consult-history)
           ("C-c i" . consult-imenu)
@@ -182,7 +183,11 @@
 
 (use-package consult-ag)
 
-(use-package consult-dir)
+(use-package consult-dir
+  :bind (("C-x C-d" . consult-dir)
+          :map minibuffer-local-completion-map
+          ("C-x C-d" . consult-dir)
+          ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package consult-spotify
   :after consult)
@@ -300,7 +305,7 @@
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
-  :bind (:map minibuffer-local-map ("M-A" . marginalia-cycle))
+  :bind (:map minibuffer-local-map ("M-a" . marginalia-cycle))
   :init (marginalia-mode))
 
 

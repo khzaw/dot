@@ -274,8 +274,10 @@
 
 ;; main hook fn, just add to text-mode/prog-mode
 (defun prettify-hook ()
+  (prettify-symbols-mode -1)
   (add-pragmatapro-prettify-symbols-alist)
-  (setup-compose-predicate))
+  (setup-compose-predicate)
+  (prettify-symbols-mode 1))
 
 (add-hook 'prog-mode-hook 'prettify-hook)
 

@@ -178,7 +178,7 @@
 (use-package zone
   :straight (:type built-in)
   :config
-  (zone-when-idle (* 5 60)))
+  (zone-when-idle (* 15 60)))
 
 
 ;; Make a clean & minimalist frame

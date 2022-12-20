@@ -54,6 +54,8 @@
 (require 'init-font)
 (require 'init-ui)
 (require 'init-themes)
+(require 'init-projectile)
+
 (require 'init-evil)
 (require 'init-edit)
 (require 'init-highlight)
@@ -61,7 +63,6 @@
 ;; (require 'init-company)
 (require 'init-corfu)
 
-(require 'init-projectile)
 (require 'init-dashboard)
 (require 'init-dired)
 (require 'init-window)
