@@ -30,6 +30,7 @@
     1 nil (lambda () (setq gs-cons-threshold 16777216))))
 
 (add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
+
 (add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
 
 ;; custom-file

@@ -16,7 +16,7 @@
           ("M-p" . symbol-overlay-jump-prev)))
 
 (use-package avy
-  :bind (("C-;"   . avy-goto-char)
+  :bind (("C-,"   . avy-goto-char)
           ("C-'"   . avy-goto-char-2)
           ("M-g g" . avy-goto-line)
           ("M-g w" . avy-goto-word-0)
@@ -164,6 +164,9 @@
        try-complete-lisp-symbol)))
 
 (use-package coverlay)
+
+(use-package indent-tools
+  :bind ("C-c TAB" . indent-tools-hydra/body))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here
