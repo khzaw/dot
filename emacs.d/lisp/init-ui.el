@@ -13,7 +13,7 @@
 (toggle-frame-maximized)
 
 (setq-default line-spacing 2)
-(set-face-attribute 'default nil :font "PragmataPro Liga" :weight 'normal :height 150)
+(set-face-attribute 'default nil :font "PragmataPro Liga Regular" :weight 'normal :height 150)
 (set-face-attribute 'fixed-pitch nil :font "iA Writer Duospace" :weight 'normal :height 160)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.1)
 
@@ -36,6 +36,7 @@
 
 (use-package solaire-mode
   :straight t
+  :disabled
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)
