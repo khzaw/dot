@@ -7,7 +7,7 @@
 (defun config-reload ()
   "Uncle dev created a function to reload Emacs config."
   (interactive)
-  (load-file (expand-file-name "~/.emacs.d/init.el")))
+  (load-file (expand-file-name "init.el" user-emacs-directory)))
 
 ;; Always load newest byte code
 (setq load-prefer-newer t)
@@ -51,8 +51,8 @@
 
 (require 'init-basics)
 
-(require 'init-font)
 (require 'init-ui)
+(require 'init-font)
 (require 'init-themes)
 (require 'init-projectile)
 
@@ -71,6 +71,7 @@
 
 ;; Programming
 (require 'init-docker)
+(require 'init-flymake)
 (require 'init-flycheck)
 (require 'init-vcs)
 (require 'init-eglot)
@@ -89,6 +90,7 @@
 (require 'init-web)
 (require 'init-prog)
 
+
 (require 'init-terminal)
 
 (require 'init-org)
@@ -96,6 +98,7 @@
 ;; Others
 (require 'init-presentation)
 (require 'init-elfeed)
+(require 'init-spell)
 
 (provide 'init)
 ;;; init.el ends here

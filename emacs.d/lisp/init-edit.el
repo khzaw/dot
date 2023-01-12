@@ -84,14 +84,7 @@
                                (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
           ispell-program-name "aspell"
-          ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
-  :config
-  ;; Correcting words with flyspell via Ivy
-  (use-package flyspell-correct-ivy
-    :after ivy
-    :bind (:map flyspell-mode-map
-            ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
-    :init (setq flyspell-correct-interface #'flyspell-correct-ivy)))
+          ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 
 (use-package highlight-indent-guides
@@ -133,19 +126,21 @@
   :hook ((text-mode . olivetti-mode)
           (prog-mode . olivetti-mode)
           (org-mode . olivetti-mode)
+          (helpful-mode . olivetti-mode)
           (fundamental-mode . olivetti-mode)
           (elfeed-show-mode . olivetti-mode)
           (Info-mode . olivetti-mode)
           (markdown-mode . olivetti-mode))
   :custom
-  (olivetti-margin-width 12)
+  ;; (olivetti-margin-width 12)
   (olivetti-body-width 120)
   (olivetti-style 'fancy)
   :delight "⊛")
 
 (use-package apheleia
   :config
-  (apheleia-global-mode t))
+  ;; (apheleia-global-mode t)
+  )
 
 (use-package repeat-mode
   :straight (:type built-in)

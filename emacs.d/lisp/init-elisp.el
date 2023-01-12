@@ -89,6 +89,8 @@ Lisp function does not specify a special indentation."
 
 (use-package eldoc
   :straight (:type built-in)
+  :config
+  (setq max-mini-window-height 3)
   :diminish)
 
 (use-package help-mode
@@ -99,7 +101,13 @@ Lisp function does not specify a special indentation."
     ("<" . help-go-back)
     (">" . help-go-forward)))
 
-(use-package helpful)
+(use-package helpful
+  :bind
+  ([remap describe-key] . helpful-key)
+  ([remap describe-function] . helpful-function)
+  ([remap describe-variable] . helpful-variable)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-symbol] . helpful-symbol))
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here

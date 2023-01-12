@@ -45,6 +45,7 @@
        helpful-mode
        "\\*Warnings\\*"
        "\\*eldoc\\*"
+       "\\*Flymake log\\*"
        "\\*xref\\*"
        "\\*Go Test\\*"
        flycheck-error-list-mode

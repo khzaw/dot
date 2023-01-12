@@ -5,6 +5,9 @@
 ;; Stop creating backup~ files
 (setq make-backup-files nil)
 
+;; No tab bar
+(setq tab-bar-mode nil)
+
 ;; Warn only for emergencies
 (setq warning-minimum-level :emergency)
 

@@ -41,6 +41,7 @@
           ("<help> a" . consult-apropos)
           ;; M-g bindings (goto-map)
           ("M-g e" . consult-compile-error)
+          ("M-g f" . consult-flymake)
           ("M-g !" . consult-flycheck)
           ("M-g g" . consult-goto-line)
           ("M-g M-g" . consult-goto-line)

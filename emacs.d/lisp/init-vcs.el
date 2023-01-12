@@ -65,9 +65,7 @@
   (blamer-min-offset 70)
   :custom-face
   (blamer-face ((t :foreground "#7a88cf"
-                  :background nil
-                  :height 140
-                  :italic t))))
+                  :height 140))))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

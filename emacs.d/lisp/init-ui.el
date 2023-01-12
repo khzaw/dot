@@ -13,8 +13,8 @@
 (toggle-frame-maximized)
 
 (setq-default line-spacing 2)
-(set-face-attribute 'default nil :font "PragmataPro Mono Liga" :weight 'normal :height 150)
-(set-face-attribute 'fixed-pitch nil :font "PragmataPro Liga" :weight 'normal :height 140)
+(set-face-attribute 'default nil :font "PragmataPro Liga" :weight 'normal :height 150)
+(set-face-attribute 'fixed-pitch nil :font "iA Writer Duospace" :weight 'normal :height 160)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.1)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
@@ -32,7 +32,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 95)
+(transparency 97)
 
 (use-package solaire-mode
   :straight t
@@ -149,13 +149,20 @@
     telephone-line-primary-right-separator 'telephone-line-cubed-right
     telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
   (telephone-line-defsegment s1 () "EMACS")
+  (telephone-line-defsegment s2 () "λ")
   (setq telephone-line-lhs
     '((evil . (s1))
        (accent . (telephone-line-vc-segment
                    telephone-line-erc-modified-channels-segment
                    telephone-line-process-segment))
        (nil . (telephone-line-projectile-segment
-              telephone-line-buffer-segment))))
+                telephone-line-buffer-segment))))
+  (setq telephone-line-rhs
+    '((nil . (telephone-line-flycheck-segment
+               telephone-line-misc-info-segment
+               telephone-line-nyan-segment))
+       (accent . (telephone-line-major-mode-segment))
+       (evil . (s2))))
   (setq telephone-line-height 24)
   (telephone-line-mode t))
 
@@ -178,7 +185,7 @@
 (use-package zone
   :straight (:type built-in)
   :config
-  (zone-when-idle (* 15 60)))
+  (zone-when-idle (* 8 60)))
 
 
 ;; Make a clean & minimalist frame
@@ -204,40 +211,20 @@
 ;; Make sure new frames use window-divider
 (add-hook 'before-make-frame-hook 'window-divider-mode)
 
-
-(use-package dimmer
-  :disabled
-  :commands dimmer-mode
-  :config
-  (setq dimmer-fraction 0.175)
-  (dimmer-configure-magit)
-  (dimmer-configure-posframe)
-
-  ;; make dimmer play nicely with corfu frames
-  (defun advise-dimmer-config-change-handler ()
-    "Advise to only force process if no predicate is truthy."
-    (let ((ignore (cl-some (lambda (f) (and (fboundp f) (funcall f)))
-                    dimmer-prevent-dimming-predicates)))
-      (unless ignore
-        (when (fboundp 'dimmer-process-all)
-          (dimmer-process-all t)))))
-
-  (defun corfu-frame-p ()
-    "Check if the buffer is a corfu frame buffer."
-    (string-match-p "\\` \\*corfu" (buffer-name)))
-
-  (defun dimmer-configure-corfu ()
-    "Convenience settings for corfu users."
-    (add-to-list
-      'dimmer-prevent-dimming-predicates
-      #'corfu-frame-p))
-
-  (advice-add
-    'dimmer-config-change-handler
-    :override 'advise-dimmer-config-change-handler)
-
-  (dimmer-configure-corfu)
-  (dimmer-mode))
+(use-package tabspaces
+  ;; use this next line only if you also use straight, otherwise ignore it.
+  :straight (:type git :host github :repo "mclear-tools/tabspaces")
+  ;; :hook (after-init . tabspaces-mode)
+  :commands (tabspaces-switch-or-create-workspace
+              tabspaces-open-or-create-project-and-workspace)
+  :custom
+  (tabspaces-use-filtered-buffers-as-default t)
+  (tabspaces-default-tab "Default")
+  (tabspaces-remove-to-default t)
+  (tabspaces-include-buffers '("*scratch*"))
+  ;; sessions
+  (tabspaces-session t)
+  (tabspaces-session-auto-restore t))
 
 
 (provide 'init-ui)
