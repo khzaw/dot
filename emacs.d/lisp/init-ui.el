@@ -32,11 +32,10 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 97)
+(transparency 99)
 
 (use-package solaire-mode
   :straight t
-  :disabled
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)

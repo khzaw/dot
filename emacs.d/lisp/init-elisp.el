@@ -90,7 +90,7 @@ Lisp function does not specify a special indentation."
 (use-package eldoc
   :straight (:type built-in)
   :config
-  (setq max-mini-window-height 3)
+  (setq max-mini-window-height 0.2)
   :diminish)
 
 (use-package help-mode
