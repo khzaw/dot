@@ -77,6 +77,7 @@
   :straight (:type built-in)
   :diminish
   :if (executable-find "aspell")
+  :bind (("C-c C-x s" . flyspell-correct-word))
   :hook (((text-mode outline-mode) . flyspell-mode)
           (prog-mode . flyspell-prog-mode)
           (flyspell-mode . (lambda ()
