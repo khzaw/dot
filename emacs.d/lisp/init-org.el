@@ -98,23 +98,49 @@
       '(
          ("d" "default" plain
            "%?"
-           :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :if-new (file+head "personal/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+startup: showall\n=n")
+           :immediate-finish t
+           :empty-lines 1
            :unnarrowed t)
-         ("b" "book notes" plain
+
+         ("t" "tech" plain
+           "%?"
+           :if-new (file+head "tech/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+startup: showall\n=n")
+           :immediate-finish t
+           :empty-lines 1
+           :unnarrowed t)
+
+         ("b" "books" plain
            "\n* Source \n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
-           :if-new (file+head "%<%Y-%m-%d-%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)))
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-            ("C-c n f" . org-roam-node-find)
+           :if-new (file+head "books/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+filetags: books\n#+startup: showall\n=n")
+           :immediate-finish t
+           :empty-lines 1
+           :unnarrowed t)
+
+         ("w" "work" plain
+           "%?"
+           :if-new (file+head "fp/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+updated: \n\n")
+           :immediate-finish t
+           :empty-lines 1
+           :unnarrowed t))
+      time-stamp-start "#\\+updated: [\t]*")
+
+    :bind (("C-c n f" . org-roam-node-find)
+            ("C-c n r" . org-roam-node-random)
             ("C-c n g" . org-roam-graph)
-            ("C-c n i" . org-roam-node-insert)
             ("C-c n c" . org-roam-capture)
             ;; Dailies
-            ("C-c n j" . org-roam-dailies-capture-today))
+            ("C-c n j" . org-roam-dailies-capture-today)
+            (:map org-mode-map
+              (("C-c n i" . org-roam-node-insert)
+                ("C-c n o" . org-id-get-create)
+                ("C-c n t" . org-roam-tag-add)
+                ("C-c n a" . org-roam-alias-add)
+                ("C-c n l" . org-roam-buffer-toggle))))
     :config
-    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-    (org-roam-db-autosync-mode)
-    (setq org-roam-dailies-directory "daily/"))
+    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
+    (setq org-roam-dailies-directory "daily/")
+    (org-roam-db-autosync-mode))
 
   (use-package org-roam-protocol
     :straight nil
@@ -146,14 +172,28 @@
 (use-package websocket :after (org-roam))
 
 (use-package deft
+  :after org
   :config
   (setq deft-directory (file-truename org-directory)
     deft-recursive t
     deft-strip-summary-regexp  ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
     deft-use-filename-as-title t
+    deft-default-extension "org"
     deft-auto-save-interval 0)
   :bind
   ("C-c n d" . deft))
+
+(use-package org-journal
+  :bind ("C-c n j" . org-journal-new-entry)
+  :custom
+  (org-journal-date-prefix "#+title: "))
+
+(use-package org-download
+  :after org
+  :bind
+  (:map org-mode-map
+    (("s-Y" . org-download-screenshot)
+      ("s-y" . org-download-yank))))
 
 (use-package svg-tag-mode
   :commands svg-tag-mode
