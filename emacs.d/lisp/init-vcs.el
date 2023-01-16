@@ -62,10 +62,7 @@
   :defer 20
   :custom
   (blamer-idle-time 0.3)
-  (blamer-min-offset 70)
-  :custom-face
-  (blamer-face ((t :foreground "#7a88cf"
-                  :height 140))))
+  (blamer-min-offset 70))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

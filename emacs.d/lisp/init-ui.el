@@ -14,8 +14,9 @@
 
 (setq-default line-spacing 2)
 (set-face-attribute 'default nil :font "PragmataPro Liga Regular" :weight 'normal :height 150)
-(set-face-attribute 'fixed-pitch nil :font "iA Writer Duospace" :weight 'normal :height 160)
+(set-face-attribute 'fixed-pitch nil :font "iA Writer Mono S" :weight 'normal :height 160)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'normal :height 1.1)
+
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
