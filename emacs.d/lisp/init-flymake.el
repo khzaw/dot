@@ -9,7 +9,7 @@
   :config
   (setq flymake-suppress-zero-counters t)
   (setq flymake-fringe-indicator-position 'right-fringe)
-  (setq flymake-no-changes-timeout nil)
+  ;; (setq flymake-no-changes-timeout nil)
   (flymake-mode))
 
 (use-package help-at-pt

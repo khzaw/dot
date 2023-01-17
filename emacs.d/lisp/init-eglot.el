@@ -16,7 +16,6 @@
   (setq eglot-auto-display-help-buffer nil)
   (setq completion-category-overrides '((eglot (styles orderless))))
   ;; (setq eglot-stay-out-of '(eldoc-documentation-strategy))
-  (setq eldoc-documentation-strategy 'eldoc-documentation-compose)
 
   (defun eglot-capf ()
     (setq-local completion-at-point-functions
@@ -29,6 +28,7 @@
     (add-hook 'before-save-hook (lambda ()
                                   (call-interactively #'eglot-format)
                                   (call-interactively #'eglot-code-action-organize-imports))))
+
   (add-hook 'eglot-managed-mode-hook #'eglot-actions-before-save)
   (add-hook 'eglot-managed-mode-hook #'eglot-capf)
   (add-hook 'eglot-managed-mode-hook

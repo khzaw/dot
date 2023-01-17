@@ -1,7 +1,4 @@
-(require 'flycheck)
-
 (defvar-local +lsp--flycheck-eglot--current-errors nil)
-
 (defun +lsp--flycheck-eglot-init (checker callback)
   "CHECKER is the checker (eglot).
 CALLBACK is the functionthat we need to call when we are done, on all the errors."
