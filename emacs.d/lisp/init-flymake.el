@@ -24,13 +24,13 @@
     (append flymake-diagnostic-functions (flymake-flycheck-all-chained-diagnostic-functions))))
 
 (use-package flymake-diagnostic-at-point
-  :ensure t
+  :after flymake
   :preface
   (defun flymake-diagnostic-at-point-quick-peek (text)
     "Display the flymake diagnostic TEXT with `quick-peek'`."
     (quick-peek-show (concat flymake-diagnostic-at-point-error-prefix text)))
   :hook
-  (flymake-mode-hook . flymake-diagnostic-at-point-mode)
+  (flymake-mode . flymake-diagnostic-at-point-mode)
   :init
   (setq flymake-diagnostic-at-point-error-prefix nil))
 
