@@ -15,7 +15,8 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme))
+  (kaolin-treemacs-theme)
+  (load-theme 'kaolin-dark t))
 
 (use-package doom-themes
   :config
@@ -27,7 +28,8 @@
       (setq doom-themes-treemacs-theme "doom-colors")
       (doom-themes-treemacs-config)))
   (doom-themes-org-config)
-  (load-theme 'doom-badger t))
+  ;; (load-theme 'doom-badger t)
+  )
 
 (use-package modus-themes
   :config
