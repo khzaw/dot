@@ -15,17 +15,15 @@
                      "~/.authinfo.gpg"))
 
 (use-package forge
+  :after magit
+  :defer 1
   :config
   ;; A topic is an issue or PR and the list of each can be configured
   ;; to display a number of open and closed items.
   ;; Show 100 open topics and never show any closed topics, for both
   ;; issues and PRs.
-  (setq forge-topic-list-limit '(100 . 0))
-  ;; (setq forge-topic-list-limit '(100 . -10))
-  )
+  (setq forge-topic-list-limit '(100 . 0)))
 
-
-;; (use-package forge :after magit)
 
 (use-package git-timemachine
   :bind ("C-c g t" . git-timemachine-toggle))
