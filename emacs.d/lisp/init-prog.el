@@ -17,7 +17,7 @@
   :init
   (setq prettify-symbols-unprettify-at-point 'right-edge)
   :hook
-  (prog-mode . prettify-hook)
+  ;; (prog-mode . prettify-hook)
   :config
   (global-prettify-symbols-mode))
 

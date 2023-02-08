@@ -53,7 +53,7 @@
 (require 'init-basics)
 
 (require 'init-ui)
-(require 'init-pragmatapro)
+;; (require 'init-pragmatapro)
 (require 'init-themes)
 (require 'init-projectile)
 
