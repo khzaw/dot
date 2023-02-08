@@ -8,23 +8,23 @@
 @import 'includes/cascade-tabs.css';
 
 /* "Auto-hide" address bar unless focused (e.g. Ctrl-L) or tab bar is hovered. */
-:root {
-    --address-bar-height: 40px;
-    --browser-offset: calc(-1 * (var(--address-bar-height) + 1px));
-}
+/* :root { */
+/*     --address-bar-height: 40px; */
+/*     --browser-offset: calc(-1 * (var(--address-bar-height) + 1px)); */
+/* } */
 
-#TabsToolbar { display: none !important; }
+/* #TabsToolbar { display: none !important; } */
 
-#navigator-toolbox-background {
-    position: absolute !important;;
-}
-/*#navigator-toolbox-background ~ #browser {
-    margin-top: var(--browser-offset) !important;
-}*/
-#navigator-toolbox-background:hover, #navigator-toolbox-background:focus-within {
-    z-index: 9001 !important;
-}
+/* #navigator-toolbox-background { */
+/*     position: absolute !important;; */
+/* } */
+/* /\*#navigator-toolbox-background ~ #browser { */
+/*     margin-top: var(--browser-offset) !important; */
+/* }*\/ */
+/* #navigator-toolbox-background:hover, #navigator-toolbox-background:focus-within { */
+/*     z-index: 9001 !important; */
+/* } */
 
-#TabsToolbar:focus-within {
-  display: block !important;
-}
+/* #TabsToolbar:focus-within { */
+/*   display: block !important; */
+/* } */
