@@ -33,7 +33,8 @@
   (progn
     (evil-leader/set-leader ",")
     (evil-leader/set-key "f" 'isearch-forward)
-    (evil-leader/set-key "b" 'consult-buffer)))
+    (evil-leader/set-key "b" 'consult-buffer)
+    (evil-leader/set-key "gi" 'eglot-find-implementation)))
 
 (use-package evil-escape
   :after (evil evil-collection)

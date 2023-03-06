@@ -1,4 +1,3 @@
-
 (use-package solo-jazz-theme)
 
 (use-package humanoid-themes)
@@ -15,8 +14,7 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme)
-  (load-theme 'kaolin-dark t))
+  (kaolin-treemacs-theme))
 
 (use-package doom-themes
   :config
@@ -46,8 +44,6 @@
 
 (use-package almost-mono-themes)
 
-(use-package base16-theme)
-
 (use-package bespoke-themes
   :straight (:host github :repo "mclear-tools/bespoke-themes")
   :config
@@ -69,5 +65,9 @@
               :type git
               :host github
               :repo "rougier/nano-theme"))
+
+(use-package timu-caribbean-theme
+  :config
+  (load-theme 'timu-caribbean t))
 
 (provide 'init-themes)

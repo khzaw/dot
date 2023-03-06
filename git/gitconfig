@@ -1,6 +1,7 @@
 [user]
 	name = Kaung Htet Zaw
 	email = kayhzaw@gmail.com
+	signingkey = E16F4D9DCF61C2FE6EB128FE623641659EAE1F12
 	# signingkey = 475D8C1DC2D4C9AC
 [credential]
 	helper = osxkeychain
@@ -19,13 +20,11 @@
   frag = magenta bold
   old = red
   new = green
+  colorMoved = default
 [color "status"]
   added = yellow
   changed = green
   untracked = cyan
-[pager]
-  diff = diff-so-fancy | less --tabs=1,5 -RFX
-  show = diff-so-fancy | less --tabs=1,5 -RFX
 [alias]
 	co = checkout
 	ci = commit
@@ -72,11 +71,12 @@
 [help]
 	format = web
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 	trustctime = false
 	commitGraph = true
+  pager = delta
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
@@ -100,15 +100,16 @@
 [help]
 	autocorrect = 1
 [merge]
+  conflictstyle = diff3
 	log = 1000
 [rebase]
   autosquash = true
 [fetch]
   prune = true
-# [gpg]
-	# program = /usr/local/MacGPG2/bin/gpg2
-# [commit]
-# 	template = ~/.stCommitMsg
+[gpg]
+  program = /usr/local/MacGPG2/bin/gpg2
+[commit]
+	template = ~/.stCommitMsg
 [rerere]
 	enabled = true
 [http]
@@ -117,3 +118,10 @@
 	defaultBranch = master
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[interactive]
+  diffFilter = delta --show-syntax-themes --dark
+[delta]
+  side-by-side = true
+  navigate = true # use n and N to move between diff sections
+  light = false # set to true if you're in a terminal w/ a light background color.
+  line-numbers = true

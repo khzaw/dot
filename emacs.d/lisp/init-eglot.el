@@ -41,8 +41,6 @@
       (setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
 
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
-  :bind (:map eglot-mode-map
-          ("g i" . eglot-find-implementation))
   )
 
 (use-package consult-eglot

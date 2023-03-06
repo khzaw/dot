@@ -4,9 +4,14 @@
   (magit-auto-revert-mode t)
   :config
   (setq magit-save-repository-buffers 'dontask)
+  (setq magit-disable-line-numbers nil)
+  (setq magit-section-disable-line-numbers nil)
   (customize-set-variable
     'display-buffer-alist
     '(("\\*magit: .*" display-buffer-same-window))))
+
+(use-package magit-delta
+  :hook (magit-mode . magit-delta-mode))
 
 (use-package magit-todos :after magit)
 
