@@ -15,7 +15,7 @@
 (setq-default line-spacing 2)
 (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 150)
 (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 150)
-(set-face-attribute 'variable-pitch nil :font "Berkeley Mono Variable" :weight 'normal :height 1.1)
+(set-face-attribute 'variable-pitch nil :font "Berkeley Mono Variable" :weight 'normal :height 1.0)
 
 
 (push '(menu-bar-lines . 0) default-frame-alist)

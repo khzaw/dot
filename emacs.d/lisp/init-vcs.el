@@ -11,7 +11,10 @@
     '(("\\*magit: .*" display-buffer-same-window))))
 
 (use-package magit-delta
-  :hook (magit-mode . magit-delta-mode))
+  :hook (magit-mode . magit-delta-mode)
+  :config
+  (add-to-list 'magit-delta-delta-args "--dark")
+  (add-to-list 'magit-delta-delta-args "--no-gitconfig"))
 
 (use-package magit-todos :after magit)
 
@@ -61,12 +64,17 @@
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package blamer
-  :disabled
-  :bind ("C-c g b" . blamer-show-posframe-commit-info)
+  :straight (:host github :repo "artawower/blamer.el")
+  :bind ("C-c g i" . blamer-show-commit-info)
   :defer 20
   :custom
   (blamer-idle-time 0.3)
-  (blamer-min-offset 70))
+  (blamer-min-offset 70)
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                  :background nil
+                  :height 140
+                  :italic t))))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
