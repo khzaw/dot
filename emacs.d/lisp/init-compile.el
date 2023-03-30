@@ -10,7 +10,6 @@
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
   :hook
   (compilation-mode . hide-mode-line-mode)
-  (compilation-mode . whitespace-mode)
   (compilation-start . olivetti-mode))
 
 ;; Enable colors in *compilation* buffer: https://stackoverflow.com/a/3072831/13215205

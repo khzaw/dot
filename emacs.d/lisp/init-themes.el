@@ -26,8 +26,7 @@
       (setq doom-themes-treemacs-theme "doom-colors")
       (doom-themes-treemacs-config)))
   (doom-themes-org-config)
-  ;; (load-theme 'doom-badger t)
-  )
+  (load-theme 'doom-gruvbox t))
 
 (use-package modus-themes
   :config
@@ -66,8 +65,6 @@
               :host github
               :repo "rougier/nano-theme"))
 
-(use-package timu-caribbean-theme
-  :config
-  (load-theme 'timu-caribbean t))
+(use-package timu-caribbean-theme)
 
 (provide 'init-themes)
