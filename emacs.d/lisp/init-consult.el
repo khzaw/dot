@@ -229,13 +229,16 @@
   :init
   (setq-default prescient-history-length 1000)
   (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
-    history-length 1000
+    history-length 100
     savehist-additional-variables '(mark-ring
                                      global-mark-ring
                                      search-ring
                                      regexp-search-ring
                                      extended-command-history)
-    savehist-autosave-interval 300))
+    savehist-autosave-interval 3000)
+  (put 'minibuffer-history 'history-length 50)
+  (put 'evil-ex-history 'history-length 50)
+  (put 'kill-ring 'history-length 25))
 
 
 (use-package vertico

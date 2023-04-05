@@ -125,7 +125,7 @@
 
 (use-package olivetti
   :hook ((text-mode . olivetti-mode)
-          (prog-mode . olivetti-mode)
+          ;; (prog-mode . olivetti-mode)
           (org-mode . olivetti-mode)
           (helpful-mode . olivetti-mode)
           (fundamental-mode . olivetti-mode)

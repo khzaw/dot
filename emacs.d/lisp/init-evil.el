@@ -9,6 +9,7 @@
   (setq evil-respect-visual-line-mode nil)
   (setq evil-split-window-below t)
   (setq evil-vsplit-window-right t)
+  (setq evil-want-C-u-scroll t)
   :config
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)
