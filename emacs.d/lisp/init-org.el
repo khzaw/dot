@@ -282,5 +282,7 @@
 
 (use-package denote)
 
+(use-package org-download)
+
 (provide 'init-org)
 ;;; init-org.el ends here
