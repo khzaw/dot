@@ -102,20 +102,6 @@
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode))
 
-(use-package yasnippet
-  :hook ((text-mode
-           prog-mode
-           conf-mode
-           snippet-mode) . yas-minor-mode-on)
-  :init
-  (setq yas-snippet-dir "~/.emacs.d/snippets")
-  :config
-  (yas-global-mode 1))
-
-(use-package yasnippet-snippets
-  :after yasnippet
-  :config (yasnippet-snippets-initialize))
-
 (use-package writeroom-mode
   :bind (("C-c w r" . writeroom-mode))
   :config

@@ -22,6 +22,12 @@
   :after evil
   :config (evil-collection-init))
 
+(use-package key-chord
+  :config
+  (setq key-chord-two-keys-delay 0.2)
+  (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
+  (key-chord-mode 1))
+
 ;; (use-package evil-surround
 ;;   :after evil
 ;;   :config
@@ -37,10 +43,12 @@
     (evil-leader/set-key "b" 'consult-buffer)
     (evil-leader/set-key "gi" 'eglot-find-implementation)))
 
-(use-package evil-escape
-  :after (evil evil-collection)
-  :init (setq-default evil-escape-key-sequence "kj")
-  :config (evil-escape-mode 1))
+;; (use-package evil-escape
+;;   :init
+;;   (setq-default evil-escape-key-sequence "kj")
+;;   (setq-default evil-escape-delay 0.2)
+;;   :config
+;;   (evil-escape-mode 1))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

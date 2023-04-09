@@ -24,7 +24,7 @@
   (org-fontify-done-headline t)
   (org-fontify-quote-and-verse-blocks t)
   (org-fontify-whole-heading-line t)
-  (org-hide-leading-stars t)
+  ;; (org-hide-leading-stars t)
   (org-hide-emphasis-markers t)
   (org-startup-truncated nil)
   (org-imenu-depth 6)
