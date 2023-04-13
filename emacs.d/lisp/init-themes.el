@@ -25,8 +25,7 @@
     (progn
       (setq doom-themes-treemacs-theme "doom-colors")
       (doom-themes-treemacs-config)))
-  (doom-themes-org-config)
-  (load-theme 'doom-badger t))
+  (doom-themes-org-config))
 
 (use-package modus-themes
   :config
@@ -35,8 +34,8 @@
   (setq
     modus-themes-mixed-fonts t
     modus-themes-mail-citations 'intense
-    modus-themes-subtle-line-numbers t
-    modus-themes-fringes 'subtle)
+    modus-themes-subtle-line-numbers t)
+  (load-theme 'modus-vivendi t)
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 (use-package ef-themes)
