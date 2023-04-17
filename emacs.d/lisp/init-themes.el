@@ -25,7 +25,8 @@
     (progn
       (setq doom-themes-treemacs-theme "doom-colors")
       (doom-themes-treemacs-config)))
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (load-theme 'doom-lantern t))
 
 (use-package modus-themes
   :config
