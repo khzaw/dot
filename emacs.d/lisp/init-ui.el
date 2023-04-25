@@ -144,12 +144,13 @@
   :config (setq elcord-use-major-mode-as-main-icon t))
 
 (use-package telephone-line
+  :disabled t
   :init
   (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
     telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
     telephone-line-primary-right-separator 'telephone-line-cubed-right
     telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
-  (telephone-line-defsegment s1 () "EMACS")
+  (telephone-line-defsegment s1 () "Emacs")
   (telephone-line-defsegment s2 () "λ")
   (setq telephone-line-lhs
     '((evil . (s1))
@@ -166,6 +167,13 @@
        (evil . (s2))))
   (setq telephone-line-height 24)
   (telephone-line-mode t))
+
+(use-package moody
+  :config
+  (setq x-underline-at-descent-line t)
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode)
+  (moody-replace-eldoc-minibuffer-message-function))
 
 ;; (use-package sideframe
 ;;   :straight (:type git :host github :repo "rougier/sideframe")
@@ -201,8 +209,6 @@
   (setq-default default-frame-alist
     (append (list
               ;; '(internal-border-width . 10)
-              '(left-fringe . 0)
-              '(right-fringe . 0)
               '(tool-bar-lines . 0)
               '(menu-bar-lines . 0)
               '(vertical-scroll-bars . nil))))
