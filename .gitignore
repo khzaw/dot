@@ -64,3 +64,5 @@ emacs.d/quelpa/
 emacs.d/var
 *.sql
 projects
+*.jar
+*jar
