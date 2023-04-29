@@ -10,11 +10,11 @@
 (setq redisplay-skip-fontification-on-input t)
 
 ;; UI
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
 
 (setq-default line-spacing 2)
-(set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 150)
-(set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 150)
+(set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
+(set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 140)
 (set-face-attribute 'variable-pitch nil :font "Berkeley Mono Variable" :weight 'normal :height 1.0)
 
 
@@ -33,7 +33,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "nTransparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 95)
+(transparency 96)
 
 (use-package solaire-mode
   :straight t
@@ -131,7 +131,6 @@
 
 (use-package autothemer)
 
-
 ;; Makes manual pages nicer to look at
 (use-package info-colors :commands (info-colors-fontify-node)
   :hook (Info-selection-hook . info-colors-fontify-node))
@@ -144,7 +143,6 @@
   :config (setq elcord-use-major-mode-as-main-icon t))
 
 (use-package telephone-line
-  :disabled t
   :init
   (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
     telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
@@ -169,6 +167,7 @@
   (telephone-line-mode t))
 
 (use-package moody
+  :disabled t
   :config
   (setq x-underline-at-descent-line t)
   (moody-replace-mode-line-buffer-identification)
@@ -219,7 +218,7 @@
 (add-hook 'before-make-frame-hook 'window-divider-mode)
 
 (use-package tabspaces
-  ;; use this next line only if you also use straight, otherwise ignore it.
+  :disabled t
   :straight (:type git :host github :repo "mclear-tools/tabspaces")
   ;; :hook (after-init . tabspaces-mode)
   :commands (tabspaces-switch-or-create-workspace

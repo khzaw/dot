@@ -77,11 +77,12 @@
 ;; (require 'init-flycheck-eglot)
 (require 'init-vcs)
 (require 'init-eglot)
-;; (require 'init-lsp)
+(require 'init-lsp)
 
 (require 'init-compile)
 (require 'init-treesitter)
 (require 'init-elisp)
+(require 'init-java)
 (require 'init-go)
 (require 'init-haskell)
 (require 'init-markdown)

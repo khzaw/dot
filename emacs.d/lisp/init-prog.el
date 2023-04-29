@@ -56,6 +56,8 @@
 
 (use-package ssh-config-mode)
 
+(use-package swift-mode)
+
 (use-package vyper-mode)
 
 (use-package conf-mode
