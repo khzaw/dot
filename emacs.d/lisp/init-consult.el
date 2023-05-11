@@ -41,9 +41,8 @@
           ("<help> a" . consult-apropos)
           ;; M-g bindings (goto-map)
           ("M-g e" . consult-compile-error)
-          ("M-g f" . consult-flymake)
-          ("M-g !" . consult-flycheck)
-          ("M-g g" . consult-goto-line)
+          ("M-g !" . consult-flymake)
+          ("M-g f" . consult-flycheck)
           ("M-g M-g" . consult-goto-line)
           ("s-l" . consult-goto-line)
           ("M-g o" . consult-outline)
@@ -293,6 +292,7 @@
 
 
 (use-package vertico-posframe
+  :init (vertico-posframe-cleanup)
   :after (vertico posframe)
   :config (setq vertico-posframe-border-width 15))
 

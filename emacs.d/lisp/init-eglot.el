@@ -1,4 +1,5 @@
 (use-package eglot
+  :after (evil evil-leader)
   :commands (eglot eglot-ensure)
   :hook ((typescript-tsx-mode
            css-mode
@@ -41,6 +42,8 @@
       (setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
 
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
+  (progn
+    (evil-leader/set-key "gi" 'eglot-find-implementation))
   )
 
 (use-package consult-eglot
@@ -48,5 +51,12 @@
   :after vertico
   :bind (:map eglot-mode-map
           ([remap xref-find-apropos] .  consult-eglot-symbols)))
+
+(use-package flycheck-eglot
+  :straight (:type git :repo "intramurz/flycheck-eglot" :host github)
+  :after (flycheck eglot)
+  :custom (flycheck-eglot-exclusive nil)
+  :config
+  (global-flycheck-eglot-mode 1))
 
 (provide 'init-eglot)

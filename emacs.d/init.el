@@ -72,7 +72,7 @@
 
 ;; Programming
 (require 'init-docker)
-(require 'init-flymake)
+;; (require 'init-flymake)
 (require 'init-flycheck)
 ;; (require 'init-flycheck-eglot)
 (require 'init-vcs)

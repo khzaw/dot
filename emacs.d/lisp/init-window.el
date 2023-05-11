@@ -65,5 +65,16 @@
     ("u" . winner-undo)
     ("U" . winner-redo)))
 
+(use-package burly
+  :straight (:type git :host github :repo "alphapapa/burly.el"))
+
+;; (use-package eyebrowse
+;;   :init (eyebrowse-mode t))
+
+;; (use-package eyebrowse-restore
+;;   :after eyebrowse
+;;   :straight (:type git :host github :repo "FrostyX/eyebrowse-restore")
+;;   :config (eyebrowse-restore-mode))
+
 (provide 'init-window)
 ;;; init-window.el ends here

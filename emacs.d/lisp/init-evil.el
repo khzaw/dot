@@ -10,6 +10,7 @@
   (setq evil-split-window-below t)
   (setq evil-vsplit-window-right t)
   (setq evil-want-C-u-scroll t)
+  (setq evil-search-module 'evil-search)
   :config
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)
@@ -40,15 +41,10 @@
   (progn
     (evil-leader/set-leader ",")
     (evil-leader/set-key "f" 'isearch-forward)
-    (evil-leader/set-key "b" 'consult-buffer)
-    (evil-leader/set-key "gi" 'eglot-find-implementation)))
+    (evil-leader/set-key "b" 'consult-buffer)))
 
-;; (use-package evil-escape
-;;   :init
-;;   (setq-default evil-escape-key-sequence "kj")
-;;   (setq-default evil-escape-delay 0.2)
-;;   :config
-;;   (evil-escape-mode 1))
+(use-package evil-goggles
+  :config (evil-goggles-mode))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

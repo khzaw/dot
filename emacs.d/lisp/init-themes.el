@@ -15,17 +15,28 @@
       (setq doom-themes-treemacs-theme "doom-colors")
       (doom-themes-treemacs-config)))
   (doom-themes-org-config)
-  (load-theme 'doom-moonlight t))
+  ;; (load-theme 'doom-moonlight t)
+  )
 
 (use-package modus-themes
   :config
-  (setq modus-themes-italic-constructs nil)
-  (setq modus-themes-bold-constructs t)
   (setq
+    modus-themes-bold-constructs t
     modus-themes-mixed-fonts t
     modus-themes-mail-citations 'intense
-    modus-themes-subtle-line-numbers t)
-  ;; (load-theme 'modus-operandi t)
+    modus-themes-subtle-line-numbers t
+    modus-themes-completions '((t . (extrabold)))
+    )
+
+  ;; Keep the border of mode line but make it the same color as the background of the mode line
+  (setq modus-themes-common-palette-overrides
+    '(
+       (border-mode-line-active bg-mode-line-active)
+       (border-mode-line-inactive bg-mode-line-inactive)
+       (fringe unspecified)
+       ))
+  (load-theme 'modus-operandi t)
+
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 (use-package ef-themes)
@@ -43,5 +54,16 @@
   :straight (kanagawa :type git :host github :repo "konrad1977/emacs"
               :local-repo "konrad1977-emacs"
               :files (:defaults "themes/*")))
+
+
+(use-package os1-theme
+  :straight (:type git :host github :repo "sashimacs/os1-theme"))
+
+(use-package hima-theme
+  :straight (:type git :host github :repo "meain/hima-theme"))
+
+(use-package nordic-night-theme
+  :straight (:type git :repo "https://git.sr.ht/~ashton314/nordic-night" :branch "main"))
+
 
 (provide 'init-themes)

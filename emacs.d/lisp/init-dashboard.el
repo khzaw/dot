@@ -14,4 +14,5 @@
   (setq dashboard-set-navigator t)
   (dashboard-setup-startup-hook))
 
+
 (provide 'init-dashboard)

@@ -109,5 +109,7 @@ Lisp function does not specify a special indentation."
   ([remap describe-command] . helpful-command)
   ([remap describe-symbol] . helpful-symbol))
 
+(use-package eros :init (eros-mode))
+
 (provide 'init-elisp)
 ;;; init-elisp.el ends here

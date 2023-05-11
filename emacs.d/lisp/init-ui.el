@@ -12,7 +12,7 @@
 ;; UI
 ;; (toggle-frame-maximized)
 
-(setq-default line-spacing 2)
+(setq-default line-spacing 1)
 (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
 (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 140)
 (set-face-attribute 'variable-pitch nil :font "Berkeley Mono Variable" :weight 'normal :height 1.0)
@@ -31,9 +31,9 @@
 
 (defun transparency (value)
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
-  (interactive "nTransparency Value (0 - 100) :")
+  (interactive "Transparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 96)
+(transparency 98)
 
 (use-package solaire-mode
   :straight t
@@ -144,10 +144,10 @@
 
 (use-package telephone-line
   :init
-  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
-    telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
-    telephone-line-primary-right-separator 'telephone-line-cubed-right
-    telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+  (setq telephone-line-primary-left-separator 'telephone-line-identity-left
+    telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
+    telephone-line-primary-right-separator 'telephone-line-identity-right
+    telephone-line-secondary-right-separator 'telephone-line-identity-hollow-right)
   (telephone-line-defsegment s1 () "Emacs")
   (telephone-line-defsegment s2 () "λ")
   (setq telephone-line-lhs
@@ -159,8 +159,7 @@
                 telephone-line-buffer-segment))))
   (setq telephone-line-rhs
     '((nil . (telephone-line-flycheck-segment
-               telephone-line-misc-info-segment
-               telephone-line-nyan-segment))
+               telephone-line-misc-info-segment))
        (accent . (telephone-line-major-mode-segment))
        (evil . (s2))))
   (setq telephone-line-height 24)
@@ -231,6 +230,39 @@
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t))
+
+(use-package pulsar
+  :init (pulsar-global-mode)
+  :config
+  (setq pulsar-pulse-functions (append pulsar-pulse-functions
+                                 '(evil-scroll-down
+                                    evil-scroll-up
+                                    evil-window-down
+                                    evil-window-up
+                                    evil-window-left
+                                    evil-window-right
+                                    evil-window-next))))
+
+(use-package sideline-blame)
+
+(use-package sideline-flymake)
+
+(use-package sideline-lsp)
+
+(use-package sideline-flycheck
+  :hook
+  (flycheck-mode . sideline-flycheck-setup))
+
+(use-package sideline
+  :after (evil evil-leader)
+  :init
+  (setq sideline-backends-right '((sideline-blame)
+                                   (sideline-lsp)
+                                   (sideline-flycheck)
+                                   (sideline-flymake)))
+  :config
+  (progn
+    (evil-leader/set-key "s" 'sideline-mode)))
 
 
 (provide 'init-ui)

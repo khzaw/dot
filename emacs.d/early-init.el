@@ -40,4 +40,8 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (when (featurep 'ns)
   (push '(ns-transparent-titlebar . t) default-frame-alist))
+
+(dolist (var '(default-frame-alist initial-frame-alist))
+  (add-to-list var '(right-divider-width . 20))
+  (add-to-list var '(internal-border-width . 20)))
 ;;; early-init.el ends here

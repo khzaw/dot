@@ -7,14 +7,15 @@
   (setq magit-disable-line-numbers nil)
   (setq magit-section-disable-line-numbers nil)
   (setq magit-refresh-status-buffer nil)
-  (customize-set-variable
-    'display-buffer-alist
-    '(("\\*magit: .*" display-buffer-same-window))))
+  ;; (customize-set-variable
+  ;;   'display-buffer-alist
+  ;;   '(("\\*magit: .*" display-buffer-same-window)))
+  )
 
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode)
   :config
-  (add-to-list 'magit-delta-delta-args "--dark")
+  ;; (add-to-list 'magit-delta-delta-args "--light")
   (add-to-list 'magit-delta-delta-args "--no-gitconfig"))
 
 (use-package magit-todos :after magit)
@@ -31,7 +32,6 @@
   ;; Show 100 open topics and never show any closed topics, for both
   ;; issues and PRs.
   (setq forge-topic-list-limit '(60 . 5)))
-
 
 (use-package git-timemachine
   :bind ("C-c g t" . git-timemachine-toggle))

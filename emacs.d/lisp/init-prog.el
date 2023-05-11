@@ -40,6 +40,8 @@
 
 (use-package vimrc-mode)
 
+(use-package sed-mode)
+
 (use-package plantuml-mode
   :mode "\\.puml\\'"
   :config
