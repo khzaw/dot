@@ -51,6 +51,7 @@
 (require 'init-bindings)
 
 (require 'init-basics)
+(require 'init-font)
 
 (require 'init-ui)
 ;; (require 'init-pragmatapro)
@@ -72,9 +73,8 @@
 
 ;; Programming
 (require 'init-docker)
-;; (require 'init-flymake)
+(require 'init-flymake)
 (require 'init-flycheck)
-;; (require 'init-flycheck-eglot)
 (require 'init-vcs)
 (require 'init-eglot)
 (require 'init-lsp)

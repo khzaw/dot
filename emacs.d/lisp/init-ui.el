@@ -12,9 +12,9 @@
 ;; UI
 ;; (toggle-frame-maximized)
 
-(setq-default line-spacing 1)
-(set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
-(set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 140)
+(setq-default line-spacing 2)
+(set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 130)
+(set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 130)
 (set-face-attribute 'variable-pitch nil :font "Berkeley Mono Variable" :weight 'normal :height 1.0)
 
 

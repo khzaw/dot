@@ -3,14 +3,15 @@
 
 (use-package flymake
   :straight (:type built-in)
-  :bind (("C-c ! n" . flymake-goto-next-error)
-          ("C-c ! p" . flymake-goto-prev-error)
-          ("C-c ! c" . flymake-start))
+  :bind (("C-c f n" . flymake-goto-next-error)
+          ("C-c f p" . flymake-goto-prev-error)
+          ("C-c f c" . flymake-start))
   :config
   (setq flymake-suppress-zero-counters t)
   (setq flymake-fringe-indicator-position 'right-fringe)
   ;; (setq flymake-no-changes-timeout nil)
-  (flymake-mode))
+  ;; (flymake-mode)
+  )
 
 (use-package help-at-pt
   :init

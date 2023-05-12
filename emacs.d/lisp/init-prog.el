@@ -73,6 +73,9 @@
 (use-package mermaid-mode
   :mode (("\\.mermaid\\'" . mermaid-mode)))
 
+(use-package makefile-executor
+  :hook (makefile-mode . makefile-executor-mode))
+
 (advice-add 'risky-local-variable-p :override #'ignore)
 
 (provide 'init-prog)
