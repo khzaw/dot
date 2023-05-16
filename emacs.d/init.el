@@ -102,6 +102,7 @@
 (require 'init-presentation)
 (require 'init-elfeed)
 (require 'init-spell)
+(require 'init-others)
 
 (provide 'init)
 ;;; init.el ends here

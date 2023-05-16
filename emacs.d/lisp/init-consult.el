@@ -189,8 +189,12 @@
           ("C-x C-d" . consult-dir)
           ("C-x C-j" . consult-dir-jump-file)))
 
+
 (use-package consult-spotify
   :after consult)
+
+(use-package consult-git-log-grep
+  :custom (consult-git-log-grep-open-function #'magit-show-commit))
 
 (use-package fzf
   :if (executable-find "fzf")
@@ -313,7 +317,6 @@
   :init (marginalia-mode))
 
 
-
 (defun +embark-live-vertico()
   "Shrink vertico minibuffer when `embark-live' is active."
   (when-let (win (and (string-prefix-p "*Embark Live" (buffer-name))
@@ -342,8 +345,10 @@
 ;;   :custom (completion-styles '(basic substring partial-completion flex orderless)))
 
 (use-package consult-ls-git
-  :bind (("C-c g f" . consult-ls-git)
-          ("C-c g F" . consult-ls-git-other-window)))
+  :straight (consult-ls-git :type git :host github :repo "rcj/consult-ls-git")
+  :bind
+  (("C-c g f" . #'consult-ls-git)
+    ("C-c g F" . #'consult-ls-git-other-window)))
 
 (use-package all-the-icons-completion
   :after all-the-icons

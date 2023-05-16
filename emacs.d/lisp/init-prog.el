@@ -28,7 +28,9 @@
 
 (use-package protobuf-mode)
 
-(use-package yaml-mode)
+(use-package yaml-pro
+  :after (yaml-mode)
+  :hook (yaml-mode . yaml-pro-mode))
 
 (use-package terraform-mode)
 

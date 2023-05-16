@@ -22,8 +22,7 @@
   :custom-face
   (flycheck-warning ((t (:underline (:color "#fabd2f" :style line :position line)))))
   (flycheck-error ((t (:underline (:color "#fb4934" :style line :position line)))))
-  (flycheck-info ((t (:underline (:color "#83a598" :style line :position line)))))
-  :delight " ∰")
+  (flycheck-info ((t (:underline (:color "#83a598" :style line :position line))))))
 
 (use-package flycheck-popup-tip
   :hook (flycheck-mode . flycheck-popup-tip-mode)

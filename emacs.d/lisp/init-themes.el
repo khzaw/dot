@@ -33,9 +33,8 @@
     '(
        (border-mode-line-active bg-mode-line-active)
        (border-mode-line-inactive bg-mode-line-inactive)
-       (fringe unspecified)
-       ))
-  (load-theme 'modus-operandi t)
+       (fringe unspecified)))
+  (load-theme 'modus-vivendi t)
 
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 

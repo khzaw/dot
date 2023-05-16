@@ -4,6 +4,7 @@
   :hook ((typescript-tsx-mode
            css-mode
            python-mode
+           java-mode
            go-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)

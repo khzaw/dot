@@ -265,5 +265,7 @@
     (evil-leader/set-key "s" 'sideline-mode)))
 
 
+(use-package emojify :config (global-emojify-mode))
+
 (provide 'init-ui)
 ;;; init-ui.el ends here

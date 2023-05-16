@@ -76,5 +76,10 @@
 ;;   :straight (:type git :host github :repo "FrostyX/eyebrowse-restore")
 ;;   :config (eyebrowse-restore-mode))
 
+(use-package zoom
+  :bind (("C-c z z" . zoom))
+  :config
+  (setq zoom-size '(0.618 . 0.618)))
+
 (provide 'init-window)
 ;;; init-window.el ends here

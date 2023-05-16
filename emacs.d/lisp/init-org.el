@@ -43,6 +43,10 @@
   (org-link-elisp-confirm-function nil)
   :config
 
+  (setq org-agenda-files (list
+                           "~/Dropbox/org/todo.org"
+                           ))
+
   (require 'org-tempo)
 
   (use-package org-modern
@@ -126,7 +130,7 @@
       time-stamp-start "#\\+updated: [\t]*")
 
     :bind (("C-c n f" . org-roam-node-find)
-            ("C-c n r" . org-roam-node-random)
+            ;; ("C-c n r" . org-roam-node-random)
             ("C-c n g" . org-roam-graph)
             ("C-c n c" . org-roam-capture)
             ;; Dailies
@@ -284,5 +288,24 @@
 
 (use-package org-download)
 
-(provide 'init-org)
+(use-package consult-org-roam
+  :after org-roam
+  :init
+  (require 'consult-org-roam)
+  (consult-org-roam-mode 1)
+  :custom
+  (consult-org-roam-grep-func #'consult-ripgrep)
+  (consult-org-roam-buffer-narrow-key ?r)
+  (consult-org-roam-buffer-after-buffers t)
+  :config
+  (consult-customize
+    consult-org-roam-forward-links
+    :preview-key (kbd "M-."))
+  :bind
+  ("C-c n e" . consult-org-roam-find-file)
+  ("C-c n b" . consult-org-roam-backlinks)
+  ("C-c n l" . consult-org-roam-forward-links)
+  ("C-c n r" . consult-org-roam-search))
+
+  (provide 'init-org)
 ;;; init-org.el ends here
