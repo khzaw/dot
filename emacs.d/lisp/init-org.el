@@ -44,7 +44,7 @@
   :config
 
   (setq org-agenda-files (list
-                           "~/Dropbox/org/todo.org"
+                           (concat (getenv "HOME") "/Dropbox/org/todo.org")
                            ))
 
   (require 'org-tempo)
@@ -130,7 +130,6 @@
       time-stamp-start "#\\+updated: [\t]*")
 
     :bind (("C-c n f" . org-roam-node-find)
-            ;; ("C-c n r" . org-roam-node-random)
             ("C-c n g" . org-roam-graph)
             ("C-c n c" . org-roam-capture)
             ;; Dailies
@@ -162,7 +161,8 @@
     (org-roam-ui-open-on-start nil)
     (org-roam-ui-browser-function #'xwidget-webkit-browse-url))
 
-  (use-package consult-org-roam :after (consult org-roam)))
+  (use-package consult-org-roam :after (consult org-roam))
+  )
 
 (use-package org-contrib)
 

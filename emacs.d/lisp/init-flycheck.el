@@ -1,7 +1,7 @@
 (use-package flycheck
   :custom
   (flycheck-indication-mode 'right-fringe)
-  (flycheck-check-syntax-automatically '(save mode-enabled))
+  (flycheck-check-syntax-automatically '(save idle-change new-line mode-enabled))
   :config
   ;; Small BitMap-Arrow
   ;;(global-flycheck-mode)
@@ -16,8 +16,7 @@
   (setq flycheck-buffer-switch-check-intermediate-buffers t)
 
   ;; Display errors a little quicker (default is 0.9s)
-  (setq flycheck-display-errors-delay 0.25)
-
+  (setq flycheck-display-errors-delay 0.2)
 
   :custom-face
   (flycheck-warning ((t (:underline (:color "#fabd2f" :style line :position line)))))
