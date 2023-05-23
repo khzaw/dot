@@ -231,29 +231,22 @@
   :hook (after-init . savehist-mode)
   :init
   (setq-default prescient-history-length 1000)
-  (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
+  (setq
+    enable-recursive-minibuffers t ; Allow commands in minibuffers
     history-length 100
     savehist-additional-variables '(mark-ring
                                      global-mark-ring
                                      search-ring
                                      regexp-search-ring
+                                     vertico-repeat-history
                                      extended-command-history)
     savehist-autosave-interval 3000)
   (put 'minibuffer-history 'history-length 50)
   (put 'evil-ex-history 'history-length 50)
   (put 'kill-ring 'history-length 25))
 
-
 (use-package vertico
-  :straight (:includes (vertico-buffer
-                         vertico-directory
-                         vertico-reverse
-                         vertico-flat
-                         vertico-repeat
-                         vertico-unobstrusive
-                         vertico-grid
-                         vertico-multiform)
-              :files (:defaults "extensions/*"))
+  :straight (vertico :type git :host github :repo "minad/vertico" :files (:defaults "extensions/*"))
   :init
   (vertico-mode)
   :custom
@@ -287,12 +280,53 @@
           t))))
   (advice-add #'vertico-directory-up :before #'set-previous-directory))
 
+(use-package vertico-mouse :after vertico :straight nil :config (vertico-mouse-mode))
+
+(use-package vertico-directory
+  :after vertico
+  :straight nil
+  :bind (:map vertico-map
+          ("RET" . vertico-directory-enter)
+          ("DEL" . vertico-directory-delete-char)
+          ("M-DEL" . vertico-directory-delete-word))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package vertico-multiform
+  :straight nil
+  :after vertico
+  :config
+
+  ;; M-V -> vertico-multiform-vertical
+  ;; M-G -> vertico-multiform-grid
+  ;; M-F -> vertico-multiform-flat
+  ;; M-R -> vertico-multiform-reverse
+  ;; M-U -> vertico-multiform-unobtrusive
+
+  (setq vertico-multiform-commands
+    '((projectile-switch-project grid indexed)))
+
+  (setq vertico-multiform-categories
+    '((file grid indexed)
+       (jinx grid (vertico-grid-annotate . 20))))
+
+  (vertico-multiform-mode 1))
+
 ;; repeat last vertico session
 (use-package vertico-repeat
   :straight nil
   :after vertico
+  :hook (minibuffer-setup . vertico-repeat-save)
   :bind
   ("M-r" . vertico-repeat))
+
+;; Add avy style keys in vertico selections
+(use-package vertico-quick
+  :straight nil
+  :after vertico
+  :bind (:map vertico-map
+          ("M-q" . vertico-quick-insert)
+          ("C-q" . vertico-quick-exit)))
 
 
 (use-package vertico-posframe
