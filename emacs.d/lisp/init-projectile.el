@@ -9,6 +9,12 @@
     projectile-enable-caching t
     projectile-completion-system 'default))
 
+(use-package consult-projectile
+  :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master")
+  :bind ("C-c p B" . consult-projectile))
+
+
+
 ;; (use-package project
 ;;   :pin gnu
 ;;   :bind (("C-c k" . #'project-kill-buffers)

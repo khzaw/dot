@@ -307,5 +307,25 @@
   ("C-c n l" . consult-org-roam-forward-links)
   ("C-c n r" . consult-org-roam-search))
 
-  (provide 'init-org)
+(use-package consult-notes
+  :straight (:type git :host github :repo "mclear-tools/consult-notes")
+  :commands (consult-notes
+              consult-notes-search-in-all-notes
+              ;; if using org-roam
+              consult-notes-org-roam-find-node
+              consult-notes-org-roam-find-node-relation)
+  :config
+  (setq consult-notes-file-dir-sources
+    '(("fp"  ?w  "~/Dropbox/notes/fp")
+       ("tech" ?t "~/Dropbox/notes/tech")
+       ("books" ?b "~/Dropbox/notes/books"))) ;; Set notes dir(s), see below
+  ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
+  ;; (setq consult-notes-org-headings-files '("~/path/to/file1.org"
+  ;;                                           "~/path/to/file2.org"))
+  (consult-notes-org-headings-mode)
+  (consult-notes-org-roam-mode)
+  (when (locate-library "denote")
+    (consult-notes-denote-mode)))
+
+(provide 'init-org)
 ;;; init-org.el ends here

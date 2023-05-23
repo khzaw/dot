@@ -2,7 +2,7 @@
 (use-package autorevert
   :straight (:type built-in)
   :diminish
-  :hook (after-init . global-auto-revert-mode))
+  :hook (on-first-buffer . global-auto-revert-mode))
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)
@@ -90,7 +90,7 @@
 (use-package jinx
   :after (vertico vertico-multiform)
   :straight (jinx :type git :host github :repo "minad/jinx" :files (:defaults "jinx-mod.c" "emacs-module.h"))
-  :hook ((emacs-startup-hook . global-jinx-mode))
+  :hook (on-first-buffer . global-jinx-mode)
   :bind (([remap ispell-word] . #'jinx-correct))
   :config
   (vertico-multiform-mode 1))

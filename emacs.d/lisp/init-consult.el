@@ -31,7 +31,7 @@
           ("C-x 4 b" . consult-buffer-other-window)
           ("C-x 5 b" . consult-buffer-other-frame)
           ("C-x r b" . consult-bookmark)
-          ("C-x p b" . consult-project-buffer)
+          ("C-c p b" . consult-project-buffer)
           ;; Custom M-# bindings for fast register access
           ("M-#" . consult-register-load)
           ("M-'" . consult-register-store)
@@ -99,8 +99,6 @@
   (setq xref-show-xrefs-function #'consult-xref
     xref-show-definitions-function #'consult-xref)
 
-  ;; Configure other variables and modes in the :config section,
-  ;; after lazily loading the package.
   :config
   (defvar my-consult-line-map
     (let ((map (make-sparse-keymap)))
@@ -194,7 +192,8 @@
   :after consult)
 
 (use-package consult-git-log-grep
-  :custom (consult-git-log-grep-open-function #'magit-show-commit))
+  :custom (consult-git-log-grep-open-function #'magit-show-commit)
+  :bind (("C-c g l" . consult-git-log-grep)))
 
 (use-package fzf
   :if (executable-find "fzf")
@@ -247,44 +246,18 @@
 
 (use-package vertico
   :straight (vertico :type git :host github :repo "minad/vertico" :files (:defaults "extensions/*"))
-  :init
-  (vertico-mode)
+  :hook (on-first-input . vertico-mode)
   :custom
   (vertico-scroll-margin 0) ;; different scroll margin
   (vertico-resize t)
-  (vertico-cycle t)
-  :config
-  (define-advice vertico--update (:after (&rest _) choose-candidate)
-    "Pick the previous directory rather than the prompt after updating candidates."
-    (cond
-      (previous-directory ; select previous directory
-        (setq vertico--index (or (seq-position vertico--candidates previous-directory)
-                               vertico--index))
-        (setq previous-directory nil))))
-
-  (defvar previous-directory nil
-    "The directory that was just left. It is set when leaving a directory and
-    set back to nil once it is used in the parent directory.")
-
-  (defun set-previous-directory ()
-    "Set the directory that was just exited from within find-file."
-    (when (> (minibuffer-prompt-end) (point))
-      (save-excursion
-        (goto-char (1- (point)))
-        (when (search-backward "/" (minibuffer-prompt-end) t)
-          ;; set parent directory
-          (setq previous-directory (buffer-substring (1+ (point)) (point-max)))
-          ;; set back to nil if not sorting by directories or what was deleted is not a directory
-          (when (not (string-suffix-p "/" previous-directory))
-            (setq previous-directory nil))
-          t))))
-  (advice-add #'vertico-directory-up :before #'set-previous-directory))
+  (vertico-cycle t))
 
 (use-package vertico-mouse :after vertico :straight nil :config (vertico-mouse-mode))
 
 (use-package vertico-directory
   :after vertico
   :straight nil
+  ;; More convenient directory navigation commands
   :bind (:map vertico-map
           ("RET" . vertico-directory-enter)
           ("DEL" . vertico-directory-delete-char)
