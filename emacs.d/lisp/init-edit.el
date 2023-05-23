@@ -88,20 +88,22 @@
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 (use-package jinx
-  :straight (jinx :type git :host github :repo "minad/jinx")
-  :hook (org-mode . jinx-mode)
-  :bind (("M-$" . jinx-correct)
-         ("C-M-$" . jinx-languages)))
+  :after (vertico vertico-multiform)
+  :straight (jinx :type git :host github :repo "minad/jinx" :files (:defaults "jinx-mod.c" "emacs-module.h"))
+  :hook ((emacs-startup-hook . global-jinx-mode))
+  :bind (([remap ispell-word] . #'jinx-correct))
+  :config
+  (vertico-multiform-mode 1))
 
 
-  (use-package highlight-indent-guides
-    :diminish
-    :hook
-    (yaml-mode . highlight-indent-guides-mode)
-    :custom
-    (highlight-indent-guides-character ?\xFFE8)
-    (highlight-indent-guides-responsive 'top)
-    (highlight-indent-guides-method 'character))
+(use-package highlight-indent-guides
+  :diminish
+  :hook
+  (yaml-mode . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guides-character ?\xFFE8)
+  (highlight-indent-guides-responsive 'top)
+  (highlight-indent-guides-method 'character))
 
 (use-package undo-fu)
 
