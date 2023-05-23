@@ -64,5 +64,7 @@
 (use-package nordic-night-theme
   :straight (:type git :repo "https://git.sr.ht/~ashton314/nordic-night" :branch "main"))
 
+(use-package badwolf
+  :straight (:host github :repo "bkruczyk/badwolf-emacs"))
 
 (provide 'init-themes)

@@ -21,7 +21,9 @@
 
 (use-package evil-collection
   :after evil
-  :config (evil-collection-init))
+  :config
+  ;; (setq evil-collection-outline-bind-tab-p t) ;; enable <tab>-based bindings in Outline mode.
+  (evil-collection-init))
 
 (use-package key-chord
   :config
@@ -45,6 +47,8 @@
 
 (use-package evil-goggles
   :config (evil-goggles-mode))
+
+(use-package god-mode )
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

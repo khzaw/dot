@@ -6,4 +6,7 @@
   (setq chatgpt-repo-path (expand-file-name "straight/repos/ChatGPT.el/" user-emacs-directory))
   :bind ("C-c q" . chatgpt-query))
 
+(use-package nov
+  :mode ("\\.epub\\'" . nov-mode))
+
 (provide 'init-others)

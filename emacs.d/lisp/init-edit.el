@@ -79,23 +79,29 @@
   :if (executable-find "aspell")
   :bind (("C-c C-x s" . flyspell-correct-word))
   :hook (((text-mode outline-mode) . flyspell-mode)
-          (prog-mode . flyspell-prog-mode)
-          (flyspell-mode . (lambda ()
-                             (dolist (key '("C-;" "C-," "C-."))
-                               (unbind-key key flyspell-mode-map)))))
+         (prog-mode . flyspell-prog-mode)
+         (flyspell-mode . (lambda ()
+                            (dolist (key '("C-;" "C-," "C-."))
+                              (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
-          ispell-program-name "aspell"
-          ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
+              ispell-program-name "aspell"
+              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
+
+(use-package jinx
+  :straight (jinx :type git :host github :repo "minad/jinx")
+  :hook (org-mode . jinx-mode)
+  :bind (("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
 
 
-(use-package highlight-indent-guides
-  :diminish
-  :hook
-  (yaml-mode . highlight-indent-guides-mode)
-  :custom
-  (highlight-indent-guides-character ?\xFFE8)
-  (highlight-indent-guides-responsive 'top)
-  (highlight-indent-guides-method 'character))
+  (use-package highlight-indent-guides
+    :diminish
+    :hook
+    (yaml-mode . highlight-indent-guides-mode)
+    :custom
+    (highlight-indent-guides-character ?\xFFE8)
+    (highlight-indent-guides-responsive 'top)
+    (highlight-indent-guides-method 'character))
 
 (use-package undo-fu)
 

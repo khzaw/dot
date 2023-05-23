@@ -76,5 +76,12 @@
   :after (lsp-mode focus)
   :hook (focus-mode . lsp-focus-mode))
 
+;; (use-package lsp-java
+;;   :straight (:type git :host github :repo "emacs-lsp/lsp-java"))
+
+
+(use-package dap-mode
+  :after lsp-mode)
+
 (provide 'init-lsp)
 ;;; init-lsp.el ends here
