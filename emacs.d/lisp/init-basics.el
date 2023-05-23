@@ -181,6 +181,14 @@
     ad-do-it))
 (ad-activate 'term-sentinel)
 
+(use-package on
+  :straight (:type git :host gitlab :repo "ajgrf/on.el"))
+
+(use-package benchmark-init
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  :hook (after-init . benchmark-init/deactivate))
+
 (use-package restart-emacs)
 
 (use-package which-key
@@ -193,7 +201,7 @@
   (push '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1")) which-key-replacement-alist)
   (push '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")) which-key-replacement-alist)
   (setq which-key-unicode-correction 5)
-  (which-key-mode))
+  :hook (on-first-input . which-key-mode))
 
 (use-package which-key-posframe
   :after (posframe which-key)
@@ -210,11 +218,11 @@
 ;; History
 (use-package saveplace
   :straight (:type built-in)
-  :hook (after-init . save-place-mode))
+  :hook (on-first-buffer . save-place-mode))
 
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
-  :hook (after-init . recentf-mode)
+  :hook (on-first-file . recentf-mode)
   :init (setq
           recentf-max-saved-items 300
           recentf-exclude
