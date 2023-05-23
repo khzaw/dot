@@ -2,7 +2,9 @@
   :custom
   (flycheck-indication-mode 'right-fringe)
   (flycheck-check-syntax-automatically '(save idle-change new-line mode-enabled))
+  :hook (flycheck-mode . flycheck-set-indication-mode)
   :config
+  (setq flycheck-indication-mode 'right-margin)
   ;; Small BitMap-Arrow
   ;;(global-flycheck-mode)
   (when (fboundp 'define-fringe-bitmap)
@@ -21,7 +23,10 @@
   :custom-face
   (flycheck-warning ((t (:underline (:color "#fabd2f" :style line :position line)))))
   (flycheck-error ((t (:underline (:color "#fb4934" :style line :position line)))))
-  (flycheck-info ((t (:underline (:color "#83a598" :style line :position line))))))
+  (flycheck-info ((t (:underline (:color "#83a598" :style line :position line)))))
+  :bind (:map flycheck-error-list-mode-map
+          ("C-n" . flycheck-error-list-next-error)
+          ("C-p" . flycheck-error-list-previous-error)))
 
 (use-package flycheck-popup-tip
   :hook (flycheck-mode . flycheck-popup-tip-mode)
