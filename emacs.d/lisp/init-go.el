@@ -20,6 +20,17 @@
           ("C-c C-t b" . go-test-current-benchmark)
           ("C-c C-x" . go-run)))
 
+(use-package go-tag
+  :bind (:map go-mode-map
+          ("C-c t a" . go-tag-add)
+          ("C-c t r" . go-tag-remove))
+  :init (setq go-tag-args (list "-transform" "camelcase")))
+
+(use-package go-fill-struct)
+
+(use-package go-dlv)
+
+
 (use-package gorepl-mode
   :if (executable-find "gore")
   :hook (go-mode . gorepl-mode))
