@@ -118,19 +118,24 @@
     writeroom-maximize-window nil))
 
 (use-package olivetti
-  :hook ((text-mode . olivetti-mode)
-          ;; (prog-mode . olivetti-mode)
-          (org-mode . olivetti-mode)
-          (helpful-mode . olivetti-mode)
-          (fundamental-mode . olivetti-mode)
-          (elfeed-show-mode . olivetti-mode)
-          (Info-mode . olivetti-mode)
-          (markdown-mode . olivetti-mode))
+  ;; :hook ((text-mode . olivetti-mode)
+  ;;         ;; (prog-mode . olivetti-mode)
+  ;;         (org-mode . olivetti-mode)
+  ;;         (helpful-mode . olivetti-mode)
+  ;;         (fundamental-mode . olivetti-mode)
+  ;;         (elfeed-show-mode . olivetti-mode)
+  ;;         (Info-mode . olivetti-mode)
+  ;;         (markdown-mode . olivetti-mode))
   :custom
-  ;; (olivetti-margin-width 12)
+  ;;(olivetti-margin-width 12)
   (olivetti-body-width 120)
   (olivetti-style 'fancy)
   :delight "⊛")
+
+(use-package auto-olivetti
+  :straight (auto-olivetti :host sourcehut :repo "ashton314/auto-olivetti")
+  :config
+  (auto-olivetti-mode))
 
 (use-package apheleia
   :config
