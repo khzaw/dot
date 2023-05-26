@@ -1,3 +1,4 @@
+(setq text-scale-mode-step 1.2)
 (use-package ligature
   :config
   ;; Enable ligatures in programming modes
