@@ -19,6 +19,7 @@
   )
 
 (use-package modus-themes
+  :defer
   :config
   (setq
     modus-themes-bold-constructs t
@@ -26,19 +27,23 @@
     modus-themes-mail-citations 'intense
     modus-themes-subtle-line-numbers t
     modus-themes-completions '((t . (extrabold)))
-    )
-
-  ;; Keep the border of mode line but make it the same color as the background of the mode line
-  (setq modus-themes-common-palette-overrides
+    ;; Keep the border of mode line but make it the same color as the background of the mode line
+    modus-themes-common-palette-overrides
     '(
        (border-mode-line-active bg-mode-line-active)
        (border-mode-line-inactive bg-mode-line-inactive)
        (fringe unspecified)))
-  (load-theme 'modus-vivendi t)
+  ;; (load-theme 'modus-vivendi t)
 
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 (use-package ef-themes)
+
+(use-package standard-themes
+  :defer
+  :config
+  (setq
+    standard-themes-fringes nil))
 
 (use-package almost-mono-themes)
 
@@ -66,5 +71,11 @@
 
 (use-package badwolf
   :straight (:host github :repo "bkruczyk/badwolf-emacs"))
+
+(use-package circadian
+  :config
+  (setq circadian-themes '(("8:00" . modus-operandi)
+                            ("19:00" . standard-dark)))
+  (circadian-setup))
 
 (provide 'init-themes)
