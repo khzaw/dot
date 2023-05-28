@@ -281,7 +281,7 @@
     '((projectile-switch-project grid indexed)))
 
   (setq vertico-multiform-categories
-    '((file grid indexed)
+    '((file grid)
        (jinx grid (vertico-grid-annotate . 20))))
 
   (vertico-multiform-mode 1))
@@ -323,7 +323,6 @@
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
   :bind (:map minibuffer-local-map ("M-a" . marginalia-cycle))
   :init (marginalia-mode))
-
 
 (defun +embark-live-vertico()
   "Shrink vertico minibuffer when `embark-live' is active."

@@ -102,7 +102,7 @@
   (yaml-mode . highlight-indent-guides-mode)
   :custom
   (highlight-indent-guides-character ?\xFFE8)
-  (highlight-indent-guides-responsive 'top)
+  (ighlight-indent-guides-responsive 'top)
   (highlight-indent-guides-method 'character))
 
 (use-package undo-fu)
@@ -113,7 +113,8 @@
 (use-package writeroom-mode
   :bind (("C-c w r" . writeroom-mode))
   :config
-  (setq writeroom-width 100
+  (setq
+    writeroom-width 100
     writeroom-fullscreen-effect nil
     writeroom-maximize-window nil))
 
@@ -129,8 +130,7 @@
   :custom
   ;;(olivetti-margin-width 12)
   (olivetti-body-width 120)
-  (olivetti-style 'fancy)
-  :delight "⊛")
+  (olivetti-style 'fancy))
 
 (use-package auto-olivetti
   :straight (auto-olivetti :host sourcehut :repo "ashton314/auto-olivetti")
@@ -167,6 +167,8 @@
 
 (use-package indent-tools
   :bind ("C-c TAB" . indent-tools-hydra/body))
+
+(use-package god-mode :config (god-mode))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here
