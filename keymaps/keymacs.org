@@ -1,5 +1,6 @@
 * Generate keymap file
 ** Via the ~keymacs.com~ UI
+** Import =keymacs_keymap.edn= to load the existing keymap
 ** Generate and download firmware. If =.hex= file is not included, follow the step below
 * Compile HEX file (Firmware)
 ** Copy the ~keymacs~ folder to ~qmk_firmware/keyboards~
