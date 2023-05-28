@@ -33,7 +33,7 @@
        (border-mode-line-active bg-mode-line-active)
        (border-mode-line-inactive bg-mode-line-inactive)
        (fringe unspecified)))
-  ;; (load-theme 'modus-vivendi t)
+  ;; (load-theme 'modus-operandi t)
 
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
@@ -75,7 +75,7 @@
 (use-package circadian
   :config
   (setq circadian-themes '(("8:00" . modus-operandi)
-                            ("19:00" . standard-dark)))
+                            ("19:00" . modus-vivendi)))
   (circadian-setup))
 
 (provide 'init-themes)
