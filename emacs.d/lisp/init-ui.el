@@ -14,9 +14,8 @@
 
 (setq-default line-spacing 2)
 (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
-(set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 140)
-(set-face-attribute 'variable-pitch nil :font "Iosevka" :weight 'normal :height 1.1)
-
+(set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
+(set-face-attribute 'variable-pitch nil :font "Iosevka Term Curly" :weight 'normal :height 1.1)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -144,24 +143,25 @@
 
 (use-package telephone-line
   :init
-  (setq telephone-line-primary-left-separator 'telephone-line-identity-left
-    telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
-    telephone-line-primary-right-separator 'telephone-line-identity-right
-    telephone-line-secondary-right-separator 'telephone-line-identity-hollow-right)
+  (setq
+   telephone-line-primary-left-separator 'telephone-line-identity-left
+   telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
+   telephone-line-primary-right-separator 'telephone-line-identity-right
+   telephone-line-secondary-right-separator 'telephone-line-identity-hollow-right)
   (telephone-line-defsegment s1 () "Emacs")
   (telephone-line-defsegment s2 () "λ")
   (setq telephone-line-lhs
-    '((evil . (s1))
-       (accent . (telephone-line-vc-segment
-                   telephone-line-erc-modified-channels-segment
-                   telephone-line-process-segment))
-       (nil . (telephone-line-projectile-segment
-                telephone-line-buffer-segment))))
+        '((evil . (s1))
+          (accent . (telephone-line-vc-segment
+                     telephone-line-erc-modified-channels-segment
+                     telephone-line-process-segment))
+          (nil . (telephone-line-projectile-segment
+                  telephone-line-buffer-segment))))
   (setq telephone-line-rhs
-    '((nil . (telephone-line-flycheck-segment
-               telephone-line-misc-info-segment))
-       (accent . (telephone-line-major-mode-segment))
-       (evil . (s2))))
+        '((nil . (telephone-line-flycheck-segment
+                  telephone-line-misc-info-segment))
+          (accent . (telephone-line-major-mode-segment))
+          (evil . (s2))))
   (setq telephone-line-height 24)
   (telephone-line-mode t))
 
@@ -266,6 +266,10 @@
 
 
 (use-package emojify :config (global-emojify-mode))
+
+(use-package spacious-padding
+  :straight (:type git :host github :repo "protesilaos/spacious-padding")
+  :config (spacious-padding-mode t))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
