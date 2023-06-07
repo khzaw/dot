@@ -1,18 +1,19 @@
 (use-package visual-fill-column
-  :hook (org-mode . visual-fill-column-mode)
+  ;;:hook (org-mode . visual-fill-column-mode)
   :custom
   (visual-fill-column-width 120)
   (visual-fill-column-center-text t))
 
 (use-package org
   :init
-  :hook (org-mode . org-indent-mode)
   :bind
   ("C-c C-c" . org-edit-src-exit)
   :custom
   (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
   ;; (org-agenda-files '("gsd.org"  "work.org"))
-  (org-todo-keywords '((sequence "TODO(t)" "|" "DOING(n)" "|" "DONE(d)" "|" "BLOCKED(b)")))
+  (org-todo-keywords
+   '((sequence "TODO(t)" "|" "DOING(n)" "|" "DONE(d)" "|" "BLOCKED(b)")
+     ))
   ;; (org-agenda-start-with-log-mode t)
   ;; (org-log-done 'time)
   ;; (org-log-into-drawer t)
@@ -21,48 +22,60 @@
   (org-src-preserve-indentation t)        ; use native major-mode indentation
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'other-window)
-  (org-fontify-done-headline t)
-  (org-fontify-quote-and-verse-blocks t)
-  (org-fontify-whole-heading-line t)
-  ;; (org-hide-leading-stars t)
+  ;; (org-fontify-done-headline t)
+  ;; (org-fontify-quote-and-verse-blocks t)
+  ;; (org-fontify-whole-heading-line t)
   (org-hide-emphasis-markers t)
   (org-startup-truncated nil)
   (org-imenu-depth 6)
   (org-tags-column 0)
-  (org-startup-indented t)
+  ;; (org-startup-indented t)
   (org-startup-folded nil)
   (org-special-ctrl-a/e t)
   (org-link-search-must-match-exact-headline nil)
   (org-M-RET-may-split-line nil)
+  (org-auto-align-tags t)
+  (org-tags-column 0)
+  (org-catch-invisible-edits 'show-and-error)
   (org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
-  (org-priority-faces
-    '((?A . error)
-       (?B . warning)
-       (?C . success)))
+  ;; (org-priority-faces
+  ;;   '((?A . error)
+  ;;      (?B . warning)
+  ;;      (?C . success)))
   (org-confirm-babel-evaluate nil)
   (org-link-elisp-confirm-function nil)
   :config
 
-  (setq org-agenda-files (list
-                           (concat (getenv "HOME") "/Dropbox/org/todo.org")
-                           ))
+  (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1)))
+
+  (defun khz/org-link-copy (&optional arg)
+    "Extract URL from org-mode link and add it to kill ring."
+    (interactive "P")
+    (let* ((link (org-element-lineage (org-element-context) '(link) t))
+           (type (org-element-property :type link))
+           (url (org-element-property :path link))
+           (url (concat type ":" url)))
+      (kill-new url)
+      (message (concat "Copied URL: " url))))
+
+  (define-key org-mode-map (kbd "C-x C-l") 'khz/org-link-copy)
 
   (require 'org-tempo)
 
-
+  (setq line-spacing 0.3)
 
   (use-package ox-gfm :after org)
   (add-to-list 'org-export-backends 'md)
 
   (defconst load-language-alist
     '((emacs-lisp . t)
-       (perl . t)
-       (python . t)
-       (ruby . t)
-       (js . t)
-       (css . t)
-       (sass . t)
-       (plantuml . t))
+      (perl . t)
+      (python . t)
+      (ruby . t)
+      (js . t)
+      (css . t)
+      (sass . t)
+      (plantuml . t))
     "Alist of org ob languages.")
 
   ;; ob-sh renamed to ob-shell since 26.1.
@@ -83,62 +96,62 @@
 
   (use-package org-rich-yank
     :bind (:map org-mode-map
-            ("C-M-y" . org-rich-yank)))
+           ("C-M-y" . org-rich-yank)))
 
   (use-package org-preview-html
     :diminish
     :bind (:map org-mode-map
-            ("C-c C-h" . org-preview-html-mode))
+           ("C-c C-h" . org-preview-html-mode))
     :init (when (featurep 'xwidget-internal)
             (setq org-preview-html-viewer 'xwidget)))
 
   (use-package org-roam
     :straight (org-roam :type git :host github :repo "org-roam/org-roam"
-                :files (:defaults "extensions/*"))
+                        :files (:defaults "extensions/*"))
     :custom
     (org-roam-directory (file-truename org-directory))
     (org-roam-capture-templates
-      '(
-         ("d" "default" plain
-           "%?"
-           :if-new (file+head "personal/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+startup: showall\n")
-           :immediate-finish t
-           :empty-lines 1
-           :unnarrowed t)
+     '(
+       ("d" "default" plain
+        "%?"
+        :if-new (file+head "personal/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+startup: showall\n")
+        :immediate-finish t
+        :empty-lines 1
+        :unnarrowed t)
 
-         ("t" "tech" plain
-           "%?"
-           :if-new (file+head "tech/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+startup: showall\n")
-           :immediate-finish t
-           :empty-lines 1
-           :unnarrowed t)
+       ("t" "tech" plain
+        "%?"
+        :if-new (file+head "tech/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+startup: showall\n")
+        :immediate-finish t
+        :empty-lines 1
+        :unnarrowed t)
 
-         ("b" "books" plain
-           "\n* Source \n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
-           :if-new (file+head "books/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+filetags: books\n#+startup: showall\n")
-           :immediate-finish t
-           :empty-lines 1
-           :unnarrowed t)
+       ("b" "books" plain
+        "\n* Source \n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
+        :if-new (file+head "books/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+filetags: books\n#+startup: showall\n")
+        :immediate-finish t
+        :empty-lines 1
+        :unnarrowed t)
 
-         ("w" "work" plain
-           "%?"
-           :if-new (file+head "fp/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+updated: \n\n")
-           :immediate-finish t
-           :empty-lines 1
-           :unnarrowed t))
-      time-stamp-start "#\\+updated: [\t]*")
+       ("w" "work" plain
+        "%?"
+        :if-new (file+head "fp/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+updated: \n\n")
+        :immediate-finish t
+        :empty-lines 1
+        :unnarrowed t))
+     time-stamp-start "#\\+updated: [\t]*")
 
     :bind (("C-c n f" . org-roam-node-find)
-            ("C-c n g" . org-roam-graph)
-            ("C-c n c" . org-roam-capture)
-            ;; Dailies
-            ("C-c n j" . org-roam-dailies-capture-today)
-            (:map org-mode-map
-              (("C-c n i" . org-roam-node-insert)
-                ("C-c n o" . org-id-get-create)
-                ("C-c n t" . org-roam-tag-add)
-                ("C-c n a" . org-roam-alias-add)
-                ("C-c n l" . org-roam-buffer-toggle))))
+           ("C-c n g" . org-roam-graph)
+           ("C-c n c" . org-roam-capture)
+           ;; Dailies
+           ("C-c n j" . org-roam-dailies-capture-today)
+           (:map org-mode-map
+            (("C-c n i" . org-roam-node-insert)
+             ("C-c n o" . org-id-get-create)
+             ("C-c n t" . org-roam-tag-add)
+             ("C-c n a" . org-roam-alias-add)
+             ("C-c n l" . org-roam-buffer-toggle))))
     :config
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
     (setq org-roam-dailies-directory "daily/")
@@ -312,15 +325,15 @@
 (use-package consult-notes
   :straight (:type git :host github :repo "mclear-tools/consult-notes")
   :commands (consult-notes
-              consult-notes-search-in-all-notes
-              ;; if using org-roam
-              consult-notes-org-roam-find-node
-              consult-notes-org-roam-find-node-relation)
+             consult-notes-search-in-all-notes
+             ;; if using org-roam
+             consult-notes-org-roam-find-node
+             consult-notes-org-roam-find-node-relation)
   :config
   (setq consult-notes-file-dir-sources
-    '(("fp"  ?w  "~/Dropbox/notes/fp")
-       ("tech" ?t "~/Dropbox/notes/tech")
-       ("books" ?b "~/Dropbox/notes/books"))) ;; Set notes dir(s), see below
+        '(("fp"  ?w  "~/Dropbox/notes/fp")
+          ("tech" ?t "~/Dropbox/notes/tech")
+          ("books" ?b "~/Dropbox/notes/books"))) ;; Set notes dir(s), see below
   ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
   ;; (setq consult-notes-org-headings-files '("~/path/to/file1.org"
   ;;                                           "~/path/to/file2.org"))

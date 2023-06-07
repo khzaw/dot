@@ -212,8 +212,9 @@
 (use-package editorconfig
   :defer 1
   :diminish
-  :config (editorconfig-mode 1)
-  :custom (editorconfig-lisp-use-default-indent t))
+  :config
+  (setq editorconfig-lisp-use-default-indent t)
+  (editorconfig-mode 1))
 
 ;; History
 (use-package saveplace

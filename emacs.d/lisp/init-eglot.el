@@ -2,15 +2,16 @@
   :after (evil evil-leader)
   :commands (eglot eglot-ensure)
   :hook ((typescript-tsx-mode
-           css-mode
-           python-mode
-           java-mode
-           go-mode) . eglot-ensure)
+          css-mode
+          python-mode
+          markdown-mode
+          java-mode
+          go-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
   :bind (("C-c e f" . #'eglot-format)
-          ("C-c e a" . #'eglot-code-actions)
-          ("C-c e i " . #'eglot-code-action-organize-imports))
+         ("C-c e a" . #'eglot-code-actions)
+         ("C-c e i " . #'eglot-code-action-organize-imports))
   :config
   (setq eglot-strict-mode nil)
   (setq eglot-events-buffer-size 0)
@@ -21,10 +22,10 @@
 
   (defun eglot-capf ()
     (setq-local completion-at-point-functions
-      (list (cape-super-capf
-              #'eglot-completion-at-point
-              #'tempel-expand
-              #'cape-file))))
+                (list (cape-super-capf
+                       #'eglot-completion-at-point
+                       #'tempel-expand
+                       #'cape-file))))
 
   (defun eglot-actions-before-save ()
     (add-hook 'before-save-hook (lambda ()
@@ -34,18 +35,17 @@
   (add-hook 'eglot-managed-mode-hook #'eglot-actions-before-save)
   (add-hook 'eglot-managed-mode-hook #'eglot-capf)
   (add-hook 'eglot-managed-mode-hook
-    (lambda ()
-      ;; Show flymake diagnostics first.
-      (setq eldoc-documentation-functions
-        (cons #'flymake-eldoc-function
-          (remove #'flymake-eldoc-function eldoc-documentation-functions)))
-      ;; Show all eldoc feedback.
-      (setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
+            (lambda ()
+              ;; Show flymake diagnostics first.
+              (setq eldoc-documentation-functions
+                    (cons #'flymake-eldoc-function
+                          (remove #'flymake-eldoc-function eldoc-documentation-functions)))
+              ;; Show all eldoc feedback.
+              (setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
 
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
   (progn
-    (evil-leader/set-key "gi" 'eglot-find-implementation))
-  )
+    (evil-leader/set-key "gi" 'eglot-find-implementation)))
 
 (use-package consult-eglot
   :defer t

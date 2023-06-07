@@ -118,24 +118,16 @@
     writeroom-fullscreen-effect nil
     writeroom-maximize-window nil))
 
-(use-package olivetti
-  ;; :hook ((text-mode . olivetti-mode)
-  ;;         ;; (prog-mode . olivetti-mode)
-  ;;         (org-mode . olivetti-mode)
-  ;;         (helpful-mode . olivetti-mode)
-  ;;         (fundamental-mode . olivetti-mode)
-  ;;         (elfeed-show-mode . olivetti-mode)
-  ;;         (Info-mode . olivetti-mode)
-  ;;         (markdown-mode . olivetti-mode))
-  :custom
-  ;;(olivetti-margin-width 12)
-  (olivetti-body-width 120)
-  (olivetti-style 'fancy))
+;; (use-package olivetti
+;;   :custom
+;;   (olivetti-margin-width 12)
+;;   (olivetti-body-width 120)
+;;   (olivetti-style 'fancy))
 
-(use-package auto-olivetti
-  :straight (auto-olivetti :host sourcehut :repo "ashton314/auto-olivetti")
-  :config
-  (auto-olivetti-mode))
+;; (use-package auto-olivetti
+;;   :straight (auto-olivetti :host sourcehut :repo "ashton314/auto-olivetti")
+;;   :config
+;;   (auto-olivetti-mode))
 
 (use-package apheleia
   :config
@@ -168,7 +160,7 @@
 (use-package indent-tools
   :bind ("C-c TAB" . indent-tools-hydra/body))
 
-(use-package god-mode :config (god-mode))
+(use-package god-mode :disabled :config (god-mode))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here
