@@ -19,7 +19,7 @@
                      ("*ag search*" :select nil :size 0.25)
                      ("*Warnings*" :select nil :size 0.25)
                      ("*Error*" :select nil :size 0.25)
-                     (magit-status-mode :align bottom :size 0.5 :inhibit-window-quit t)
+                     (magit-status-mode :align bottom :size 0.65 :inhibit-window-quit t)
                      (magit-log-mode :same t :inhibit-window-quit t)
                      (magit-commit-mode :ignore t)
                      (magit-diff-mode :select nil :align left :size 0.5)
