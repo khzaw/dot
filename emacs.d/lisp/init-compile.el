@@ -1,5 +1,11 @@
 (use-package compile
   :config
+
+  (defun khz/compile-mode-hook ()
+    (hide-mode-line-mode)
+    (setq truncate-lines nil) ;; automatically becomes buffer local
+    (set (make-local-variable 'truncate-partial-width-winows) nil))
+
   (setq compilation-scroll-output t)
   (setq compilation-ask-about-save nil)
   (require 'ansi-color)
@@ -9,7 +15,7 @@
     (toggle-read-only))
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
   :hook
-  (compilation-mode . hide-mode-line-mode)
+  (compilation-mode . khz/compile-mode-hook)
   (compilation-start . olivetti-mode))
 
 ;; Enable colors in *compilation* buffer: https://stackoverflow.com/a/3072831/13215205
