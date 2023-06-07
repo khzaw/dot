@@ -29,6 +29,13 @@
           ;; C-x bindings (ctl-x-map)
           ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
           ("C-x b" . consult-buffer) ;; orig . switch-to-buffer
+          ;; b Buffers
+          ;; SPC Hidden buffers
+          ;; * Modified buffers
+          ;; f Files (Requires recentf-mode)
+          ;; r File registers
+          ;; m Bookmarks
+          ;; p Project
           ("C-x 4 b" . consult-buffer-other-window)
           ("C-x 5 b" . consult-buffer-other-frame)
           ("C-x r b" . consult-bookmark)
@@ -97,10 +104,20 @@
   (advice-add #'register-preview :override #'consult-register-window)
 
   ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
+  (setq
+    xref-show-xrefs-function #'consult-xref
     xref-show-definitions-function #'consult-xref)
 
   :config
+
+  (setq
+    consult-narrow-key "<"
+    consult-line-numbers-widen t
+    consult-async-min-input 2
+    consult-async-refresh-delay 0.15
+    consult-async-input-throttle 0.2
+    consult-async-input-debounce 0.1)
+
   (defvar my-consult-line-map
     (let ((map (make-sparse-keymap)))
       (define-key map "\C-s" #'previous-history-element)
@@ -122,18 +139,8 @@
     consult--source-bookmark consult--source-file-register
     consult--source-recent-file consult--source-project-recent-file
     ;; preview-key (kdb "M-.")
-    :preview-key '(:debounce 0.2 any)
-    )
+    :preview-key '(:debounce 0.2 any))
 
-  ;; Optionally configure the narrowing key.
-  ;; Both < and C++ work resonably well.
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
-
-  (setq consult-line-numbers-widen t
-    consult-async-min-input 2
-    consult-async-refresh-delay 0.15
-    consult-async-input-throttle 0.2
-    consult-async-input-debounce 0.1)
 
   ;; Optinally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
@@ -180,7 +187,7 @@
         (delete-region (1+ (point)) (point-max))
         t))))
 
-(use-package consult-ag)
+(use-package consult-ag :after consult)
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
