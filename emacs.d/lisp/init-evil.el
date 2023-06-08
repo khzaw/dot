@@ -25,16 +25,13 @@
   ;; (setq evil-collection-outline-bind-tab-p t) ;; enable <tab>-based bindings in Outline mode.
   (evil-collection-init))
 
-(use-package key-chord
-  :config
-  (setq key-chord-two-keys-delay 0.2)
-  (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
-  (key-chord-mode 1))
 
-;; (use-package evil-surround
-;;   :after evil
-;;   :config
-;;   (global-evil-surround-mode 1))
+(use-package key-chord
+  :init
+  (setq key-chord-two-keys-delay 0.1)
+  (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
+  :config
+  (key-chord-mode 1))
 
 (use-package evil-leader
   :commands (evil-leader-mode)
@@ -48,7 +45,7 @@
 (use-package evil-goggles
   :config (evil-goggles-mode))
 
-(use-package god-mode )
+(use-package god-mode :disabled)
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

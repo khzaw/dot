@@ -46,6 +46,14 @@
   (org-link-elisp-confirm-function nil)
   :config
 
+  (custom-set-faces
+   '(org-level-1 ((t (:weight bold  :height 1.2))))
+   '(org-level-2 ((t (:weight bold :height 1.1))))
+   ;; '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+   ;; '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+   ;; '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+   )
+
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1)))
 
   (defun khz/org-link-copy (&optional arg)
@@ -89,10 +97,15 @@
     :if (executable-find "rustc")
     :init (cl-pushnew '(rust . t) load-language-alist))
 
+  (use-package emacs-ob-racket
+    :straight (:type git :host github :repo "hasu/emacs-ob-racket")
+    :init (cl-pushnew '(racket . t) load-language-alist))
+
   ;; npm install -g @mermaid-js/mermaid-cli
   ;; (use-package ob-mermaid
   ;;   :init (cl-pushnew '(mermaid . t) load-language-alist))
   (org-babel-do-load-languages 'org-babel-load-languages load-language-alist)
+
 
   (use-package org-rich-yank
     :bind (:map org-mode-map
@@ -110,6 +123,7 @@
                         :files (:defaults "extensions/*"))
     :custom
     (org-roam-directory (file-truename org-directory))
+    (org-roam-completion-everywhere t)
     (org-roam-capture-templates
      '(
        ("d" "default" plain
@@ -153,6 +167,7 @@
              ("C-c n a" . org-roam-alias-add)
              ("C-c n l" . org-roam-buffer-toggle))))
     :config
+
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
     (setq org-roam-dailies-directory "daily/")
     (org-roam-db-autosync-mode))
@@ -311,11 +326,11 @@
   :custom
   (consult-org-roam-grep-func #'consult-ripgrep)
   (consult-org-roam-buffer-narrow-key ?r)
-  (consult-org-roam-buffer-after-buffers t)
+  ;; (consult-org-roam-buffer-after-buffers t)
   :config
   (consult-customize
-    consult-org-roam-forward-links
-    :preview-key (kbd "M-."))
+   consult-org-roam-forward-links
+   :preview-key (kbd "M-."))
   :bind
   ("C-c n e" . consult-org-roam-find-file)
   ("C-c n b" . consult-org-roam-backlinks)

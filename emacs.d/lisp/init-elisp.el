@@ -111,5 +111,7 @@ Lisp function does not specify a special indentation."
 
 (use-package eros :init (eros-mode))
 
+(use-package racket-mode)
+
 (provide 'init-elisp)
 ;;; init-elisp.el ends here

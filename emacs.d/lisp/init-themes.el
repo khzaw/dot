@@ -22,20 +22,31 @@
   :defer
   :config
   (setq
-    modus-themes-bold-constructs t
-    modus-themes-mixed-fonts t
-    modus-themes-mail-citations 'intense
-    modus-themes-subtle-line-numbers t
-    modus-themes-completions '((t . (extrabold)))
-    ;; Keep the border of mode line but make it the same color as the background of the mode line
-    modus-themes-common-palette-overrides
-    '(
-       (border-mode-line-active bg-mode-line-active)
-       (border-mode-line-inactive bg-mode-line-inactive)
-       (fringe unspecified)))
+   modus-themes-bold-constructs t
+   modus-themes-mixed-fonts t
+   modus-themes-mail-citations 'intense
+   modus-themes-subtle-line-numbers t
+   modus-themes-completions '((t . (extrabold)))
+   ;; Keep the border of mode line but make it the same color as the background of the mode line
+   modus-themes-common-palette-overrides
+   '(
+     (border-mode-line-active bg-mode-line-active)
+     (border-mode-line-inactive bg-mode-line-inactive)
+     (fringe unspecified)))
   ;; (load-theme 'modus-operandi t)
 
-  (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
+  (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
+
+  (defun my-modus-themes-invisible-dividers (_theme)
+    "Make window dividers for THEME invisible."
+    (let ((bg (face-background 'default)))
+      (custom-set-faces
+       `(fringe ((t :background ,bg :foreground ,bg)))
+       `(window-divider ((t :background ,bg :foreground ,bg)))
+       `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
+       `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
+
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
 
 (use-package ef-themes)
 

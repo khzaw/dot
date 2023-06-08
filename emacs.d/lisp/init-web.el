@@ -9,23 +9,16 @@
 
 (use-package json-mode)
 
-;; (use-package add-node-modules-path
-;;   :hook ((js-mode
-;;            js2-mode
-;;            rjsx-mode
-;;            web-mode
-;;            typescript-mode
-;;            typescript-tsx-mode) . add-node-modules-path))
+(use-package add-node-modules-path
+  :hook ((js-mode
+          js2-mode
+          rjsx-mode
+          web-mode
+          typescript-mode
+          typescript-tsx-mode) . add-node-modules-path))
 
-;; (use-package prettier
-;;   :after (add-node-modules-path)
-;;   :hook ((js-mode
-;;            js2-mode
-;;            rjsx-mode
-;;            web-mode
-;;            typescript-mode
-;;            typescript-tsx-mode
-;;            solidity-mode) . prettier-mode))
+(use-package prettier
+  :after (add-node-modules-path))
 
 ;; (use-package js2-mode
 ;;   :init (setq js-indent-level 2))

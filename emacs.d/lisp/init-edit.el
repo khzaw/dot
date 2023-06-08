@@ -114,15 +114,16 @@
   :bind (("C-c w r" . writeroom-mode))
   :config
   (setq
-    writeroom-width 100
-    writeroom-fullscreen-effect nil
-    writeroom-maximize-window nil))
+   writeroom-width 100
+   writeroom-fullscreen-effect nil
+   writeroom-maximize-window nil))
 
-;; (use-package olivetti
-;;   :custom
-;;   (olivetti-margin-width 12)
-;;   (olivetti-body-width 120)
-;;   (olivetti-style 'fancy))
+(use-package olivetti
+  :straight (:type git :host github :repo "rnkn/olivetti")
+  :custom
+  (olivetti-margin-width 12)
+  (olivetti-body-width 120)
+  (olivetti-style 'fancy))
 
 ;; (use-package auto-olivetti
 ;;   :straight (auto-olivetti :host sourcehut :repo "ashton314/auto-olivetti")

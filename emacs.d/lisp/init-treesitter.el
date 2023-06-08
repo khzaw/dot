@@ -8,10 +8,22 @@
 
 (use-package tree-sitter
   :after (tree-sitter-langs)
-  :config (global-tree-sitter-mode)
+  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
+  :config
+  (global-tree-sitter-mode)
   (setq tree-sitter-debug-jump-buttons t)
   (setq tree-sitter-debug-highlight-jump-region nil)
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode))
+  (use-package combobulate
+    :straight (combobulate :type git :host github :repo "mickeynp/combobulate")
+    :preface
+    (setq combobulate-key-prefix "C-c o")
+    :hook
+    ((python-ts-mode . combobulate-mode)
+     (js-ts-mode . combobulate-mode)
+     (css-ts-mode . combobulate-mode)
+     (yaml-ts-mode . combobulate-mode)
+     (typescript-ts-mode . combobulate-mode)
+     (tsx-ts-mode . combobulate-mode))))
 
 ;; (use-package tree-sitter
 ;;   :hook ((go-mode
@@ -33,7 +45,7 @@
 (defun khz/toggle-fold ()
   (interactive)
   (if (equal tree-sitter-mode nil)
-    (call-interactively 'evil-toggle-fold)
+      (call-interactively 'evil-toggle-fold)
     (call-interactively 'ts-fold-toggle)))
 
 (use-package ts-fold

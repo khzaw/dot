@@ -12,10 +12,10 @@
 ;; UI
 ;; (toggle-frame-maximized)
 
-(setq-default line-spacing 2)
+(setq-default line-spacing 0.175)
 (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
 (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-(set-face-attribute 'variable-pitch nil :font "Iosevka Term Curly" :weight 'normal :height 1.1)
+(set-face-attribute 'variable-pitch nil :font "Iosevka" :weight 'normal :height 1.1)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
