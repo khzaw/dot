@@ -22,10 +22,8 @@
   ;; (tempel-trigger-prefix "<")
 
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
-          ("M-*" . tempel-insert))
-
+         ("M-*" . tempel-insert))
   :init
-
   ;; Setup completion at point
   (defun tempel-setup-capf ()
     ;; Add the Tempel Capf to `completion-at-point-functions'.
@@ -36,8 +34,8 @@
     ;; `tempel-expand' *before* the main programming mode Capf, such
     ;; that it will be tried first.
     (setq-local completion-at-point-functions
-      (cons #'tempel-expand
-        completion-at-point-functions)))
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
 
   (add-hook 'prog-mode-hook 'tempel-setup-capf)
   (add-hook 'text-mode-hook 'tempel-setup-capf)
@@ -49,27 +47,27 @@
   )
 
 (use-package orderless
-  :init
   :custom
   (completion-styles '(orderless flex))
   (completion-category-overrides '((eglot (styles orderless)))))
 
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu"
-              :files (:defaults "extensions/*"))
+                   :files (:defaults "extensions/*"))
   ;; :init (global-corfu-mode)
   :hook ((prog-mode . corfu-mode)
-          (shell-mode . corfu-mode)
-          (eshell-mode . corfu-mode))
+         (shell-mode . corfu-mode)
+
+         (eshell-mode . corfu-mode))
   :custom
   (corfu-auto t)
   (corfu-quit-no-match 'separator)
   (corfu-preselect-first t)
   (corfu-scroll-margin 5)
   :bind (:map corfu-map
-          ("M-m" . corfu-move-to-minibuffer)
-          ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
-          ([remap move-end-of-line] . corfu-end-of-prompt)))
+         ("M-m" . corfu-move-to-minibuffer)
+         ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
+         ([remap move-end-of-line] . corfu-end-of-prompt)))
 
 ;; show candidate doc in echo area
 (use-package corfu-echo
@@ -101,12 +99,12 @@
 (defun corfu-enable-always-in-minibuffer ()
   "Enable Corfu in the minibuffer if Vertico/Mct are not active."
   (unless (or (bound-and-true-p mct--active)
-            (bound-and-true-p vertico--input))
+              (bound-and-true-p vertico--input))
     ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
     (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-      corfu-popupinfo-delay nil)
+                corfu-popupinfo-delay nil)
     (corfu-mode 1)))
-(add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+;; (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
 (use-package kind-icon
   :after corfu
