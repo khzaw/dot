@@ -9,4 +9,6 @@
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode))
 
+(use-package emojify :config (global-emojify-mode))
+
 (provide 'init-others)

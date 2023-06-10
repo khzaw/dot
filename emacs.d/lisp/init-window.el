@@ -68,14 +68,6 @@
 (use-package burly
   :straight (:type git :host github :repo "alphapapa/burly.el"))
 
-;; (use-package eyebrowse
-;;   :init (eyebrowse-mode t))
-
-;; (use-package eyebrowse-restore
-;;   :after eyebrowse
-;;   :straight (:type git :host github :repo "FrostyX/eyebrowse-restore")
-;;   :config (eyebrowse-restore-mode))
-
 (use-package zoom
   :bind (("C-c z z" . zoom))
   :config

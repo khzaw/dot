@@ -1,5 +1,4 @@
 (use-package visual-fill-column
-  ;;:hook (org-mode . visual-fill-column-mode)
   :custom
   (visual-fill-column-width 120)
   (visual-fill-column-center-text t))
@@ -22,9 +21,6 @@
   (org-src-preserve-indentation t)        ; use native major-mode indentation
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'other-window)
-  ;; (org-fontify-done-headline t)
-  ;; (org-fontify-quote-and-verse-blocks t)
-  ;; (org-fontify-whole-heading-line t)
   (org-hide-emphasis-markers t)
   (org-startup-truncated nil)
   (org-imenu-depth 6)
@@ -106,7 +102,6 @@
   ;;   :init (cl-pushnew '(mermaid . t) load-language-alist))
   (org-babel-do-load-languages 'org-babel-load-languages load-language-alist)
 
-
   (use-package org-rich-yank
     :bind (:map org-mode-map
            ("C-M-y" . org-rich-yank)))
@@ -167,7 +162,6 @@
              ("C-c n a" . org-roam-alias-add)
              ("C-c n l" . org-roam-buffer-toggle))))
     :config
-
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
     (setq org-roam-dailies-directory "daily/")
     (org-roam-db-autosync-mode))
