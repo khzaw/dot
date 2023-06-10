@@ -75,9 +75,9 @@
 (require 'init-docker)
 (require 'init-flymake)
 (require 'init-flycheck)
-(require 'init-vcs)
 (require 'init-eglot)
 (require 'init-lsp)
+(require 'init-vcs)
 
 (require 'init-compile)
 (require 'init-treesitter)

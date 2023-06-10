@@ -173,20 +173,6 @@
   (moody-replace-vc-mode)
   (moody-replace-eldoc-minibuffer-message-function))
 
-;; (use-package sideframe
-;;   :straight (:type git :host github :repo "rougier/sideframe")
-;;   :config
-;;   (sideframe-make 'left 32)
-;;   (sideframe-toggle-maximized))
-
-;; (use-package fontset
-;;   :straight (:type built-in)
-;;   :config
-;;   ;; Use symbola for proper unicode
-;;   (when (member "Symbola" (font-family-list))
-;;     (set-fontset-font
-;;       t 'symbol "Symbola" nil)))
-
 (use-package keycast)
 
 ;; (use-package zone
@@ -257,19 +243,13 @@
   :after (evil evil-leader)
   :init
   (setq sideline-backends-right '((sideline-blame)
-                                   (sideline-lsp)
-                                   (sideline-flycheck)
-                                   (sideline-flymake)))
+                                  (sideline-lsp)
+                                  (sideline-flycheck)
+                                  (sideline-flymake)))
   :config
   (progn
     (evil-leader/set-key "s" 'sideline-mode)))
 
-
-(use-package emojify :config (global-emojify-mode))
-
-(use-package spacious-padding
-  :straight (:type git :host github :repo "protesilaos/spacious-padding")
-  :config (spacious-padding-mode t))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
