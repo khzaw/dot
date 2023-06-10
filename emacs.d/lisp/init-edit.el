@@ -87,15 +87,6 @@
               ispell-program-name "aspell"
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
-(use-package jinx
-  :after (vertico vertico-multiform)
-  :straight (jinx :type git :host github :repo "minad/jinx" :files (:defaults "jinx-mod.c" "emacs-module.h"))
-  :hook (on-first-buffer . global-jinx-mode)
-  :bind (([remap ispell-word] . #'jinx-correct))
-  :config
-  (vertico-multiform-mode 1))
-
-
 (use-package highlight-indent-guides
   :diminish
   :hook
@@ -160,8 +151,6 @@
 
 (use-package indent-tools
   :bind ("C-c TAB" . indent-tools-hydra/body))
-
-(use-package god-mode :disabled :config (god-mode))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

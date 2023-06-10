@@ -369,6 +369,5 @@
   :config (all-the-icons-completion-mode)
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
-
 (provide 'init-consult)
 ;;; init-consult.el ends here
