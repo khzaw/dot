@@ -19,19 +19,18 @@
   (evil-set-initial-state 'vterm-mode 'emacs)
   (evil-mode 1))
 
+(use-package evil-escape
+  :straight (evil-escape :type git :host github :repo "syl20bnr/evil-escape")
+  :init
+  (setq-default evil-escape-key-sequence "kj")
+  :config
+  (evil-escape-mode))
+
 (use-package evil-collection
   :after evil
   :config
   ;; (setq evil-collection-outline-bind-tab-p t) ;; enable <tab>-based bindings in Outline mode.
   (evil-collection-init))
-
-
-(use-package key-chord
-  :init
-  (setq key-chord-two-keys-delay 0.1)
-  (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
-  :config
-  (key-chord-mode 1))
 
 (use-package evil-leader
   :commands (evil-leader-mode)
@@ -41,11 +40,6 @@
     (evil-leader/set-leader ",")
     (evil-leader/set-key "f" 'isearch-forward)
     (evil-leader/set-key "b" 'consult-buffer)))
-
-(use-package evil-goggles
-  :config (evil-goggles-mode))
-
-(use-package god-mode :disabled)
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

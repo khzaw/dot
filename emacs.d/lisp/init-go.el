@@ -7,18 +7,14 @@
 
 (use-package go-dlv)
 
-;; (use-package go-fill-struct :defer t)
-
-;; (use-package go-impl :defer t)
-
 (use-package gotest
   :bind (:map go-mode-map
-          ("C-c C-t f" . go-test-current-file)
-          ("C-c C-t t" . go-test-current-test)
-          ("C-c C-t p" . go-test-current-project)
-          ("C-c C-t c" . go-test-current-coverage)
-          ("C-c C-t b" . go-test-current-benchmark)
-          ("C-c C-x" . go-run)))
+         ("C-c C-t f" . go-test-current-file)
+         ("C-c C-t t" . go-test-current-test)
+         ("C-c C-t p" . go-test-current-project)
+         ("C-c C-t c" . go-test-current-coverage)
+         ("C-c C-t b" . go-test-current-benchmark)
+         ("C-c C-x" . go-run)))
 
 (use-package go-tag
   :bind (:map go-mode-map
@@ -29,7 +25,6 @@
 (use-package go-fill-struct)
 
 (use-package go-dlv)
-
 
 (use-package gorepl-mode
   :if (executable-find "gore")
