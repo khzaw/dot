@@ -35,10 +35,10 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 # go
-export GOPATH=$HOME/.go
-export GO111MODULE=on
+# export GOPATH=$HOME/.go
+# export GO111MODULE=on
 
-alias go=go1.18.8
+# alias go=go1.18.8
 
 # local config
 [[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"

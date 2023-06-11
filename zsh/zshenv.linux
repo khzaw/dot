@@ -1,4 +1,6 @@
 PATH=$PATH:$HOME/.local/bin
-PATH=$PATH:$GOPATH/bin
+# PATH=$PATH:$GOPATH/bin
 PATH=$PATH:$HOME/.cargo/bin
 export PATH
+
+export GITHUB_TOKEN=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

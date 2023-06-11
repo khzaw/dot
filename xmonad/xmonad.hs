@@ -1,31 +1,3 @@
--- import XMonad
--- import XMonad.Config.Desktop
---
--- import XMonad.Util.EZConfig
--- import XMonad.Util.Ungrab
---
--- import XMonad.Hooks.EwmhDesktops
--- import XMonad.Hooks.DynamicLog
---
--- myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
---
--- myConfig = def
---   { terminal   = "alacritty"
---   , modMask    = mod4Mask
---   , borderWidth = 2
---   , workspaces = myWorkspaces
---   }
---   `additionalKeysP`
---   [ ("M-S-4"    , unGrab *> spawn "scrot -s")
---   , ("M-<Space>", spawn "rofi -show run -dpi 164")
---   , ("M-]"      , spawn "google-chrome-beta" )
---   , ("M-S-]"    , spawn "firefox")
---   , ("M-M1-\\"   , spawn "1password")
---   ]
---
--- main :: IO ()
--- main = xmonad . ewmh =<< myConfig
-
 import System.IO
 
 import XMonad
@@ -60,7 +32,7 @@ myManageHook = composeAll
         , className =? "trayer"                               --> doIgnore
         , className =? "calculator"                           --> doFloat
         , className =? "hl_linux"                             --> doFloat
-        , className =? "crx_nkbihfbeogaeaoehlefnkodbefgpgknn"	--> doFloat
+        , className =? "crx_nkbihfbeogaeaoehlefnkodbefgpgknn" --> doFloat
         , title     =? "Volume Control"                       --> doCenterFloat
         , title     =? "Bluetooth Devices"                    --> doCenterFloat
         , title     =? "Save As"                              --> doCenterFloat
@@ -104,15 +76,15 @@ mySpotify = "spotify"
 -- M  - Mod Key (Cmd)
 myKeys :: [(String, X ())]
 myKeys =
-	[ ("M1-<Space>" , spawn myLauncher)
-	, ("M1-S-3"	, unGrab *> spawn "scrot ~/Pictures/screenshots/")
-	, ("M1-S-4"	, unGrab *> spawn "scrot -s ~/Pictures/screenshots/")
-	, ("M1-\\"	, spawn my1Password)
-	, ("M-x a"	, spawn mySpotify)
-	, ("M-x b"	, spawn myBrowser)
-	, ("M-x t"	, spawn myTelegram)
-	, ("M-x d"	, spawn myDiscord)
-	]
+  [ ("M1-<Space>", spawn myLauncher)
+  , ("M1-S-3", unGrab *> spawn "scrot ~/Pictures/screenshots/")
+  , ("M1-S-4", unGrab *> spawn "scrot -s ~/Pictures/screenshots/")
+  , ("M1-\\", spawn my1Password)
+  , ("M-x a", spawn mySpotify)
+  , ("M-x b", spawn myBrowser)
+  , ("M-x t", spawn myTelegram)
+  , ("M-x d", spawn myDiscord)
+  ]
 
 -- workspaces
 myWorkspaces :: [String]
@@ -130,10 +102,10 @@ mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
 
 main :: IO ()
 main = do
-	xmproc <- spawnPipe "xmobar -d"
-        tray <- spawnPipe "killall -q stalonetray; sleep 1; stalonetray"
-	spawn "pkill dunst ; dunst"
-	xmonad $ docks def {
+  xmproc <- spawnPipe "xmobar -d"
+  tray <- spawnPipe "killall -q stalonetray; sleep 1; stalonetray"
+  spawn "pkill dunst; dunst"
+  xmonad $ docks $ ewmhFullscreen . ewmh $ def {
     modMask = mod4Mask,
     workspaces = myWorkspaces,
     manageHook = myManageHook <+> manageHook def,
@@ -141,8 +113,7 @@ main = do
     logHook = dynamicLogWithPP xmobarPP {
         ppOutput = hPutStrLn xmproc,
         ppTitle = xmobarColor "#8bc34a" "" . shorten 50
-		},
-    handleEventHook = fullscreenEventHook,
+        },
     borderWidth = 1,
     terminal = myTerminal,
     startupHook = myStartupHook,

@@ -78,3 +78,20 @@ fi
 alias diff='/usr/local/bin/diff'
 
 eval "$(fnm env --use-on-cd)"
+
+LAST_REPO="" # start with an empty name
+
+cd() {
+	builtin cd "$@" # run the actual cd
+
+	git rev-parse 2>/dev/null # check if you are in a git repository without dumping the output to the screen [1]
+	if [ $? -eq 0 ]; then # if return value of previous command is 0 then you are
+  CURRENT_REPO=$(basename $(git rev-parse --show-toplevel)) # get name of current repository [2]
+		if [ "$LAST_REPO" != "$CURRENT_REPO" ]; then
+			onefetch
+			LAST_REPO=$CURRENT_REPO
+		fi
+	fi
+}
+
+[[ -s "/home/khz/.gvm/scripts/gvm" ]] && source "/home/khz/.gvm/scripts/gvm"
