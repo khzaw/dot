@@ -7,16 +7,14 @@
 
 (use-package doom-themes
   :config
-  (setq doom-themes-enable-italic nil)
-  (setq doom-themes-enable-bold t)
+  (setq doom-themes-enable-italic nil
+        doom-themes-enable-bold t)
   (doom-themes-visual-bell-config)
   (if (display-graphic-p)
-    (progn
-      (setq doom-themes-treemacs-theme "doom-colors")
-      (doom-themes-treemacs-config)))
-  (doom-themes-org-config)
-  ;; (load-theme 'doom-moonlight t)
-  )
+      (progn
+        (setq doom-themes-treemacs-theme "doom-colors")
+        (doom-themes-treemacs-config)))
+  (doom-themes-org-config))
 
 (use-package modus-themes
   :defer
@@ -33,7 +31,6 @@
      (border-mode-line-active bg-mode-line-active)
      (border-mode-line-inactive bg-mode-line-inactive)
      (fringe unspecified)))
-  ;; (load-theme 'modus-operandi t)
 
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
 
@@ -46,22 +43,17 @@
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
 
+
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
 
 (use-package ef-themes)
 
 (use-package standard-themes
-  :defer
   :config
-  (setq
-    standard-themes-fringes nil))
-
-(use-package almost-mono-themes)
+  (setq standard-themes-fringes nil))
 
 (use-package stimmung-themes
-  :straight (stimmung-themes :host github :repo "motform/stimmung-themes")
-  ;; (stimmung-themes-load-dark)
-  ) ; or (stimmung-themes-load-dark)
+  :straight (stimmung-themes :host github :repo "motform/stimmung-themes"))
 
 (use-package timu-caribbean-theme)
 
@@ -86,7 +78,7 @@
 (use-package circadian
   :config
   (setq circadian-themes '(("8:00" . modus-operandi)
-                            ("19:00" . modus-vivendi)))
+                           ("19:00" . kaolin-galaxy)))
   (circadian-setup))
 
 (provide 'init-themes)
