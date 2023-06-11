@@ -2,20 +2,40 @@ import System.IO
 
 import XMonad
 import qualified XMonad.StackSet as W
-import XMonad.Layout.Spacing
-import XMonad.Layout.Gaps
-import XMonad.Layout.LayoutModifier (ModifiedLayout)
 
+import Data.Char (isSpace)
+import Data.List
+import Data.Monoid
+import qualified Data.Map as M
+
+-- Actions
+import XMonad.Actions.CopyWindow (kill1, killAllOtherCopies, copyToAll, copy)
+import qualified XMonad.Actions.CycleWS as WS
+import XMonad.Actions.MouseResize
+import XMonad.Actions.Promote
+import qualified XMonad.Actions.Search as S
+
+-- Hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 
+-- Utils
 import XMonad.Util.Run
 import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
 import XMonad.Util.Cursor
+
+-- Layouts and Layout Modifiers
+import XMonad.Layout.GridVariants (Grid(Grid))
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.ThreeColumns
+import XMonad.Layout.ResizableThreeColumns
+import XMonad.Layout.Spacing
+import XMonad.Layout.Gaps
+import XMonad.Layout.LayoutModifier (ModifiedLayout)
 
 myManageHook = composeAll
         [ className =? "1Password"                            --> doCenterFloat
@@ -47,7 +67,7 @@ underLine col = xmobarBorder "Bottom" col 3
 
 -- StartupHook
 myStartupHook :: X ()
-myStartupHook = setWMName "LG3D"
+myStartupHook = setWMName "xmonad"
 
 -- Variables
 myTerminal :: String
@@ -71,6 +91,9 @@ my1Password = "1password"
 mySpotify :: String
 mySpotify = "spotify"
 
+windowCount :: X (Maybe String)
+windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+
 -- Key Bindings
 -- M1 - Left Alt
 -- M  - Mod Key (Cmd)
@@ -87,13 +110,22 @@ myKeys =
   ]
 
 -- workspaces
-myWorkspaces :: [String]
-myWorkspaces = ["1", "2", "3", "4", "5", "6"]
+-- myWorkspaces are clickable by mouse. Requires `xdotool`.
+xmobarEscape :: String -> String
+xmobarEscape = concatMap doubleLts
+  where
+    doubleLts '<' = "<<"
+    doubleLts x   = [x]
 
--- clickableWorkspaces :: [String] -> [String]
--- clickableWorkspaces = zipWith switchWorkspace [0..]
---   where
---     switchWorkspace i = xmobarAction ("wmctrl -s " ++ show i) "1"
+
+myWorkspaces :: [String]
+myWorkspaces = clickable . map xmobarEscape
+  $ ["main", "side", "dev1", "dev2", "chat", "files", "write", "edit", "watch"]
+  where
+    clickable l = [ "<action=`xdotool key super+" ++ show n ++ "`>" ++ ws ++ "</action>" |
+                    (i, ws) <- zip [1..9] l,
+                    let n = i ]
+
 
 -- Layouts
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
@@ -110,9 +142,11 @@ main = do
     workspaces = myWorkspaces,
     manageHook = myManageHook <+> manageHook def,
     layoutHook = avoidStruts $ mySpacing 10 $ layoutHook def,
-    logHook = dynamicLogWithPP xmobarPP {
-        ppOutput = hPutStrLn xmproc,
-        ppTitle = xmobarColor "#8bc34a" "" . shorten 50
+    logHook = dynamicLogWithPP xmobarPP
+      { ppOutput  = hPutStrLn xmproc
+      , ppCurrent = xmobarColor "#ddbd94" "" . wrap "[" "]" -- Current workspace in xmobar
+      , ppTitle   = xmobarColor "#8bc34a" "" . shorten 50   -- Title of active window in xmobar
+      , ppSep     = "<fc=#666666> | </fc>"                  -- Separators in xmobar
         },
     borderWidth = 1,
     terminal = myTerminal,

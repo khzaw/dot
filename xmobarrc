@@ -1,23 +1,32 @@
-Config {
-  font   = "xft:SanFranciscoText:weight=bold:pixelsize=26:antialias=true:hinting=true",
-  bgColor = "#000000",
-  fgColor = "#ffffff",
-  position = TopSize L 95 24,
-  -- position = Static { xpos = 0, ypos = 2160, width = 4940, height = 36 },
-  -- general behavior
-  overrideRedirect = True,
-  lowerOnStart = False,
-  allDesktops = True,
-  persistent = True,
+Config { font = "Berkeley Mono 18"
+       , bgColor = "#000000"
+       , fgColor = "#ffffff"
+       -- , position = TopSize L 95 24
+       , position = TopH 52
+       , overrideRedirect = True
+       , lowerOnStart = False
+       , allDesktops = True
+       , persistent = True
 
-  -- plugins
-  commands = [  Run Cpu [ "-L", "3" , "-H", "50" , "--high", "red" , "--normal", "green" ] 10
-	 	, Run Memory ["-t", "Mem: <usedratio>%"] 10
-	        , Run Swap [] 10
-    		, Run Date "%a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 10
-    		, Run StdinReader
-    		],
-   sepChar = "%",
-   alignSep = "}{",
-   template = "%StdinReader% }{ %cpu% | %memory% | <fc=#ee9a00>%date%</fc>"
-   }
+       -- plugins
+       , commands = [
+           --- CPU
+           Run Cpu [ "-t", "\xf108 cpu: <total>%", "-H", "50", "--high", "red"] 20
+           -- RAM
+         , Run Memory ["-t", "\xf233 mem: <used>M"] 20
+           -- GPU temperature
+         , Run Com "nvidia-smi" ["--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"] "gpu" 2
+
+           -- Date
+         , Run Date "\xf133 %a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 50
+
+    		 , Run UnsafeStdinReader
+         ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " <icon=haskell_20.xpm/> <fc=#666666>|</fc> %UnsafeStdinReader% }{ \
+                     \<fc=#ddbd94> gpu: %gpu%°C</fc><fc=#666666> | </fc>\
+                     \<fc=#c15c2e><action=`alacritty -e htop`>%cpu%</action></fc><fc=#666666> | </fc>\
+                     \<fc=#8b8f78>%memory%</fc><fc=#666666> | </fc>\
+                     \<fc=#118a71>%date% </fc>"
+       }
