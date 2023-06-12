@@ -111,6 +111,7 @@
 
 (use-package olivetti
   :straight (:type git :host github :repo "rnkn/olivetti")
+  :hook (org-mode . olivetti-mode)
   :custom
   (olivetti-margin-width 12)
   (olivetti-body-width 120)
