@@ -256,6 +256,8 @@
   (progn
     (evil-leader/set-key "s" 'sideline-mode)))
 
+(use-package rainbow-mode)
+
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
