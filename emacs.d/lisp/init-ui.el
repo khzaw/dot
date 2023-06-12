@@ -15,13 +15,13 @@
   (setq-default line-spacing 1)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 100)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Curly" :weight 'normal :height 1.1))
+  (set-face-attribute 'variable-pitch nil :font "Iosevka Term Curly" :weight 'normal))
 
 (when (eq system-type 'darwin)
   (setq-default line-spacing 1.75)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Curly" :weight 'normal :height 1.1))
+  (set-face-attribute 'variable-pitch nil :font "Iosevka Curly" :weight 'normal))
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
