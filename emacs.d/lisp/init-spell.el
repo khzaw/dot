@@ -1,4 +1,5 @@
 (use-package ispell
+  :disabled t
   :defer 15
   :config
   (progn
@@ -9,7 +10,7 @@
                                 "--lang=en_US")))))
   (setq ispell-silently-savep t))
 
-(use-package flymake-aspell :after flymake)
+(use-package flymake-aspell :disabled t :after flymake)
 
 (use-package jinx
   :if (executable-find "enchant-2")
