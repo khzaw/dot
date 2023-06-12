@@ -7,7 +7,7 @@
 (defun khz/open-work-links ()
   "C-c e l Quickly open work bookmarks file"
   (interactive)
-  (find-file-other-window "~/Library/CloudStorage/Dropbox/notes/fp/links.org"))
+  (find-file-other-window "~/Dropbox/notes/fp/links.org"))
 
 (global-set-key (kbd "C-c e l") 'khz/open-work-links)
 
