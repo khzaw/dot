@@ -2,17 +2,9 @@
 background "#000000"
 decorations border
 transparent false
-dockapp_mode simple
-kludges force_icons_size
 fuzzy_edges 0
-grow_gravity NE
-icon_gravity NE
-# position = combined_width - (num_icons * icon_size)
-geometry 7x1+7028
-icon_size 36
-sticky true
-window_type dock
-dockapp_mode wmaker
-window_strut auto
+geometry 1x1+8900
+max_geometry 10x1
+grow_gravity E
+slot_size 40x52
 scrollbars none
-skip_taskbar true

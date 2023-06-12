@@ -35,9 +35,6 @@ fi
 
 
 . ~/.screenlayout/screenlayout.sh
-nitrogen --restore &
-picom -b &
 spotifyd &
-udiskie &
 setxkbmap -model pc104 -option ctrl:nocaps # Caps lock -> Ctrl
 exec xmonad

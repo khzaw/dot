@@ -1,32 +1,43 @@
 Config { font = "Berkeley Mono 18"
        , bgColor = "#000000"
        , fgColor = "#ffffff"
-       -- , position = TopSize L 95 24
-       , position = TopH 52
+       -- TopSize takes 3 params
+       -- an alignment parameter (L/R/C) for Left, Right, Center
+       -- an integer for the percentage width
+       -- an integer for th minimum pixel height for xmobar
+       --    height should be the same as stalonetray height
+       , position = TopSize L 100 52
        , overrideRedirect = True
        , lowerOnStart = False
        , allDesktops = True
        , persistent = True
+       , iconRoot = "/home/khz/Code/dot/xmonad/xpm/"
 
        -- plugins
        , commands = [
            --- CPU
            Run Cpu [ "-t", "\xf108 cpu: <total>%", "-H", "50", "--high", "red"] 20
            -- RAM
-         , Run Memory ["-t", "\xf233 mem: <used>M"] 20
+         , Run Memory ["-t", "\xf233 mem: <usedratio>% (<used>M)"] 20
            -- GPU temperature
          , Run Com "nvidia-smi" ["--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"] "gpu" 2
-
            -- Date
          , Run Date "\xf133 %a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 50
+
+         -- Volume
+         -- , Run Alsa "default" "Master" ["-t", "\xf028 vol: <volume>% "]
+
+         , Run XPropertyLog "_XMONAD_TRAYPAD"
 
     		 , Run UnsafeStdinReader
          ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <icon=haskell_20.xpm/> <fc=#666666>|</fc> %UnsafeStdinReader% }{ \
-                     \<fc=#ddbd94> gpu: %gpu%°C</fc><fc=#666666> | </fc>\
-                     \<fc=#c15c2e><action=`alacritty -e htop`>%cpu%</action></fc><fc=#666666> | </fc>\
-                     \<fc=#8b8f78>%memory%</fc><fc=#666666> | </fc>\
-                     \<fc=#118a71>%date% </fc>"
+       , template = "  <icon=haskell.xpm/> <fc=#666>|</fc> %UnsafeStdinReader% }{ \
+                     \<fc=#c15c2e><action=`alacritty -e htop`>%cpu%</action></fc><fc=#666> | </fc>\
+                     \<fc=#ddbd94> gpu: %gpu%°C</fc><fc=#666> | </fc>\
+                     \<fc=#8b8f78>%memory%</fc><fc=#666> | </fc>\
+                     -- \<fc=#8d6947>%alsa:default:Master%</fc>\
+                     \<fc=#118a71>%date% </fc><fc=#666> | </fc>\
+                     \%_XMONAD_TRAYPAD%"
        }
