@@ -9,7 +9,6 @@
           ;; (prog-mode . (lambda ()
           ;;                (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
           ;;                  (lsp-deferred))))
-          (kotlin-mode . lsp-deferred)
           ;; (markdown-mode . lsp-deferred)
           (lsp-mode . (lambda ()
                         (lsp-enable-which-key-integration)
