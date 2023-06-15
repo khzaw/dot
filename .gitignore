@@ -67,3 +67,4 @@ projects
 *.jar
 *jar
 emacs.d/emojis
+.DS_Store
