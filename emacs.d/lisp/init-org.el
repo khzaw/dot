@@ -1,7 +1,8 @@
 (use-package visual-fill-column
   :custom
   (visual-fill-column-width 120)
-  (visual-fill-column-center-text t))
+  (visual-fill-column-center-text t)
+  (visual-fill-column-split-window-sensibly t))
 
 (use-package org
   :init
@@ -40,6 +41,11 @@
   ;;      (?C . success)))
   (org-confirm-babel-evaluate nil)
   (org-link-elisp-confirm-function nil)
+  :hook
+  (org-mode . (lambda ()
+                (variable-pitch-mode)
+                (setq visual-fill-column-center-text nil)
+                (visual-fill-column-mode)))
   :config
 
   (custom-set-faces
@@ -50,7 +56,7 @@
    ;; '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
    )
 
-  (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1)))
+
 
   (defun khz/org-link-copy (&optional arg)
     "Extract URL from org-mode link and add it to kill ring."
