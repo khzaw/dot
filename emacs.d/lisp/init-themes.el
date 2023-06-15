@@ -81,4 +81,7 @@
                            ("19:00" . kaolin-galaxy)))
   (circadian-setup))
 
+(use-package solarized-emacs
+  :straight (:type git :host github :repo "bbatsov/solarized-emacs"))
+
 (provide 'init-themes)
