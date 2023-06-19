@@ -319,9 +319,7 @@
 (use-package org-download)
 
 (use-package consult-org-roam
-  :after org-roam
   :init
-  (require 'consult-org-roam)
   (consult-org-roam-mode 1)
   :custom
   (consult-org-roam-grep-func #'consult-ripgrep)
@@ -356,6 +354,9 @@
   (consult-notes-org-roam-mode)
   (when (locate-library "denote")
     (consult-notes-denote-mode)))
+
+(use-package org-autolist
+  :hook (org-mode . org-autolist-mode))
 
 (provide 'init-org)
 ;;; init-org.el ends here
