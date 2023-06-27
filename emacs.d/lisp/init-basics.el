@@ -205,7 +205,11 @@
 
 (use-package which-key-posframe
   :after (posframe which-key)
-  :config (setq which-key-posframe-border-width 15))
+  :config
+  (setq
+   which-key-posframe-parameters `((left-fringe . 10)
+                                   (right-fringe . 10))
+   which-key-posframe-border-width 5))
 
 (use-package rg)
 

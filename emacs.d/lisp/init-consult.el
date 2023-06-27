@@ -369,5 +369,13 @@
   :config (all-the-icons-completion-mode)
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
+(use-package affe
+  :config
+  (consult-customize affe-grep :preview-key "M-.")
+  (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+    (setq input (orderless-pattern-compiler input))
+    (cons input (apply-partially #'orderless--highlight input)))
+  (setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
+
 (provide 'init-consult)
 ;;; init-consult.el ends here
