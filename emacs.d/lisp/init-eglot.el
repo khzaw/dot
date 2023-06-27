@@ -13,6 +13,9 @@
          ("C-c e a" . #'eglot-code-actions)
          ("C-c e i " . #'eglot-code-action-organize-imports))
   :config
+  (cl-pushnew '((js-mode jsx-mode rjsx-mode typescript-mode typescript-tsx-mode) . ("typescript-language-server" "--stdio"))
+              eglot-server-programs
+              :test #'equal)
   (setq eglot-strict-mode nil)
   (setq eglot-events-buffer-size 0)
   (setq eglot-confirm-server-initiated-edits nil)
@@ -29,9 +32,9 @@
 
   (defun eglot-actions-before-save ()
     (add-hook 'before-save-hook (lambda ()
-                                  (call-interactively #'eglot-format)
+                                  (when (not (eq major-mode 'typescript-tsx-mode))
+                                    (call-interactively #'eglot-format))
                                   (call-interactively #'eglot-code-action-organize-imports))))
-
   (add-hook 'eglot-managed-mode-hook #'eglot-actions-before-save)
   (add-hook 'eglot-managed-mode-hook #'eglot-capf)
   (add-hook 'eglot-managed-mode-hook
@@ -48,10 +51,8 @@
     (evil-leader/set-key "gi" 'eglot-find-implementation)))
 
 (use-package consult-eglot
-  :defer t
-  :after vertico
   :bind (:map eglot-mode-map
-          ([remap xref-find-apropos] .  consult-eglot-symbols)))
+         ([remap xref-find-apropos] .  consult-eglot-symbols)))
 
 (use-package flycheck-eglot
   :straight (:type git :repo "intramurz/flycheck-eglot" :host github)

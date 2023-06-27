@@ -18,7 +18,8 @@
           typescript-tsx-mode) . add-node-modules-path))
 
 (use-package prettier
-  :after (add-node-modules-path))
+  :after (add-node-modules-path)
+  :hook ((js-mode js2-mode rjsx-mode web-mode typescript-mode typescript-tsx-mode) . prettier-mode))
 
 ;; (use-package js2-mode
 ;;   :init (setq js-indent-level 2))
