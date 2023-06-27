@@ -64,12 +64,30 @@
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package blamer
-  :straight (:host github :repo "artawower/blamer.el")
+  :straight (:type git :host github :repo "artawower/blamer.el")
   :bind ("C-c g i" . blamer-show-commit-info)
   :defer 20
   :custom
   (blamer-idle-time 0.3)
   (blamer-min-offset 70))
+
+(use-package consult-gh
+  :straight (:type git :host github :repo "armindarvish/consult-gh" :branch "develop")
+  :config
+  (setq consult-gh-default-orgs-list '("khzaw" "projectrangoon" "algo-koans" "deliveryhero"))
+  (setq consult-gh-default-clone-directory "~/Code")
+  (setq consult-gh-show-preview t
+        consult-gh-preview-key "M-.")
+  (setq consult-gh-issue-action #'consult-gh--issue-view-action ;; view issues inside emacs
+        consult-gh-repo-action #'consult-gh--repo-browse-files-action ;; browse files inside emacs
+        consult-gh-file-action #'consult-gh--files-view-action) ;; open files in an emacs buffer
+  (require 'consult-gh-embark)
+  (add-to-history 'savehist-additional-variables 'consult-gh--known-orgs-list) ;; keep record of searched orgs
+  (add-to-history 'savehist-additional-variables 'consult-gh--known-repos-list)) ;; keep record of searched repos
+
+(use-package consult-git-log-grep
+  :custom
+  (consult-git-log-grep-open-function #'magit-show-commit))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

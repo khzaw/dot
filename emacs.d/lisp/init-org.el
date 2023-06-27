@@ -56,6 +56,8 @@
    ;; '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
    )
 
+  (setq visual-fill-column-center-text t)
+  (visual-line-mode t)
 
 
   (defun khz/org-link-copy (&optional arg)
@@ -154,10 +156,10 @@
         :immediate-finish t
         :empty-lines 1
         :unnarrowed t))
+
      time-stamp-start "#\\+updated: [\t]*")
 
-    :bind (("C-c n f" . org-roam-node-find)
-           ("C-c n g" . org-roam-graph)
+    :bind (("C-c n g" . org-roam-graph)
            ("C-c n c" . org-roam-capture)
            ;; Dailies
            ("C-c n j" . org-roam-dailies-capture-today)
@@ -181,7 +183,6 @@
   (use-package org-roam-ui
     :after org-roam
     :custom
-    (org-roam-ui-open-on-startup nil)
     (org-roam-ui-sync-theme t)
     (org-roam-ui-follow t)
     (org-roam-ui-update-on-save t)
@@ -203,11 +204,11 @@
   :after org
   :config
   (setq deft-directory (file-truename org-directory)
-    deft-recursive t
-    deft-strip-summary-regexp  ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
-    deft-use-filename-as-title t
-    deft-default-extension "org"
-    deft-auto-save-interval 0)
+        deft-recursive t
+        deft-strip-summary-regexp  ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+        deft-use-filename-as-title t
+        deft-default-extension "org"
+        deft-auto-save-interval 0)
   :bind
   ("C-c n d" . deft))
 
@@ -220,97 +221,13 @@
   :after org
   :bind
   (:map org-mode-map
-    (("s-Y" . org-download-screenshot)
-      ("s-y" . org-download-yank))))
-
-;; (use-package svg-tag-mode
-;;   :disabled
-;;   :commands svg-tag-mode
-;;   :config
-;;   (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
-;;   (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
-;;   (defconst day-re "[A-Za-z]\\{3\\}")
-;;   (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
-
-;;   (defun svg-progress-percent (value)
-;;     (svg-image (svg-lib-concat
-;;                  (svg-lib-progress-bar (/ (string-to-number value) 100.0)
-;;                    nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-;;                  (svg-lib-tag (concat value "%")
-;;                    nil :stroke 0 :margin 0)) :ascent 'center))
-
-;;   (defun svg-progress-count (value)
-;;     (let* ((seq (mapcar #'string-to-number (split-string value "/")))
-;;             (count (float (car seq)))
-;;             (total (float (cadr seq))))
-;;       (svg-image (svg-lib-concat
-;;                    (svg-lib-progress-bar (/ count total) nil
-;;                      :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-;;                    (svg-lib-tag value nil
-;;                      :stroke 0 :margin 0)) :ascent 'center)))
-
-;;   (setq svg-tag-tags
-;;     `(
-;;        ;; Org tags
-;;        (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
-;;        (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
-
-;;        ;; Task priority
-;;        ("\\[#[A-Z]\\]" . ( (lambda (tag)
-;;                              (svg-tag-make tag :face 'org-priority
-;;                                :beg 2 :end -1 :margin 0))))
-
-;;        ;; Progress
-;;        ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
-;;                                            (svg-progress-percent (substring tag 1 -2)))))
-;;        ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
-;;                                          (svg-progress-count (substring tag 1 -1)))))
-
-;;        ;; TODO / DONE
-;;        ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
-;;        ("DOING". ((lambda (tag) (svg-tag-make "DOING":face 'org-todo :margin 0))))
-;;        ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
-
-
-;;        ;; Citation of the form [cite:@Knuth:1984]
-;;        ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
-;;                                          (svg-tag-make tag
-;;                                            :inverse t
-;;                                            :beg 7 :end -1
-;;                                            :crop-right t))))
-;;        ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
-;;                                                   (svg-tag-make tag
-;;                                                     :end -1
-;;                                                     :crop-left t))))
-
-
-;;        ;; Active date (with or without day name, with or without time)
-;;        (,(format "\\(<%s>\\)" date-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :beg 1 :end -1 :margin 0))))
-;;        (,(format "\\(<%s \\)%s>" date-re day-time-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
-;;        (,(format "<%s \\(%s>\\)" date-re day-time-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
-
-;;        ;; Inactive date  (with or without day name, with or without time)
-;;        (,(format "\\(\\[%s\\]\\)" date-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-;;        (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
-;;        (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
-;;          ((lambda (tag)
-;;             (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
+   (("s-Y" . org-download-screenshot)
+    ("s-y" . org-download-yank))))
 
 ;; Auto toggle LaTeX rendering
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode))
 
-(use-package denote)
 
 (use-package org-modern
   :config
@@ -353,10 +270,26 @@
   (consult-notes-org-headings-mode)
   (consult-notes-org-roam-mode)
   (when (locate-library "denote")
-    (consult-notes-denote-mode)))
+    (consult-notes-denote-mode))
+  :bind
+  ("C-c n f" . consult-notes-org-roam-find-node))
 
 (use-package org-autolist
   :hook (org-mode . org-autolist-mode))
+
+(use-package denote)
+
+(use-package org-ref
+  :config
+  (setq bibtex-autokey-year-length 4
+        bibtex-autokey-name-year-separator "-"
+        bibtex-autokey-year-title-separator "-"
+        bibtex-autokey-titleword-separator "-"))
+
+(use-package org-roam-bibtex
+  :after org-roam
+  :config
+  (require 'org-ref))
 
 (provide 'init-org)
 ;;; init-org.el ends here

@@ -306,25 +306,29 @@
   :straight nil
   :after vertico
   :bind (:map vertico-map
-          ("M-q" . vertico-quick-insert)
-          ("C-q" . vertico-quick-exit)))
-
+         ("M-q" . vertico-quick-insert)
+         ("C-q" . vertico-quick-exit)))
 
 (use-package vertico-posframe
   :init (vertico-posframe-cleanup)
   :after (vertico posframe)
-  :config (setq vertico-posframe-border-width 15))
+  :config
+  (setq
+   vertico-posframe-parameters `((left-fringe . 10)
+                                 (right-fringe . 10))
+   vertico-posframe-border-width 5)
+  (vertico-posframe-mode t))
 
 ;; Enable rich annotations in completion UI
 (use-package marginalia
   :after vertico
   :config
   (setq marginalia-command-categories (append marginalia-command-categories
-                                        '((projectile-find-file . project-file)
-                                           (projectile-find-dir . project-file)
-                                           (projectile-switch-project . file)
-                                           (persp-switch-to-buffer . buffer)
-                                           (flycheck-error-list-set-filter . builtin))))
+                                              '((projectile-find-file . project-file)
+                                                (projectile-find-dir . project-file)
+                                                (projectile-switch-project . file)
+                                                (persp-switch-to-buffer . buffer)
+                                                (flycheck-error-list-set-filter . builtin))))
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer

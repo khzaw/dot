@@ -396,5 +396,5 @@ function grename() {
 
 unset git_version
 
-alias ls="exa"
+# alias ls="exa"
 alias startx="ssh-agent startx"

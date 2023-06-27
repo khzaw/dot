@@ -23,4 +23,7 @@
 
 (use-package calibredb)
 
+(use-package bookmark-view
+  :straight (bookmark-view :type git :host github :repo "minad/bookmark-view"))
+
 (provide 'init-others)
