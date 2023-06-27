@@ -78,7 +78,7 @@
 (use-package circadian
   :config
   (setq circadian-themes '(("8:00" . modus-operandi)
-                           ("19:00" . kaolin-galaxy)))
+                           ("19:00" . doom-badger)))
   (circadian-setup))
 
 (use-package solarized-emacs
