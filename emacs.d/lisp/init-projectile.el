@@ -1,18 +1,19 @@
 (use-package projectile
   :delight '(:eval (concat " " (projectile-projct-name)))
   :bind (:map projectile-mode-map
-          ("C-c p" . projectile-command-map))
+         ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
   :init
   (setq projectile-sort-order 'recentf
-    projectile-use-git-grep t
-    projectile-enable-caching t
-    projectile-completion-system 'default))
+        projectile-use-git-grep t
+        projectile-enable-caching t
+        projectile-completion-system 'default))
 
 (use-package consult-projectile
   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master")
-  :bind ("C-c p B" . consult-projectile))
-
+  :bind (:map projectile-mode-map
+         ("C-c p B" . consult-projectile)
+         ("C-c p f" . consult-projectile-find-file)))
 
 
 ;; (use-package project
@@ -23,8 +24,6 @@
 ;;           ("C-c f" . #'project-find-file)
 ;;           ("C-c F" . #'project-switch-project))
 ;;   :custom
-;;   ;; This is one of my favorite things: you can customize
-;;   ;; the options shown upon switching projects.
 ;;   (project-switch-commands
 ;;     '((project-find-file "Find file")
 ;;        (magit-project-status "Magit" ?g)
