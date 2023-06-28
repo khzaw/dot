@@ -62,7 +62,7 @@
   :custom
   (corfu-auto t)
   (corfu-quit-no-match 'separator)
-  (corfu-preselect-first t)
+  (corfu-preselect-first nil)
   (corfu-scroll-margin 5)
   :bind (:map corfu-map
          ("M-m" . corfu-move-to-minibuffer)
