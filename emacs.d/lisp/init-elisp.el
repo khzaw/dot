@@ -111,7 +111,9 @@ Lisp function does not specify a special indentation."
 
 (use-package eros :init (eros-mode))
 
-(use-package racket-mode)
+(use-package racket-mode
+  :bind (:map racket-repl-mode-map
+         ("C-RET" . newline-and-indent)))
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here

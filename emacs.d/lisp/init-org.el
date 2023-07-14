@@ -49,13 +49,14 @@
   :config
 
   (custom-set-faces
-   '(org-level-1 ((t (:weight bold  :height 1.2))))
-   '(org-level-2 ((t (:weight bold :height 1.1))))
+   '(org-level-1 ((t (:weight bold  :height 1.1))))
+   '(org-level-2 ((t (:weight bold :height 1.05))))
    ;; '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
    ;; '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
    ;; '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
    )
 
+  (setq sentence-end-double-space nil)
   (setq visual-fill-column-center-text t)
   (visual-line-mode t)
 

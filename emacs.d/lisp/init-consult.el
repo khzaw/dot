@@ -381,5 +381,9 @@
     (cons input (apply-partially #'orderless--highlight input)))
   (setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
 
+(use-package vertico-truncate
+  :straight (vertico-truncate :type git :host github :repo "jdtsmith/vertico-truncate")
+  :config (vertico-truncate-mode 1))
+
 (provide 'init-consult)
 ;;; init-consult.el ends here
