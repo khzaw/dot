@@ -19,7 +19,7 @@
   (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
   (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
 
-(use-package emojify :config (global-emojify-mode))
+(use-package emojify)
 
 (use-package calibredb)
 
