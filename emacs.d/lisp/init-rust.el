@@ -1,4 +1,5 @@
 (use-package rustic
-  :hook ((rustic-mode . lsp-deferred)))
+  :config
+  (setq rustic-lsp-client 'eglot))
 
 (provide 'init-rust)

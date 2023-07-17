@@ -5,6 +5,7 @@
           css-mode
           python-mode
           markdown-mode
+          rustic-mode
           java-mode
           go-mode) . eglot-ensure)
   :custom
