@@ -84,7 +84,7 @@
 (use-package solarized-emacs
   :straight (:type git :host github :repo "bbatsov/solarized-emacs"))
 
-(use-package hak
+(use-package haki
   :straight (:type git :host github :repo "idlip/haki"))
 
 (provide 'init-themes)
