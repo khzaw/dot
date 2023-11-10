@@ -10,7 +10,7 @@
   ("C-c C-c" . org-edit-src-exit)
   :custom
   (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
-  ;; (org-agenda-files '("gsd.org"  "work.org"))
+  (org-agenda-files '("gsd.org"  "work.org"))
   (org-todo-keywords
    '((sequence "TODO(t)" "|" "DOING(n)" "|" "DONE(d)" "|" "BLOCKED(b)")
      ))
