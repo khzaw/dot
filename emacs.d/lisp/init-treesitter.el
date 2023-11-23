@@ -4,10 +4,12 @@
 ;;   :config
 ;;   (setq treesit-extra-load-path '("~/Code/dot/emacs.d/treesit-libs")))
 
-(use-package tree-sitter-langs)
+
+;; (use-package treesit-auto
+;;   :config (global-treesit-auto-mode))
+
 
 (use-package tree-sitter
-  :after (tree-sitter-langs)
   :hook (tree-sitter-after-on . tree-sitter-hl-mode)
   :config
   (global-tree-sitter-mode)
@@ -24,6 +26,8 @@
      (yaml-ts-mode . combobulate-mode)
      (typescript-ts-mode . combobulate-mode)
      (tsx-ts-mode . combobulate-mode))))
+
+(use-package tree-sitter-langs :after tree-sitter)
 
 ;; (use-package tree-sitter
 ;;   :hook ((go-mode
