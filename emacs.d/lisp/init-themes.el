@@ -77,8 +77,8 @@
 
 (use-package circadian
   :config
-  (setq circadian-themes '(("8:00" . modus-operandi)
-                           ("19:00" . doom-badger)))
+  (setq circadian-themes '(("8:00" . solarized-gruvbox-light)
+                           ("19:00" . modus-vivendi)))
   (circadian-setup))
 
 (use-package solarized-emacs
