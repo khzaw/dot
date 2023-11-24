@@ -1,37 +1,38 @@
 (use-package lsp-mode
   :diminish
   :commands (lsp-enable-which-key-integration
-              lsp-format-buffer
-              lsp-organize-imports)
+             lsp-format-buffer
+             lsp-organize-imports)
   :hook (
-          ;;(typescript-tsx-mode . lsp-deferred)
-          ;; ((go-mode sh-mode) . lsp-deferred)
-          ;; (prog-mode . (lambda ()
-          ;;                (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
-          ;;                  (lsp-deferred))))
-          ;; (markdown-mode . lsp-deferred)
-          (lsp-mode . (lambda ()
-                        (lsp-enable-which-key-integration)
-                        (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                        (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+				 (kotlint-mode . lsp-deferred)
+         ;;(typescript-tsx-mode . lsp-deferred)
+         ;; ((go-mode sh-mode) . lsp-deferred)
+         ;; (prog-mode . (lambda ()
+         ;;                (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
+         ;;                  (lsp-deferred))))
+         ;; (markdown-mode . lsp-deferred)
+         (lsp-mode . (lambda ()
+                       (lsp-enable-which-key-integration)
+                       (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                       (add-hook 'before-save-hook #'lsp-organize-imports t t))))
   :bind (:map lsp-mode-map
-          ("C-c C-d" . lsp-describe-thing-at-point)
-          ([remap xref-find-definitions] . lsp-find-definitions)
-          ([remap xref-find-references] . lsp-find-references))
+         ("C-c C-d" . lsp-describe-thing-at-point)
+         ([remap xref-find-definitions] . lsp-find-definitions)
+         ([remap xref-find-references] . lsp-find-references))
   :init (setq lsp-keymap-prefix "C-c l"
-          lsp-keep-workspace-alive nil
-          lsp-signature-auto-activate nil
-          lsp-modeline-code-actions-enable nil
-          lsp-modeline-diagnostics-enable nil
-          lsp-modeline-workspace-status-enable nil
-          lsp-headerline-breadcrumb-enable nil
-          lsp-enable-file-watchers nil
-          lsp-enable-folding t
-          lsp-enable-symbol-highlighting t
-          lsp-enable-text-document-color nil
-          lsp-enable-indentation t
-          lsp-eldoc-render-all t
-          lsp-enable-on-type-formatting t))
+							lsp-keep-workspace-alive nil
+							lsp-signature-auto-activate nil
+							lsp-modeline-code-actions-enable nil
+							lsp-modeline-diagnostics-enable nil
+							lsp-modeline-workspace-status-enable nil
+							lsp-headerline-breadcrumb-enable nil
+							lsp-enable-file-watchers nil
+							lsp-enable-folding t
+							lsp-enable-symbol-highlighting t
+							lsp-enable-text-document-color nil
+							lsp-enable-indentation t
+							lsp-eldoc-render-all t
+							lsp-enable-on-type-formatting t))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)

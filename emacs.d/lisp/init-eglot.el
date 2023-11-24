@@ -1,7 +1,8 @@
 (use-package eglot
-  :after (evil evil-leader)
+  :after (evil evil-leader typescript-mode)
   :commands (eglot eglot-ensure)
   :hook ((typescript-tsx-mode
+          typescript-mode
           css-mode
           python-mode
           markdown-mode
@@ -32,7 +33,7 @@
 
   (defun eglot-actions-before-save ()
     (add-hook 'before-save-hook (lambda ()
-                                  (when (not (eq major-mode 'typescript-tsx-mode))
+                                  (when (not (memq major-mode '(typescript-tsx-mode typescript-mode)))
                                     (call-interactively #'eglot-format))
                                   (call-interactively #'eglot-code-action-organize-imports))))
   (add-hook 'eglot-managed-mode-hook #'eglot-actions-before-save)
