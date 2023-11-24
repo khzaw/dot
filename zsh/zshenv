@@ -1,15 +1,19 @@
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  source "$HOME/Code/dot/zsh/zshenv.mac"
-else
-  source "$HOME/Code/dot/zsh/zshenv.linux"
-fi
-
 setopt no_global_rcs
 
 # home
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export HOME="/Users/$(whoami)"
 fi
+
+# XDG_CONFIG_HOME
+export XDG_CONFIG_HOME=$HOME/.config
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source "$HOME/Code/dot/zsh/zshenv.mac"
+else
+  source "$HOME/Code/dot/zsh/zshenv.linux"
+fi
+
 
 # lang
 export LANG="en_US.UTF-8"
@@ -23,11 +27,17 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
 # misc
 export EDITOR="vim"
+export ESHELL=$SHELL
 export GREP_OPTIONS="--color=auto"
 # don't clear the screen after quitting a manual page
 export MANPAGER="less -X"
 # highlight section titles in manual pages
 export LESS_TERMCAP_md="${yellow}"
+
+# android
+export ANDROID_HOME=$HOME/Library/Android/sdk
+
+
 
 # python
 export PYENV_ROOT="$HOME/.pyenv"
@@ -40,7 +50,37 @@ if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -
 
 # alias go=go1.18.8
 
+# path
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# arm gcc, avr-gcc, needed by qmk
+path+=("$(brew --prefix)/opt/avr-gcc@8/bin" "$(brew --prefix)/opt/arm-gcc-bin@8/bin")
+
+# go
+path+=$(go env GOPATH)/bin
+
+# foundry
+path+=$HOME/.foundry/bin
+
+# android
+path+=($ANDROID_HOME/tools $ANDROID_HOME/platform-tools)
+
+# pipx
+path+=$HOME/.local/bin
+
+path+=/usr/local/bin
+
+path+=/System/Cryptexes/App/usr/bin
+
+path+=(/usr/bin /bin /usr/sbin /sbin)
+
+path+=(/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin)
+
+
+eval "$(fnm env --use-on-cd)"
+
 # local config
 [[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"
 
 export LSP_USE_PLISTS=true
+

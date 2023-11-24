@@ -145,7 +145,8 @@
 ;; set discord status
 (use-package elcord
   :commands elcord-mode
-  :config (setq elcord-use-major-mode-as-main-icon t))
+  :config (setq elcord-use-major-mode-as-main-icon t)
+  (elcord-mode t))
 
 (use-package telephone-line
   :init

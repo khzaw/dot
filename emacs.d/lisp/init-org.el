@@ -10,7 +10,7 @@
   ("C-c C-c" . org-edit-src-exit)
   :custom
   (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
-  (org-agenda-files '("gsd.org"  "work.org"))
+  (org-agenda-files '("~/Dropbox/notes/agenda"))
   (org-todo-keywords
    '((sequence "TODO(t)" "|" "DOING(n)" "|" "DONE(d)" "|" "BLOCKED(b)")
      ))
@@ -49,8 +49,8 @@
   :config
 
   (custom-set-faces
-   '(org-level-1 ((t (:weight bold  :height 1.1))))
-   '(org-level-2 ((t (:weight bold :height 1.05))))
+   '(org-level-1 ((t (:weight bold  :height 1.0))))
+   '(org-level-2 ((t (:weight bold :height 1.0))))
    ;; '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
    ;; '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
    ;; '(org-level-5 ((t (:inherit outline-5 :height 1.0))))

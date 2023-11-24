@@ -1,7 +1,7 @@
 (use-package dashboard
   :config
   (setq dashboard-banner-logo-title "Create illusions of effortless competence."
-        dashboard-startup-banner "~/Pictures/emacs_fancy_logos/xemacs_color.png"
+        ;; dashboard-startup-banner "~/Pictures/emacs_fancy_logos/xemacs_color.png"
         dashboard-items '((recents . 5)
                           (bookmarks . 5)
                           (projects . 5)

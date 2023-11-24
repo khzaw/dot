@@ -17,3 +17,4 @@ nnoremap <leader>iv :source ~/.ideavimrc<cr>
 
 set hlsearch
 set ignorecase
+set visualbell
