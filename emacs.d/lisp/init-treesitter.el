@@ -1,20 +1,13 @@
-;; (use-package treesit
-;;   :disabled t
-;;   :if (executable-find "tree-sitter")
-;;   :config
-;;   (setq treesit-extra-load-path '("~/Code/dot/emacs.d/treesit-libs")))
-
-
-;; (use-package treesit-auto
-;;   :config (global-treesit-auto-mode))
-
+(use-package tree-sitter-langs)
 
 (use-package tree-sitter
   :hook (tree-sitter-after-on . tree-sitter-hl-mode)
   :config
   (global-tree-sitter-mode)
+  ;; Makes every node a link to a section of code
   (setq tree-sitter-debug-jump-buttons t)
-  (setq tree-sitter-debug-highlight-jump-region nil)
+  ;; highlights entire sub tree in your code
+  (setq tree-sitter-debug-highlight-jump-region t)
   (use-package combobulate
     :straight (combobulate :type git :host github :repo "mickeynp/combobulate")
     :preface
@@ -24,27 +17,8 @@
      (js-ts-mode . combobulate-mode)
      (css-ts-mode . combobulate-mode)
      (yaml-ts-mode . combobulate-mode)
-     (typescript-ts-mode . combobulate-mode)
+     (typescript-tsx-mode . combobulate-mode)
      (tsx-ts-mode . combobulate-mode))))
-
-(use-package tree-sitter-langs :after tree-sitter)
-
-;; (use-package tree-sitter
-;;   :hook ((go-mode
-;;           python-mode
-;;           rust-mode
-;;           ruby-mode
-;;           js-mode js2-mode rjsx-mode typescript-mode typescript-ts-mode
-;;           sh-mode) . tree-sitter-hl-mode)
-;;   :config
-;;   (global-tree-sitter-mode)
-;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-;; (use-package tree-sitter-langs :after tree-sitter :defer nil
-;;   :config
-;;   (tree-sitter-require 'tsx)
-;;   (add-to-list 'tree-sitter-major-mode-language-alist
-;;     '(typescript-tsx-mode . tsx)))
 
 (defun khz/toggle-fold ()
   (interactive)
