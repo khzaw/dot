@@ -10,6 +10,7 @@
   :config (eshell-syntax-highlighting-global-mode +1))
 
 (use-package eat
+  :disabled t
   :straight
   (:type git
    :host codeberg
