@@ -13,3 +13,6 @@ indent_size = 4
 
 [*.rs]
 indent_size = 4
+
+[*.org]
+indent_size = 8
