@@ -71,5 +71,9 @@
                                                                          (list (cons ':python (list ':venvPath venv ':pythonPath (concat venv "/bin/python"))))))))
                     (eglot-ensure)))))
 
+(use-package python-black
+  :after python
+  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+
 (provide 'init-python)
 ;;; init-python.el ends here
