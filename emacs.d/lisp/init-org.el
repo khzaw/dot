@@ -170,7 +170,8 @@
     :config
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
     (setq org-roam-dailies-directory "daily/")
-    (org-roam-db-autosync-mode))
+    (org-roam-db-autosync-mode)
+    (toggle-word-wrap))
 
   (use-package org-roam-protocol
     :straight nil
