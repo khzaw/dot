@@ -5,7 +5,6 @@
   (visual-fill-column-split-window-sensibly t))
 
 (use-package org
-  :init
   :bind
   ("C-c C-c" . org-edit-src-exit)
   :custom
@@ -47,7 +46,6 @@
                 (setq visual-fill-column-center-text nil)
                 (visual-fill-column-mode)))
   :config
-
   (custom-set-faces
    '(org-level-1 ((t (:weight bold  :height 1.0))))
    '(org-level-2 ((t (:weight bold :height 1.0))))
@@ -59,7 +57,6 @@
   (setq sentence-end-double-space nil)
   (setq visual-fill-column-center-text t)
   (visual-line-mode t)
-
 
   (defun khz/org-link-copy (&optional arg)
     "Extract URL from org-mode link and add it to kill ring."
