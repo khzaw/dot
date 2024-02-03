@@ -1,4 +1,5 @@
-(use-package hide-mode-line)
+(use-package hide-mode-line
+  :config (global-hide-mode-line-mode))
 
 ;; (use-package org-faces :straight nil)
 
@@ -59,8 +60,8 @@
     (org-show-children))
 
   :hook ((org-present-mode . khz/org-present-start)
-          (org-present-mode-quit . khz/org-present-end)
-          (org-present-after-navigate-functions . khz/org-present-prepare-slide)))
+         (org-present-mode-quit . khz/org-present-end)
+         (org-present-after-navigate-functions . khz/org-present-prepare-slide)))
 
 (provide 'init-presentation)
 ;;; init-presentation.el ends here

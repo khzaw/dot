@@ -76,6 +76,7 @@
   :straight (:host github :repo "bkruczyk/badwolf-emacs"))
 
 (use-package circadian
+  :disabled
   :config
   (setq circadian-themes '(("8:00" . solarized-gruvbox-light)
                            ("19:00" . modus-vivendi)))
@@ -86,5 +87,18 @@
 
 (use-package haki
   :straight (:type git :host github :repo "idlip/haki"))
+
+(use-package quasi-monochrome
+  :straight (:type git :host github :repo "lbolla/emacs-quasi-monochrome")
+  :config (load-theme 'quasi-monochrome t))
+
+(use-package apropospriate-theme
+  :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
+
+(use-package wildcharm-theme
+  :straight (:type git :host github :repo "habamax/wildcharm-theme"))
+
+(use-package wildcharm-light-theme
+  :straight (:type git :host github :repo "habamax/wildcharm-theme"))
 
 (provide 'init-themes)

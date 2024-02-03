@@ -51,18 +51,21 @@
   (completion-styles '(orderless flex))
   (completion-category-overrides '((eglot (styles orderless)))))
 
+(use-package corfu)
+
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu"
                    :files (:defaults "extensions/*"))
+  :init
+  (global-corfu-mode)
   ;; :init (global-corfu-mode)
-  :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-
-         (eshell-mode . corfu-mode))
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
   :custom
   (corfu-auto t)
   (corfu-quit-no-match 'separator)
-  (corfu-preselect-first nil)
+  ;; (corfu-preselect 'valid)
   (corfu-scroll-margin 5)
   :bind (:map corfu-map
          ("M-m" . corfu-move-to-minibuffer)
@@ -115,22 +118,23 @@
 (use-package cape
   ;; Bind dedicated completion commands
   ;; Alternative prefix keys: C-c p, M-p, M-+, ...
-  :bind ( ("C-c c p" . completion-at-point) ;; capf
-          ("C-c c t" . complete-tag)        ;; etags
-          ("C-c c d" . cape-dabbrev)        ;; or dabbrev-completion
-          ("C-c c h" . cape-history)
-          ("C-c c f" . cape-file)
-          ("C-c c k" . cape-keyword)
-          ("C-c c s" . cape-symbol)
-          ("C-c c a" . cape-abbrev)
-          ("C-c c i" . cape-ispell)
-          ("C-c c l" . cape-line)
-          ("C-c c w" . cape-dict)
-          ("C-c c \\" . cape-tex)
-          ("C-c c _" . cape-tex)
-          ("C-c c ^" . cape-tex)
-          ("C-c c &" . cape-sgml)
-          ("C-c c r" . cape-rfc1345))
+  :bind (("C-c c p" . completion-at-point) ;; capf
+         ("C-c c t" . complete-tag)        ;; etags
+         ("C-c c d" . cape-dabbrev)        ;; or dabbrev-completion
+         ("C-c c h" . cape-history)
+         ("C-c c f" . cape-file)
+         ("C-c c k" . cape-keyword)
+         ("C-c c s" . cape-elisp-symbol)
+         ("C-c c e" . cape-elisp-block)
+         ("C-c c a" . cape-abbrev)
+         ("C-c c i" . cape-ispell)
+         ("C-c c l" . cape-line)
+         ("C-c c w" . cape-dict)
+         ("C-c c \\" . cape-tex)
+         ("C-c c _" . cape-tex)
+         ("C-c c ^" . cape-tex)
+         ("C-c c &" . cape-sgml)
+         ("C-c c r" . cape-rfc1345))
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
@@ -143,7 +147,8 @@
   ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
   ;;(add-to-list 'completion-at-point-functions #'cape-ispell)
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-  (add-to-list 'completion-at-point-functions #'cape-symbol)
+  ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
   )
 

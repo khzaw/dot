@@ -18,7 +18,7 @@
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-spacing 0.1)
+  (setq-default line-spacing 1)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
@@ -149,6 +149,7 @@
   (elcord-mode t))
 
 (use-package telephone-line
+  :disabled t
   :init
   (setq
    telephone-line-primary-left-separator 'telephone-line-identity-left
@@ -258,7 +259,6 @@
     (evil-leader/set-key "s" 'sideline-mode)))
 
 (use-package rainbow-mode)
-
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

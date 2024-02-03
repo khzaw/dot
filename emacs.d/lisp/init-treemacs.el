@@ -29,10 +29,10 @@
   :after magit
   :commands treemacs-magit--schedule-update
   :hook ((magit-post-commit
-           git-commit-post-finish
-           magit-post-stage
-           magit-post-unstage)
-          . treemacs-magit--schedule-update))
+          git-commit-post-finish
+          magit-post-stage
+          magit-post-unstage)
+         . treemacs-magit--schedule-update))
 
 
 (use-package treemacs-icons-dired
@@ -46,6 +46,9 @@
 (use-package treemacs-all-the-icons
   :if (display-graphic-p)
   :after (treemacs))
+
+(use-package neotree
+  :straight (:type git :host github :repo "jaypei/emacs-neotree"))
 
 (provide 'init-treemacs)
 ;;; init-treemacs.el ends here

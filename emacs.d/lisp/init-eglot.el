@@ -62,4 +62,9 @@
   :config
   (global-flycheck-eglot-mode 1))
 
+(use-package eglot-booster
+  :straight (:type git :host github :repo "jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
+
 (provide 'init-eglot)
