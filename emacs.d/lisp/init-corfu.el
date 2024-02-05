@@ -51,26 +51,32 @@
   (completion-styles '(orderless flex))
   (completion-category-overrides '((eglot (styles orderless)))))
 
-(use-package corfu)
 
 (use-package corfu
-  :straight (corfu :type git :host github :repo "minad/corfu"
-                   :files (:defaults "extensions/*"))
-  :init
-  (global-corfu-mode)
-  ;; :init (global-corfu-mode)
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
+  :straight (corfu :type git :host github :repo "minad/corfu" :files (:defaults "extensions/*"))
+  :bind (:map corfu-map
+         ("C-p" . corfu-previous)
+         ("C-n" . corfu-next))
   :custom
   (corfu-auto t)
-  (corfu-quit-no-match 'separator)
-  ;; (corfu-preselect 'valid)
-  (corfu-scroll-margin 5)
+  (corfu-preview-current nil)
+  (corfu-auto-delay 0.2)
+  (corfu-quit-no-match t)
+  :custom-face
+  (corfu-border ((t (:inherit region :background unspecified))))
   :bind (:map corfu-map
          ("M-m" . corfu-move-to-minibuffer)
          ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
-         ([remap move-end-of-line] . corfu-end-of-prompt)))
+         ([remap move-end-of-line] . corfu-end-of-prompt)
+         ;; Free RET key for less instrusive behavior.
+         ("RET" . nil))
+  :init
+  (global-corfu-mode)
+  ;; https://github.com/emacs-evil/evil-collection/issues/766
+  (advice-remove 'corfu--setup 'evil-normalize-keymaps)
+  (advice-remove 'corfu--teardown 'evil-normalize-keymaps)
+  (advice-add 'corfu--setup :after (lambda (&rest _) (evil-normalize-keymaps)))
+  (advice-add 'corfu--teardown :after (lambda (&rest _) (evil-normalize-keymaps))))
 
 ;; show candidate doc in echo area
 (use-package corfu-echo
@@ -84,20 +90,11 @@
   :after corfu
   :commands corfu-popupinfo-mode
   :custom
-  (corfu-popupinfo-delay 0)
+  (corfu-popupinfo-delay '(0.4 . 0.2))
   (corfu-popupinfo-direction 'vertical)
   :custom-face
   (corfu-popupinfo ((t (:height 1.0))))
   :init (corfu-popupinfo-mode))
-
-(use-package corfu-history
-  :straight nil
-  :after corfu
-  :demand
-  :config
-  (corfu-history-mode 1)
-  (savehist-mode 1)
-  (add-to-list 'savehist-additional-variables 'corfu-history))
 
 (defun corfu-enable-always-in-minibuffer ()
   "Enable Corfu in the minibuffer if Vertico/Mct are not active."
@@ -150,6 +147,7 @@
   ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   )
 
 (provide 'init-corfu)

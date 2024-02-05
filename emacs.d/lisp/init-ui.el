@@ -199,11 +199,11 @@
   (window-divider-mode t)
   :config
   (setq-default default-frame-alist
-    (append (list
-              ;; '(internal-border-width . 10)
-              '(tool-bar-lines . 0)
-              '(menu-bar-lines . 0)
-              '(vertical-scroll-bars . nil))))
+                (append (list
+                         ;; '(internal-border-width . 10)
+                         '(tool-bar-lines . 0)
+                         '(menu-bar-lines . 0)
+                         '(vertical-scroll-bars . nil))))
   (setq-default window-resize-pixelwise t)
   (setq-default frame-resize-pixelwise t))
 

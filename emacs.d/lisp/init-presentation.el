@@ -1,5 +1,3 @@
-(use-package hide-mode-line
-  :config (global-hide-mode-line-mode))
 
 ;; (use-package org-faces :straight nil)
 

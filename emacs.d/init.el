@@ -15,10 +15,10 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (add-hook 'emacs-startup-hook
-  (lambda ()
-    "Recover GC values after startup."
-    (setq gc-cons-threshold 16777216 ; 16 mb
-      gc-cons-percentage 0.1)))
+          (lambda ()
+            "Recover GC values after startup."
+            (setq gc-cons-threshold 16777216 ; 16 mb
+                  gc-cons-percentage 0.1)))
 
 (defun doom-defer-garbage-collection-h ()
   "Disable garbage collection."
@@ -35,7 +35,7 @@
 
 ;; custom-file
 (setq custom-file (locate-user-emacs-file "custom.el"))
-(ignore-errors (load custom-file))
+;; (ignore-errors (load custom-file))
 
 (setq package-check-signature nil)
 
@@ -52,11 +52,10 @@
 
 (require 'init-basics)
 (require 'init-font)
-
 (require 'init-ui)
-;; (require 'init-pragmatapro)
+(require 'init-modeline)
 (require 'init-themes)
-(require 'init-projectile)
+(require 'init-dashboard)
 
 (require 'init-evil)
 (require 'init-edit)
@@ -64,28 +63,29 @@
 (require 'init-consult)
 ;; (require 'init-company)
 (require 'init-corfu)
-
-(require 'init-dashboard)
 (require 'init-dired)
 (require 'init-window)
 (require 'init-treemacs)
 
-
-;; Programming
+;; tools
+(require 'init-compile)
+(require 'init-treesitter)
 (require 'init-docker)
+(require 'init-projectile)
 (require 'init-flymake)
-(require 'init-flycheck)
+;; (require 'init-flycheck)
 (require 'init-eglot)
 (require 'init-lsp)
 (require 'init-vcs)
+(require 'init-terminal)
 
-(require 'init-compile)
-(require 'init-treesitter)
+;; Programming languages
 (require 'init-elisp)
 (require 'init-java)
 (require 'init-go)
 (require 'init-haskell)
 (require 'init-markdown)
+(require 'init-ocaml)
 (require 'init-python)
 (require 'init-rust)
 (require 'init-solidity)
@@ -93,11 +93,7 @@
 (require 'init-web)
 (require 'init-prog)
 
-
-(require 'init-terminal)
-
 (require 'init-org)
-
 ;; Others
 (require 'init-presentation)
 (require 'init-elfeed)

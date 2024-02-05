@@ -38,7 +38,6 @@
 
 (use-package flymake-golangci
   :after (go-mode flymake)
-  :straight (:type git :host gitlab :repo "shackra/flymake-golangci")
   :hook (go-mode . flymake-golangci-load))
 
 (provide 'init-go)

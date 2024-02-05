@@ -43,8 +43,20 @@
 
 (use-package evil-textobj-tree-sitter
   :straight (evil-textobj-tree-sitter :type git
-              :host github
-              :repo "meain/evil-textobj-tree-sitter"
-              :files (:defaults "queries")))
+                                      :host github
+                                      :repo "meain/evil-textobj-tree-sitter"
+                                      :files (:defaults "queries"))
+  :config
+  (defvar +tree-sitter-inner-text-objects-map (make-sparse-keymap))
+  (defvar +tree-sitter-outer-text-objects-map (make-sparse-keymap))
+  (defvar +tree-sitter-goto-previous-map (make-sparse-keymap))
+  (defvar +tree-sitter-goto-next-map (make-sparse-keymap))
+
+  (evil-define-key '(visual operator) 'tree-sitter-mode
+    "i" +tree-sitter-inner-text-objects-map
+    "a" +tree-sitter-outer-text-objects-map)
+  (evil-define-key 'normal 'tree-sitter-mode
+    "[g" +tree-sitter-goto-previous-map
+    "]g" +tree-sitter-goto-next-map))
 
 (provide 'init-treesitter)

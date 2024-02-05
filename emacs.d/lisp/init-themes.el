@@ -3,7 +3,8 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme))
+  (kaolin-treemacs-theme)
+  (load-theme 'kaolin-shiva t))
 
 (use-package doom-themes
   :config
@@ -17,7 +18,6 @@
   (doom-themes-org-config))
 
 (use-package modus-themes
-  :defer
   :config
   (setq
    modus-themes-bold-constructs t
@@ -42,15 +42,9 @@
        `(window-divider ((t :background ,bg :foreground ,bg)))
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
-
-
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
 
 (use-package ef-themes)
-
-(use-package standard-themes
-  :config
-  (setq standard-themes-fringes nil))
 
 (use-package stimmung-themes
   :straight (stimmung-themes :host github :repo "motform/stimmung-themes"))
@@ -59,9 +53,8 @@
 
 (use-package kanagawa
   :straight (kanagawa :type git :host github :repo "konrad1977/emacs"
-              :local-repo "konrad1977-emacs"
-              :files (:defaults "themes/*")))
-
+                      :local-repo "konrad1977-emacs"
+                      :files (:defaults "themes/*")))
 
 (use-package os1-theme
   :straight (:type git :host github :repo "sashimacs/os1-theme"))
@@ -69,28 +62,12 @@
 (use-package hima-theme
   :straight (:type git :host github :repo "meain/hima-theme"))
 
-(use-package nordic-night-theme
-  :straight (:type git :repo "https://git.sr.ht/~ashton314/nordic-night" :branch "main"))
-
-(use-package badwolf
-  :straight (:host github :repo "bkruczyk/badwolf-emacs"))
-
-(use-package circadian
-  :disabled
-  :config
-  (setq circadian-themes '(("8:00" . solarized-gruvbox-light)
-                           ("19:00" . modus-vivendi)))
-  (circadian-setup))
 
 (use-package solarized-emacs
   :straight (:type git :host github :repo "bbatsov/solarized-emacs"))
 
 (use-package haki
   :straight (:type git :host github :repo "idlip/haki"))
-
-(use-package quasi-monochrome
-  :straight (:type git :host github :repo "lbolla/emacs-quasi-monochrome")
-  :config (load-theme 'quasi-monochrome t))
 
 (use-package apropospriate-theme
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
