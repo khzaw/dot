@@ -19,11 +19,8 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-    // QUERTY LAYER
+    // QWERTY LAYER
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
-  // ESC , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,BSPC,
-  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-  // TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,MINS ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
   // LCTL, A  , S  , D  , F  , G  ,                H  , J  , K  , L  ,SCLN,QUOT,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
@@ -40,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSPO, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LALT,         KC_BSLASH,KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSPC,
+     SC_LSPO, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LALT,         KC_BSLASH,KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSPC,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     KC_LGUI, KC_LOWR, KC_ENTER,                   KC_SPC,  KC_RASE, KC_RALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -62,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_GRV, KC_EXLM, KC_AT,  KC_HASH,  KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
+      KC_GRV, KC_EXLM, KC_AT,  KC_HASH,  KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN , KC_RPRN,  KC_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, KC_BRMD, KC_BRMU, _______, _______, KC_LBRC,                            KC_RBRC, _______, _______,  _______, _______, KC_PLUS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤

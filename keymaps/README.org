@@ -1,6 +1,9 @@
 * Keyboads keymaps
+
 ** Setup QMK default config
+
 This will set a default keyboard. Don't do it. Just supply keyboard the parameter at subsequent commands.
+
 #+begin_src sh :session shared
 keyboard_name=ymdk/wingshs
 qmk_username=khzaw
@@ -14,7 +17,9 @@ qmk config user.keymap=$qmk_username
 | [0m[0m[0m[0m     |       |                |                 |                                 |                           |
 
 ** Symlink the keymap file
+
 Symlink the file to `qmk_firmware/keyboards/<keyboard_name>/keymaps/khzaw/keymap.c`.
+
 #+begin_src sh :session shared
 keymap_file=ymdk_wingshs.c
 mkdir -p $HOME/Library/qmk_firmware/keyboards/${keyboard_name}/keymaps/${qmk_username}
@@ -24,6 +29,7 @@ ln -s $HOME/Code/dot/keymaps/${keymap_file} $HOME/Library/qmk_firmware/keyboards
 #+RESULTS:
 
 ** Compile
+
 #+begin_src sh :session shared :results no
 qmk compile --keyboard $keyboard_name -km $qmk_username
 #+end_src
