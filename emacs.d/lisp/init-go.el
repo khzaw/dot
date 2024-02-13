@@ -37,6 +37,7 @@
   (setq flycheck-golangci-lint-fast t))
 
 (use-package flymake-golangci
+  :disabled t
   :after (go-mode flymake)
   :hook (go-mode . flymake-golangci-load))
 

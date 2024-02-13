@@ -3,8 +3,7 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme)
-  (load-theme 'kaolin-shiva t))
+  (kaolin-treemacs-theme))
 
 (use-package doom-themes
   :config
@@ -51,23 +50,11 @@
 
 (use-package timu-caribbean-theme)
 
-(use-package kanagawa
-  :straight (kanagawa :type git :host github :repo "konrad1977/emacs"
-                      :local-repo "konrad1977-emacs"
-                      :files (:defaults "themes/*")))
-
 (use-package os1-theme
   :straight (:type git :host github :repo "sashimacs/os1-theme"))
 
 (use-package hima-theme
   :straight (:type git :host github :repo "meain/hima-theme"))
-
-
-(use-package solarized-emacs
-  :straight (:type git :host github :repo "bbatsov/solarized-emacs"))
-
-(use-package haki
-  :straight (:type git :host github :repo "idlip/haki"))
 
 (use-package apropospriate-theme
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))

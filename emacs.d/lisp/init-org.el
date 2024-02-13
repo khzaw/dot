@@ -46,6 +46,7 @@
                 (setq visual-fill-column-center-text nil)
                 (visual-fill-column-mode)))
   :config
+  (require 'org-indent)
   (custom-set-faces
    '(org-level-1 ((t (:weight bold  :height 1.0))))
    '(org-level-2 ((t (:weight bold :height 1.0))))
@@ -92,15 +93,21 @@
   (cl-pushnew '(shell . t) load-language-alist)
 
   (use-package ob-go
+    :after org
     :if (executable-find "go")
     :init (cl-pushnew '(go . t) load-language-alist))
 
   (use-package ob-rust
+    :after org
     :if (executable-find "rustc")
     :init (cl-pushnew '(rust . t) load-language-alist))
 
-  (use-package emacs-ob-racket
-    :straight (:type git :host github :repo "hasu/emacs-ob-racket")
+  (use-package ob-racket
+    :after org
+    :config
+    (add-hook 'ob-racket-pre-runtime-library-load-hook
+              #'ob-racket-raco-make-runtime-library)
+    :straight (ob-racket :type git :host github :repo "hasu/emacs-ob-racket" :files ("*.el" "*.rkt"))
     :init (cl-pushnew '(racket . t) load-language-alist))
 
   ;; npm install -g @mermaid-js/mermaid-cli

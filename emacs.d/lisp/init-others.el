@@ -26,4 +26,7 @@
 (use-package bookmark-view
   :straight (bookmark-view :type git :host github :repo "minad/bookmark-view"))
 
+;; (use-package mugur
+;;  :straight (mugur :type git :host github :repo "mihaiolteanu/mugur"))
+
 (provide 'init-others)
