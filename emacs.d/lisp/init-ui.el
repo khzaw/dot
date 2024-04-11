@@ -12,13 +12,13 @@
 ;; UI
 ;; (toggle-frame-maximized)
 (when (eq system-type 'gnu/linux)
-  (setq-default line-spacing 1)
+  ;; (setq-default line-spacing 1)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 100)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-spacing 1)
+  (setq-default line-height nil)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
@@ -38,7 +38,7 @@
   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
   (interactive "Transparency Value (0 - 100) :")
   (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 98)
+(transparency 96)
 
 (use-package solaire-mode
   :straight t

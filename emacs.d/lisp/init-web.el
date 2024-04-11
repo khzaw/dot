@@ -81,7 +81,7 @@
 
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode)
-          ("\\.restclient$" . restclient-mode))
+         ("\\.restclient$" . restclient-mode))
   :config
   (use-package restclient-test
     :diminish
