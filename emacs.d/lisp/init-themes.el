@@ -86,4 +86,10 @@
 (use-package bocchi
   :straight (:type git :host github :repo "cel7t/bocchi-theme"))
 
+(use-package tomorrow-night-deepblue-theme
+  :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
+
+(use-package nano-theme
+  :straight (:type git :host github :repo "rougier/nano-theme"))
+
 (provide 'init-themes)
