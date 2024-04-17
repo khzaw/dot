@@ -92,4 +92,9 @@
 (use-package nano-theme
   :straight (:type git :host github :repo "rougier/nano-theme"))
 
+(use-package almost-mono-themes
+  :straight (:type git :host github :repo "cryon/almost-mono-themes")
+  :config
+  (load-theme 'almost-mono-cream t))
+
 (provide 'init-themes)
