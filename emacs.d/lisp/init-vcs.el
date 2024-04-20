@@ -39,7 +39,7 @@
 (use-package git-messenger
   :bind ("C-c g m" . git-messenger:popup-message)
   :init (setq git-messenger:show-detail t
-          git-messenger:use-magit-popup t))
+              git-messenger:use-magit-popup t))
 ;; :config
 ;; (progn
 ;;   (define-key git-messenger-map (kbd "RET") 'git-messenger:popup-close)))
