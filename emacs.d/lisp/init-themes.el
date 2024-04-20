@@ -21,8 +21,6 @@
   (setq
    modus-themes-bold-constructs t
    modus-themes-mixed-fonts t
-   modus-themes-mail-citations 'intense
-   modus-themes-subtle-line-numbers t
    modus-themes-completions '((t . (extrabold)))
    ;; Keep the border of mode line but make it the same color as the background of the mode line
    modus-themes-common-palette-overrides
@@ -41,7 +39,9 @@
        `(window-divider ((t :background ,bg :foreground ,bg)))
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
-  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
+  (load-theme 'modus-vivendi-tritanopia t))
+
 
 (use-package ef-themes)
 

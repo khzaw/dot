@@ -19,69 +19,69 @@
 (use-package consult
   :after projectile
   :bind (("C-c a" . consult-ag)
-          ("C-c h" . consult-history)
-          ("C-c i" . consult-imenu)
-          ("C-c r". consult-recent-file)
-          ("C-c m" . consult-mode-command)
-          ("C-c k" . consult-kmacro)
-          ("C-c l t" . consult-theme)
-          ("C-c n a" . consult-org-agenda)
-          ;; C-x bindings (ctl-x-map)
-          ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
-          ("C-x b" . consult-buffer) ;; orig . switch-to-buffer
-          ;; b Buffers
-          ;; SPC Hidden buffers
-          ;; * Modified buffers
-          ;; f Files (Requires recentf-mode)
-          ;; r File registers
-          ;; m Bookmarks
-          ;; p Project
-          ("C-x 4 b" . consult-buffer-other-window)
-          ("C-x 5 b" . consult-buffer-other-frame)
-          ("C-x r b" . consult-bookmark)
-          ("C-c p b" . consult-project-buffer)
-          ;; Custom M-# bindings for fast register access
-          ("M-#" . consult-register-load)
-          ("M-'" . consult-register-store)
-          ("C-M-#" . consult-register)
-          ;; Other custom bindings
-          ("M-y" . consult-yank-pop)
-          ("<help> a" . consult-apropos)
-          ;; M-g bindings (goto-map)
-          ("M-g e" . consult-compile-error)
-          ("M-g !" . consult-flymake)
-          ("M-g f" . consult-flycheck)
-          ("M-g M-g" . consult-goto-line)
-          ("s-l" . consult-goto-line)
-          ("M-g o" . consult-outline)
-          ("M-g m" . consult-mark)
-          ("M-g k" . consult-global-mark)
-          ("M-g i" . consult-imenu)
-          ("M-g I" . consult-imenu-multi)
-          ;; M-s bindings (search-map)
-          ("M-s f" . consult-find)
-          ;; ("C-c f" . consult-find)
-          ("M-s D" . consult-locate)
-          ("M-s g" . consult-grep)
-          ("M-s G" . consult-git-grep)
-          ("M-s r" . consult-ripgrep)
-          ("C-s" . consult-line)
-          ("M-s L" . consult-line-multi)
-          ("M-s m" . consult-multi-occur)
-          ("M-s k" . consult-keep-lines)
-          ("M-s u" . consult-focus-lines)
-          ;; Isearch integration
-          ("M-s e" . consult-isearch-history)
-          :map isearch-mode-map
-          ("M-e" . consult-isearch-history)   ;; orig. isearch-edit-string
-          ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
-          ("M-s l" . consult-line)       ;; needed by consult-line to detect isearch
-          ("M-s L" . consult-line-multi) ;; needed by consult-line to detect isearch
-          ;; Minibuffer history
-          :map minibuffer-local-map
-          ("M-s" . consult-history) ;; orig. next-matching-history-element
-          ("M-r" . consult-history) ;; orig. previous-matching-history-element
-          )
+         ("C-c h" . consult-history)
+         ("C-c i" . consult-imenu)
+         ("C-c r". consult-recent-file)
+         ("C-c m" . consult-mode-command)
+         ("C-c k" . consult-kmacro)
+         ("C-c l t" . consult-theme)
+         ("C-c n a" . consult-org-agenda)
+         ;; C-x bindings (ctl-x-map)
+         ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer) ;; orig . switch-to-buffer
+         ;; b Buffers
+         ;; SPC Hidden buffers
+         ;; * Modified buffers
+         ;; f Files (Requires recentf-mode)
+         ;; r File registers
+         ;; m Bookmarks
+         ;; p Project
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x 5 b" . consult-buffer-other-frame)
+         ("C-x r b" . consult-bookmark)
+         ("C-c p b" . consult-project-buffer)
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)
+         ("<help> a" . consult-apropos)
+         ;; M-g bindings (goto-map)
+         ("M-g e" . consult-compile-error)
+         ("M-g !" . consult-flymake)
+         ("M-g f" . consult-flycheck)
+         ("M-g M-g" . consult-goto-line)
+         ("s-l" . consult-goto-line)
+         ("M-g o" . consult-outline)
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ;; M-s bindings (search-map)
+         ("M-s f" . consult-find)
+         ;; ("C-c f" . consult-find)
+         ("M-s D" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("C-s" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s m" . consult-multi-occur)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; Isearch integration
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history)   ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
+         ("M-s l" . consult-line)       ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi) ;; needed by consult-line to detect isearch
+         ;; Minibuffer history
+         :map minibuffer-local-map
+         ("M-s" . consult-history) ;; orig. next-matching-history-element
+         ("M-r" . consult-history) ;; orig. previous-matching-history-element
+         )
 
   ;; Enable automatic preview at point in the *Completion* buffer. This is
   ;; relevant when you use the default completion UI.
@@ -94,7 +94,7 @@
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
-    register-preview-function #'consult-register-format)
+        register-preview-function #'consult-register-format)
 
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
@@ -104,19 +104,17 @@
   (advice-add #'register-preview :override #'consult-register-window)
 
   ;; Use Consult to select xref locations with preview
-  (setq
-    xref-show-xrefs-function #'consult-xref
-    xref-show-definitions-function #'consult-xref)
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
 
   :config
 
-  (setq
-    consult-narrow-key "<"
-    consult-line-numbers-widen t
-    consult-async-min-input 2
-    consult-async-refresh-delay 0.15
-    consult-async-input-throttle 0.2
-    consult-async-input-debounce 0.1)
+  (setq consult-narrow-key "<"
+        consult-line-numbers-widen t
+        consult-async-min-input 2
+        consult-async-refresh-delay 0.15
+        consult-async-input-throttle 0.2
+        consult-async-input-debounce 0.1)
 
   (defvar my-consult-line-map
     (let ((map (make-sparse-keymap)))
@@ -133,13 +131,13 @@
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
-    consult-theme :preview-key '(:debounce 0.5 any)
-    consult-ripgrep consult-git-grep consult-grep
-    consult-ag consult-bookmark consult-recent-file consult-xref
-    consult--source-bookmark consult--source-file-register
-    consult--source-recent-file consult--source-project-recent-file
-    ;; preview-key (kdb "M-.")
-    :preview-key '(:debounce 0.2 any))
+   consult-theme :preview-key '(:debounce 0.5 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-ag consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   ;; preview-key (kdb "M-.")
+   :preview-key '(:debounce 0.2 any))
 
 
   ;; Optinally make narrowing help available in the minibuffer.
