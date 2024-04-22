@@ -17,21 +17,25 @@
 
 (use-package avy
   :bind (("C-,"   . avy-goto-char)
-          ("C-'"   . avy-goto-char-2)
-          ("M-g g" . avy-goto-line)
-          ("M-g w" . avy-goto-word-0)
-          ("M-g e" . avy-goto-word-1))
+         ("C-'"   . avy-goto-char-2)
+         ("M-g g" . avy-goto-line)
+         ("M-g w" . avy-goto-word-0)
+         ("M-g e" . avy-goto-word-1))
   :hook (after-init . avy-setup-default)
   :config (setq avy-background t
-            avy-all-windows nil
-            avy-all-windows-alt t
-            avy-style 'pre))
+                avy-all-windows nil
+                avy-all-windows-alt t
+                avy-style 'pre))
+
+(use-package lasgun
+  :straight (:type git :host github :repo "aatmunbaxi/lasgun.el")
+  :after (avy embark))
 
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish
   :hook ((clojure-mode . aggressive-indent-mode)
-          (emacs-lisp-mode . aggressive-indent-mode)))
+         (emacs-lisp-mode . aggressive-indent-mode)))
 
 (use-package symbol-overlay
   :defer t

@@ -49,7 +49,8 @@
 
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
   (progn
-    (evil-leader/set-key "gi" 'eglot-find-implementation)))
+    (evil-leader/set-key "gi" 'eglot-find-implementation)
+    (evil-leader/set-key "ty" 'eglot-find-typeDefinition)))
 
 (use-package consult-eglot
   :bind (:map eglot-mode-map

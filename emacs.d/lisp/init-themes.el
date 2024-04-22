@@ -68,23 +68,12 @@
 (use-package catppuccin-theme
   :straight (:type git :host github :repo "catppuccin/emacs"))
 
-(use-package rebecca
-  :straight (:type git :host github :repo "vic/rebecca-theme"))
 
 (use-package anisochromatic
   :straight (:type git :host github :repo "isomatter-labs/anisochromatic-emacs"))
 
-(use-package nordic-night
-  :straight (:type git :host codeberg :repo "ashton314/nordic-night"))
-
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
-
-(use-package myron
-  :straight (:type git :host github :repo "neeasade/myron-themes" :files (".el" "themes/*.el")))
-
-(use-package bocchi
-  :straight (:type git :host github :repo "cel7t/bocchi-theme"))
 
 (use-package tomorrow-night-deepblue-theme
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))

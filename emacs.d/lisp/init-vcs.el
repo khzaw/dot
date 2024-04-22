@@ -15,7 +15,7 @@
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode)
   :config
-  ;; (add-to-list 'magit-delta-delta-args "--light")
+  (add-to-list 'magit-delta-delta-args "--dark")
   (add-to-list 'magit-delta-delta-args "--no-gitconfig"))
 
 (use-package magit-todos :after magit)

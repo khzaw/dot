@@ -1,24 +1,24 @@
 (use-package treemacs
-  :after doom-themeskj
+  :after doom-themes
   :commands (treemacs-follow-mode
-              treemacs-filewatch-mode
-              treemacs-fringe-indicator-mode
-              treemacs-git-mode)
+             treemacs-filewatch-mode
+             treemacs-fringe-indicator-mode
+             treemacs-git-mode)
   :config
   (progn
     (setq
-      treemacs-eldoc-display t
-      treemacs-silent-refresh t
-      treemacs-silent-filewatch t
-      treemacs-show-hidden-files t
-      treemacs-is-never-other-window t
-      treemacs-user-mode-line-format 'none
-      treemacs-is-never-other-window t))
+     treemacs-eldoc-display t
+     treemacs-silent-refresh t
+     treemacs-silent-filewatch t
+     treemacs-show-hidden-files t
+     treemacs-is-never-other-window t
+     treemacs-user-mode-line-format 'none
+     treemacs-is-never-other-window t))
   :bind (("C-c t t" . treemacs)
-          ("C-c t d" . treemacs-select-directory)
-          ("C-c t C-f" . treemacs-find-file)
-          ("C-c t 1" . treemacs-select-window)
-          ("C-c t 2" . treemacs-delete-other-windows)))
+         ("C-c t d" . treemacs-select-directory)
+         ("C-c t C-f" . treemacs-find-file)
+         ("C-c t 1" . treemacs-select-window)
+         ("C-c t 2" . treemacs-delete-other-windows)))
 
 (use-package treemacs-projectile
   :after projectile

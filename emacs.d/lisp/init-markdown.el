@@ -10,7 +10,10 @@
           ("C-c v" . markdown-view-mode))
          (:map markdown-view-mode-map
           ("C-c v" . markdown-mode)))
-  :init (setq markdown-command "multimarkdown"))
+  :init (setq markdown-command "multimarkdown")
+  :custom-face
+  (markdown-bold-face ((t (:font "Univers"))))
+  (markdown-italic-face ((t (:font "Univers")))))
 
 (use-package impatient-mode)
 

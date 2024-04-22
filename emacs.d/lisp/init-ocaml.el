@@ -4,7 +4,7 @@
   (setq tuareg-opam-insinuate t))
 
 (use-package dune
-  :straight (:type git :host github :repo "ocaml/dune" :files ("emacs/*.el")))
+  :straight (:type git :host github :repo "ocaml/dune" :files ("editor-integrations/emacs/*.el")))
 
 (use-package merlin
   :config
