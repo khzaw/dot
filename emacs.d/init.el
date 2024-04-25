@@ -52,9 +52,9 @@
 
 (require 'init-basics)
 (require 'init-font)
+(require 'init-themes)
 (require 'init-ui)
 (require 'init-modeline)
-(require 'init-themes)
 (require 'init-dashboard)
 
 (require 'init-evil)
