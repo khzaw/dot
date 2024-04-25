@@ -180,6 +180,7 @@
     (org-roam-db-autosync-mode)
     (toggle-word-wrap))
 
+
   (use-package org-roam-protocol
     :straight nil
     :after org-roam)
@@ -194,6 +195,12 @@
     (org-roam-ui-update-on-save t)
     (org-roam-ui-open-on-start nil)
     (org-roam-ui-browser-function #'xwidget-webkit-browse-url)))
+
+(use-package quickroam
+  :straight (quickroam :type git :host github :repo "meedstrom/quickroam")
+  :defer t
+  :hook (org-mode . quickroam-enable-cache))
+
 
 (use-package org-contrib)
 

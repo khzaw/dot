@@ -72,8 +72,8 @@
   (blamer-min-offset 70))
 
 (use-package consult-gh
-  :disabled t
   :straight (:type git :host github :repo "armindarvish/consult-gh" :branch "develop")
+  :after consult
   :config
   (setq consult-gh-default-orgs-list '("khzaw" "projectrangoon" "algo-koans" "deliveryhero"))
   (setq consult-gh-default-clone-directory "~/Code")
