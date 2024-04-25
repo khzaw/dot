@@ -384,5 +384,18 @@
   :straight (vertico-truncate :type git :host github :repo "jdtsmith/vertico-truncate")
   :config (vertico-truncate-mode 1))
 
+(use-package consult-web
+	:straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "extras.el" "sources/*.el" ))
+  :after consult
+  :custom
+  (consult-web-show-preview t)
+  (consult-web-preview-key "C-o")
+  (consult-web-highlight-matches t)
+  (consult-web-dynamic-input-debounce 0.8)
+  :config
+  (require 'consult-web-sources)
+  (require 'consult-web-embark)
+  (setq consult-web-default-autosuggest-command #'consult-web-dynamic-google-autosuggest))
+
 (provide 'init-consult)
 ;;; init-consult.el ends here

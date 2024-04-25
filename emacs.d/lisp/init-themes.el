@@ -14,7 +14,8 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (load-theme 'doom-ir-black t))
 
 (use-package modus-themes
   :config
@@ -82,8 +83,6 @@
   :straight (:type git :host github :repo "rougier/nano-theme"))
 
 (use-package almost-mono-themes
-  :straight (:type git :host github :repo "cryon/almost-mono-themes")
-  :config
-  (load-theme 'almost-mono-cream t))
+  :straight (:type git :host github :repo "cryon/almost-mono-themes"))
 
 (provide 'init-themes)
