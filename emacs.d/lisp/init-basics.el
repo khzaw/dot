@@ -104,11 +104,11 @@
 
 ;; Better scrolling
 (setq scroll-margin 10
-  scroll-step 1
-  next-line-add-newlines nil
-  scroll-conservatively 10000
-  scroll-preserve-screen-position t
-  auto-window-vscroll nil)
+      scroll-step 1
+      next-line-add-newlines nil
+      scroll-conservatively 10000
+      scroll-preserve-screen-position t
+      auto-window-vscroll nil)
 
 
 (blink-cursor-mode t)
