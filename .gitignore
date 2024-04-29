@@ -70,3 +70,5 @@ emacs.d/emojis
 .DS_Store
 
 nov-places
+
+zshenv.local
