@@ -3,17 +3,18 @@
   :commands (treemacs-follow-mode
              treemacs-filewatch-mode
              treemacs-fringe-indicator-mode
-             treemacs-git-mode)
+             treemacs-git-mode
+             treemacs-peek-mode)
   :config
   (progn
-    (setq
-     treemacs-eldoc-display t
-     treemacs-silent-refresh t
-     treemacs-silent-filewatch t
-     treemacs-show-hidden-files t
-     treemacs-is-never-other-window t
-     treemacs-user-mode-line-format 'none
-     treemacs-is-never-other-window t))
+    (setq treemacs-eldoc-display t
+          treemacs-silent-refresh t
+          treemacs-silent-filewatch t
+          treemacs-show-hidden-files t
+          treemacs-is-never-other-window t
+          treemacs-user-mode-line-format 'none))
+  (treemacs-fringe-indicator-mode 'always)
+  (treemacs-filewatch-mode t)
   :bind (("C-c t t" . treemacs)
          ("C-c t d" . treemacs-select-directory)
          ("C-c t C-f" . treemacs-find-file)
@@ -21,12 +22,12 @@
          ("C-c t 2" . treemacs-delete-other-windows)))
 
 (use-package treemacs-projectile
-  :after projectile
+  :after (treemacs projectile)
   :bind (:map projectile-command-map
-          ("h" . treemacs-projectile)))
+         ("h" . treemacs-projectile)))
 
 (use-package treemacs-magit
-  :after magit
+  :after (treemacs magit)
   :commands treemacs-magit--schedule-update
   :hook ((magit-post-commit
           git-commit-post-finish
@@ -46,6 +47,9 @@
 (use-package treemacs-all-the-icons
   :if (display-graphic-p)
   :after (treemacs))
+
+(use-package treemacs-evil
+  :after (treemacs evil))
 
 (use-package neotree
   :straight (:type git :host github :repo "jaypei/emacs-neotree"))
