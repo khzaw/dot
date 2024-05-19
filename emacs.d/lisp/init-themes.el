@@ -15,7 +15,7 @@
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)))
   (doom-themes-org-config)
-  (load-theme 'doom-ir-black t))
+  (load-theme 'doom-pine t))
 
 (use-package modus-themes
   :config
@@ -41,8 +41,8 @@
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
-  (load-theme 'modus-vivendi-tritanopia t))
-
+  ;; (load-theme 'modus-vivendi-tritanopia t)
+  )
 
 (use-package ef-themes)
 
