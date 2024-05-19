@@ -7,6 +7,7 @@
 
 ;; No tab bar
 (setq tab-bar-mode nil)
+(tab-bar-mode 0)
 
 ;; Warn only for emergencies
 (setq warning-minimum-level :emergency)
@@ -260,8 +261,16 @@
               define-hook-helper
               hkhlp-normalize-hook-spec)
   :functions (make-hook-helper
-               add-hook-helper
-               hkhlp-update-helper))
+              add-hook-helper
+              hkhlp-update-helper))
+
+(use-package image-mode
+  :striaght (:type built-in)
+  :mode (("\\.png\\'" . image-mode))
+  :bind (:map image-mode-map
+         ("k" . image-kill-buffer)
+         ("<right>" . image-next-file)
+         ("<left>" . image-previous-file)))
 
 (provide 'init-basics)
 ;;; init-basics.el ends here

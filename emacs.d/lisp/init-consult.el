@@ -1,16 +1,15 @@
 (use-package embark
-  :bind (("C-c C-." . embark-act)
-          ("C-." . embark-act)
-          ("C-;" . embark-dwim)
-          ("C-c C-;" . embark-dwim)
-          ("C-h B" . embark-bindings))
+  :bind (("C-." . embark-act)
+         ("C-;" . embark-dwim)
+         ("C-h B" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
+  ;; hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
-    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-       nil
-       (window-parameters (mode-line-format . none)))))
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
   :hook
