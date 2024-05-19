@@ -4,10 +4,10 @@
   :hook ((typescript-tsx-mode
           typescript-mode
           css-mode
-          python-mode
+          python-mode python-ts-mode
           markdown-mode
           java-mode
-          go-mode) . eglot-ensure)
+          go-mode go-ts-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
   :bind (("C-c e f" . #'eglot-format)
