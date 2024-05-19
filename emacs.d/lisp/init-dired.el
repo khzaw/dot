@@ -60,5 +60,20 @@
 
 (use-package dirvish)
 
+(use-package casual-dired
+  :straight (:type git :host github :repo "kickingvegas/casual-dired")
+  :bind (:map dired-mode-map ("C-o" . 'casual-dired-tmenu)))
+
+(use-package image-dired
+  :custom
+  (image-dired-external-viewer "feh")
+  (image-dired-thumb-margin 10)
+  :bind
+  (("C-c w i" . image-dired))
+  (:map image-dired-thumbnail-mode-map
+   ("C-<right>" . image-dired-display-next)
+   ("C-<left>" . image-dired-display-previous)))
+
+
 (provide 'init-dired)
 ;;; init-dired.el ends here
