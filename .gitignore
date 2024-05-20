@@ -72,3 +72,7 @@ emacs.d/emojis
 nov-places
 
 zshenv.local
+
+emacs.d/elfeed/index
+emacs.d/forge-database*
+emacs.d/tree-sitter/
