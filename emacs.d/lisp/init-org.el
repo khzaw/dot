@@ -5,6 +5,7 @@
   (visual-fill-column-split-window-sensibly t))
 
 (use-package org
+  :straight (:type built-in)
   :bind
   ("C-c C-c" . org-edit-src-exit)
   :custom

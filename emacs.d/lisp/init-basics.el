@@ -265,7 +265,7 @@
               hkhlp-update-helper))
 
 (use-package image-mode
-  :striaght (:type built-in)
+  :straight (:type built-in)
   :mode (("\\.png\\'" . image-mode))
   :bind (:map image-mode-map
          ("k" . image-kill-buffer)

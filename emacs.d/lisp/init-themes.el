@@ -3,7 +3,8 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme))
+  (kaolin-treemacs-theme)
+  (load-theme 'kaolin-dark t))
 
 (use-package doom-themes
   :config
@@ -14,8 +15,7 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config)
-  (load-theme 'doom-pine t))
+  (doom-themes-org-config))
 
 (use-package modus-themes
   :config

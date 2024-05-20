@@ -384,6 +384,7 @@
   :config (vertico-truncate-mode 1))
 
 (use-package consult-web
+  :disabled t
 	:straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "extras.el" "sources/*.el" ))
   :after consult
   :custom

@@ -4,9 +4,9 @@
   (magit-auto-revert-mode t)
   :config
   (setq magit-save-repository-buffers 'dontask)
-  (setq magit-disable-line-numbers nil)
-  (setq magit-section-disable-line-numbers nil)
   (setq magit-refresh-status-buffer nil)
+  (setq display-line-numbers-type 'visual)
+  (setq magit-section-disable-line-numbers nil)
   ;; (customize-set-variable
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
@@ -16,7 +16,7 @@
   :hook (magit-mode . magit-delta-mode)
   :disabled t
   :config
-  (add-to-list 'magit-delta-delta-args "--dark" "--no-gitconfig"))
+  (add-to-list 'magit-delta-delta-args "--light" "--no-gitconfig"))
 
 (use-package magit-todos :after magit)
 

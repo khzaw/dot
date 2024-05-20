@@ -18,7 +18,9 @@
   (setq prettify-symbols-unprettify-at-point 'right-edge)
   ;; :hook (prog-mode . prettify-hook)
   :config
+  :hook (prog-mode . (lambda () (yafolding-mode)))
   (global-prettify-symbols-mode))
+
 
 (use-package hideshow
   :straight (:type built-in))
@@ -48,8 +50,8 @@
   :mode "\\.puml\\'"
   :config
   (setq homebrew-plantuml-jar-path
-    (expand-file-name
-      (string-trim (shell-command-to-string "brew list plantuml | grep jar"))))
+        (expand-file-name
+         (string-trim (shell-command-to-string "brew list plantuml | grep jar"))))
   :custom
   (plantuml-jar-path homebrew-plantuml-jar-path)
   (plantuml-default-exec-mode 'executable))
@@ -73,12 +75,24 @@
           eos))
 
 (use-package mermaid-mode
+  :disabled t
   :mode (("\\.mermaid\\'" . mermaid-mode)))
 
 (use-package makefile-executor
   :hook (makefile-mode . makefile-executor-mode))
 
 (advice-add 'risky-local-variable-p :override #'ignore)
+
+(use-package mermaid-ts-mode
+  :straight (:type git
+             :host github
+             :repo "d4ncer/mermaid-ts-mode"
+             :branch "main"
+             :files ("mermaid-ts-mode.el"))
+  :mode (("\\.mermaid\\'" . mermaid-ts-mode)))
+
+(use-package promql-mode
+  :straight (:type git :host github :repo "Andor/promql-mode"))
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

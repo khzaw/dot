@@ -26,7 +26,7 @@
 
   (defun eglot-capf ()
     (setq-local completion-at-point-functions
-                (list (cape-super-capf
+                (list (cape-capf-super
                        #'eglot-completion-at-point
                        #'tempel-expand
                        #'cape-file))))
