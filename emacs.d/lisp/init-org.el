@@ -5,6 +5,7 @@
   (visual-fill-column-split-window-sensibly t))
 
 (use-package org
+  :after (verb)
   :straight (:type built-in)
   :bind
   ("C-c C-c" . org-edit-src-exit)
@@ -47,6 +48,7 @@
                 (setq visual-fill-column-center-text nil)
                 (visual-fill-column-mode)))
   :config
+  (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   (require 'org-indent)
   (custom-set-faces
    '(org-level-1 ((t (:weight bold  :height 1.0))))
@@ -73,8 +75,6 @@
   (define-key org-mode-map (kbd "C-x C-l") 'khz/org-link-copy)
 
   (require 'org-tempo)
-
-  (setq line-spacing 0.3)
 
   (use-package ox-gfm :after org)
   (add-to-list 'org-export-backends 'md)

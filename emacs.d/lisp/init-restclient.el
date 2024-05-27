@@ -12,4 +12,6 @@
      ("image/jpeg" . image-mode)
      ("image/jpg" . image-mode))))
 
+(use-package verb)
+
 (provide 'init-restclient)

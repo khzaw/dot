@@ -5,7 +5,6 @@
 ;;; Code:
 
 (defun config-reload ()
-  "Uncle dev created a function to reload Emacs config."
   (interactive)
   (load-file (expand-file-name "init.el" user-emacs-directory)))
 
@@ -93,8 +92,11 @@
 (require 'init-web)
 (require 'init-prog)
 
-(require 'init-org)
+;; programming tools
+(require 'init-restclient)
+
 ;; Others
+(require 'init-org)
 (require 'init-presentation)
 (require 'init-elfeed)
 (require 'init-spell)

@@ -41,6 +41,7 @@
 
 
 (use-package typescript-mode
+  :disabled t
   :init
   (autoload 'typescript-tsx-mode "typescript-mode" nil t)
   (add-to-list 'auto-mode-alist

@@ -15,6 +15,8 @@
   (markdown-bold-face ((t (:font "Univers"))))
   (markdown-italic-face ((t (:font "Univers")))))
 
+(use-package markdown-toc)
+
 (use-package impatient-mode)
 
 (defun markdown-filter (buffer)

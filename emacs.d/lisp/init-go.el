@@ -1,5 +1,9 @@
 (use-package go-mode
-  :config (setq gofmt-command "goimports"))
+  :config (setq gofmt-command "goimports")
+  :hook (go-mode . go-ts-mode-hook))
+
+;; (use-package go-ts-mode
+;;   :hook (go-ts-mode . eglot-ensure))
 
 (use-package go-playground
   :diminish
@@ -8,7 +12,7 @@
 (use-package go-dlv)
 
 (use-package gotest
-  :bind (:map go-mode-map
+  :bind (:map go-ts-mode-map
          ("C-c C-t f" . go-test-current-file)
          ("C-c C-t t" . go-test-current-test)
          ("C-c C-t p" . go-test-current-project)
@@ -17,10 +21,12 @@
          ("C-c C-x" . go-run)))
 
 (use-package go-tag
-  :bind (:map go-mode-map
-          ("C-c t a" . go-tag-add)
-          ("C-c t r" . go-tag-remove))
+  :bind (:map go-ts-mode-map
+         ("C-c t a" . go-tag-add)
+         ("C-c t r" . go-tag-remove))
   :init (setq go-tag-args (list "-transform" "camelcase")))
+
+(use-package godoctor)
 
 (use-package go-fill-struct)
 
@@ -28,18 +34,20 @@
 
 (use-package gorepl-mode
   :if (executable-find "gore")
-  :hook (go-mode . gorepl-mode))
+  :hook ((go-mode go-ts-mode) . gorepl-mode))
 
 (use-package flycheck-golangci-lint
   :after (flycheck go-mode)
-  :hook (go-mode . flycheck-golangci-lint-setup)
+  :hook ((go-mode . flycheck-golangci-lint-setup)
+         (go-ts-mode . flycheck-golangci-lint-setup))
   :config
   (setq flycheck-golangci-lint-fast t))
 
 (use-package flymake-golangci
   :disabled t
   :after (go-mode flymake)
-  :hook (go-mode . flymake-golangci-load))
+  :hook ((go-mode . flymake-golangci-load)
+         (go-ts-mode . flymake-golangci-load)))
 
 (provide 'init-go)
 ;;; init-go.el ends here

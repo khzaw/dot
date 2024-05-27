@@ -63,13 +63,17 @@
   :straight (:type built-in)
   :hook (after-init . electric-pair-mode))
 
+(use-package vundo
+  :bind ("C-x u" . vundo)
+  :config (setq vundo-glyph-alist vundo-unicode-symbols))
+
 (use-package undo-tree
   :diminish
   :hook (after-init . global-undo-tree-mode)
   :init
   (setq undo-tree-visualizer-timestamps t
-    undo-tree-enable-undo-in-region nil
-    undo-tree-auto-save-history nil))
+        undo-tree-enable-undo-in-region nil
+        undo-tree-auto-save-history nil))
 
 ;; Narrow/Widen
 (use-package fancy-narrow
@@ -127,7 +131,7 @@
 ;;   (auto-olivetti-mode))
 
 (use-package apheleia
-  :config
+  ;; :config
   ;; (apheleia-global-mode t)
   )
 
@@ -140,22 +144,51 @@
   :bind ("M-/" . hippie-expand)
   :init
   (setq hippie-expand-try-functions-list
-    '(try-expand-dabbrev
-       try-expand-dabbrev-visible
-       try-expand-dabbrev-all-buffers
-       try-expand-dabbrev-from-kill
-       try-complete-file-name-partially
-       try-complete-file-name
-       try-expand-all-abbrevs
-       try-expand-list
-       try-expand-line
-       try-complete-lisp-symbol-partially
-       try-complete-lisp-symbol)))
+        '(try-expand-dabbrev
+          try-expand-dabbrev-visible
+          try-expand-dabbrev-all-buffers
+          try-expand-dabbrev-from-kill
+          try-complete-file-name-partially
+          try-complete-file-name
+          try-expand-all-abbrevs
+          try-expand-list
+          try-expand-line
+          try-complete-lisp-symbol-partially
+          try-complete-lisp-symbol)))
 
 (use-package coverlay)
 
 (use-package indent-tools
   :bind ("C-c TAB" . indent-tools-hydra/body))
+
+(use-package indent-bars
+  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :hook ((python-mode yaml-mode) . indent-bars-mode)
+  :custom
+  (indent-bars-treesit-support t)
+  (indent-bars-treesit-ignore-blank-lines-types '("module"))
+  ;; Add other languages as needed
+  (indent-bars-treesit-scope '((python function_definition class_definition for_statement if_statement with_statement while_statement)))
+  ;; wrap may not be needed if no-descend-list is enough
+  ;; (indent-bars-treesit-wrap '((python argument_list parameters ; for python , as an example list list_comprehension
+  ;; dictionary dictionary_comprehension paranthesized_expression subscript)))
+  :hook ((python-base-mode yaml-mode) . indent-bars-mode)
+  :config
+  (setq
+   indent-bars-color '(highlight :face-bg t :blend 0.2)
+   indent-bars-pattern "."
+   indent-bars-width-frac 0.1
+   indent-bars-pad-frac 0.1
+   indent-bars-zigzag nil
+   indent-bars-color-by-depth nil
+   indent-bars-highlight-current-depth nil
+   indent-bars-display-on-blank-lines nil))
+
+(use-package anzu
+  :config
+  (global-set-key [remap query-replace] 'anzu-query-replace)
+  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
+  (global-anzu-mode +1))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

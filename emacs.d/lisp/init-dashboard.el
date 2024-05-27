@@ -1,17 +1,19 @@
 (use-package dashboard
+  :custom
+  (dashboard-banner-logo-title "Create illusions of effortless competence.")
+  ;; (dashboard-startup-banner (concat emacs-dir "lambda-logo-white.png"))
+  (dashboard-items '((recents . 5)
+                     (bookmarks . 5)
+                     (projects . 5)
+                     (agenda . 5)))
+  (dashboard-center-content t)
+  (dashboard-vertically-center-content t)
+  (dashboard-image-banner-max-width 400)
+  (dashboard-set-heading-icons t)
+  (dashboard-set-file-icons t)
+  (dashboard-set-navigator t)
   :config
-  (setq dashboard-banner-logo-title "Create illusions of effortless competence."
-        ;; dashboard-startup-banner "~/Pictures/emacs_fancy_logos/xemacs_color.png"
-        dashboard-items '((recents . 5)
-                          (bookmarks . 5)
-                          (projects . 5)
-                          (agenda . 5)))
-  (setq dashboard-center-content t)
-  (setq dashboard-image-banner-max-width 400)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-projects-backend 'projectile)
-  (setq dashboard-set-navigator t)
-  (dashboard-setup-startup-hook))
+  (dashboard-setup-startup-hook)
+  (add-hook 'dashboard-mode-hook #'hide-mode-line-mode))
 
 (provide 'init-dashboard)

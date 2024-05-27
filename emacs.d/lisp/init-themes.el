@@ -3,8 +3,8 @@
 (use-package kaolin-themes
   :after all-the-icons
   :config
-  (kaolin-treemacs-theme)
-  (load-theme 'kaolin-dark t))
+  (setq kaolin-themes-modeline-border nil)
+  (kaolin-treemacs-theme))
 
 (use-package doom-themes
   :config
@@ -44,7 +44,8 @@
   ;; (load-theme 'modus-vivendi-tritanopia t)
   )
 
-(use-package ef-themes)
+(use-package ef-themes
+  :config (load-theme 'ef-dream t))
 
 (use-package stimmung-themes
   :straight (stimmung-themes :host github :repo "motform/stimmung-themes"))
@@ -69,7 +70,6 @@
 (use-package catppuccin-theme
   :straight (:type git :host github :repo "catppuccin/emacs"))
 
-
 (use-package anisochromatic
   :straight (:type git :host github :repo "isomatter-labs/anisochromatic-emacs"))
 
@@ -84,5 +84,8 @@
 
 (use-package almost-mono-themes
   :straight (:type git :host github :repo "cryon/almost-mono-themes"))
+
+(use-package acme-theme
+  :straight (:type git :host github :repo "ianyepan/acme-emacs-theme"))
 
 (provide 'init-themes)

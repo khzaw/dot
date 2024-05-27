@@ -1,4 +1,3 @@
-
 (use-package tree-sitter
   :disabled t
   :hook (tree-sitter-after-on . tree-sitter-hl-mode)
@@ -31,7 +30,7 @@
         treesitter-context-frame-autohide-timeout 15))
 
 (use-package combobulate
-  :straight (combobulate :type git :host github :repo "mickeynp/combobulate")
+  :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
   :preface
   (setq combobulate-key-prefix "C-c o")
   :hook
@@ -39,8 +38,9 @@
    (js-ts-mode . combobulate-mode)
    (css-ts-mode . combobulate-mode)
    (yaml-ts-mode . combobulate-mode)
-   (typescript-tsx-mode . combobulate-mode)
+   (go-ts-mode . combobulate-mode)
    (tsx-ts-mode . combobulate-mode)))
+
 ;; (use-package tree-sitter-langs)
 
 ;; (use-package tree-sitter-indent)

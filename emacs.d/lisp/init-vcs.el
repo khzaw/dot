@@ -4,13 +4,15 @@
   (magit-auto-revert-mode t)
   :config
   (setq magit-save-repository-buffers 'dontask)
-  (setq magit-refresh-status-buffer nil)
   (setq display-line-numbers-type 'visual)
   (setq magit-section-disable-line-numbers nil)
   ;; (customize-set-variable
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
-  )
+  ;; Suppress the message
+                                        ;
+  (setq magit-no-message '("Turning on magit-auto-revert-mode..."))
+  (setq magit-refresh-status-buffer t))
 
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode)
@@ -18,11 +20,13 @@
   :config
   (add-to-list 'magit-delta-delta-args "--light" "--no-gitconfig"))
 
-(use-package magit-todos :after magit)
+(use-package magit-todos
+  :after magit
+  :config (magit-todos-mode 1))
 
 (setq auth-sources (list
-                     (concat (getenv "XDG_CONFIG_HOME") "/authinfo.gpg")
-                     "~/.authinfo.gpg"))
+                    (concat (getenv "XDG_CONFIG_HOME") "/authinfo.gpg")
+                    "~/.authinfo.gpg"))
 
 (use-package forge
   :after magit
@@ -89,6 +93,28 @@
 (use-package consult-git-log-grep
   :custom
   (consult-git-log-grep-open-function #'magit-show-commit))
+
+(use-package ediff
+  :straight (:type built-in)
+  :hook
+  ;; show org ediffs unfolded
+  (edit-prepare-buffer . outline-show-all)
+  ;; restore window layout when done
+  (ediff-quit . winner-undo))
+
+(use-package conventional-commit
+  :straight (:host github :repo "akirak/conventional-commit.el")
+  :hook
+  (git-commit-mode . conventional-commit-setup))
+
+(use-package git-gutter
+  :hook (prog-mode . git-gutter-mode))
+
+(use-package git-gutter-fringe
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

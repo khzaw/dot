@@ -41,8 +41,10 @@
   :config
   (progn
     (evil-leader/set-leader ",")
-    (evil-leader/set-key "f" 'isearch-forward)
-    (evil-leader/set-key "b" 'consult-buffer)))
+    (evil-leader/set-key
+      "f" 'isearch-forward
+      "F" 'isearch-backward
+      "b" 'consult-buffer)))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

@@ -60,7 +60,19 @@
   :commands graphviz-dot-mode
   :mode ("\\.dot'" . graphviz-dot-mode))
 
-(use-package ssh-config-mode)
+(use-package ssh-config-mode
+  :straight (:type built-in)
+  :mode ("jumphost*$'" . sh-mode))
+
+(use-package sh-mode
+  :straight (:type built-in)
+  :mode (("\\.sh\\'" . sh-mode)
+         ("\\.zsh\\'" . sh-mode)
+         ("zshenv\\'" . sh-mode)
+         ("zshenv.local\\'" . sh-mode)
+         ("zshenv.linux\\'" . sh-mode)
+         ("zshrc\\'" . sh-mode)
+         ("zshenv.mac\\'" . sh-mode)))
 
 (use-package swift-mode)
 

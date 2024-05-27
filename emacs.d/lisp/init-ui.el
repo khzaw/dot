@@ -9,8 +9,9 @@
 
 (setq redisplay-skip-fontification-on-input t)
 
+(toggle-frame-maximized)
+
 ;; UI
-;; (toggle-frame-maximized)
 (when (eq system-type 'gnu/linux)
   ;; (setq-default line-spacing 1)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 100)
@@ -18,7 +19,7 @@
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-height nil)
+  (setq-default line-spacing 2)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 120)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
@@ -34,14 +35,25 @@
 (menu-bar-mode 0)
 (setq x-underline-at-descent-line t)
 
-(defun transparency (value)
-  "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
-  (interactive "Transparency Value (0 - 100) :")
-  (set-frame-parameter (selected-frame) 'alpha value))
-(transparency 97)
+;; (defun transparency (value)
+;;   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
+;;   (interactive "Transparency Value (0 - 100) :")
+;;   (set-frame-parameter (selected-frame) 'alpha value))
+;; (transparency 100)
+
+(defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cadr alpha)) (cadr alpha)))
+              100)
+         '(97 . 97) '(100 . 100)))))
 
 (use-package solaire-mode
-  :straight t
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)

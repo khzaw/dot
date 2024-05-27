@@ -44,4 +44,31 @@
 (dolist (var '(default-frame-alist initial-frame-alist))
   (add-to-list var '(right-divider-width . 20))
   (add-to-list var '(internal-border-width . 20)))
+
+;;;; Clean View
+;; UI - Disable visual cruft
+
+;; Resizing the Emacs frame can be an expensive part of changing the
+;; font. By inhibiting this, we easily halve startup times with fonts that are
+;; larger than the system default.
+(setopt frame-inhibit-implied-resize t
+        ;; HACK: Don't show size info (or anything else) in frame title
+        frame-title-format "\n"
+        ;; Disable start-up screen
+        inhibit-startup-screen t
+        inhibit-startup-message t
+        ;; We'll provide our own splash screen, thanks
+        inhibit-splash-screen t
+        ;; No message in initial scratch buffer
+        initial-scratch-message nil)
+
+;; And set these to nil so users don't have to toggle the modes twice to
+;; reactivate them.
+(setopt tool-bar-mode nil
+        scroll-bar-mode nil)
+
+(defconst emacs-dir (expand-file-name user-emacs-directory)
+  "The path to the emacs.d directory.")
+
+
 ;;; early-init.el ends here
