@@ -28,7 +28,7 @@
   (org-imenu-depth 6)
   (org-tags-column 0)
   ;; (org-startup-indented t)
-  (org-startup-folded nil)
+  (org-startup-folded t)
   (org-special-ctrl-a/e t)
   (org-link-search-must-match-exact-headline nil)
   (org-M-RET-may-split-line nil)
@@ -48,6 +48,12 @@
                 (setq visual-fill-column-center-text nil)
                 (visual-fill-column-mode)))
   :config
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (font-lock-add-keywords
+               nil
+               '(("^-\\{5,\\}"  0 '(:foreground "black" :weight bold))))))
+
   (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   (require 'org-indent)
   (custom-set-faces
