@@ -1,9 +1,11 @@
 (use-package go-mode
-  :config (setq gofmt-command "goimports")
-  :hook (go-mode . go-ts-mode-hook))
+  :config (setq gofmt-command "goimports"))
 
-;; (use-package go-ts-mode
-;;   :hook (go-ts-mode . eglot-ensure))
+(use-package go-ts-mode
+  :bind (:map go-ts-mode-map
+         ("C-c C-a" . go-import-add)
+         ("C-c C-d" . godef-describe)
+         ("C-c C-j" . godef-jump)))
 
 (use-package go-playground
   :diminish
@@ -12,6 +14,7 @@
 (use-package go-dlv)
 
 (use-package gotest
+  :after go-ts-mode
   :bind (:map go-ts-mode-map
          ("C-c C-t f" . go-test-current-file)
          ("C-c C-t t" . go-test-current-test)
@@ -21,6 +24,7 @@
          ("C-c C-x" . go-run)))
 
 (use-package go-tag
+  :after go-ts-mode
   :bind (:map go-ts-mode-map
          ("C-c t a" . go-tag-add)
          ("C-c t r" . go-tag-remove))
@@ -29,8 +33,6 @@
 (use-package godoctor)
 
 (use-package go-fill-struct)
-
-(use-package go-dlv)
 
 (use-package gorepl-mode
   :if (executable-find "gore")
