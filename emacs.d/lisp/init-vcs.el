@@ -77,8 +77,11 @@
 
 (use-package consult-gh
   :straight (:type git :host github :repo "armindarvish/consult-gh" :branch "develop")
-  :after consult
+  :after (consult forge transient)
   :config
+  (require 'consult-gh-embark)
+  (require 'consult-gh-forge)
+  (require 'consut-gh-transient)
   (setq consult-gh-default-orgs-list '("khzaw" "projectrangoon" "algo-koans" "deliveryhero"))
   (setq consult-gh-default-clone-directory "~/Code")
   (setq consult-gh-show-preview t
@@ -86,7 +89,6 @@
   (setq consult-gh-issue-action #'consult-gh--issue-view-action ;; view issues inside emacs
         consult-gh-repo-action #'consult-gh--repo-browse-files-action ;; browse files inside emacs
         consult-gh-file-action #'consult-gh--files-view-action) ;; open files in an emacs buffer
-  (require 'consult-gh-embark)
   (add-to-history 'savehist-additional-variables 'consult-gh--known-orgs-list) ;; keep record of searched orgs
   (add-to-history 'savehist-additional-variables 'consult-gh--known-repos-list)) ;; keep record of searched repos
 
