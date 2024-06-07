@@ -21,11 +21,11 @@
   (add-to-list 'magit-delta-delta-args "--light" "--no-gitconfig"))
 
 (use-package magit-todos
-  :after magit
-  :config (magit-todos-mode 1))
+  :after magit)
 
 (setq auth-sources (list
                     (concat (getenv "XDG_CONFIG_HOME") "/authinfo.gpg")
+                    "~/.authinfo"
                     "~/.authinfo.gpg"))
 
 (use-package forge

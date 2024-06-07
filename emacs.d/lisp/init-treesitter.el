@@ -31,8 +31,8 @@
 
 (use-package combobulate
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
-  :preface
-  (setq combobulate-key-prefix "C-c o")
+  :custom
+  (combobulate-key-prefix "C-c o")
   :hook
   ((python-ts-mode . combobulate-mode)
    (js-ts-mode . combobulate-mode)

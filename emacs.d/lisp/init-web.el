@@ -13,13 +13,13 @@
   :hook ((js-mode
           js2-mode
           rjsx-mode
-          web-mode
-          typescript-mode
-          typescript-tsx-mode) . add-node-modules-path))
+          tsx-ts-mode
+          typescript-ts-mode
+          web-mode) . add-node-modules-path))
 
 (use-package prettier
   :after (add-node-modules-path)
-  :hook ((js-mode js2-mode rjsx-mode web-mode typescript-mode typescript-tsx-mode) . prettier-mode))
+  :hook ((js-mode js2-mode rjsx-mode web-mode tsx-ts-mode typescript-ts-mode) . prettier-mode))
 
 ;; (use-package js2-mode
 ;;   :init (setq js-indent-level 2))
@@ -39,6 +39,9 @@
   (prettier-mode)
   (company-mode +1))
 
+(use-package tsx-ts-mode
+  :straight (:type built-in)
+  :mode "\\.tsx\\'")
 
 (use-package typescript-mode
   :disabled t

@@ -95,15 +95,6 @@
               ispell-program-name "aspell"
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
-(use-package highlight-indent-guides
-  :diminish
-  :hook
-  (yaml-mode . highlight-indent-guides-mode)
-  :custom
-  (highlight-indent-guides-character ?\xFFE8)
-  (ighlight-indent-guides-responsive 'top)
-  (highlight-indent-guides-method 'character))
-
 (use-package undo-fu)
 
 (use-package hl-todo
