@@ -1,10 +1,5 @@
-
-(use-package chatgpt
-  :straight (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el"))
-  :init
-  (require 'python)
-  (setq chatgpt-repo-path (expand-file-name "straight/repos/ChatGPT.el/" user-emacs-directory))
-  :bind ("C-c q" . chatgpt-query))
+(use-package gptel
+  :straight (gptel :type git :host github :repo "karthink/gptel"))
 
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode)
@@ -15,9 +10,9 @@
 (use-package nov-xwidget
   :straight (:type git :host github :repo "chenyanming/nov-xwidget")
   :after nov
+  :hook (nov-mode . nov-xwidget-inject-all-files)
   :config
-  (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
-  (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+  (define-key nov-mode-map (kbd "o") 'nov-xwidget-view))
 
 (use-package emojify)
 
@@ -25,6 +20,7 @@
 
 (use-package bookmark-view
   :straight (bookmark-view :type git :host github :repo "minad/bookmark-view"))
+
 
 ;; (use-package mugur
 ;;  :straight (mugur :type git :host github :repo "mihaiolteanu/mugur"))
