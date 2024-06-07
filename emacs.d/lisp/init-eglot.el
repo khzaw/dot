@@ -9,7 +9,8 @@
           tsx-ts-mode typescript-ts-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
-  :bind (("C-c e f" . #'eglot-format)
+  :bind (("C-c e e" . #'eglot)
+         ("C-c e f" . #'eglot-format)
          ("C-c e a" . #'eglot-code-actions)
          ("C-c e o" . #'eglot-code-action-organize-imports)
          ("C-c e t" . #'eglot-find-typeDefinition)
@@ -39,7 +40,7 @@
   
   (defun eglot-actions-before-save ()
     (add-hook 'before-save-hook (lambda ()
-                                  (when (not (memq major-mode '(tsx-ts-mode typescript-mode)))
+                                  (when (not (memq major-mode '(tsx-ts-mode typescript-ts-mode)))
                                     (call-interactively #'eglot-format))
                                   (call-interactively #'eglot-code-action-organize-imports))))
   (add-hook 'eglot-managed-mode-hook #'eglot-actions-before-save)
@@ -79,15 +80,14 @@
   :config (eglot-booster-mode))
 
 (use-package eldoc-box
-  :hook (eglot-managed-mode . eldoc-box-hover-at-point-mode)
+  :bind (:map eglot-mode-map
+         ("C-c e m" . eldoc-box-help-at-point))
   :config
   (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
         (alist-get 'right-fringe eldoc-box-frame-parameters) 8))
 
-
 (use-package xref
-  :straight (:type built-in)
-  )
+  :straight (:type built-in))
 
 
 (provide 'init-eglot)
