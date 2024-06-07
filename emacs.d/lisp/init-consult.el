@@ -9,7 +9,67 @@
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
-                 (window-parameters (mode-line-format . none)))))
+                 (window-parameters (mode-line-format . none))))
+
+  (defun embark-which-key-indicator ()
+    "An embark indicator that displays keymaps using which-key.
+The which-key help message will show the type and value of the
+current target followed by an ellipsis if there are further
+targets."
+    (lambda (&optional keymap targets prefix)
+      (if (null keymap)
+          (which-key--hide-popup-ignore-command)
+        (which-key--show-keymap
+         (if (eq (plist-get (car targets) :type) 'embark-become)
+             "Become"
+           (format "Act on %s '%s'%s"
+                   (plist-get (car targets) :type)
+                   (embark--truncate-target (plist-get (car targets) :target))
+                   (if (cdr targets) "…" "")))
+         (if prefix
+             (pcase (lookup-key keymap prefix 'accept-default)
+               ((and (pred keymapp) km) km)
+               (_ (key-binding prefix 'accept-default)))
+           keymap)
+         nil nil t (lambda (binding)
+                     (not (string-suffix-p "-argument" (cdr binding))))))))
+
+  (setq embark-indicators
+        '(embark-which-key-indicator
+          embark-highlight-indicator
+          embark-isearch-highlight-indicator))
+
+  (defun embark-hide-which-key-indicator (fn &rest args)
+    "Hide the which-key indicator immediately when using the completing-read prompter."
+    (which-key--hide-popup-ignore-command)
+    (let ((embark-indicators
+           (remq #'embark-which-key-indicator embark-indicators)))
+      (apply fn args)))
+
+  (advice-add #'embark-completing-read-prompter
+              :around #'embark-hide-which-key-indicator)
+
+  ;; Automatically resize auto-updating Embark Collect buffers to fit their contents
+  ;; produce something similar to (setq resize-mini-windows t) for the minibuffer
+  (add-hook 'embark-collect-post-revert-hook
+            (defun resize-embark-collect-window (&rest _)
+              (when (memq embark-collect--kind '(:live :completions))
+                (fit-window-to-buffer (get-buffer-window)
+                                      (floor (frame-height) 2) 1))))
+
+  ;; Make embark works well with `keycast'
+  (defun store-action-key+cmd (cmd)
+    (force-mode-line-update t)
+    (setq this-command cmd
+          keycast--this-command-keys (this-single-command-keys)
+          keycast--this-command-desc cmd))
+
+  (advice-add 'embark-keymap-prompter :filter-return #'store-action-key+cmd)
+
+  ;; version of keycast--update that accepts (and ignores) parameters
+  (defun force-keycast-update (&rest _) (keycast--update))
+
+  (advice-add 'embark-act :before #'force-keycast-update))
 
 (use-package embark-consult
   :hook
@@ -108,6 +168,9 @@
 
   :config
 
+  ;; exclude these directories from `consult-find'
+  (setq consult-find-args "find . -not ( -wholename */.* -prune -o -name -node_modules -prune )")
+
   (setq consult-narrow-key "<"
         consult-line-numbers-widen t
         consult-async-min-input 2
@@ -115,11 +178,11 @@
         consult-async-input-throttle 0.2
         consult-async-input-debounce 0.1)
 
+  ;; Load the latest search again in `consult-line' when pressing C-s C-s
   (defvar my-consult-line-map
     (let ((map (make-sparse-keymap)))
       (define-key map "\C-s" #'previous-history-element)
       map))
-
   (consult-customize consult-line :keymap my-consult-line-map)
 
   ;; Optionally configure preview. The default value
@@ -175,14 +238,50 @@
   "Delete directory or entire entry before point."
   (interactive)
   (when (and (> (point) (minibuffer-prompt-end))
-          ;; Check vertico--base for stepwise file path completion
-          (not (equal vertico--base ""))
-          (eq 'file (vertico--metadata-get 'category)))
+             ;; Check vertico--base for stepwise file path completion
+             (not (equal vertico--base ""))
+             (eq 'file (vertico--metadata-get 'category)))
     (save-excursion
       (goto-char (1- (point)))
       (when (search-backward "/" (minibuffer-prompt-end) t)
         (delete-region (1+ (point)) (point-max))
         t))))
+
+;; Narrowing which-key help without delay
+(defun immediate-which-key-for-narrow (fun &rest args)
+  (let* ((refresh t)
+         (timer (and consult-narrow-key
+                     (memq :narrow args)
+                     (run-at-time 0.05 0.05
+                                  (lambda ()
+                                    (if (eq last-input-event (elt consult-narrow-key 0))
+                                        (when refresh
+                                          (setq refresh nil)
+                                          (which-key--update))
+                                      (setq refresh t)))))))
+    (unwind-protect
+        (apply fun args)
+      (when timer
+        (cancel-timer timer)))))
+(advice-add #'consult--read :around #'immediate-which-key-for-narrow)
+
+;; dogears
+(defvar consult--source-dogears
+  (list :name     "Dogears"
+        :narrow   ?d
+        :category 'dogears
+        :items    (lambda ()
+                    (mapcar
+                     (lambda (place)
+                       (propertize (dogears--format-record place)
+                                   'consult--candidate place))
+                     dogears-list))
+        :action   (lambda (cand)
+                    (dogears-go (get-text-property 0 'consult--candidate cand)))))
+
+(defun consult-dogears ()
+  (interactive)
+  (consult--multi '(consult--source-dogears)))
 
 (use-package consult-ag :after consult)
 
