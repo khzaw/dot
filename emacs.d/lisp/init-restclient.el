@@ -1,4 +1,6 @@
 (use-package restclient
+  :mode (("\\.http\\'" . restclient-mode)
+         ("\\.restclient$" . restclient-mode))
   :commands (restclient-jump-next restclient-jump-prev)
   :custom
   (restclient-same-buffer-response-name "*restclient*")
@@ -10,7 +12,11 @@
      ("image/gif" . image-mode)
      ("image/png" . image-mode)
      ("image/jpeg" . image-mode)
-     ("image/jpg" . image-mode))))
+     ("image/jpg" . image-mode)))
+  :config
+  (use-package restclient-test
+    :diminish
+    :hook (restclient-mode . restclient-test-mode)))
 
 (use-package verb)
 

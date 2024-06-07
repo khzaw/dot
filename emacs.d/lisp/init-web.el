@@ -7,7 +7,8 @@
 (use-package css-mode
   :init (setq css-indent-offset 2))
 
-(use-package json-mode)
+(use-package json-ts-mode
+  :mode ("\\.json\\'"))
 
 (use-package add-node-modules-path
   :hook ((js-mode
@@ -21,11 +22,13 @@
   :after (add-node-modules-path)
   :hook ((js-mode js2-mode rjsx-mode web-mode tsx-ts-mode typescript-ts-mode) . prettier-mode))
 
-;; (use-package js2-mode
-;;   :init (setq js-indent-level 2))
+(use-package js2-mode
+  :disabled t
+  :init (setq js-indent-level 2))
 
-;; (use-package rjsx-mode
-;;   :mode ("\\.jsx?\\'"))
+(use-package rjsx-mode
+  :disabled t
+  :mode ("\\.jsx?\\'"))
 
 (use-package php-mode)
 
@@ -82,18 +85,6 @@
 (use-package emmet-mode
   :hook ((web-mode . emmet-mode)
          (html-mode . emmet-mode)))
-
-(use-package restclient
-  :mode (("\\.http\\'" . restclient-mode)
-         ("\\.restclient$" . restclient-mode))
-  :config
-  (use-package restclient-test
-    :diminish
-    :hook (restclient-mode . restclient-test-mode))
-
-  (with-eval-after-load 'company
-    (use-package company-restclient
-      :init (add-to-list 'company-backends 'company-restclient))))
 
 (provide 'init-web)
 ;;; init-web.el ends here
