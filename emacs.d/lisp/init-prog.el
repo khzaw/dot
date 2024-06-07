@@ -106,5 +106,11 @@
 (use-package promql-mode
   :straight (:type git :host github :repo "Andor/promql-mode"))
 
+(use-package sqlup-mode
+  :straight (:type git :host github :repo "Trevoke/sqlup-mode.el")
+  :hook ((sql-mode . sqlup-mode)
+         (sql-interactive-mode . sqlup-mode)))
+
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
