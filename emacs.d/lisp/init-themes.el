@@ -15,7 +15,8 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (load-theme 'doom-vibrant t))
 
 (use-package modus-themes
   :config
@@ -44,8 +45,7 @@
   ;; (load-theme 'modus-vivendi-tritanopia t)
   )
 
-(use-package ef-themes
-  :config (load-theme 'ef-dream t))
+(use-package ef-themes)
 
 (use-package stimmung-themes
   :straight (stimmung-themes :host github :repo "motform/stimmung-themes"))
@@ -87,5 +87,8 @@
 
 (use-package acme-theme
   :straight (:type git :host github :repo "ianyepan/acme-emacs-theme"))
+
+(use-package plan9-theme
+  :straight (:type git :host github :repo "john2x/plan9-theme.el"))
 
 (provide 'init-themes)
