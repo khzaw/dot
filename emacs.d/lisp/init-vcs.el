@@ -12,6 +12,8 @@
   ;; Suppress the message
                                         ;
   (setq magit-no-message '("Turning on magit-auto-revert-mode..."))
+  ;; (setq magit-bury-buffer-function #'quit-window) ;; let shackle handle this
+  (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-refresh-status-buffer t))
 
 (use-package magit-delta
@@ -81,7 +83,7 @@
   :config
   (require 'consult-gh-embark)
   (require 'consult-gh-forge)
-  (require 'consut-gh-transient)
+  (require 'consult-gh-transient)
   (setq consult-gh-default-orgs-list '("khzaw" "projectrangoon" "algo-koans" "deliveryhero"))
   (setq consult-gh-default-clone-directory "~/Code")
   (setq consult-gh-show-preview t
@@ -110,7 +112,9 @@
   (git-commit-mode . conventional-commit-setup))
 
 (use-package git-gutter
-  :hook (prog-mode . git-gutter-mode))
+  :bind (("C-x v C-g" . git-gutter-mode)
+         ("C-x v p" . git-gutter:previous-hunk)
+         ("C-x v n" . git-gutter:next-hunk)))
 
 (use-package git-gutter-fringe
   :config
