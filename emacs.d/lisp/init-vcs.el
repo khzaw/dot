@@ -71,9 +71,11 @@
 
 (use-package blamer
   :straight (:type git :host github :repo "artawower/blamer.el")
-  :bind ("C-c g i" . blamer-show-commit-info)
+  :bind (("C-c g i" . blamer-show-commit-info)
+         ("C-c g p" . blamer-show-posframe-commit-info))
   :defer 20
   :custom
+  (blamer-view 'overlay-right)
   (blamer-idle-time 0.3)
   (blamer-min-offset 70))
 

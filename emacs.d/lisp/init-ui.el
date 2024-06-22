@@ -266,12 +266,8 @@
 
 (use-package sideline
   :after (evil evil-leader)
-  :init
-  (setq sideline-backends-right '((sideline-blame)
-                                  (sideline-lsp)
-                                  (sideline-flycheck)
-                                  (sideline-flymake)))
   :config
+  (setq sideline-display-backend-name t)
   (progn
     (evil-leader/set-key "s" 'sideline-mode)))
 
