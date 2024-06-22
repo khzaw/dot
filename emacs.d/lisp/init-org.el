@@ -311,5 +311,9 @@
   :config
   (require 'org-ref))
 
+(use-package org-appear
+  :straight (org-appear :type git :host github :repo "awth13/org-appear")
+  :hook (org-mode . org-appear-mode))
+
 (provide 'init-org)
 ;;; init-org.el ends here
