@@ -4,7 +4,7 @@
               aw-char-position 'left
               aw-ignore-current nil
               aw-leading-char-style 'char
-              aw-scope 'frame)
+              aw-scope 'global)
   :bind (("M-o" . ace-window)
          ("M-O" . ace-swap-window)))
 
@@ -20,14 +20,20 @@
                    ("*ag search*" :select nil :size 0.25)
                    ("*Warnings*" :select nil :size 0.25)
                    ("*Error*" :select nil :size 0.25)
-                   ;; (magit-status-mode :align bottom :size 0.85 :select t :inhibit-window-quit t)
+                   (magit-status-mode :quit t :align bottom :size 0.5 :select t :inhibit-window-quit t)
+                   (magit-revision-mode :same t :inhibit-window-quit t)
+                   (magit-log-mode :same t :inhibit-window-quit t)
+                   (magit-diff-mode :same t :inhibit-window-quit t)
+                   (magit-stash-mode :same t :inhibit-window-quit t)
                    ;; (magit-log-mode :same t :inhibit-window-quit t)
                    ;; (magit-diff-mode :same t  :inhibit-window-quit t)
-                   (forge-pullreq-mode :align t :size 0.7 :same t :inhibit-window-quit t)
+                   ;; (forge-pullreq-mode :align t :size 0.7 :same t :inhibit-window-quit t)
                    ("work.org" :align bottom :size 0.25 :same t :inhibit-window-quit t)
+                   ("*eldoc*" :align bottom :size 0.2)
                    (git-commit-mode :same t)
+                   (forge-post-mode :same t :inhibit-window-quit t)
+                   (forge-topic-list-mode :same t :inhibit-window-quit t)
                    (vc-annotate-mode :same t)
-                   ("\\*magit.*?\\*\\'" :regexp t :align t :same t :inhibit-window-quit 5 :size 0.7)
                    ))
   :config
   (shackle-mode 1))
