@@ -15,8 +15,7 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config)
-  (load-theme 'doom-vibrant t))
+  (doom-themes-org-config))
 
 (use-package modus-themes
   :config
@@ -42,7 +41,7 @@
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
-  ;; (load-theme 'modus-vivendi-tritanopia t)
+  (load-theme 'modus-vivendi-tritanopia t)
   )
 
 (use-package ef-themes)
@@ -61,17 +60,9 @@
 (use-package apropospriate-theme
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
 
-(use-package wildcharm-theme
-  :straight (:type git :host github :repo "habamax/wildcharm-theme"))
-
-(use-package wildcharm-light-theme
-  :straight (:type git :host github :repo "habamax/wildcharm-theme"))
-
 (use-package catppuccin-theme
   :straight (:type git :host github :repo "catppuccin/emacs"))
 
-(use-package anisochromatic
-  :straight (:type git :host github :repo "isomatter-labs/anisochromatic-emacs"))
 
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))

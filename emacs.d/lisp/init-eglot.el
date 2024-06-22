@@ -28,7 +28,7 @@
   (setq eglot-confirm-server-initiated-edits nil)
   (setq completion-category-overrides '((eglot (styles orderless))))
   ;; (setq eglot-stay-out-of '(eldoc-documentation-strategy))
-  
+
   (defun eglot-capf ()
     (setq-local completion-at-point-functions
                 (list (cape-capf-super
@@ -37,12 +37,12 @@
                        #'cape-file
                        #'cape-line
                        #'cape-keyword))))
-  
+
   (defun eglot-actions-before-save ()
     (add-hook 'before-save-hook (lambda ()
                                   (when (not (memq major-mode '(tsx-ts-mode typescript-ts-mode)))
-                                    (call-interactively #'eglot-format))
-                                  (call-interactively #'eglot-code-action-organize-imports))))
+                                    (call-interactively #'eglot-format)
+                                    (call-interactively #'eglot-code-action-organize-imports)))))
   (add-hook 'eglot-managed-mode-hook #'eglot-actions-before-save)
   (add-hook 'eglot-managed-mode-hook #'eglot-capf)
   (add-hook 'eglot-managed-mode-hook
@@ -53,9 +53,9 @@
                           (remove #'flymake-eldoc-function eldoc-documentation-functions)))
               ;; Show all eldoc feedback.
               (setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
-  
+
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
-  
+
   (progn
     (evil-leader/set-key
       "gi" 'eglot-find-implementation
