@@ -65,6 +65,7 @@
 (require 'init-dired)
 (require 'init-window)
 (require 'init-treemacs)
+(require 'init-helm)
 
 ;; tools
 (require 'init-compile)
@@ -101,6 +102,7 @@
 (require 'init-elfeed)
 (require 'init-spell)
 (require 'init-others)
+(require 'init-slack)
 
 (provide 'init)
 ;;; init.el ends here
