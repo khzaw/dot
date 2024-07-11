@@ -10,61 +10,61 @@
 
 (use-package shackle
   :init
-  (setq
-   shackle-default-alignment 'below
-   shackle-default-size 0.4
-   shackle-inhibit-window-quit-on-same-windows t
-   shackle-rules '((help-mode :align below :size 0.25 :select t)
-                   (helpful-mode :align below)
-                   (compilation-mode :select nil :size 0.25)
-                   ("*ag search*" :select nil :size 0.25)
-                   ("*Warnings*" :select nil :size 0.25)
-                   ("*Error*" :select nil :size 0.25)
-                   (magit-status-mode :quit t :align bottom :size 0.5 :select t :inhibit-window-quit t)
-                   (magit-revision-mode :same t :inhibit-window-quit t)
-                   (magit-log-mode :same t :inhibit-window-quit t)
-                   (magit-diff-mode :same t :inhibit-window-quit t)
-                   (magit-stash-mode :same t :inhibit-window-quit t)
-                   ;; (magit-log-mode :same t :inhibit-window-quit t)
-                   ;; (magit-diff-mode :same t  :inhibit-window-quit t)
-                   ;; (forge-pullreq-mode :align t :size 0.7 :same t :inhibit-window-quit t)
-                   ("work.org" :align bottom :size 0.25 :same t :inhibit-window-quit t)
-                   ("*eldoc*" :align bottom :size 0.2)
-                   (git-commit-mode :same t)
-                   (forge-post-mode :same t :inhibit-window-quit t)
-                   (forge-topic-list-mode :same t :inhibit-window-quit t)
-                   (vc-annotate-mode :same t)
-                   ))
+  (setq shackle-default-alignment 'below
+        shackle-default-size 0.4
+        shackle-inhibit-window-quit-on-same-windows t
+        shackle-rules '((help-mode :align below :size 0.25 :select t)
+                        (helpful-mode :align below)
+                        (devdocs-mode :align below :size 0.5 :select t)
+                        (compilation-mode :select nil :size 0.25)
+                        ("*ag search*" :select nil :size 0.25)
+                        ("*Warnings*" :select nil :size 0.25)
+                        ("*Error*" :select nil :size 0.25)
+                        (magit-status-mode :quit t :align bottom :size 0.5 :select t)
+                        (magit-revision-mode :same t :inhibit-window-quit t)
+                        (magit-log-mode :same t :inhibit-window-quit t)
+                        (magit-diff-mode :same t :inhibit-window-quit t)
+                        (magit-stash-mode :same t :inhibit-window-quit t)
+                        ;; (magit-log-mode :same t :inhibit-window-quit t)
+                        ;; (magit-diff-mode :same t  :inhibit-window-quit t)
+                        ;; (forge-pullreq-mode :align t :size 0.7 :same t :inhibit-window-quit t)
+                        ("work.org" :align bottom :size 0.25 :same t :inhibit-window-quit t)
+                        ("*eldoc*" :align bottom :size 0.2)
+                        (git-commit-mode :same t)
+                        (forge-post-mode :same t :inhibit-window-quit t)
+                        (forge-topic-list-mode :same t :inhibit-window-quit t)
+                        (vc-annotate-mode :same t)))
   :config
   (shackle-mode 1))
 
 (use-package popper
   :bind (("C-\\" . popper-toggle-latest)
-          ("M-\\" . popper-cycle)
-          ("C-M-\\" . popper-toggle-type))
+         ("M-\\" . popper-cycle)
+         ("C-M-\\" . popper-toggle-type))
   :config
   (popper-mode +1)
   (popper-echo-mode +1)
   :custom
   (popper-reference-buffers
-    '("\\*Messages\\*"
-       "Output\\*$"
-       "\\*Async Shell Command\\*"
-       xref--xref-buffer-mode
-       help-mode
-       helpful-mode
-       "\\*Warnings\\*"
-       "\\*eldoc\\*"
-       "\\*Flymake log\\*"
-       "\\*xref\\*"
-       "\\*Go Test\\*"
-       flycheck-error-list-mode
-       compilation-mode
-       go-test-mode
-       "^\\*vterm.*\\*$" vterm-mode
-       "^\\*eshell.*\\*$" eshell-mode
-       "^\\*term.*\\*$" term-mode
-       "^\\*shell.*\\*$" shell-mode)))
+   '("\\*Messages\\*"
+     "Output\\*$"
+     "\\*Async Shell Command\\*"
+     xref--xref-buffer-mode
+     help-mode
+     helpful-mode
+     devdocs-mode
+     "\\*Warnings\\*"
+     "\\*eldoc\\*"
+     "\\*Flymake log\\*"
+     "\\*xref\\*"
+     "\\*Go Test\\*"
+     flycheck-error-list-mode
+     compilation-mode
+     go-test-mode
+     "^\\*vterm.*\\*$" vterm-mode
+     "^\\*eshell.*\\*$" eshell-mode
+     "^\\*term.*\\*$" term-mode
+     "^\\*shell.*\\*$" shell-mode)))
 
 (use-package winner-mode
   :straight (:type built-in)

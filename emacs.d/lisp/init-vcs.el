@@ -5,6 +5,7 @@
   :config
   (setq magit-save-repository-buffers 'dontask)
   (setq display-line-numbers-type 'visual)
+  (setq markdown-display-remote-images t)
   (setq magit-section-disable-line-numbers nil)
   ;; (customize-set-variable
   ;;   'display-buffer-alist
@@ -32,12 +33,27 @@
 
 (use-package forge
   :after magit
+  :init
+  (setq forge-add-default-bindings nil) ;; will be take care of by evil-collection -> forge
   :config
   ;; A topic is an issue or PR and the list of each can be configured
   ;; to display a number of open and closed items.
   ;; Show 100 open topics and never show any closed topics, for both
   ;; issues and PRs.
   (setq forge-topic-list-limit '(60 . 5)))
+
+(use-package code-review
+  :straight (:type git :host github :repo "doomelpa/code-review")
+  :after (forge magit emojify)
+  :hook (code-review-mode . emojify-mode)
+  :config
+  (setq code-review-fill-column 120)
+  (setq code-review-auth-login-marker 'forge)
+  (transient-append-suffix 'magit-merge "i" '("y" "Review pull request" code-review-forge-pr-at-point))
+  (transient-append-suffix 'forge-dispatch "c u" '("c r" "Review pull-request" code-review-forge-pr-at-point))
+  :bind (:map code-review-mode-map
+         ("r" . code-review-transient-api)
+         ("RET" . code-review-comment-add-or-edit)))
 
 (use-package git-timemachine
   :bind ("C-c g t" . git-timemachine-toggle))
