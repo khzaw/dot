@@ -406,6 +406,7 @@ targets."
          ("C-q" . vertico-quick-exit)))
 
 (use-package vertico-posframe
+  :disabled t
   :init (vertico-posframe-cleanup)
   :after (vertico posframe)
   :config

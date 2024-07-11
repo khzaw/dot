@@ -4,7 +4,7 @@
   (defun khz/compile-mode-hook ()
     (hide-mode-line-mode)
     (setq truncate-lines nil) ;; automatically becomes buffer local
-    (set (make-local-variable 'truncate-partial-width-winows) nil))
+    (set (make-local-variable 'truncate-partial-width-windows) nil))
 
   (setq compilation-scroll-output t)
   (setq compilation-ask-about-save nil)

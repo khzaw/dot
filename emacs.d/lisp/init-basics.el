@@ -205,6 +205,7 @@
   :hook (on-first-input . which-key-mode))
 
 (use-package which-key-posframe
+  :disabled t
   :after (posframe which-key)
   :config
   (setq
