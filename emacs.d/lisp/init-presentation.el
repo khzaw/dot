@@ -33,7 +33,7 @@
     ;; Tweak font sizes in presentation
     (setq-local face-mapping-alist '((default (:height 1.5) default)))
 
-    (setq-local visual-fill-column-width 120)
+    (setq-local visual-fill-column-width nil)
     (setq-local visual-fill-column-center-text t)
     (visual-fill-column-mode 1)
     (hide-mode-line-mode 1)

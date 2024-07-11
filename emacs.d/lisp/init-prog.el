@@ -111,6 +111,7 @@
   :hook ((sql-mode . sqlup-mode)
          (sql-interactive-mode . sqlup-mode)))
 
+(use-package kubernetes)
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

@@ -16,7 +16,9 @@
           ("M-p" . symbol-overlay-jump-prev)))
 
 (use-package avy
-  :bind (("C-,"   . avy-goto-char)
+  :bind (("M-g c" . avy-goto-char)
+         ("M-g C" . avy-goto-char-2)
+         ;; ("C-,"   . avy-goto-char)
          ("C-'"   . avy-goto-char-2)
          ("M-g g" . avy-goto-line)
          ("M-g w" . avy-goto-word-0)
@@ -72,7 +74,6 @@
   :hook (after-init . global-undo-tree-mode)
   :init
   (setq undo-tree-visualizer-timestamps t
-        undo-tree-enable-undo-in-region nil
         undo-tree-auto-save-history nil))
 
 ;; Narrow/Widen
@@ -81,19 +82,6 @@
   :hook (after-init . fancy-narrow-mode))
 
 ;; On-the-fly spell checker
-(use-package flyspell
-  :straight (:type built-in)
-  :diminish
-  :if (executable-find "aspell")
-  :bind (("C-c C-x s" . flyspell-correct-word))
-  :hook (((text-mode outline-mode) . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)
-         (flyspell-mode . (lambda ()
-                            (dolist (key '("C-;" "C-," "C-."))
-                              (unbind-key key flyspell-mode-map)))))
-  :init (setq flyspell-issue-message-flag nil
-              ispell-program-name "aspell"
-              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
 (use-package undo-fu)
 

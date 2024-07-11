@@ -52,5 +52,13 @@
   (setq gcmh-high-cons-threshold (* 16 1024 1024))
   (gcmh-mode))
 
+(use-package epkg
+  :hook (epkg-list-mode . (lambda () (setq truncate-lines t)))
+  :bind (:map epkg-list-mode
+         ("j" . next-line)
+         ("k" . previous-line)
+         ("u" . beginning-of-buffer)
+         ("q" . kill-buffer-and-window)))
+
 (provide 'init-package)
 ;;; init-package.el ends here

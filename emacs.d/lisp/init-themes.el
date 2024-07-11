@@ -25,8 +25,7 @@
    modus-themes-completions '((t . (extrabold)))
    ;; Keep the border of mode line but make it the same color as the background of the mode line
    modus-themes-common-palette-overrides
-   '(
-     (border-mode-line-active bg-mode-line-active)
+   '((border-mode-line-active bg-mode-line-active)
      (border-mode-line-inactive bg-mode-line-inactive)
      (fringe unspecified)))
 
@@ -41,7 +40,7 @@
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
-  (load-theme 'modus-vivendi-tritanopia t)
+  ;; (load-theme 'modus-vivendi-tritanopia t)
   )
 
 (use-package ef-themes)
@@ -81,5 +80,8 @@
 
 (use-package plan9-theme
   :straight (:type git :host github :repo "john2x/plan9-theme.el"))
+
+(use-package grandshell-theme
+  :config (load-theme 'grandshell t))
 
 (provide 'init-themes)
