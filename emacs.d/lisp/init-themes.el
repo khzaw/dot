@@ -60,7 +60,8 @@
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
 
 (use-package catppuccin-theme
-  :straight (:type git :host github :repo "catppuccin/emacs"))
+  :straight (:type git :host github :repo "catppuccin/emacs")
+  :config (load-theme 'catppuccin t))
 
 
 (use-package color-theme-sanityinc-tomorrow
@@ -81,7 +82,6 @@
 (use-package plan9-theme
   :straight (:type git :host github :repo "john2x/plan9-theme.el"))
 
-(use-package grandshell-theme
-  :config (load-theme 'grandshell t))
+(use-package grandshell-theme)
 
 (provide 'init-themes)

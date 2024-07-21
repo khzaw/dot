@@ -54,6 +54,7 @@
          '(97 . 97) '(100 . 100)))))
 
 (use-package solaire-mode
+  :disabled t
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)
@@ -270,7 +271,6 @@
   (setq sideline-display-backend-name t)
   (progn
     (evil-leader/set-key "s" 'sideline-mode)))
-
 
 
 
