@@ -35,13 +35,6 @@
 
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
-
-;; Auto update packages
-(use-package auto-package-update
-  :init
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-hide-results t))
-
 ;; profiler
 (use-package esup)
 
