@@ -18,9 +18,18 @@
          ("C-c e d" . #'eglot-find-declaration)
          ("C-c e p" . #'eldoc-print-current-symbol-info))
   :config
-  (cl-pushnew '((js-mode jsx-mode rjsx-mode typescript-mode tsx-ts-mode) . ("typescript-language-server" "--stdio"))
-              eglot-server-programs
-              :test #'equal)
+
+  (cl-pushnew
+   '(t
+     (js-mode jsx-mode rjsx-mode typescript-mode typescript-ts-mode tsx-ts-mode)
+     . ("typescript-language-server" "--stdio"))
+   eglot-server-programs
+   :test #'equal)
+
+  (cl-pushnew
+   '(solidity-mode . ("nomicfoundation-solidity-language-server" "--stdio"))
+   eglot-server-programs
+   :test #'equal)
 
   (setq eldoc-echo-area-use-multiline-p t)
   (setq eglot-strict-mode nil)
@@ -33,6 +42,7 @@
     (setq-local completion-at-point-functions
                 (list (cape-capf-super
                        #'eglot-completion-at-point
+                       #'codeium-completion-at-point
                        #'tempel-expand
                        #'cape-file
                        #'cape-line
@@ -88,6 +98,5 @@
 
 (use-package xref
   :straight (:type built-in))
-
 
 (provide 'init-eglot)

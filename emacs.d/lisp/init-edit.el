@@ -89,19 +89,27 @@
   :hook (prog-mode . hl-todo-mode))
 
 (use-package writeroom-mode
-  :bind (("C-c w r" . writeroom-mode))
+  :bind
+  (("C-c w r" . writeroom-mode)
+   (:map writeroom-mode-map
+    ("C-M-<" . writeroom-decrease-width)
+    ("C-M->" . writeroom-increase-width)
+    ("C-M-=" . writeroom-adjust-width)))
   :config
-  (setq
-   writeroom-width 100
-   writeroom-fullscreen-effect nil
-   writeroom-maximize-window nil))
+  (setq writeroom-width 100
+        writeroom-fullscreen-effect nil
+        writeroom-maximize-window nil
+        writeroom-major-modes '(text-mode prog-mode)
+        writeroom-mode-line-toggle-position 'mode-line-format)
+  :init
+  (global-writeroom-mode 1))
 
 (use-package olivetti
   :straight (:type git :host github :repo "rnkn/olivetti")
   ;; :hook (org-mode . olivetti-mode)
   :custom
   (olivetti-margin-width 12)
-  (olivetti-body-width 120)
+  (olivetti-body-width 100)
   (olivetti-style 'fancy))
 
 ;; (use-package auto-olivetti
@@ -117,6 +125,11 @@
 (use-package repeat-mode
   :straight (:type built-in)
   :hook (after-init . repeat-mode))
+
+(use-package repeat-help
+  :straight (:type git :host github :repo "karthink/repeat-help")
+  :hook (repeat-mode . repeat-help-mode))
+
 
 (use-package hippie-exp
   :straight (:type built-in)
@@ -141,6 +154,7 @@
   :bind ("C-c TAB" . indent-tools-hydra/body))
 
 (use-package indent-bars
+  :disabled t
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
   :hook ((python-mode yaml-mode) . indent-bars-mode)
   :custom
@@ -153,21 +167,30 @@
   ;; dictionary dictionary_comprehension paranthesized_expression subscript)))
   :hook ((python-base-mode yaml-mode) . indent-bars-mode)
   :config
-  (setq
-   indent-bars-color '(highlight :face-bg t :blend 0.2)
-   indent-bars-pattern "."
-   indent-bars-width-frac 0.1
-   indent-bars-pad-frac 0.1
-   indent-bars-zigzag nil
-   indent-bars-color-by-depth nil
-   indent-bars-highlight-current-depth nil
-   indent-bars-display-on-blank-lines nil))
+  (setq indent-bars-color '(highlight :face-bg t :blend 0.2)
+        indent-bars-pattern "."
+        indent-bars-width-frac 0.1
+        indent-bars-pad-frac 0.1
+        indent-bars-zigzag nil
+        indent-bars-color-by-depth nil
+        indent-bars-highlight-current-depth nil
+        indent-bars-display-on-blank-lines nil))
 
 (use-package anzu
   :config
   (global-set-key [remap query-replace] 'anzu-query-replace)
   (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
   (global-anzu-mode +1))
+
+(use-package ipe
+  :straight (:type git :host github :repo "BriansEmacs/insert-pair-edit.el")
+  :config
+  (global-set-key [remap insert-parentheses] 'ipe-insert-pair-edit)
+  (global-set-key (kbd "A-(") 'ipe-insert-pair-edit-update)
+  (global-set-key (kbd "H-(") 'ipe-insert-pair-edit-delete)
+  (require 'ipe-markdown-mode)
+  (require 'ipe-texinfo-mode)
+  (require 'ipe-html-mode))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

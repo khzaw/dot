@@ -1,10 +1,15 @@
 (use-package solidity-mode
+  :bind (:map solidity-mode-map
+         ("C-c s g" . solidity-estimate-gas-at-point))
+  :mode ("\\.sol\\'")
   :config
   (setq solidity-comment-style 'slash)
-  (setq solidity-solc-path "/usr/local/bin/solc")
-  :bind
-  (:map solidity-mode-map
-    ("C-c s g" . solidity-estimate-gas-at-point)))
+  (with-eval-after-load 'eglot
+    (add-hook 'solidity-mode-hook 'eglot-ensure)))
+
+(defun my-customer-solidity-eglot-setup ()
+  (setq-local eglot-server-programs
+              '((solidity-mode . ("solc --")))))
 
 (use-package solidity-flycheck
   :after (solidity-mode flycheck))

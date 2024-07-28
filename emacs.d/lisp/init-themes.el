@@ -60,9 +60,7 @@
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
 
 (use-package catppuccin-theme
-  :straight (:type git :host github :repo "catppuccin/emacs")
-  :config (load-theme 'catppuccin t))
-
+  :straight (:type git :host github :repo "catppuccin/emacs"))
 
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
@@ -74,7 +72,9 @@
   :straight (:type git :host github :repo "rougier/nano-theme"))
 
 (use-package almost-mono-themes
-  :straight (:type git :host github :repo "cryon/almost-mono-themes"))
+  :straight (:type git :host github :repo "khzaw/almost-mono-themes")
+  :config
+  (load-theme 'almost-mono-white t))
 
 (use-package acme-theme
   :straight (:type git :host github :repo "ianyepan/acme-emacs-theme"))
@@ -83,5 +83,37 @@
   :straight (:type git :host github :repo "john2x/plan9-theme.el"))
 
 (use-package grandshell-theme)
+
+(use-package doom-kyoto-night-theme
+  :after doom-themes
+  :straight (:type git :host github :repo "shrikecode/doom-kyoto-night-theme"))
+
+(use-package carbon-theme
+  :straight (:type git :host github :repo "gopesh-human/carbon-theme"))
+
+(use-package hundred-shades-of-gray
+  :straight (:type git :host github :repo "mr-reg/hundred-shades-of-gray"))
+
+(use-package github-modern-theme
+  :straight (:type git :host github :repo "tx46/GitHub-Modern-Theme-for-Emacs"))
+
+(use-package eink-theme
+  :straight (:type git :host github :repo "maio/eink-emacs"))
+
+(use-package no-clown-fiesta-theme
+  :straight (no-clown-fiesta-theme :type git :host github :repo "emacsmirror/no-clown-fiesta-theme"))
+
+(use-package flexoki-themes
+  :custom
+  (flexoki-themes-use-bold-keywords t)
+  (flexoki-themes-use-bold-builtins t)
+  (flexoki-themes-use-italic-comments t))
+
+(use-package naga-theme
+  :straight (:type git :host github :repo "kenranunderscore/emacs-naga-theme")
+  ;; :config
+  ;; (setq naga-theme-use-lighter-org-block-background nil)
+  ;; (setq naga-theme-modeline-style 'filled-green)
+  )
 
 (provide 'init-themes)

@@ -180,7 +180,7 @@ targets."
 
   ;; Load the latest search again in `consult-line' when pressing C-s C-s
   (defvar my-consult-line-map
-    (let ((map (make-sparse-keymap)))
+  (let ((map (make-sparse-keymap)))
       (define-key map "\C-s" #'previous-history-element)
       map))
   (consult-customize consult-line :keymap my-consult-line-map)
@@ -287,10 +287,9 @@ targets."
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
-          :map minibuffer-local-completion-map
-          ("C-x C-d" . consult-dir)
-          ("C-x C-j" . consult-dir-jump-file)))
-
+         :map
+         ("C-x C-d" . consult-dir)
+         ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package consult-spotify
   :after consult)
@@ -484,7 +483,6 @@ targets."
   :config (vertico-truncate-mode 1))
 
 (use-package consult-web
-  :disabled t
 	:straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "extras.el" "sources/*.el" ))
   :after consult
   :custom

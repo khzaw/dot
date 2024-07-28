@@ -72,7 +72,8 @@
          ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
          ([remap move-end-of-line] . corfu-end-of-prompt)
          ;; Free RET key for less instrusive behavior.
-         ("RET" . nil))
+         ;; ("RET" . nil)
+         )
   :init
   (global-corfu-mode)
   ;; https://github.com/emacs-evil/evil-collection/issues/766
