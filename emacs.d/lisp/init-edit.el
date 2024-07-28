@@ -99,7 +99,10 @@
   (setq writeroom-width 100
         writeroom-fullscreen-effect nil
         writeroom-maximize-window nil
-        writeroom-major-modes '(text-mode prog-mode)
+        writeroom-major-modes '(text-mode prog-mode helpful-mode
+                                          magit-status-mode magit-diff-mode
+                                          magit-log-mode magit-stash-mode
+                                          magit-revision-mode magit-process-mode)
         writeroom-mode-line-toggle-position 'mode-line-format)
   :init
   (global-writeroom-mode 1))
