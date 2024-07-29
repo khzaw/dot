@@ -38,6 +38,8 @@
   (setq completion-category-overrides '((eglot (styles orderless))))
   ;; (setq eglot-stay-out-of '(eldoc-documentation-strategy))
 
+  (setq eglot-extend-to-xref t)
+
   (defun eglot-capf ()
     (setq-local completion-at-point-functions
                 (list (cape-capf-super
@@ -82,6 +84,35 @@
   :custom (flycheck-eglot-exclusive nil)
   :config
   (global-flycheck-eglot-mode 1))
+
+(use-package flymake-eslint
+  :config
+  (setq flymake-eslint-prefer-json-diagonistics t)
+
+  (defun khz/use-local-eslint ()
+    "Set proejct's `node_modules' binary eslint as first priority.
+If nothing is found, keep the default value flyamke-eslint set or your override
+of `flymake-eslint-executable-name.'"
+    (interactive)
+    (let* ((root (locate-dominating-file (buffer-file-name) "node_modules"))
+           (eslint (and root
+                        (expand-file-name "node_modules/.bin/eslint" root))))
+      (when (and eslint (file-executable-p eslint))
+        (setq-local flymake-eslint-executable-name eslint)
+        (message (format "Found local eslint. Setting: %s" eslint))
+        (flymake-eslint-enable))))
+
+  (defun khz/configure-eslint-with-flymake ()
+    (when (or (eq major-mode 'tsx-ts-mode)
+              (eq major-mode 'typescript-ts-mode)
+              (eq major-mode 'typescriptreact-mode))
+      (khz/use-local-eslint)))
+
+  (add-hook 'eglot-managed-mode-hook #'khz/use-local-eslint)
+
+  ;; (add-hook 'js-ts-mode-hook #'khz/use-local-eslint)
+  )
+
 
 (use-package eglot-booster
   :disabled t
