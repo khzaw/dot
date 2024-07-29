@@ -46,7 +46,10 @@
     (evil-leader/set-key
       "f" 'isearch-forward
       "F" 'isearch-backward
+      "g s" 'magit-status
       "b" 'consult-buffer)))
+
+(use-package evil-surround :config (global-evil-surround-mode 1))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here
