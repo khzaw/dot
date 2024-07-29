@@ -140,5 +140,24 @@
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
+(use-package git-link
+  :straight (:type git :host github :repo "sshaw/git-link")
+  :config
+  (defun git-link-diffrent-branch (branch)
+    "Invoke `git-link', but with the `branch' name set to a different
+branch than the one you're currently working on."
+    (interactive "P")
+    (let* ((default-remote-branch-name "master")
+           (git-link-current-branch-setting git-link-default-branch)
+           (git-link-default-branch (if branch
+                                        (completing-read
+                                         (format "Instead of '%s' branch replace with branch: " (git-link--branch))
+                                         (magit-list-branch-names))
+                                      default-remote-branch-name)))
+      (setq current-prefix-arg nil)
+      (call-interactively 'git-link)
+      (setq git-link-default-branch git-link-current-branch-setting)))
+  (global-set-key (kbd "C-c g l") 'git-link))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
