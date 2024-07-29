@@ -34,16 +34,17 @@
          ("C-c e F" . treesitter-context-focus-mode)))
 
 (use-package combobulate
-  :disabled t
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
   :custom
   (combobulate-key-prefix "C-c o")
   :hook
   ((python-ts-mode . combobulate-mode)
    (js-ts-mode . combobulate-mode)
+   (html-ts-mode . combobulate-mode)
    (css-ts-mode . combobulate-mode)
    (yaml-ts-mode . combobulate-mode)
    (go-ts-mode . combobulate-mode)
+   (typescript-ts-mode . combobulate-mode)
    (tsx-ts-mode . combobulate-mode)))
 
 ;; (use-package tree-sitter-langs)
