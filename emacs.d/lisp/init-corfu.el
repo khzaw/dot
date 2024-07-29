@@ -57,18 +57,18 @@
 
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu" :files (:defaults "extensions/*"))
-  :bind (:map corfu-map
-         ("C-p" . corfu-previous)
-         ("C-n" . corfu-next))
   :custom
   (corfu-auto t)
-  (corfu-preview-current nil)
-  (corfu-auto-delay 0.2)
+  (corfu-preview-current 'insert) ; insert previewed candidate
+  (corfu-auto-delay 0)            ; no delay for completion
   (corfu-quit-no-match t)
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :bind (:map corfu-map
+         ("C-p" . corfu-previous)
+         ("C-n" . corfu-next)
          ("M-m" . corfu-move-to-minibuffer)
+         ("M-SPC" . corfu-insert-separator)
          ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
          ([remap move-end-of-line] . corfu-end-of-prompt)
          ;; Free RET key for less instrusive behavior.
