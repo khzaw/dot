@@ -7,7 +7,9 @@
   (setq projectile-sort-order 'recentf
         projectile-use-git-grep t
         projectile-enable-caching t
-        projectile-completion-system 'default))
+        projectile-completion-system 'default)
+  :config
+  (add-to-list 'projectile-globally-ignored-directories "node_modules"))
 
 (use-package consult-projectile
   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master")
