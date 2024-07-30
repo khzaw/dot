@@ -94,9 +94,6 @@
 (use-package hundred-shades-of-gray
   :straight (:type git :host github :repo "mr-reg/hundred-shades-of-gray"))
 
-(use-package github-modern-theme
-  :straight (:type git :host github :repo "tx46/GitHub-Modern-Theme-for-Emacs"))
-
 (use-package eink-theme
   :straight (:type git :host github :repo "maio/eink-emacs"))
 
