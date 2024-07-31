@@ -81,8 +81,6 @@
   :diminish
   :hook (after-init . fancy-narrow-mode))
 
-;; On-the-fly spell checker
-
 (use-package undo-fu)
 
 (use-package hl-todo
@@ -100,6 +98,7 @@
         writeroom-fullscreen-effect nil
         writeroom-maximize-window nil
         writeroom-major-modes '(text-mode prog-mode helpful-mode
+                                          forge-pullreq-mode
                                           magit-status-mode magit-diff-mode
                                           magit-log-mode magit-stash-mode
                                           magit-revision-mode magit-process-mode)

@@ -287,7 +287,7 @@ targets."
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
-         :map
+         :map vertico-map
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
 
@@ -484,7 +484,7 @@ targets."
 
 (use-package consult-web
 	:straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "extras.el" "sources/*.el" ))
-  :after consult
+  :after (consult elfeed)
   :custom
   (consult-web-show-preview t)
   (consult-web-preview-key "C-o")
@@ -493,6 +493,7 @@ targets."
   :config
   (require 'consult-web-sources)
   (require 'consult-web-embark)
+  (require 'consult-web-google-autosuggest)
   (setq consult-web-default-autosuggest-command #'consult-web-dynamic-google-autosuggest))
 
 (provide 'init-consult)

@@ -259,7 +259,7 @@
 
 (use-package sideline-flymake)
 
-(use-package sideline-lsp)
+(use-package sideline-lsp :after lsp-mode)
 
 (use-package sideline-flycheck
   :hook
@@ -271,8 +271,6 @@
   (setq sideline-display-backend-name t)
   (progn
     (evil-leader/set-key "s" 'sideline-mode)))
-
-
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

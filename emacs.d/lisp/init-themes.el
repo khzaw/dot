@@ -91,9 +91,6 @@
 (use-package carbon-theme
   :straight (:type git :host github :repo "gopesh-human/carbon-theme"))
 
-(use-package hundred-shades-of-gray
-  :straight (:type git :host github :repo "mr-reg/hundred-shades-of-gray"))
-
 (use-package eink-theme
   :straight (:type git :host github :repo "maio/eink-emacs"))
 

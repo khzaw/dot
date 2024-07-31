@@ -57,6 +57,7 @@
                                ,(face-foreground 'font-lock-variable-name-face))))
 
 (use-package lsp-jedi
+  :after lsp-mode
   :config
   (with-eval-after-load "lsp-mode"
     (add-to-list 'lsp-disabled-clients 'pyls)

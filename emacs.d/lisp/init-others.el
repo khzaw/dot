@@ -25,4 +25,10 @@
 ;; (use-package mugur
 ;;  :straight (mugur :type git :host github :repo "mihaiolteanu/mugur"))
 
+(use-package devdocs
+  :straight (:type git :host github :repo "astoff/devdocs.el")
+  :bind ("C-h D" . devdocs-lookup))
+
+(global-set-key (kbd "C-c C-'") 'uuidgen)
+
 (provide 'init-others)

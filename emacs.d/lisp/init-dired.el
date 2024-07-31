@@ -74,9 +74,6 @@
    ("C-<right>" . image-dired-display-next)
    ("C-<left>" . image-dired-display-previous)))
 
-(use-package dired-ranger
-  :straight (dired-ranger :type git :host github :repo "justinlime/dired-hacks"))
-
 
 (provide 'init-dired)
 ;;; init-dired.el ends here
