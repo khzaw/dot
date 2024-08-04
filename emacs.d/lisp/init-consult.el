@@ -72,6 +72,7 @@ targets."
   (advice-add 'embark-act :before #'force-keycast-update))
 
 (use-package embark-consult
+  :after (embark consult)
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
@@ -405,15 +406,12 @@ targets."
          ("C-q" . vertico-quick-exit)))
 
 (use-package vertico-posframe
-  :disabled t
   :init (vertico-posframe-cleanup)
   :after (vertico posframe)
   :config
-  (setq
-   vertico-posframe-parameters `((left-fringe . 10)
-                                 (right-fringe . 10))
-   vertico-posframe-border-width 5)
-  (vertico-posframe-mode t))
+  (setq vertico-posframe-parameters `((left-fringe . 10)
+                                      (right-fringe . 10))
+        vertico-posframe-border-width 5))
 
 ;; Enable rich annotations in completion UI
 (use-package marginalia
