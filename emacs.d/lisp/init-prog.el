@@ -101,7 +101,29 @@
              :repo "d4ncer/mermaid-ts-mode"
              :branch "main"
              :files ("mermaid-ts-mode.el"))
-  :mode (("\\.mermaid\\'" . mermaid-ts-mode)))
+  :mode (("\\.mermaid\\'" . mermaid-ts-mode))
+  :config
+  (defun khz/preview-mermaid ()
+    "Render region inside a webit embebed browser."
+    (interactive)
+    (unless (region-active-p)
+      (user-error "Select a region first"))
+    (let* ((path (concat (make-temp-file (temporary-file-directory)) ".html"))
+           (mermaid-code (buffer-substring-no-properties (region-beginning) (region-end))))
+      (save-excursion
+        (with-temp-buffer
+          (insert "<body>
+  <pre class=\"mermaid\">")
+          (insert mermaid-code)
+          ;; js script copied from mermaid documentation
+          (insert "</pre>
+  <script type=\"module\">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</body>")
+          (write-file path)))
+      (xwidget-webkit-browse-url (format "file://%s" path)))))
 
 (use-package promql-mode
   :straight (:type git :host github :repo "Andor/promql-mode"))
