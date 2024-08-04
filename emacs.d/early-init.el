@@ -5,14 +5,17 @@
   (defvar native-comp-async-report-warnings-errors)
 
   (setq native-comp-speed 2
-    ;; Enable ahead-of-time compilation when installing a package
-    package-native-compile t
-    ;; Silence compiler warnings
-    native-comp-async-report-warnings-errors nil
-    ;; Compile loaded packages asynchronously
-    native-comp-deferred-compilation t
+        ;; Enable ahead-of-time compilation when installing a package
+        package-native-compile t
+        ;; Silence compiler warnings
+        native-comp-async-report-warnings-errors nil
+        ;; Compile loaded packages asynchronously
+        native-comp-deferred-compilation t
 
-    warning-suppress-log-types '((comp))))
+        ;; Prefer loading newer compiled files
+        load-prefer-newer t
+
+        warning-suppress-log-types '((comp))))
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum
