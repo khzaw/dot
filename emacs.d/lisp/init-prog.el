@@ -31,8 +31,12 @@
 (use-package protobuf-mode)
 
 (use-package yaml-pro
+  :mode "\\.yaml\\'"
   :after (yaml-mode)
   :hook (yaml-mode . yaml-pro-mode))
+
+;; (use-package yaml-pro-ts-mode
+;;   :mode "\\.yaml\\'")
 
 (use-package terraform-mode)
 
