@@ -19,8 +19,8 @@
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-spacing 1)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 130)
+  (setq-default line-spacing 2)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 125)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
 

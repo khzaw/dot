@@ -1,5 +1,5 @@
 (use-package go-mode
-  :config (setq gofmt-command "goimports"))
+  :config (setq gofmt-command "gofumpt"))
 
 (use-package go-ts-mode
   :bind (:map go-ts-mode-map

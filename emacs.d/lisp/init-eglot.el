@@ -6,7 +6,8 @@
           python-mode python-ts-mode
           markdown-mode
           java-mode java-ts-mode
-          tsx-ts-mode typescript-ts-mode) . eglot-ensure)
+          tsx-ts-mode typescript-ts-mode)
+         . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
   :bind (("C-c e e" . #'eglot)
@@ -44,7 +45,7 @@
     (setq-local completion-at-point-functions
                 (list (cape-capf-super
                        #'eglot-completion-at-point
-                       #'codeium-completion-at-point
+                       ;; #'codeium-completion-at-point
                        #'tempel-expand
                        #'cape-file
                        #'cape-line
@@ -91,7 +92,7 @@
 
   (defun khz/use-local-eslint ()
     "Set proejct's `node_modules' binary eslint as first priority.
-If nothing is found, keep the default value flyamke-eslint set or your override
+If nothing is found, keep the default value flymake-eslint set or your override
 of `flymake-eslint-executable-name.'"
     (interactive)
     (let* ((root (locate-dominating-file (buffer-file-name) "node_modules"))
@@ -129,5 +130,19 @@ of `flymake-eslint-executable-name.'"
 
 (use-package xref
   :straight (:type built-in))
+
+(use-package dape
+  :config
+  (setq dape-buffer-window-arrangement 'right)
+
+  ;; To not display info and/or buffers on startup
+  (remove-hook 'dape-stopped-hook 'dape-info)
+  (remove-hook 'dape-start-hook 'dape-repl)
+
+  ;; Save buffers on startup, useful for interpreted languages
+  (add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
+
+  ;; Projectile users
+  (setq dape-cwd-fn 'projectile-project-root))
 
 (provide 'init-eglot)

@@ -94,7 +94,7 @@
     ("C-M->" . writeroom-increase-width)
     ("C-M-=" . writeroom-adjust-width)))
   :config
-  (setq writeroom-width 100
+  (setq writeroom-width 140
         writeroom-fullscreen-effect nil
         writeroom-maximize-window nil
         writeroom-major-modes '(text-mode prog-mode helpful-mode
@@ -102,7 +102,8 @@
                                           magit-status-mode magit-diff-mode
                                           magit-log-mode magit-stash-mode
                                           magit-revision-mode magit-process-mode)
-        writeroom-mode-line-toggle-position 'mode-line-format)
+        writeroom-mode-line-toggle-position 'mode-line-format
+        writeroom-mode-line t)
   :init
   (global-writeroom-mode 1))
 
@@ -193,6 +194,8 @@
   (require 'ipe-markdown-mode)
   (require 'ipe-texinfo-mode)
   (require 'ipe-html-mode))
+
+(use-package string-inflection)
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

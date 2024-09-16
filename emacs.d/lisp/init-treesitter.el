@@ -26,10 +26,10 @@
   (setq treesitter-context-idle-time 0.5
         treesitter-context-show-context-always t
         treesitter-context-frame-autohide-timeout 15)
-  :hook ((go-ts-mode . treesitter-context-focus-mode)
-         (typescript-ts-mode . treesitter-context-focus-mode)
-         (python-ts-mode . treesitter-context-focus-mode)
-         (yaml-ts-mode . treesitter-context-focus-mode))
+  ;; :hook ((go-ts-mode . treesitter-context-focus-mode)
+  ;;        (typescript-ts-mode . treesitter-context-focus-mode)
+  ;;        (python-ts-mode . treesitter-context-focus-mode)
+  ;;        (yaml-ts-mode . treesitter-context-focus-mode))
   :bind (("C-c e C-t" . treesitter-context-toggle-show)
          ("C-c e F" . treesitter-context-focus-mode)))
 
