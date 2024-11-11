@@ -61,12 +61,12 @@
   :straight (corfu :type git :host github :repo "minad/corfu" :files (:defaults "extensions/*"))
   :custom
   (corfu-preselect 'directory) ;; select the first candidate, except for directories
-
   (corfu-auto t)
+  (corfu-separator ?_)         ;; Set to orderless separator, if not using space
   (corfu-auto-delay 0.35)
   (corfu-quit-no-match 'separator) ;; or t
   (corfu-auto-prefix 3)
-
+  ;; :bind
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :config

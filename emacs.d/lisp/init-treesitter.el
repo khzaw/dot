@@ -15,6 +15,11 @@
 
 (use-package tree-sitter-indent :disabled t)
 
+(defun treesit--ts-find-parent (node pattern)
+  (let ((pred (lambda (n)
+                (string-match-p patterts-node-textts-node-textn (treesit-node-type n)))))
+    (treesit-parent-until node pred)))
+
 (use-package treesit-auto
   :config
   (setq treesit-font-lock-level 4)
