@@ -17,7 +17,8 @@
 
 (use-package prism
   :diminish
-  :straight (prism :type git :host github :repo "alphapapa/prism.el"))
+  :straight (prism :type git :host github :repo "alphapapa/prism.el")
+  :hook ((emacs-lisp-mode clojure-mode clojurescript-mode) . prism-mode))
 
 (use-package highlight-indent-guides
   :diminish
