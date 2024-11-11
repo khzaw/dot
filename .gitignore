@@ -76,3 +76,9 @@ zshenv.local
 emacs.d/elfeed/index
 emacs.d/forge-database*
 emacs.d/tree-sitter/
+emacs.d/codeium/
+emacs.d/*.log
+emacs.d/code-review-db-file.sqlite
+emacs.d/smudge/
+emacs.d/devdocs/
+emacs.d/undo-fu-session/
