@@ -75,6 +75,7 @@
 (require 'init-flymake)
 ;; (require 'init-flycheck)
 (require 'init-eglot)
+(require 'init-dape)
 (require 'init-lsp)
 (require 'init-vcs)
 (require 'init-terminal)
@@ -102,7 +103,7 @@
 (require 'init-elfeed)
 (require 'init-spell)
 (require 'init-others)
-(require 'init-slack)
+;; (require 'init-slack)
 
 (provide 'init)
 ;;; init.el ends here
