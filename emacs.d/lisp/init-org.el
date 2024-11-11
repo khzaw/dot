@@ -117,6 +117,11 @@
     :straight (ob-racket :type git :host github :repo "hasu/emacs-ob-racket" :files ("*.el" "*.rkt"))
     :init (cl-pushnew '(racket . t) load-language-alist))
 
+  (use-package ob-mermaid
+    :if (executable-find "mmdc")
+    :straight (ob-mermaid :type git :host github :repo "arnm/ob-mermaid")
+    :init (cl-pushnew '(mermaid . t) load-language-alist))
+
   ;; npm install -g @mermaid-js/mermaid-cli
   ;; (use-package ob-mermaid
   ;;   :init (cl-pushnew '(mermaid . t) load-language-alist))
@@ -314,6 +319,10 @@
 (use-package org-appear
   :straight (org-appear :type git :host github :repo "awth13/org-appear")
   :hook (org-mode . org-appear-mode))
+
+(use-package orgit)
+
+(use-package orgit-forge)
 
 (provide 'init-org)
 ;;; init-org.el ends here
