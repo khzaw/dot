@@ -59,9 +59,6 @@
 (use-package apropospriate-theme
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
 
-(use-package catppuccin-theme
-  :straight (:type git :host github :repo "catppuccin/emacs"))
-
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
@@ -73,8 +70,9 @@
 
 (use-package almost-mono-themes
   :straight (:type git :host github :repo "khzaw/almost-mono-themes")
-  :config
-  (load-theme 'almost-mono-white t))
+  :config (load-theme 'almost-mono-white t))
+;; (custom-set-faces
+;;  `(shadow ((t :foreground "#cccccc")))))
 
 (use-package acme-theme
   :straight (:type git :host github :repo "ianyepan/acme-emacs-theme"))
@@ -102,12 +100,5 @@
   (flexoki-themes-use-bold-keywords t)
   (flexoki-themes-use-bold-builtins t)
   (flexoki-themes-use-italic-comments t))
-
-(use-package naga-theme
-  :straight (:type git :host github :repo "kenranunderscore/emacs-naga-theme")
-  ;; :config
-  ;; (setq naga-theme-use-lighter-org-block-background nil)
-  ;; (setq naga-theme-modeline-style 'filled-green)
-  )
 
 (provide 'init-themes)

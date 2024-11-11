@@ -3,7 +3,7 @@
   (setq evil-want-integration t
         evil-want-keybinding nil
         evil-want-minibuffer nil
-        evil-undo-system 'undo-tree
+        evil-undo-system 'undo-fu
         evil-mode-line-format nil
         evil-kill-on-visual-paste nil
         evil-symbol-word-search t
@@ -11,10 +11,11 @@
         evil-split-window-below t
         evil-vsplit-window-right t
         evil-want-C-u-scroll nil
+        evil-want-integration t
         evil-ex-interactive-search-highlight 'selected-window
-        evil-search-module 'evil-search
         evil-kbd-macro-suppress-motion-error t)
   :config
+  (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)
   (evil-set-initial-state 'fundamental-mode 'emacs)

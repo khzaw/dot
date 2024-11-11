@@ -19,10 +19,10 @@
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-spacing 2)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 125)
+  (setq-default line-spacing 3)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 120 :width 'semi-condensed)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
+  (set-face-attribute 'variable-pitch nil :font "CommitMono" :weight 'normal :height 1.0))
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -89,10 +89,10 @@
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
-  use-dialog-box nil
-  inhibit-startup-screen t
-  inhibit-startup-echo-area-message user-login-name
-  inhibit-default-init t)
+      use-dialog-box nil
+      inhibit-startup-screen t
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-default-init t)
 
 
 ;; Easily adjust the font size in all frames
