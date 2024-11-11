@@ -63,6 +63,7 @@
   (corfu-preselect 'directory) ;; select the first candidate, except for directories
 
   (corfu-auto t)
+  (corfu-auto-delay 0.35)
   (corfu-quit-no-match 'separator) ;; or t
   (corfu-auto-prefix 3)
 
@@ -74,6 +75,34 @@
                                           ,(lambda (&optional _)
                                              (and (derived-mode-p 'eshell-mode 'comint-mode)
                                                   #'corfu-send))))
+  ;; Complete on punctuation
+  ;; https://github.com/minad/corfu/wiki#tab-and-go-completion
+  (dolist (c (list (cons "SPC" " ")
+                   (cons "." ".")
+                   (cons "," ",")
+                   (cons ":" ":")
+                   (cons ")" ")")
+                   (cons "}" "}")
+                   (cons "]" "]")))
+    (define-key corfu-map (kbd (car c)) `(lambda ()
+                                           (interactive)
+                                           (corfu-insert)
+                                           (insert ,(cdr c)))))
+
+
+  (defun corfu-send-shell (&rest _)
+    "Send completion candidate when inside comint/eshell.
+The idea is to avoid pressing RET twice; see README at
+https://github.com/minad/corfu."
+    (cond
+     ((and (derived-mode-p 'eshell-mode)
+           (fboundp 'eshell-send-input))
+      (eshell-send-input))
+     ((and (derived-mode-p 'comint-mode)
+           (fboundp 'comint-send-input))
+      (comint-send-input))))
+  (advice-add #'corfu-insert :after #'corfu-send-shell)
+
   :bind (:map corfu-map
          ("C-p" . corfu-previous)
          ("C-n" . corfu-next)
