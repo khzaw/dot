@@ -6,19 +6,21 @@ config.set_environment_variables = {
   PATH = '/opt/homebrew/bin:' .. os.getenv('PATH')
 }
 
-if appearance.is_dark() then
-  config.color_scheme = 'Tokyo Night'
-else
-  config.color_scheme = 'Tokyo Night Day'
-end
+-- if appearance.is_dark() then
+--   config.color_scheme = 'catppuucin'
+-- else
+--   config.color_scheme = 'srcery'
+-- end
 
-config.font = wezterm.font({ family = 'Server Mono' })
+config.color_scheme = 'kanagawa_dragon'
+config.font = wezterm.font({ family = 'Berkeley Mono' })
 config.font_size = 13
+config.default_cursor_style = 'BlinkingBar'
 config.window_background_opacity = 0.9
 config.macos_window_background_blur = 30
 config.window_decorations = 'RESIZE'
 config.window_frame = {
-  font = wezterm.font({ family = 'Server Mono', weight = 'Bold' }),
+  font = wezterm.font({ family = 'Berkeley Mono', weight = 'Bold' }),
   font_size = 11,
 }
 
