@@ -34,6 +34,7 @@
 (use-package forge
   :after magit
   :init
+  (setq forge-get-repository-verbose t)
   (setq forge-add-default-bindings nil) ;; will be take care of by evil-collection -> forge
   :config
   ;; A topic is an issue or PR and the list of each can be configured
@@ -43,17 +44,30 @@
   (setq forge-topic-list-limit '(60 . 5)))
 
 (use-package code-review
-  :straight (:type git :host github :repo "doomelpa/code-review")
-  :after (forge magit emojify)
+  :straight (:type git :host github :repo "phelrine/code-review" :branch "fix/closql-update")
+  :after (forge emojify)
   :hook (code-review-mode . emojify-mode)
   :config
   (setq code-review-fill-column 120)
   (setq code-review-auth-login-marker 'forge)
   (transient-append-suffix 'magit-merge "i" '("y" "Review pull request" code-review-forge-pr-at-point))
   (transient-append-suffix 'forge-dispatch "c u" '("c r" "Review pull-request" code-review-forge-pr-at-point))
-  :bind (:map code-review-mode-map
-         ("r" . code-review-transient-api)
-         ("RET" . code-review-comment-add-or-edit)))
+  :bind ((:map magit-status-mode-map
+          ("C-c r" . code-review-forge-pr-at-point))
+         (:map code-review-mode-map
+          ("r" . code-review-transient-api)
+          ("gr" . code-review-reload)
+          ("RET" . code-review-comment-add-or-edit)
+          ("d" . code-review-submit-single-diff-comment-at-point))))
+
+;; (use-package pr-review
+;;   :straight (:type git :host github :repo "blahgeek/emacs-pr-review")
+;;   :config
+;;   (evil-ex-define-cmd "prr" #'pr-review)
+;;   (evil-ex-define-cmd "prs" #'pr-review-search)
+;;   (evil-ex-define-cmd "prn" #'pr-review-notification)
+;;   (add-to-list 'browse-url-default-handlers
+;;                '(pr-review-url-parse . pr-review-open-url)))
 
 (use-package git-timemachine
   :bind ("C-c g t" . git-timemachine-toggle))
@@ -76,8 +90,9 @@
 (use-package gitignore-templates)
 
 (use-package git-gutter
-  :config
-  (setq git-gutter:update-interval 0.02))
+  :bind (("C-x v C-g" . git-gutter-mode)
+         ("C-x v p" . git-gutter:previous-hunk)
+         ("C-x v n" . git-gutter:next-hunk)))
 
 (use-package git-gutter-fringe
   :config
@@ -96,12 +111,14 @@
   (blamer-min-offset 70))
 
 (use-package consult-gh
-  :straight (:type git :host github :repo "armindarvish/consult-gh" :branch "develop")
-  :after (consult forge transient)
+  :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :files (:defaults "*.el"))
+  :after consult
   :config
+  (require 'consult-gh-transient)
   (require 'consult-gh-embark)
   (require 'consult-gh-forge)
-  (require 'consult-gh-transient)
+  (consult-gh-embark-mode +1)
+  (consult-gh-forge-mode +1)
   (setq consult-gh-default-orgs-list '("khzaw" "projectrangoon" "algo-koans" "deliveryhero"))
   (setq consult-gh-default-clone-directory "~/Code")
   (setq consult-gh-show-preview t
@@ -129,16 +146,6 @@
   :hook
   (git-commit-mode . conventional-commit-setup))
 
-(use-package git-gutter
-  :bind (("C-x v C-g" . git-gutter-mode)
-         ("C-x v p" . git-gutter:previous-hunk)
-         ("C-x v n" . git-gutter:next-hunk)))
-
-(use-package git-gutter-fringe
-  :config
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package git-link
   :straight (:type git :host github :repo "sshaw/git-link")
@@ -158,6 +165,9 @@ branch than the one you're currently working on."
       (call-interactively 'git-link)
       (setq git-link-default-branch git-link-current-branch-setting)))
   (global-set-key (kbd "C-c g l") 'git-link))
+
+(use-package magit-town
+  :straight (:type git :host github :repo "natecox/magit-town"))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
