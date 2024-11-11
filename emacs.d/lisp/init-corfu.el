@@ -50,37 +50,41 @@
 (use-package tempel-collection)
 
 (use-package orderless
-  :custom
-  (completion-styles '(orderless flex))
-  (completion-category-overrides '((eglot (styles orderless)))))
+  :config
+  (setq completion-styles '(orderless flex))
+  (setq completion-category-overrides '((file (styles  . (basic partial-completion)))
+                                        (eglot (styles . (orderless flex)))
+                                        (eglot-capf (styles . (orderless flex))))))
 
 
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu" :files (:defaults "extensions/*"))
   :custom
+  (corfu-preselect 'directory) ;; select the first candidate, except for directories
+
   (corfu-auto t)
-  (corfu-preview-current 'insert) ; insert previewed candidate
-  (corfu-auto-delay 0)            ; no delay for completion
-  (corfu-quit-no-match t)
+  (corfu-quit-no-match 'separator) ;; or t
+  (corfu-auto-prefix 3)
+
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
+  :config
+  ;; Use RET only in shell modes
+  (keymap-set corfu-map "RET" `(menu-item "" nil :filter
+                                          ,(lambda (&optional _)
+                                             (and (derived-mode-p 'eshell-mode 'comint-mode)
+                                                  #'corfu-send))))
   :bind (:map corfu-map
          ("C-p" . corfu-previous)
          ("C-n" . corfu-next)
          ("M-m" . corfu-move-to-minibuffer)
          ("M-SPC" . corfu-insert-separator)
-         ([remap move-beginning-of-line] . corfu-beginning-of-prompt)
-         ([remap move-end-of-line] . corfu-end-of-prompt)
+         ("C-g" . corfu-quit)
          ;; Free RET key for less instrusive behavior.
          ;; ("RET" . nil)
          )
   :init
-  (global-corfu-mode)
-  ;; https://github.com/emacs-evil/evil-collection/issues/766
-  (advice-remove 'corfu--setup 'evil-normalize-keymaps)
-  (advice-remove 'corfu--teardown 'evil-normalize-keymaps)
-  (advice-add 'corfu--setup :after (lambda (&rest _) (evil-normalize-keymaps)))
-  (advice-add 'corfu--teardown :after (lambda (&rest _) (evil-normalize-keymaps))))
+  (global-corfu-mode))
 
 ;; show candidate doc in echo area
 (use-package corfu-echo
@@ -99,6 +103,17 @@
   :custom-face
   (corfu-popupinfo ((t (:height 1.0))))
   :init (corfu-popupinfo-mode))
+
+(use-package corfu-history
+  :straight nil
+  :commands (corfu-history-mode)
+  :init (corfu-history-mode))
+
+(use-package corfu-quick
+  :straight nil
+  :after corfu
+  :bind (:map corfu-map
+         ("C-q" . corfu-quick-insert)))
 
 (defun corfu-enable-always-in-minibuffer ()
   "Enable Corfu in the minibuffer if Vertico/Mct are not active."

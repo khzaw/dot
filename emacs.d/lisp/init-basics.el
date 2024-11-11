@@ -182,6 +182,21 @@
     ad-do-it))
 (ad-activate 'term-sentinel)
 
+
+(use-package emacs
+  :straight nil
+  :custom
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  (tab-always-indent 'complete)
+
+  (text-mode-ispell-word-completion nil)
+
+  ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+  ;; commands are hidden, since they are not used via M-x. This setting is
+  ;; useful beyond Corfu.
+  (read-extended-command-predicate #'command-completion-default-include-p))
+
 (use-package on
   :straight (:type git :host gitlab :repo "ajgrf/on.el"))
 
@@ -255,7 +270,7 @@
   :init (prescient-persist-mode 1)
   :config
   (setq prescient-sort-full-matches-first t
-    prescient-sort-length-enable t))
+        prescient-sort-length-enable t))
 
 (use-package hook-helpers
   :commands (create-hook-helper

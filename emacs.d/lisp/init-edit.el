@@ -81,7 +81,18 @@
   :diminish
   :hook (after-init . fancy-narrow-mode))
 
-(use-package undo-fu)
+(use-package undo-fu
+  :commands (undo-fu-only-undo
+             undo-fu-only-redo
+             undo-fu-only-redo-all
+             undo-fu-disable-checkpoint)
+  :custom
+  ;; 3 times the default values
+  (undo-limit (* 3 160000))
+  (undo-strong-limit (* 3 240000)))
+
+(use-package undo-fu-session
+  :config (undo-fu-session-global-mode))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode))
@@ -196,6 +207,10 @@
   (require 'ipe-html-mode))
 
 (use-package string-inflection)
+
+(use-package vlf
+  ;; very large files
+  :config (require 'vlf-setup))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

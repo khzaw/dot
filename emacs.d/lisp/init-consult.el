@@ -3,7 +3,7 @@
   :after projectile
   :bind (("C-c a" . consult-ag)
          ("C-c h" . consult-history)
-         ("C-c i" . consult-imenu)
+         ;; ("C-c i" . consult-imenu)
          ("C-c r". consult-recent-file)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
@@ -214,9 +214,6 @@
          :map vertico-map
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
-
-(use-package consult-spotify
-  :after consult)
 
 (use-package consult-git-log-grep
   :custom (consult-git-log-grep-open-function #'magit-show-commit)
