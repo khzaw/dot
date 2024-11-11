@@ -1,12 +1,10 @@
 (use-package magit
   :bind ("C-x g" . magit-status)
+  :init (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
   :custom
   (magit-auto-revert-mode t)
   :config
-  (setq magit-save-repository-buffers 'dontask)
-  (setq display-line-numbers-type 'visual)
-  (setq markdown-display-remote-images t)
-  (setq magit-section-disable-line-numbers nil)
+
   ;; (customize-set-variable
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
@@ -15,7 +13,15 @@
   (setq magit-no-message '("Turning on magit-auto-revert-mode..."))
   ;; (setq magit-bury-buffer-function #'quit-window) ;; let shackle handle this
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
-  (setq magit-refresh-status-buffer t))
+
+  (setq magit-refresh-status-buffer nil)
+  ;; Don't display parent/related refs in commit buffers
+  (setq magit-revision-insert-related-refs nil)
+
+  (setq magit-save-repository-buffers nil ;; don't autosave repo buffers.
+        display-line-numbers-type 'visual
+        markdown-display-remote-images t
+        magit-section-disable-line-numbers nil))
 
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode)
@@ -70,7 +76,8 @@
 ;;                '(pr-review-url-parse . pr-review-open-url)))
 
 (use-package git-timemachine
-  :bind ("C-c g t" . git-timemachine-toggle))
+  :bind (:map vc-prefix-map
+         ("t" . git-timemachine-toggle)))
 
 (use-package git-messenger
   :bind ("C-c g m" . git-messenger:popup-message)
@@ -90,9 +97,10 @@
 (use-package gitignore-templates)
 
 (use-package git-gutter
-  :bind (("C-x v C-g" . git-gutter-mode)
-         ("C-x v p" . git-gutter:previous-hunk)
-         ("C-x v n" . git-gutter:next-hunk)))
+  :bind (:map vc-prefix-map
+         ("C-g" . git-gutter-mode)
+         ("p" . git-gutter:previous-hunk)
+         ("n" . git-gutter:next-hunk)))
 
 (use-package git-gutter-fringe
   :config
@@ -245,6 +253,7 @@ branch than the one you're currently working on."
     (advice-remove #'magit-setup-buffer-internal #'unpackaged/magit-log--add-date-headers)))
 
 (require 'hydra)
+;; Resolve diff3 conflicts
 (use-package smerge-mode
   :config
   (defhydra unpackaged/smerge-hydra
@@ -283,5 +292,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :hook (magit-diff-visit-file . (lambda ()
                                    (when smerge-mode
                                      (unpackaged/smerge-hydra/body)))))
+
+(use-package magit-gitflow
+  :hook (magit-mode . turn-on-magit-gitflow))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
