@@ -1,5 +1,8 @@
 (use-package eglot
-  :commands (eglot eglot-ensure)
+  :commands (eglot
+             eglot-rename
+             eglot-format-buffer
+             eglot-ensure)
   :hook ((go-mode
           go-ts-mode
           css-mode css-ts-mode
@@ -10,6 +13,7 @@
          . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
+  (eglot-report-progress nil) ; Prevent minibuffer spams
   :bind (("C-c e e" . #'eglot)
          ("C-c e f" . #'eglot-format)
          ("C-c e a" . #'eglot-code-actions)
@@ -19,6 +23,9 @@
          ("C-c e d" . #'eglot-find-declaration)
          ("C-c e p" . #'eldoc-print-current-symbol-info))
   :config
+  ;; Optimizations
+  (fset #'jsonrpc--log-event #'ignore)
+  (setq jsonrpc-event-hook nil)
 
   (cl-pushnew
    '(t
@@ -35,8 +42,10 @@
   (setq eldoc-echo-area-use-multiline-p t)
   (setq eglot-strict-mode nil)
   ;; (setq eglot-events-buffer-size 0)
+  (setq completion-category-defaults nil)
   (setq eglot-confirm-server-initiated-edits nil)
-  (setq completion-category-overrides '((eglot (styles orderless))))
+  (setq completion-category-overrides '((eglot (styles . (orderless flex)))
+                                        (eglot-capf (styles . (orderless flex)))))
   ;; (setq eglot-stay-out-of '(eldoc-documentation-strategy))
 
   (setq eglot-extend-to-xref t)
