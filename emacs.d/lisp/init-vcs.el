@@ -175,7 +175,7 @@ branch than the one you're currently working on."
   (global-set-key (kbd "C-c g l") 'git-link))
 
 (use-package magit-town
-  :straight (:type git :host github :repo "natecox/magit-town"))
+  :straight (:type git :host github :repo "khzaw/magit-town"))
 
 (use-package magit-pretty-graph
   :straight (:type git :host github :repo "georgek/magit-pretty-graph"))
