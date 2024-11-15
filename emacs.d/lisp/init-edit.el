@@ -63,7 +63,12 @@
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :straight (:type built-in)
-  :hook (after-init . electric-pair-mode))
+  :hook ((after-init . electric-pair-mode)
+         (org-mode . (lambda ()
+                       (setq-local electric-pair-inhibit-predicate
+                                   `(lambda (c)
+                                      (if (char-equal c ?<) t
+                                        (,electric-pair-inhibit-predicate c))))))))
 
 (use-package vundo
   :bind ("C-x u" . vundo)
