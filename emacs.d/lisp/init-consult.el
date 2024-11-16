@@ -370,18 +370,11 @@
       (let ((embark-quit-after-action nil))
         (embark-dwim)))))
 
-
-;; (use-package orderless
-;;   :init (icomplete-mode)
-;;   (setq orderless-style-dispatchers '(+orderless-dispatch))
-;;   :custom (completion-styles '(basic substring partial-completion flex orderless)))
-
 (use-package consult-ls-git
   :straight (consult-ls-git :type git :host github :repo "rcj/consult-ls-git")
   :bind
   (("C-c g f" . #'consult-ls-git)
    ("C-c g F" . #'consult-ls-git-other-window)))
-
 
 (use-package all-the-icons-completion
   :after all-the-icons
@@ -399,20 +392,6 @@
 (use-package vertico-truncate
   :straight (vertico-truncate :type git :host github :repo "jdtsmith/vertico-truncate")
   :config (vertico-truncate-mode 1))
-
-(use-package consult-web
-	:straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "extras.el" "sources/*.el" ))
-  :after (consult elfeed)
-  :custom
-  (consult-web-show-preview t)
-  (consult-web-preview-key "C-o")
-  (consult-web-highlight-matches t)
-  (consult-web-dynamic-input-debounce 0.8)
-  :config
-  (require 'consult-web-sources)
-  (require 'consult-web-embark)
-  (require 'consult-web-google-autosuggest)
-  (setq consult-web-default-autosuggest-command #'consult-web-dynamic-google-autosuggest))
 
 (use-package embark
   :bind (("C-." . embark-act)

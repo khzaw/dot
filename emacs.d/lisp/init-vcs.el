@@ -119,6 +119,7 @@
   (blamer-min-offset 70))
 
 (use-package consult-gh
+  :disabled t
   :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :files (:defaults "*.el"))
   :after consult
   :config
@@ -295,6 +296,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (use-package magit-gitflow
   :hook (magit-mode . turn-on-magit-gitflow))
+
+(use-package magit-pretty-graph
+  :straight (:type git :host github :repo "georgek/magit-pretty-graph"))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

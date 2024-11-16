@@ -60,8 +60,8 @@
 
 (use-package dirvish)
 
-(use-package casual-dired
-  :straight (:type git :host github :repo "kickingvegas/casual-dired")
+(use-package casual
+  :straight (:type git :host github :repo "kickingvegas/casual" :files (:defaults "lisp/*.el"))
   :bind (:map dired-mode-map ("C-o" . 'casual-dired-tmenu)))
 
 (use-package image-dired

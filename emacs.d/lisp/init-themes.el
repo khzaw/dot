@@ -60,7 +60,8 @@
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
 
 (use-package color-theme-sanityinc-tomorrow
-  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
+  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow")
+  :config (load-theme 'sanityinc-tomorrow-bright t))
 
 (use-package tomorrow-night-deepblue-theme
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
@@ -69,8 +70,7 @@
   :straight (:type git :host github :repo "rougier/nano-theme"))
 
 (use-package almost-mono-themes
-  :straight (:type git :host github :repo "khzaw/almost-mono-themes")
-  :config (load-theme 'almost-mono-white t))
+  :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
 ;; (custom-set-faces
 ;;  `(shadow ((t :foreground "#cccccc")))))
 

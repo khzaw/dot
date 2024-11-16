@@ -1,7 +1,8 @@
+(setq evil-want-keybinding nil)
 (use-package evil
+  :straight t
   :init
   (setq evil-want-integration t
-        evil-want-keybinding nil
         evil-want-minibuffer nil
         evil-undo-system 'undo-fu
         evil-mode-line-format nil
