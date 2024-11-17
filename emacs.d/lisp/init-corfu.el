@@ -138,6 +138,10 @@ https://github.com/minad/corfu."
   :commands (corfu-history-mode)
   :init (corfu-history-mode))
 
+(use-package corfu-prescient
+  :after (corfu prescient)
+  :config (corfu-prescient-mode 1))
+
 (use-package corfu-quick
   :straight nil
   :after corfu
@@ -195,7 +199,6 @@ https://github.com/minad/corfu."
   ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   )
 
 (provide 'init-corfu)

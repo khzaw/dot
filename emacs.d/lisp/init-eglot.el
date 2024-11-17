@@ -27,6 +27,8 @@
   (fset #'jsonrpc--log-event #'ignore)
   (setq jsonrpc-event-hook nil)
 
+  (setq eglot-extend-to-xref t)
+
   (cl-pushnew
    '(t
      (js-mode jsx-mode rjsx-mode typescript-mode typescript-ts-mode tsx-ts-mode)
@@ -39,16 +41,18 @@
    eglot-server-programs
    :test #'equal)
 
+  ;; specify explicitly to use orderless for eglot
+  (setq completion-category-overrides '((eglot (styles . (orderless flex)))
+                                        (eglot-capf (styles . (orderless flex)))))
+  ;; enable cache busting
+  ;; (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+
   (setq eldoc-echo-area-use-multiline-p t)
   (setq eglot-strict-mode nil)
   ;; (setq eglot-events-buffer-size 0)
   (setq completion-category-defaults nil)
   (setq eglot-confirm-server-initiated-edits nil)
-  (setq completion-category-overrides '((eglot (styles . (orderless flex)))
-                                        (eglot-capf (styles . (orderless flex)))))
   ;; (setq eglot-stay-out-of '(eldoc-documentation-strategy))
-
-  (setq eglot-extend-to-xref t)
 
   (defun eglot-capf ()
     (setq-local completion-at-point-functions
@@ -56,9 +60,7 @@
                        #'eglot-completion-at-point
                        ;; #'codeium-completion-at-point
                        #'tempel-expand
-                       #'cape-file
-                       #'cape-line
-                       #'cape-keyword))))
+                       #'cape-line))))
 
   (defun eglot-actions-before-save ()
     (add-hook 'before-save-hook (lambda ()
