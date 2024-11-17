@@ -217,16 +217,17 @@
   (push '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1")) which-key-replacement-alist)
   (push '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")) which-key-replacement-alist)
   (setq which-key-unicode-correction 5)
+  :custom
+  (which-key-max-description-length nil)
   :hook (on-first-input . which-key-mode))
 
 (use-package which-key-posframe
   :disabled t
   :after (posframe which-key)
   :config
-  (setq
-   which-key-posframe-parameters `((left-fringe . 10)
-                                   (right-fringe . 10))
-   which-key-posframe-border-width 5))
+  (setq which-key-posframe-parameters `((left-fringe . 10)
+                                        (right-fringe . 10))
+        which-key-posframe-border-width 5))
 
 (use-package rg)
 
@@ -264,8 +265,8 @@
 (use-package so-long
   :hook (after-init . global-so-long-mode))
 
-;; Persist results for better sorting
 (use-package prescient
+  ;; Persist results for better sorting
   :commands prescient-persist-mode
   :init (prescient-persist-mode 1)
   :config

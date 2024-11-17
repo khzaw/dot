@@ -21,7 +21,10 @@
     (treesit-parent-until node pred)))
 
 (use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
   :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
   (setq treesit-font-lock-level 4)
   (global-treesit-auto-mode))
 
@@ -147,6 +150,13 @@
 
 (use-package treesit-fold
   :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold"))
+
+(use-package symbols-outline
+  :bind ("C-c e i" . symbols-outline-show)
+  :custom
+  (symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
+  :config
+  (symbols-outline-follow-mode 1))
 
 
 (provide 'init-treesitter)

@@ -84,6 +84,11 @@
       "ty" 'eglot-find-typeDefinition
       "ed" 'eglot-find-declaration)))
 
+(use-package eglot-booster
+  :striaght (:type git :host github :repo "jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
+
 (use-package consult-eglot
   :bind (:map eglot-mode-map
          ([remap xref-find-apropos] .  consult-eglot-symbols)))
@@ -122,13 +127,6 @@ of `flymake-eslint-executable-name.'"
 
   ;; (add-hook 'js-ts-mode-hook #'khz/use-local-eslint)
   )
-
-
-(use-package eglot-booster
-  :disabled t
-  :straight (:type git :host github :repo "jdtsmith/eglot-booster")
-  :after eglot
-  :config (eglot-booster-mode))
 
 (use-package eldoc-box
   :bind (:map eglot-mode-map

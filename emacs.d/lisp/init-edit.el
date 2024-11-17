@@ -100,7 +100,11 @@
   :config (undo-fu-session-global-mode))
 
 (use-package hl-todo
-  :hook (prog-mode . hl-todo-mode))
+  :hook (prog-mode . hl-todo-mode)
+  :bind (:map hl-todo-mode-map
+         ("C-! h p" . hl-todo-previous)
+         ("C-! h n" . hl-todo-next)
+         ("C-! h o" . hl-todo-occur)))
 
 (use-package writeroom-mode
   :bind
