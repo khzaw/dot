@@ -47,7 +47,27 @@
   ;; to display a number of open and closed items.
   ;; Show 100 open topics and never show any closed topics, for both
   ;; issues and PRs.
-  (setq forge-topic-list-limit '(60 . 5)))
+  (setq forge-topic-list-limit '(60 . 5))
+
+  (defun khz/forge-browse-buffer-file ()
+    (interactive)
+    (browse-url
+     (let
+         ((rev (magit-rev-abbrev "HEAD"))
+          (repo (forge-get-repository 'stub))
+          (file (magit-file-relative-name buffer-file-name))
+          (highlight
+           (if
+               (use-region-p)
+               (let ((l1 (line-number-at-pos (region-beginning)))
+                     (l2 (line-number-at-pos (- (region-end) 1))))
+                 (format "#L%d-L%d" l1 l2))
+             ""
+             )))
+       (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
+                      `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
+
+  (global-set-key (kbd "C-c g L") 'khz/forge-browse-buffer-file))
 
 (use-package code-review
   :straight (:type git :host github :repo "phelrine/code-review" :branch "fix/closql-update")
@@ -299,6 +319,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (use-package magit-pretty-graph
   :straight (:type git :host github :repo "georgek/magit-pretty-graph"))
+
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
