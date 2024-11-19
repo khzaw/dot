@@ -123,9 +123,7 @@
                                           magit-log-mode magit-stash-mode
                                           magit-revision-mode magit-process-mode)
         writeroom-mode-line-toggle-position 'mode-line-format
-        writeroom-mode-line t)
-  :init
-  (global-writeroom-mode 1))
+        writeroom-mode-line t))
 
 (use-package olivetti
   :straight (:type git :host github :repo "rnkn/olivetti")

@@ -78,10 +78,6 @@
   (plantuml-jar-path homebrew-plantuml-jar-path)
   (plantuml-default-exec-mode 'executable))
 
-(use-package graphviz-dot-mode
-  :commands graphviz-dot-mode
-  :mode ("\\.dot'" . graphviz-dot-mode))
-
 (use-package ssh-config-mode
   :straight (:type built-in)
   :mode ("jumphost*$'" . sh-mode))
@@ -110,6 +106,7 @@
 
 (use-package mermaid-mode
   :disabled t
+  :if (executable-find "mmdc")
   :mode (("\\.mermaid\\'" . mermaid-mode)))
 
 (use-package makefile-executor
@@ -160,6 +157,8 @@
 (use-package graphql-mode
   :straight (:type git :host github :repo "davazp/graphql-mode"))
 
+(use-package graphivz-dot-mode
+  :straight (:type git :host github :repo "ppareit/graphviz-dot-mode"))
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

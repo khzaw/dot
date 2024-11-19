@@ -61,7 +61,12 @@
 
 (use-package casual
   :straight (:type git :host github :repo "kickingvegas/casual" :files (:defaults "lisp/*.el"))
-  :bind (:map dired-mode-map ("C-o" . 'casual-dired-tmenu)))
+  :after (ibuffer re-builder bookmark)
+  :bind
+  (:map calc-mode-map ("C-o" . 'casual-calc-tmenu))
+  (:map dired-mode-map ("C-o" . 'casual-dired-tmenu))
+  ("M-G" . casual-avy-tmenu)
+  (:map isearch-mode-map ("<f2>" . casual-isearch-tmenu)))
 
 (use-package image-dired
   :custom
