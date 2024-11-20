@@ -99,10 +99,10 @@
 
 ;; Others
 (require 'init-org)
-(require 'init-presentation)
 (require 'init-elfeed)
 (require 'init-spell)
 (require 'init-others)
+(require 'init-presentation)
 ;; (require 'init-slack)
 
 (provide 'init)
