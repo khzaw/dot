@@ -7,7 +7,9 @@
          ("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . markdown-mode))
   :bind ((:map markdown-mode-map
-          ("C-c v" . markdown-view-mode))
+          ("C-c v" . markdown-view-mode)
+          ("M-p" . 'backward-paragraph)
+          ("M-n" . 'forward-paragraph))
          (:map markdown-view-mode-map
           ("C-c v" . markdown-mode)))
   :init (setq markdown-command "multimarkdown")
