@@ -158,7 +158,10 @@
   :straight (:type git :host github :repo "davazp/graphql-mode"))
 
 (use-package graphivz-dot-mode
-  :straight (:type git :host github :repo "ppareit/graphviz-dot-mode"))
+  :straight (graphviz-dot-mode :type git :host github :repo "ppareit/graphviz-dot-mode")
+  :after org
+  :config
+  (setq graphviz-dot-indent-width 2))
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

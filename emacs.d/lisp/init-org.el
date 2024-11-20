@@ -7,8 +7,7 @@
 (use-package org
   :after (verb)
   :straight (:type built-in)
-  :bind
-  ("C-c C-c" . org-edit-src-exit)
+  :bind (("C-c C-c" . org-edit-src-exit))
   :custom
   (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
   (org-agenda-files '("~/Dropbox/notes/agenda"))
@@ -26,7 +25,6 @@
   (org-hide-emphasis-markers t)
   (org-startup-truncated nil)
   (org-imenu-depth 6)
-  (org-tags-column 0)
   ;; (org-startup-indented t)
   (org-startup-folded t)
   (org-special-ctrl-a/e t)
@@ -40,14 +38,18 @@
   ;;   '((?A . error)
   ;;      (?B . warning)
   ;;      (?C . success)))
-  (org-confirm-babel-evaluate nil)
   (org-link-elisp-confirm-function nil)
+  (org-startup-with-inline-images t) ; always display images
+  (org-confirm-babel-evaluate nil) ; just evaluate
+
   :hook
-  (org-mode . (lambda ()
-                (variable-pitch-mode)
-                (setq visual-fill-column-center-text nil)
-                (visual-fill-column-mode)))
+  ((org-babel-after-execute . org-redisplay-inline-images)
+   (org-mode . (lambda ()
+                 (variable-pitch-mode)
+                 (setq visual-fill-column-center-text nil)
+                 (visual-fill-column-mode))))
   :config
+  (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
   (add-hook 'org-mode-hook
             (lambda ()
               (font-lock-add-keywords
@@ -68,6 +70,8 @@
   (setq visual-fill-column-center-text t)
   (visual-line-mode t)
 
+  (use-package org-contrib)
+
   (defun khz/org-link-copy (&optional arg)
     "Extract URL from org-mode link and add it to kill ring."
     (interactive "P")
@@ -81,6 +85,9 @@
   (define-key org-mode-map (kbd "C-x C-l") 'khz/org-link-copy)
 
   (require 'org-tempo)
+  (add-to-list 'org-structure-template-alist
+               '("m" . "src mermaid :file %^{filename}.png :exports both :caption %^{caption}"))
+
 
   (use-package ox-gfm :after org)
   (add-to-list 'org-export-backends 'md)
@@ -117,14 +124,18 @@
     :straight (ob-racket :type git :host github :repo "hasu/emacs-ob-racket" :files ("*.el" "*.rkt"))
     :init (cl-pushnew '(racket . t) load-language-alist))
 
+  ;; npm install -g @mermaid-js/mermaid-cli
   (use-package ob-mermaid
     :if (executable-find "mmdc")
     :straight (ob-mermaid :type git :host github :repo "arnm/ob-mermaid")
     :init (cl-pushnew '(mermaid . t) load-language-alist))
 
-  ;; npm install -g @mermaid-js/mermaid-cli
-  ;; (use-package ob-mermaid
-  ;;   :init (cl-pushnew '(mermaid . t) load-language-alist))
+  (use-package ob-dot
+    :if (executable-find "dot")
+    :straight nil
+    :commands (org-babel-execute:go:dot org-babel-expand-body:dot)
+    :init (cl-pushnew '(dot . t) load-language-alist))
+
   (org-babel-do-load-languages 'org-babel-load-languages load-language-alist)
 
   (use-package org-rich-yank
@@ -192,7 +203,6 @@
     (org-roam-db-autosync-mode)
     (toggle-word-wrap))
 
-
   (use-package org-roam-protocol
     :straight nil
     :after org-roam)
@@ -214,7 +224,6 @@
   :hook (org-mode . quickroam-enable-cache))
 
 
-(use-package org-contrib)
 
 (use-package evil-org
   :after org
@@ -252,7 +261,6 @@
 ;; Auto toggle LaTeX rendering
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode))
-
 
 (use-package org-modern
   :config

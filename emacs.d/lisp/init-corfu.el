@@ -70,6 +70,14 @@
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :config
+
+  ;; disable corfu for org-tempo
+  (defun khz/completion-at-point-org-tempo (orig-fun &rest :args)
+    (unless (and (equal (char-before) ?<)
+                 (derived-mode-p 'org-mode))
+      (apply orig-fun args)))
+  (advice-add 'completion-at-point :around #'khz/completion-at-point-org-tempo)
+
   ;; Use RET only in shell modes
   (keymap-set corfu-map "RET" `(menu-item "" nil :filter
                                           ,(lambda (&optional _)

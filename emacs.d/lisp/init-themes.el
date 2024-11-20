@@ -15,7 +15,8 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (load-theme 'doom-palenight t))
 
 (use-package modus-themes
   :config
@@ -60,8 +61,7 @@
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
 
 (use-package color-theme-sanityinc-tomorrow
-  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow")
-  :config (load-theme 'sanityinc-tomorrow-bright t))
+  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
 (use-package tomorrow-night-deepblue-theme
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
