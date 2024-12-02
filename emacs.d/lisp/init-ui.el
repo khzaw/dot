@@ -19,10 +19,10 @@
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-spacing 3)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 120 :width 'semi-condensed)
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "CommitMono" :weight 'normal :height 1.0))
+  (setq-default line-spacing 1)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'medium :height 140)
+  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'medium :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "CommitMono" :weight 'medium :height 1.0))
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -35,23 +35,17 @@
 (menu-bar-mode 0)
 (setq x-underline-at-descent-line t)
 
-;; (defun transparency (value)
-;;   "Set the transparency of the frame window to VALUE 0=transparent/100=opaque."
-;;   (interactive "Transparency Value (0 - 100) :")
-;;   (set-frame-parameter (selected-frame) 'alpha value))
-;; (transparency 100)
-
-(defun toggle-transparency ()
+(defun khz/toggle-window-transparency ()
+  "Toggle transparency."
   (interactive)
-  (let ((alpha (frame-parameter nil 'alpha)))
-    (set-frame-parameter
-     nil 'alpha
-     (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '(97 . 97) '(100 . 100)))))
+  (let ((alpha-transparency 75))
+    (pcase (frame-parameter nil 'alpha-background)
+      (alpha-transparency (set-frame-parameter nil 'alpha-background 100))
+      (t (set-frame-parameter nil 'alpha-background alpha-transparency)))))
+
+(global-set-key (kbd "C-c T T") 'khz/toggle-window-transparency)
+(global-set-key (kbd "C-c T ]") (lambda () (interactive) (khz/frame-transparency-adjust 2)))
+(global-set-key (kbd "C-c T [") (lambda () (interactive) (khz/frame-transparency-adjust -2)))
 
 (use-package solaire-mode
   :disabled t

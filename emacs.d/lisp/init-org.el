@@ -86,7 +86,7 @@
 
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist
-               '("m" . "src mermaid :file %^{filename}.png :exports both :caption %^{caption}"))
+               '("m" . "src mermaid :file %^{filename}.png :exports results"))
 
 
   (use-package ox-gfm :after org)

@@ -2,6 +2,7 @@
 (use-package ein)
 
 (use-package poetry
+  :if (executable-find "poetry")
   :hook (python-mode . poetry-tracking-mode)
   :config
   (setq poetry-tracking-strategy 'switch-buffer))
@@ -46,7 +47,6 @@
 (defun locate-venv-poetry ()
   "Find a poetry venv."
   (run-command-in-directory nil "poetry" "env" "info" "-p"))
-
 
 
 (use-package auto-virtualenv
