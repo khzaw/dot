@@ -1,5 +1,6 @@
 (use-package dired
   :straight (:type built-in)
+  :commands (dired)
   :defer t
   :custom
   (dired-listing-switches "-alh --group-directories-first")
@@ -56,6 +57,17 @@
     :init (diredfl-global-mode 1))
 
   (use-package dired-sidebar))
+
+
+(use-package dired-subtree
+  :after dired
+  :bind
+  (:map dired-mode-map
+   ("<tab>" . dired-subtree-toggle)
+   ("TAB" . dired-subtree-toggle)
+   ("<backtab>" . dired-subtree-remove)
+   ("S-TAB" . dired-subtree-remove))
+  :config (setq dired-subtree-use-backgrounds nil))
 
 (use-package dirvish)
 

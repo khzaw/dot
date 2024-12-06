@@ -35,4 +35,10 @@
   :init
   (setq flymake-diagnostic-at-point-error-prefix nil))
 
+(use-package flymake-json
+  :straight (:type git :host github :repo "purcell/flymake-json")
+  :if (executable-find "jsonlint")
+  :hook ((json-ts-mode . flymake-json-maybe-load)))
+
+
 (provide 'init-flymake)

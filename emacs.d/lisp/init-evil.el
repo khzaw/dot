@@ -38,6 +38,12 @@
   (evil-define-key 'normal magit-status-mode-map [escape] nil)
   (evil-collection-init))
 
+(use-package outline-indent
+  :ensure t
+  :custom
+  (outline-indent-ellipsis " ▼ ")
+  :config (setq outline-blank-line t))
+
 (use-package evil-leader
   :commands (evil-leader-mode)
   :init (global-evil-leader-mode)

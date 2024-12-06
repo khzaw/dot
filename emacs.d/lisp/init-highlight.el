@@ -17,6 +17,7 @@
 
 (use-package prism
   :diminish
+  :disabled t
   :straight (prism :type git :host github :repo "alphapapa/prism.el")
   :hook ((emacs-lisp-mode clojure-mode clojurescript-mode json-mode json-ts-mode) . prism-mode))
 

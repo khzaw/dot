@@ -12,8 +12,11 @@
 (use-package symbol-overlay
   :diminish
   :hook (prog-mode . symbol-overlay-mode)
-  :bind (("M-n" . symbol-overlay-jump-next)
-          ("M-p" . symbol-overlay-jump-prev)))
+  :bind-keymap ("M-s M-s" . symbol-overlay-map)
+  :bind (:map symbol-overlay-mode-map
+         ("M-n" . symbol-overlay-jump-next)
+         ("M-p" . symbol-overlay-jump-prev))
+  :commands (symbol-overlay-mode symbol-overlay-put))
 
 (use-package avy
   :bind (("M-g c" . avy-goto-char)
@@ -39,9 +42,6 @@
   :hook ((clojure-mode . aggressive-indent-mode)
          (emacs-lisp-mode . aggressive-indent-mode)))
 
-(use-package symbol-overlay
-  :defer t
-  :commands (symbol-overlay-mode symbol-overlay-put))
 
 
 ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=55340
@@ -49,14 +49,14 @@
   "Honour `electric-pair-open-newline-between-pairs'.
   Member of `post-self-insert-hook' if `electric-pair-mode' is on."
   (when (and (if (functionp electric-pair-open-newline-between-pairs)
-               (funcall electric-pair-open-newline-between-pairs)
+                 (funcall electric-pair-open-newline-between-pairs)
                electric-pair-open-newline-between-pairs)
-          (eq last-command-event ?\n)
-          (< (1+ (point-min)) (point) (point-max))
-          (eq (save-excursion
-                (skip-chars-backward "\t\s")
-                (char-before (1- (point))))
-            (matching-paren (char-after))))
+             (eq last-command-event ?\n)
+             (< (1+ (point-min)) (point) (point-max))
+             (eq (save-excursion
+                   (skip-chars-backward "\t\s")
+                   (char-before (1- (point))))
+                 (matching-paren (char-after))))
     (save-excursion (newline-and-indent))))
 (advice-add 'electric-pair-open-newline-between-pairs-psif :override #'fix-electric-indent)
 
@@ -218,6 +218,17 @@
 (use-package vlf
   ;; very large files
   :config (require 'vlf-setup))
+
+(use-package dtrt-indent
+  :ensure t
+  :commands (dtrt-indent-global-mode
+             dtrt-indent-mode
+             dtrt-indent-adapt
+             dtrt-indent-undo
+             dtrt-indent-diagnosis
+             dtrt-indent-highlight)
+  :config
+  (dtrt-indent-global-mode))
 
 (provide 'init-edit)
 ;;; init-edit.el ends here

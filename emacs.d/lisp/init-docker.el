@@ -1,4 +1,5 @@
 (use-package docker
+  :defer t
   :bind ("C-c D" . docker)
   :config (setq docker-containers-show-all t))
 

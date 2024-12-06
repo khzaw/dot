@@ -19,10 +19,10 @@
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-spacing 1)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'medium :height 140)
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'medium :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "CommitMono" :weight 'medium :height 1.0))
+  (setq-default line-spacing 2)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 130 :width 'semi-condensed)
+  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "CommitMono" :weight 'normal :height 1.0))
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -265,6 +265,8 @@
   (setq sideline-display-backend-name t)
   (progn
     (evil-leader/set-key "s" 'sideline-mode)))
+
+(use-package spacious-padding)
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

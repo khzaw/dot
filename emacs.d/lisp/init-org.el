@@ -10,13 +10,12 @@
   :bind (("C-c C-c" . org-edit-src-exit))
   :custom
   (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
-  (org-agenda-files '("~/Dropbox/notes/agenda"))
+  (org-agenda-files '("~/Dropbox/notes/agenda" "~/Dropbox/notes/inbox.org" "~/Dropbox/notes/todo.org"))
   (org-todo-keywords
-   '((sequence "TODO(t)" "|" "DOING(n)" "|" "DONE(d)" "|" "BLOCKED(b)")
-     ))
+   '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
   ;; (org-agenda-start-with-log-mode t)
-  ;; (org-log-done 'time)
   ;; (org-log-into-drawer t)
+  (org-log-done 'time) ; Record the task completion date.
   (org-pretty-entities t)
   (org-src-fontify-natively t)
   (org-src-preserve-indentation t)        ; use native major-mode indentation
@@ -42,14 +41,63 @@
   (org-startup-with-inline-images t) ; always display images
   (org-confirm-babel-evaluate nil) ; just evaluate
 
+  (org-refile-targets '(("~/Dropbox/notes/todo.org" :maxlevel .1))) ; Allow moving task from anywhere into todo
+  (org-capture-templates
+   '(("t" "todo" entry (file "~/Dropbox/notes/inbox.org")
+      "* TODO %?\n/Entered on/ %U\n")
+     ("j" "Journal" entry (file+olp+datetree "~/Dropbox/notes/journal.org")
+      "* %?\n")))
   :hook
   ((org-babel-after-execute . org-redisplay-inline-images)
+   (org-babel-after-execute . org-display-inline-images)
    (org-mode . (lambda ()
                  (variable-pitch-mode)
                  (setq visual-fill-column-center-text nil)
                  (visual-fill-column-mode))))
   :config
   (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
+  (global-set-key (kbd "<f6>") 'org-capture)
+  (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
+
+
+
+  ;; The GTD view
+  (setq-default org-agenda-custom-commands
+                '(("g" "Get Things Done (GTD)"
+                   ((agenda ""
+                            ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                             (org-deadline-warning-days 0)))
+                    (todo "NEXT"
+                          ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                           (org-agenda-prefix-format "  %i %-12:c [%e] ")
+                           (org-agenda-overriding-header "\nTasks\n")))
+                    (tags-todo "inbox"
+                               ((org-agenda-prefix-format "  %?-12t% s")
+                                (org-agenda-overriding-header "\nInbox\n")))
+                    (tags "CLOSED>=\"<today>\""
+                          ((org-agenda-overriding-header "\nCompleted today\n")))))))
+
+  ;; Press F4 to get things done!
+  (global-set-key (kbd "<f4>") (lambda () (interactive) (org-agenda nil "g")))
+
+
+  ;; With auto save disabled
+  (defun org-archive-done-tasks ()
+    "Archive all tasks marked DONE in the file."
+    (interactive)
+    ;; Disable auto save to avoid repeated file write.
+    (setq org-archive-subtree-save-file-p nil)
+    ;; unwind-protect is like try/finally
+    (unwind-protect
+        ;; process the entry in reverse to avoid changes in positioning
+        (mapc (lambda(entry)
+                (goto-char entry)
+                (org-archive-subtree))
+              (reverse (org-map-entries (lambda () (point)) "TODO=\"DONE\"" 'file)))
+      ;; Enable auto save, even if an exception is raised.
+      (setq org-archive-subtree-save-file-p t))
+    (org-save-all-org-buffers))
+
   (add-hook 'org-mode-hook
             (lambda ()
               (font-lock-add-keywords

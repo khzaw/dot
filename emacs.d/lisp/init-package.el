@@ -18,6 +18,8 @@
 (eval-when-compile
   (require 'use-package))
 (setq straight-use-package-by-default t)
+(straight-use-package 'org)
+
 
 ;; `require-with-check' is a very new function
 ;; projectile loads project but doesn't declare it as a dependency

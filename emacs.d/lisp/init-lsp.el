@@ -3,8 +3,7 @@
   :commands (lsp-enable-which-key-integration
              lsp-format-buffer
              lsp-organize-imports)
-  :hook (
-				 (kotlint-mode . lsp-deferred)
+  :hook ((kotlin-mode . lsp-deferred)
          ;;(typescript-tsx-mode . lsp-deferred)
          ;; ((go-mode sh-mode) . lsp-deferred)
          ;; (prog-mode . (lambda ()
@@ -37,11 +36,11 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :bind (("C-c u" . lsp-ui-imenu)
-          :map lsp-ui-mode-map
-          ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-          ([remap xref-find-references] . lsp-ui-peek-find-references)
-          ("C-c l g n" . lsp-ui-find-next-reference)
-          ("C-c l g p" . lsp-ui-find-prev-reference))
+         :map lsp-ui-mode-map
+         ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+         ([remap xref-find-references] . lsp-ui-peek-find-references)
+         ("C-c l g n" . lsp-ui-find-next-reference)
+         ("C-c l g p" . lsp-ui-find-prev-reference))
   :custom
   (lsp-ui-peek-always-show nil)
   (lsp-ui-sideline-show-hover nil)
@@ -52,9 +51,11 @@
   (lsp-ui-doc-delay 0.3)
   :init
   (setq lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
-                               ,(face-foreground 'font-lock-string-face)
-                               ,(face-foreground 'font-lock-constant-face)
-                               ,(face-foreground 'font-lock-variable-name-face))))
+                              ,(face-foreground 'font-lock-string-face)
+                              ,(face-foreground 'font-lock-constant-face)
+                              ,(face-foreground 'font-lock-variable-name-face))))
+
+
 
 (use-package lsp-jedi
   :after lsp-mode

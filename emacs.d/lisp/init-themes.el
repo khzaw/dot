@@ -15,8 +15,7 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-colors")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config)
-  (load-theme 'doom-palenight t))
+  (doom-themes-org-config))
 
 (use-package modus-themes
   :config
@@ -40,9 +39,7 @@
        `(window-divider ((t :background ,bg :foreground ,bg)))
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
-  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
-  ;; (load-theme 'modus-vivendi-tritanopia t)
-  )
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
 
 (use-package ef-themes)
 
@@ -64,7 +61,8 @@
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
 (use-package tomorrow-night-deepblue-theme
-  :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
+  :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme")
+  :config (load-theme 'tomorrow-night-deepblue t))
 
 (use-package nano-theme
   :straight (:type git :host github :repo "rougier/nano-theme"))
@@ -100,5 +98,8 @@
   (flexoki-themes-use-bold-keywords t)
   (flexoki-themes-use-bold-builtins t)
   (flexoki-themes-use-italic-comments t))
+
+(use-package green-phosphor-theme
+  :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
 
 (provide 'init-themes)

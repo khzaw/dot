@@ -87,13 +87,14 @@
       "ed" 'eglot-find-declaration)))
 
 (use-package eglot-booster
-  :striaght (:type git :host github :repo "jdtsmith/eglot-booster")
+  :straight (:type git :host github :repo "jdtsmith/eglot-booster")
+  :if (executable-find "emacs-lsp-booster")
   :after eglot
   :config (eglot-booster-mode))
 
 (use-package consult-eglot
   :bind (:map eglot-mode-map
-         ([remap xref-find-apropos] .  consult-eglot-symbols)))
+              ([remap xref-find-apropos] .  consult-eglot-symbols)))
 
 (use-package flycheck-eglot
   :straight (:type git :repo "intramurz/flycheck-eglot" :host github)
@@ -153,5 +154,10 @@ of `flymake-eslint-executable-name.'"
 
   ;; Projectile users
   (setq dape-cwd-fn 'projectile-project-root))
+
+(use-package sideline-eglot
+  :straight (:type git :host github :repo "emacs-sideline/sideline-eglot")
+  :init
+  (setq sideline-backends-right '(sideline-eglot)))
 
 (provide 'init-eglot)

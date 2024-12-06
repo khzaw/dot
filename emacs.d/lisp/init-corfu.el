@@ -60,7 +60,7 @@
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu" :files (:defaults "extensions/*"))
   :custom
-  (corfu-preselect 'directory) ;; select the first candidate, except for directories
+  (corfu-preselect 'valid) ;; select the first candidate, except for directories
   (corfu-auto t)
   (corfu-separator ?_)         ;; Set to orderless separator, if not using space
   (corfu-auto-delay 0.35)
@@ -110,6 +110,10 @@ https://github.com/minad/corfu."
            (fboundp 'comint-send-input))
       (comint-send-input))))
   (advice-add #'corfu-insert :after #'corfu-send-shell)
+  ;; Sort by input history (no need to modify `corfu-sort-function').
+  (with-eval-after-load 'savehist
+    (corfu-history-mode 1)
+    (add-to-list 'savehist-additional-variables 'corfu-history))
 
   :bind (:map corfu-map
          ("C-p" . corfu-previous)
