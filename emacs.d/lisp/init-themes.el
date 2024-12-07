@@ -43,16 +43,8 @@
 
 (use-package ef-themes)
 
-(use-package stimmung-themes
-  :straight (stimmung-themes :host github :repo "motform/stimmung-themes"))
-
-(use-package timu-caribbean-theme)
-
 (use-package os1-theme
   :straight (:type git :host github :repo "sashimacs/os1-theme"))
-
-(use-package hima-theme
-  :straight (:type git :host github :repo "meain/hima-theme"))
 
 (use-package apropospriate-theme
   :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
@@ -84,14 +76,8 @@
   :after doom-themes
   :straight (:type git :host github :repo "shrikecode/doom-kyoto-night-theme"))
 
-(use-package carbon-theme
-  :straight (:type git :host github :repo "gopesh-human/carbon-theme"))
-
 (use-package eink-theme
   :straight (:type git :host github :repo "maio/eink-emacs"))
-
-(use-package no-clown-fiesta-theme
-  :straight (no-clown-fiesta-theme :type git :host github :repo "emacsmirror/no-clown-fiesta-theme"))
 
 (use-package flexoki-themes
   :custom

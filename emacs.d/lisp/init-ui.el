@@ -266,7 +266,10 @@
   (progn
     (evil-leader/set-key "s" 'sideline-mode)))
 
-(use-package spacious-padding)
+(use-package spacious-padding
+  :config (setq spacious-padding-widths
+                '(:mode-line-width 0))
+  (spacious-padding-mode 1))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
