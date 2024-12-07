@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*
 ;; Kill current buffer (instead of asking first buffer name)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
@@ -37,11 +38,11 @@
 ;; Open recent files
 (global-set-key (kbd "C-c r") 'recentf-open-files)
 
-(defun khz/keyboard-quit-dwim ()
+(defun khz/keyboard-quit-dwim (&optional interactive)
   "Do-What-I-Mean behaviour for a general `keyboard-quit'.
 
   The generic `keyboard-quit' does not do the expected thing when
-  the minibuffer is open.  Whereas we want it to close the
+  the minibuffer is open.  Whereas I want it to close the
   minibuffer, even without explicitly focusing it.
 
   The DWIM behaviour of this command is as follows:
@@ -50,19 +51,20 @@
   - When a minibuffer is open, but not focused, close the minibuffer.
   - When the Completions buffer is selected, close it.
   - In every other case use the regular `keyboard-quit'."
-  (interactive)
-  (cond
-   ((region-active-p)
-    (keyboard-quit))
-   ((derived-mode-p 'completion-list-mode)
-    (delete-completion-window))
-   ((> (minibuffer-depth) 0)
-    (while (> (minibuffer-depth) 0)
-      (abort-recursive-edit)))
-   (t
-    (keyboard-quit))))
-
-(define-key global-map (kbd "C-g") #'khz/keyboard-quit-dwim)
+  (interactive (list 'interactive))
+  (let ((inhibit-quit t))
+    (cond ((minibuffer-window-active-p (minibuffer-window))
+           ;; quit the minibuffer if open.
+           (when interactive
+             (setq this-command 'abort-recursive-edit))
+           (abort-recursive-edit))
+          ;; don't abort macros
+          ((or defining-kbd-macro executing-kbd-macro) nil)
+          ;; back to the default
+          ((unwind-protect (keyboard-quit)
+             (when interactive
+               (setq this-command 'keyboard-quit)))))))
+(define-key global-map [remap keyboard-quit] #'khz/keyboard-quit-dwim)
 
 (provide 'init-bindings)
 ;;; init-bindings.el ends here

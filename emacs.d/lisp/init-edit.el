@@ -1,4 +1,3 @@
-;; Automatically reload files modified by external program  -*- lexical-binding: t; -*-
 (use-package autorevert
   :straight (:type built-in)
   :diminish

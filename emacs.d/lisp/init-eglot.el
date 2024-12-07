@@ -169,6 +169,7 @@ of `flymake-eslint-executable-name.'"
   (eglot-inactive-regions-mode 1))
 
 (use-package eglot-codelens
+  :disabled t
   :after eglot
   :straight (:type git :host github :repo "Gavinok/eglot-codelens")
   :config

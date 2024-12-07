@@ -31,11 +31,10 @@
   (evil-escape-mode))
 
 (use-package evil-collection
-  :after evil
+  :after (evil magit)
   :config
   ;; (setq evil-collection-outline-bind-tab-p t) ;; enable <tab>-based bindings in Outline mode.
   ;; q is enough; ESC is way too easy to accidentally press
-  (evil-define-key 'normal magit-status-mode-map [escape] nil)
   (evil-collection-init))
 
 (use-package outline-indent
