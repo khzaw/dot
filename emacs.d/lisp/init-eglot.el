@@ -160,4 +160,25 @@ of `flymake-eslint-executable-name.'"
   :init
   (setq sideline-backends-right '(sideline-eglot)))
 
+(use-package eglot-inactive-regions
+  :straight (:type git :host github :repo "fargiolas/eglot-inactive-regions")
+  :custom
+  (eglot-inactive-regions-style 'darken-foreground)
+  (eglot-inactive-regions-opacity 0.4)
+  :config
+  (eglot-inactive-regions-mode 1))
+
+(use-package eglot-codelens
+  :after eglot
+  :straight (:type git :host github :repo "Gavinok/eglot-codelens")
+  :config
+  (eglot-codelens-mode +1))
+
+(use-package eglot-menu
+  :straight (eglot-menu
+             :repo "KarimAziev/eglot-menu"
+             :type git
+             :host github)
+  :commands (eglot-menu-reconnect))
+
 (provide 'init-eglot)
