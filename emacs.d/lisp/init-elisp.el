@@ -89,8 +89,12 @@ Lisp function does not specify a special indentation."
 
 (use-package eldoc
   :straight (:type built-in)
+  :preface
+  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
   :config
   (setq max-mini-window-height 0.2)
+  (eldoc-add-command-completions "paredit-")
+  (eldoc-add-command-completions "combobulate-")
   :diminish)
 
 (use-package help-mode

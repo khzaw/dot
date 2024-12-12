@@ -10,7 +10,7 @@
   :bind (("C-c C-c" . org-edit-src-exit))
   :custom
   (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
-  (org-agenda-files '("~/Dropbox/notes/agenda" "~/Dropbox/notes/inbox.org" "~/Dropbox/notes/todo.org"))
+  (org-agenda-files '("~/Dropbox/notes/agenda"))
   (org-todo-keywords
    '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
   ;; (org-agenda-start-with-log-mode t)

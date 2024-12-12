@@ -162,5 +162,8 @@
   :config
   (setq graphviz-dot-indent-width 2))
 
+(use-package promql-mode
+  :straight (:type git :host github :repo "Andor/promql-mode"))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here

@@ -60,10 +60,10 @@
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu" :files (:defaults "extensions/*"))
   :custom
-  (corfu-preselect 'valid) ;; select the first candidate, except for directories
+  (corfu-preselect 'directory)
   (corfu-auto t)
   (corfu-separator ?_)         ;; Set to orderless separator, if not using space
-  (corfu-auto-delay 0.35)
+  (corfu-auto-delay 0.4)
   (corfu-quit-no-match 'separator) ;; or t
   (corfu-auto-prefix 3)
   ;; :bind

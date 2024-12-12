@@ -1,5 +1,5 @@
 ;; Optimization  -*- lexical-binding: t; -*-
-(setq idle-update-delay 1.0)
+(setq which-func-update-delay 1.0)
 
 (setq-default cursor-in-non-selected-windows nil)
 
@@ -35,20 +35,7 @@
 (menu-bar-mode 0)
 (setq x-underline-at-descent-line t)
 
-(defun khz/toggle-window-transparency ()
-  "Toggle transparency."
-  (interactive)
-  (let ((alpha-transparency 75))
-    (pcase (frame-parameter nil 'alpha-background)
-      (alpha-transparency (set-frame-parameter nil 'alpha-background 100))
-      (t (set-frame-parameter nil 'alpha-background alpha-transparency)))))
-
-(global-set-key (kbd "C-c T T") 'khz/toggle-window-transparency)
-(global-set-key (kbd "C-c T ]") (lambda () (interactive) (khz/frame-transparency-adjust 2)))
-(global-set-key (kbd "C-c T [") (lambda () (interactive) (khz/frame-transparency-adjust -2)))
-
 (use-package solaire-mode
-  :disabled t
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)
@@ -270,6 +257,14 @@
   :config (setq spacious-padding-widths
                 '(:mode-line-width 0))
   (spacious-padding-mode 1))
+
+(use-package quick-peek
+  :straight (:type git :host github :repo "cpitclaudel/quick-peek"))
+
+(use-package peek
+  :straight (:host sourcehut :repo "meow_king/peek")
+  :custom
+  (peek-enable-eldoc-display-integration t))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
