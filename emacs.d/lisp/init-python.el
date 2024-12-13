@@ -9,7 +9,7 @@
 
 (use-package pyenv
   :if (executable-find "pyenv")
-  :straight (:host github :repo "aiguofer/pyenv.el")
+  :straight (:type git :host github :repo "aiguofer/pyenv.el")
   :config
   (setq pyenv-use-alias 't)
   (setq pyenv-modestring-prefix " ")
@@ -77,4 +77,4 @@
   :hook (python-ts-mode . python-black-on-save-mode-enable-dwim))
 
 (provide 'init-python)
-;;; init-python.el ends here
+;; init-python.el ends here

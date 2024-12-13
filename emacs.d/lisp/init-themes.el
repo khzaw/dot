@@ -13,7 +13,7 @@
   (doom-themes-visual-bell-config)
   (if (display-graphic-p)
       (progn
-        (setq doom-themes-treemacs-theme "doom-colors")
+        (setq doom-themes-treemacs-theme "doom-atom")
         (doom-themes-treemacs-config)))
   (doom-themes-org-config))
 
@@ -64,11 +64,6 @@
 ;; (custom-set-faces
 ;;  `(shadow ((t :foreground "#cccccc")))))
 
-(use-package acme-theme
-  :straight (:type git :host github :repo "ianyepan/acme-emacs-theme"))
-
-(use-package plan9-theme
-  :straight (:type git :host github :repo "john2x/plan9-theme.el"))
 
 (use-package grandshell-theme)
 
@@ -87,5 +82,6 @@
 
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
+
 
 (provide 'init-themes)

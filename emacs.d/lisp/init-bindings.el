@@ -22,9 +22,9 @@
 (global-set-key (kbd "C-c e l") 'khz/open-work-links)
 
 ;; M-return for frame maximization toggle
-(global-set-key (kbd "<M-return>") 'toggle-frame-maximized)
+(global-set-key (kbd "<M-return>") 'toggle-frame-fullscreen)
 (with-eval-after-load 'org
-  (define-key org-mode-map (kbd "<M-return>") 'toggle-frame-maximized))
+  (define-key org-mode-map (kbd "<M-return>") 'toggle-frame-fullscreen))
 
 ;; Close frame if not the last, kill emacs else
 (defun nano--delete-frame-or-kill-emacs ()

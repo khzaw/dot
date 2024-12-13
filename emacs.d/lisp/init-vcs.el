@@ -1,3 +1,6 @@
+;;; -*- lexical-binding: t; -*-
+
+
 (use-package magit
   :bind ("C-x g" . magit-status)
   :init (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
@@ -175,7 +178,6 @@
   :hook
   (git-commit-mode . conventional-commit-setup))
 
-
 (use-package git-link
   :straight (:type git :host github :repo "sshaw/git-link")
   :config
@@ -316,10 +318,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (use-package magit-gitflow
   :hook (magit-mode . turn-on-magit-gitflow))
-
-(use-package magit-pretty-graph
-  :straight (:type git :host github :repo "georgek/magit-pretty-graph"))
-
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

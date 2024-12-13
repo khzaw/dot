@@ -229,5 +229,12 @@
   :config
   (dtrt-indent-global-mode))
 
+(use-package transform-symbol-at-point
+  :straight (:type git :host github :repo "waymondo/transform-symbol-at-point")
+  :custom (transform-symbol-at-point-cursor-after-transform 'next-symbol)
+  :bind ("s-;" . transform-symbol-at-point))
+
+
+
 (provide 'init-edit)
 ;;; init-edit.el ends here

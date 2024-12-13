@@ -45,6 +45,7 @@
 (require 'secrets)
 (require 'init-package)
 (require 'init-exec-path)
+(require 'init-maintenance)
 
 (require 'init-layout)
 (require 'init-bindings)
