@@ -1,11 +1,11 @@
+;; -*- lexical-binding: t; -*-
 
 (use-package tuareg
   :config
   (setq tuareg-opam-insinuate t))
 
 (use-package dune
-  :disabled t
-  :straight (:type git :host github :repo "ocaml/dune" :files ("editor-integrations/emacs/*.el")))
+  :straight (:type git :host github :repo "ocaml/dune" :depth 1 :files ("editor-integration/emacs/*.el")))
 
 (use-package merlin
   :config
@@ -15,6 +15,11 @@
   :hook ((tuareg-mode) . merlin-eldoc-setup))
 
 (use-package ocp-indent)
+
+(use-package utop
+  :config
+  (setq utop-command "opam exec -- utop -emacs")
+  :hook ((turage-mode) . utop-minor-mode))
 
 
 (provide 'init-ocaml)

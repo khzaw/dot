@@ -234,6 +234,13 @@
   :custom (transform-symbol-at-point-cursor-after-transform 'next-symbol)
   :bind ("s-;" . transform-symbol-at-point))
 
+(use-package smartparens
+  :straight (smartparens :type git
+                         :host github
+                         :repo "Fuco1/smartparens")
+  :hook (prog-mode text-mode markdown-mode)
+  :config (require 'smartparens-config)
+  :commands (smartparens-mode sp-forward-slurp-sexp))
 
 
 (provide 'init-edit)

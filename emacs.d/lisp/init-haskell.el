@@ -1,4 +1,7 @@
-(use-package haskell-mode :defer t)
+(use-package haskell-mode
+  :straight (haskell-mode :type git
+                          :host github
+                          :repo "haskell/haskell-mode"))
 
 (use-package haskell-ts-mode
   :disabled t

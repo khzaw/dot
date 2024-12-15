@@ -29,6 +29,13 @@
   :straight (:type git :host github :repo "astoff/devdocs.el")
   :bind ("C-h D" . devdocs-lookup))
 
+;; generate uuid
 (global-set-key (kbd "C-c C-'") 'uuidgen)
+
+(use-package writegood-mode
+  :straight (:type git :host github :repo "bnbeckwith/writegood-mode"))
+
+(use-package artbollocks-mode
+  :straight (:type git :host github :repo "sachac/artbollocks-mode"))
 
 (provide 'init-others)

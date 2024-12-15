@@ -63,7 +63,7 @@
   (corfu-preselect 'directory)
   (corfu-auto t)
   (corfu-separator ?_)         ;; Set to orderless separator, if not using space
-  (corfu-auto-delay 0.4)
+  (corfu-auto-delay 0.7)
   (corfu-quit-no-match 'separator) ;; or t
   (corfu-auto-prefix 3)
   ;; :bind
@@ -85,17 +85,17 @@
                                                   #'corfu-send))))
   ;; Complete on punctuation
   ;; https://github.com/minad/corfu/wiki#tab-and-go-completion
-  (dolist (c (list (cons "SPC" " ")
-                   (cons "." ".")
-                   (cons "," ",")
-                   (cons ":" ":")
-                   (cons ")" ")")
-                   (cons "}" "}")
-                   (cons "]" "]")))
-    (define-key corfu-map (kbd (car c)) `(lambda ()
-                                           (interactive)
-                                           (corfu-insert)
-                                           (insert ,(cdr c)))))
+  ;; (dolist (c (list (cons "SPC" " ")
+  ;;                  (cons "." ".")
+  ;;                  (cons "," ",")
+  ;;                  (cons ":" ":")
+  ;;                  (cons ")" ")")
+  ;;                  (cons "}" "}")
+  ;;                  (cons "]" "]")))
+  ;;   (define-key corfu-map (kbd (car c)) `(lambda ()
+  ;;                                          (interactive)
+  ;;                                          (corfu-insert)
+  ;;                                          (insert ,(cdr c)))))
 
 
   (defun corfu-send-shell (&rest _)
