@@ -1,7 +1,8 @@
-;;; -*- lexical-binding: t; -*-
-
+;; -*- lexical-binding: t; -*-
 
 (use-package magit
+  :defer t
+  :commands (magit-status magit-blame magit-get-current-branch)
   :bind ("C-x g" . magit-status)
   :init (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
   :custom
@@ -17,6 +18,7 @@
   ;; (setq magit-bury-buffer-function #'quit-window) ;; let shackle handle this
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
 
+  ;; don't refresh status buffer automatically
   (setq magit-refresh-status-buffer nil)
   ;; Don't display parent/related refs in commit buffers
   (setq magit-revision-insert-related-refs nil)
