@@ -17,6 +17,7 @@
 (use-package ocp-indent)
 
 (use-package utop
+  :if (executable-find "opam")
   :config
   (setq utop-command "opam exec -- utop -emacs")
   :hook ((turage-mode) . utop-minor-mode))

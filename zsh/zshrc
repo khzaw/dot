@@ -1,3 +1,5 @@
+[[ -s "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -10,6 +12,7 @@ if [[ `uname` == "Darwin" ]]; then
 else
     source /usr/share/zsh/share/antigen.zsh
 fi
+
 
 
 antigen use oh-my-zsh
@@ -93,10 +96,11 @@ cd() {
 	fi
 }
 
-[[ -s "/home/khz/.gvm/scripts/gvm" ]] && source "/home/khz/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+# local config
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
-eval "$(saml2aws --completion-script-zsh)"
+[[ -s "/Users/k.htet/.gvm/scripts/gvm" ]] && source "/Users/k.htet/.gvm/scripts/gvm"
+
+source <(git-town completions zsh)

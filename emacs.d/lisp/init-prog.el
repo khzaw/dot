@@ -80,7 +80,7 @@
 
 (use-package ssh-config-mode
   :straight (:type built-in)
-  :mode ("jumphost*$'" . sh-mode))
+  :mode ("jumphost*$'" . ssh-config-mode))
 
 (use-package sh-mode
   :straight (:type built-in)

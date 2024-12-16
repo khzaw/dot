@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 
 (use-package consult
   :after projectile
@@ -348,18 +349,7 @@
   :bind (:map minibuffer-local-map ("M-a" . marginalia-cycle))
   :init (marginalia-mode))
 
-(defun +embark-live-vertico()
-  "Shrink vertico minibuffer when `embark-live' is active."
-  (when-let (win (and (string-prefix-p "*Embark Live" (buffer-name))
-                   (active-minibuffer-window)))
-    (with-selected-window win
-      (when (and (bound-and-true-p vertico--input)
-              (fboundp 'vertico-multiform-unobtrusive))
-        (vertico-multiform-unobtrusive)))))
-(add-hook 'embark-collect-mode-hook #'+embark-live-vertico)
-
-
-;; manual preview for non-consult commands using embark
+;; Manual preview for non-Consult commands using Embark
 (define-key minibuffer-local-map (kbd "M-.") #'my-embark-preview)
 (defun my-embark-preview ()
   "Previews candidate in vertico buffer, unless it's a consult command"
@@ -368,6 +358,7 @@
     (save-selected-window
       (let ((embark-quit-after-action nil))
         (embark-dwim)))))
+
 
 (use-package consult-ls-git
   :straight (consult-ls-git :type git :host github :repo "rcj/consult-ls-git")
@@ -381,11 +372,12 @@
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
 (use-package affe
+  :if (executable-find "rg")
   :config
   (consult-customize affe-grep :preview-key "M-.")
   (defun affe-orderless-regexp-compiler (input _type _ignorecase)
     (setq input (orderless-pattern-compiler input))
-    (cons input (apply-partially #'orderless--highlight input)))
+    (cons input (apply-partially #'orderless--highlight input t)))
   (setq affe-regexp-compiler #'affe-orderless-regexp-compiler))
 
 (use-package vertico-truncate
@@ -404,6 +396,16 @@
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none))))
+
+  (defun +embark-live-vertico ()
+    "Shrink Vertico minibuffer when `embark-live' is active."
+    (when-let (win (and (string-prefix-p "*Embark Live" (buffer-name))
+                        (active-minibuffer-window)))
+      (with-selected-window win
+        (when (and (bound-and-true-p vertico--input)
+                   (fboundp 'vertico-multiform-unobtrusive))
+          (vertico-multiform-unobtrusive)))))
+  (add-hook 'embark-collect-mode-hook #'+embark-live-vertico)
 
   (defun embark-which-key-indicator ()
     "An embark indicator that displays keymaps using which-key.
