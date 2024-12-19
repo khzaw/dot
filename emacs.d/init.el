@@ -81,6 +81,8 @@
 (require 'init-vcs)
 (require 'init-terminal)
 
+(require 'init-pragmatapro)
+
 ;; Programming languages
 (require 'init-elisp)
 (require 'init-java)
@@ -94,7 +96,7 @@
 (require 'init-tex)
 (require 'init-web)
 (require 'init-prog)
-
+'
 ;; programming tools
 (require 'init-restclient)
 

@@ -275,9 +275,7 @@
                     (t              `(,(car old) ,arg)))))
     (if elt (setcdr elt new) (push `(alpha ,@new) default-frame-alist))
     (set-frame-parameter nil 'alpha new)))
-(set-frame-alpha 87)
-
-(global-set-key (kbd "C-c C-t") 'set-frame-alpha)
+(global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
 
 
 (provide 'init-ui)

@@ -18,7 +18,8 @@
   (setq prettify-symbols-unprettify-at-point 'right-edge)
   ;; :hook (prog-mode . prettify-hook)
   :config
-  :hook (prog-mode . (lambda () (yafolding-mode)))
+  :hook ((prog-mode . (lambda () (yafolding-mode)))
+         (prog-mode . prettify-hook))
   (global-prettify-symbols-mode))
 
 
