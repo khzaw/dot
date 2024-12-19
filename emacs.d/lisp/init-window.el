@@ -53,6 +53,7 @@
      help-mode
      helpful-mode
      devdocs-mode
+     utop-mode
      "\\*Warnings\\*"
      "\\*eldoc\\*"
      "\\*Flymake log\\*"
@@ -60,7 +61,6 @@
      "\\*Go Test\\*"
      flycheck-error-list-mode
      compilation-mode
-     go-test-mode
      "^\\*vterm.*\\*$" vterm-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*term.*\\*$" term-mode

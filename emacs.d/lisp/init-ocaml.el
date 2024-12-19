@@ -13,8 +13,8 @@
                                         tuareg-prettify-symbols-extra-alist
                                         prettify-symbols-alist))
                           (prettify-symbols-mode 1))))
-  :custom-face
-  (tuareg-font-lock-governing-face ((t (:foreground ,(face-foreground 'font-lock-keyword-face))))))
+  :custom
+  (tuareg-font-lock-governing-face ((t :inherit font-lock-keyword-face))))
 
 (use-package dune
   :straight (:type git :host github :repo "ocaml/dune" :depth 1 :files ("editor-integration/emacs/*.el"))
