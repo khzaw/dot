@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package autorevert
   :straight (:type built-in)
   :diminish

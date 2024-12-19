@@ -15,8 +15,7 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-atom")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config)
-  (load-theme 'doom-gruvbox-light t))
+  (doom-themes-org-config))
 
 (use-package modus-themes
   :config
@@ -44,20 +43,12 @@
 
 (use-package ef-themes)
 
-(use-package os1-theme
-  :straight (:type git :host github :repo "sashimacs/os1-theme"))
-
-(use-package apropospriate-theme
-  :straight (:type git :host github :repo "waymondo/apropospriate-theme"))
-
 (use-package color-theme-sanityinc-tomorrow
-  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
+  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow")
+  :config (load-theme 'sanityinc-tomorrow-bright t))
 
 (use-package tomorrow-night-deepblue-theme
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
-
-(use-package nano-theme
-  :straight (:type git :host github :repo "rougier/nano-theme"))
 
 (use-package almost-mono-themes
   :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
@@ -74,14 +65,8 @@
 (use-package eink-theme
   :straight (:type git :host github :repo "maio/eink-emacs"))
 
-(use-package flexoki-themes
-  :custom
-  (flexoki-themes-use-bold-keywords t)
-  (flexoki-themes-use-bold-builtins t)
-  (flexoki-themes-use-italic-comments t))
-
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
 
-
 (provide 'init-themes)
+;; init-themes.el ends here

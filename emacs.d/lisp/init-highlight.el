@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 
 ;; Highlight the current line
 (use-package hl-line
