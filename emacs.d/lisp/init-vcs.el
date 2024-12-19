@@ -23,7 +23,7 @@
   ;; Don't display parent/related refs in commit buffers
   (setq magit-revision-insert-related-refs nil)
 
-  (setq magit-save-repository-buffers nil ;; don't autosave repo buffers.
+  (setq magit-save-repository-buffers 'dontask
         display-line-numbers-type 'visual
         markdown-display-remote-images t
         magit-section-disable-line-numbers nil))
@@ -37,10 +37,23 @@
 (use-package magit-todos
   :after magit)
 
+
 (setq auth-sources (list
                     (concat (getenv "XDG_CONFIG_HOME") "/authinfo.gpg")
                     "~/.authinfo"
                     "~/.authinfo.gpg"))
+
+(use-package git-commit
+  :config
+  (add-to-list 'git-commit-style-convention-checks 'overlong-summary-line)
+  (global-git-commit-mode))
+
+(use-package diff-hl
+  :custom (diff-refine 'navigation)
+  :config
+  (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
+  (global-diff-hl-mode))
 
 (use-package forge
   :after magit
