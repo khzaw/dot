@@ -3,14 +3,14 @@
              eglot-rename
              eglot-format-buffer
              eglot-ensure)
-  :hook ((go-mode
-          go-ts-mode
-          css-mode css-ts-mode
-          python-mode python-ts-mode
-          markdown-mode
-          java-mode java-ts-mode
-          tsx-ts-mode typescript-ts-mode)
-         . eglot-ensure)
+  :hook
+  ((go-mode go-ts-mode) . eglot-ensure)
+  ((css-mode css-ts-mode) . eglot-ensure)
+  ((python-mode python-ts-mode) . eglot-ensure)
+  (markdown-mode . eglot-ensure)
+  ((java-mode java-ts-mode) . eglot-ensure)
+  ((tsx-ts-mode typescript-ts-mode) . eglot-ensure)
+  (tuareg-mode . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
   (eglot-report-progress nil) ; Prevent minibuffer spams
