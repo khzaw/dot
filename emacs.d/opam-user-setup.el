@@ -60,7 +60,7 @@
     (require 'auto-complete nil t)))
 
 (defun opam-setup-ocp-indent ()
-  (opam-setup-complete)
+  ;; (opam-setup-complete)
   (autoload 'ocp-setup-indent "ocp-indent" "Improved indentation for Tuareg mode")
   (autoload 'ocp-indent-caml-mode-setup "ocp-indent" "Improved indentation for Caml mode")
   (add-hook 'tuareg-mode-hook 'ocp-setup-indent t)
@@ -71,7 +71,7 @@
   (opam-setup-add-ocaml-hook 'ocp-index-mode))
 
 (defun opam-setup-merlin ()
-  (opam-setup-complete)
+  ;; (opam-setup-complete)
   (require 'merlin)
   (opam-setup-add-ocaml-hook 'merlin-mode)
 
