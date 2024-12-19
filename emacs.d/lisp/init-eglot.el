@@ -11,7 +11,7 @@
   ((java-mode java-ts-mode) . eglot-ensure)
   ((tsx-ts-mode typescript-ts-mode) . eglot-ensure)
   (tuareg-mode . eglot-ensure)
-  :custom
+  (yaml-mode . eglot-ensure)
   (eglot-autoshutdown t)
   (eglot-report-progress nil) ; Prevent minibuffer spams
   :bind (("C-c e e" . #'eglot)
@@ -23,8 +23,10 @@
          ("C-c e d" . #'eglot-find-declaration)
          ("C-c e p" . #'eldoc-print-current-symbol-info))
   :config
+
   ;; Optimizations
   (fset #'jsonrpc--log-event #'ignore)
+
   (setq jsonrpc-event-hook nil)
 
   (setq eglot-extend-to-xref t)
@@ -40,6 +42,8 @@
    '(solidity-mode . ("nomicfoundation-solidity-language-server" "--stdio"))
    eglot-server-programs
    :test #'equal)
+
+  (add-to-list 'eglot-server-programs '(yaml-mode . ("yaml-language-server" "--stdio")))
 
   ;; specify explicitly to use orderless for eglot
   (setq completion-category-overrides '((eglot (styles . (orderless flex)))
