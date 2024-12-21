@@ -1,4 +1,5 @@
-;; Optimization  -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
+
 (setq which-func-update-delay 1.0)
 
 (setq-default cursor-in-non-selected-windows nil)

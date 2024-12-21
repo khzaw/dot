@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package visual-fill-column
   :custom
   (visual-fill-column-width 120)
@@ -152,7 +154,10 @@
     "Alist of org ob languages.")
 
   ;; ob-sh renamed to ob-shell since 26.1.
-  (cl-pushnew '(shell . t) load-language-alist)
+  (use-package ob-shell
+    :straight nil
+    :after org
+    :init (cl-pushnew '(shell . t) load-language-alist))
 
   (use-package ob-go
     :after org

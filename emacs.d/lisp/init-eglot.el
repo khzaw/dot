@@ -12,6 +12,7 @@
   ((tsx-ts-mode typescript-ts-mode) . eglot-ensure)
   (tuareg-mode . eglot-ensure)
   (yaml-mode . eglot-ensure)
+  :custom
   (eglot-autoshutdown t)
   (eglot-report-progress nil) ; Prevent minibuffer spams
   :bind (("C-c e e" . #'eglot)
