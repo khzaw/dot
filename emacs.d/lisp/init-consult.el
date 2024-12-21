@@ -375,7 +375,6 @@
   :if (executable-find "rg")
   :after consult
   :config
-  (require 'affe)
   (consult-customize affe-grep :preview-key "M-.")
   (defun affe-orderless-regexp-compiler (input _type _ignorecase)
     (setq input (orderless-pattern-compiler input))
