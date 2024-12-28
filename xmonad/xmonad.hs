@@ -25,7 +25,6 @@ import XMonad.Hooks.SetWMName
 -- Utils
 import XMonad.Util.Run
 import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Ungrab
 import XMonad.Util.Cursor
 import XMonad.Util.SpawnOnce
 import qualified XMonad.Util.Hacks as Hacks
