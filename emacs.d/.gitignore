@@ -1,4 +1,5 @@
 custom.el
+.emacs-custom.el
 projectile-bookmarks.eld
 projectile.cache
 elpy/
