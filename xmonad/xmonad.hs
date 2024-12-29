@@ -86,7 +86,7 @@ myTerminal :: String
 myTerminal = "alacritty"
 
 myBrowser :: String
-myBrowser = "brave"
+myBrowser = "zen-browser"
 
 myLauncher :: String
 myLauncher = "rofi -show run -dpi 196 -show-icons"
