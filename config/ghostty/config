@@ -1,0 +1,11 @@
+background = 000000
+foreground = ffffff
+
+font-family = Berkeley Mono
+window-theme = system
+theme = light:Belafonte Day,dark:Belafonte Night
+
+window-padding-x = 20
+window-padding-y = 20
+
+macos-titlebar-style = hidden
