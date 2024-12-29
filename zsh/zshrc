@@ -1,5 +1,3 @@
-[[ -s "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -14,7 +12,6 @@ else
 fi
 
 
-
 antigen use oh-my-zsh
 antigen bundle git
 antigen bundle git-extras
@@ -25,26 +22,15 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-history-substring-search
-antigen theme romkatv/powerlevel10k
+antigen theme lambda
 antigen apply
 
 zmodload zsh/zprof
 
 
-# if [[ `uname` == "Darwin" ]]; then
-    # pyenv init -i
-# fi
-
-
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-if [[ `uname` == "Darwin" ]]; then
-    source "$(brew --prefix)/opt/git-extras/share/git-extras/git-extras-completion.zsh"
-else
-    source /usr/share/doc/git-extras/git-extras-completion.zsh
-fi
 
 
 # eval "$(register-python-argcomplete pipx)"
@@ -73,12 +59,13 @@ unset file
 
 
 if [[ `uname` == "Linux" ]] then
-   source /usr/share/nvm/init-nvm.sh
-   alias pbcopy='xsel --clipboard --input'
-   alias pbpaste='xsel --clipboard --output'
+   source "$HOME/Code/dot/zsh/zshrc.linux"
 fi
 
-alias diff="$(brew --prefix)/bin/diff"
+if [[ `uname` == "Darwin" ]]; then
+   source "$HOME/Code/dot/zsh/zshrc.mac"
+fi
+
 
 
 LAST_REPO="" # start with an empty name
@@ -101,9 +88,6 @@ cd() {
 # local config
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
-[[ -s "/Users/k.htet/.gvm/scripts/gvm" ]] && source "/Users/k.htet/.gvm/scripts/gvm"
-
-source <(git-town completions zsh)
 
 
 # BEGIN opam configuration
@@ -111,5 +95,5 @@ source <(git-town completions zsh)
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-[[ ! -r '/Users/k.htet/.opam/opam-init/init.zsh' ]] || source '/Users/k.htet/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
 # END opam configuration
