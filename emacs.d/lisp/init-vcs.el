@@ -44,6 +44,7 @@
                     "~/.authinfo.gpg"))
 
 (use-package git-commit
+  :straight nil
   :config
   (add-to-list 'git-commit-style-convention-checks 'overlong-summary-line)
   (global-git-commit-mode))

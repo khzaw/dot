@@ -8,7 +8,8 @@
   (setq poetry-tracking-strategy 'switch-buffer))
 
 (use-package pyenv
-  :if (executable-find "pyenv")
+  :when (executable-find "pyenv")
+  :disabled t
   :straight (:type git :host github :repo "aiguofer/pyenv.el")
   :config
   (setq pyenv-use-alias 't)
