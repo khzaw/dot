@@ -25,6 +25,7 @@
 
 (use-package go-tag
   :after go-ts-mode
+  :if (executable-find "gomodifytags")
   :bind (:map go-ts-mode-map
          ("C-c t a" . go-tag-add)
          ("C-c t r" . go-tag-remove))
