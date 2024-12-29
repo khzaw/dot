@@ -75,9 +75,10 @@ underLine col = xmobarBorder "Bottom" col 3
 -- StartupHook
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "nitrogren --restore"
+  spawnOnce "nitrogen --restore"
   spawnOnce "picom -b"
   spawnOnce "udiskie -an"
+  spawnOnce "setxkbmap -option caps:ctrl_modifier"
   setWMName "xmonad"
 
 -- Variables

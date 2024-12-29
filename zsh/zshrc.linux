@@ -1,1 +1,4 @@
 source /usr/share/doc/git-extras/git-extras-completion.zsh
+source /usr/share/nvm/init-nvm.sh
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'

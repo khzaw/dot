@@ -1,7 +1,3 @@
-source /usr/share/nvm/init-nvm.sh
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
-
 alias diff="$(brew --prefix)/bin/diff"
 
 source <(git-town completions zsh)

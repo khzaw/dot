@@ -21,15 +21,16 @@ Config { font = "Berkeley Mono 18"
          , Run Memory ["-t", "\xf233 mem: <usedratio>% (<used>M)"] 20
            -- HDD
          , Run DiskU [("/", "\xf0c7 hdd: <free> free") ] [] 20
-         -- , Run DiskU [("/", "\xf0c7 hdd: <usedp>% used, <free> free") ] [] 20
 
            -- GPU temperature
          , Run Com "nvidia-smi" ["--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"] "gpu" 2
-           -- Date
-         , Run Date "\xf133 %a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 50
 
          -- Volume
-         -- , Run Alsa "default" "Master" ["-t", "\xf028 vol: <volume>% "]
+         -- , Run Alsa "default" "Master" ["--", "--alsactl=/usr/bin/alsactl"]
+         , Run Com "pactl" ["get-sink-volume", "alsa_output.pci-0000_2a_00.1.hdmi-stereo", "|", "awk", "'/Volume/{print $5}'"] "volume" 50
+
+           -- Date
+         , Run Date "\xf133 %a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 50
 
          , Run XPropertyLog "_XMONAD_TRAYPAD"
 
@@ -42,7 +43,7 @@ Config { font = "Berkeley Mono 18"
                      \<fc=#ddbd94> gpu: %gpu%°C</fc><fc=#666> | </fc>\
                      \<fc=#8b8f78>%memory%</fc><fc=#666> | </fc>\
                      \<fc=#5a8c93>%disku%</fc><fc=#666> | </fc>\
-                     -- \<fc=#8d6947>%alsa:default:Master%</fc>\
+                     \<fc=#8d6947>%volume%</fc><fc=#666> | </fc>\
                      \<fc=#118a71>%date% </fc><fc=#666> | </fc>\
                      \%_XMONAD_TRAYPAD%"
        }
