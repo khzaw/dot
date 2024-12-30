@@ -14,10 +14,10 @@
 
 ;; UI
 (when (eq system-type 'gnu/linux)
-  ;; (setq-default line-spacing 1)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 100)
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
+  (setq-default line-spacing 0.05)
+  (set-face-attribute 'default nil :font "TX-02" :weight 'medium :height 90)
+  (set-face-attribute 'fixed-pitch nil :font "TX-02" :weight 'normal :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "TX-02" :weight 'normal))
 
 (when (eq system-type 'darwin)
   (setq-default line-spacing 1)

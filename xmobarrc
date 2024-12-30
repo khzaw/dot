@@ -1,4 +1,4 @@
-Config { font = "Berkeley Mono 18"
+Config { font = "TX-02 Medium 18"
        , bgColor = "#000000"
        , fgColor = "#ffffff"
        -- TopSize takes 3 params
@@ -17,6 +17,7 @@ Config { font = "Berkeley Mono 18"
        , commands = [
            --- CPU
            Run Cpu [ "-t", "\xf108 cpu: <total>%", "-H", "50", "--high", "red"] 20
+
            -- RAM
          , Run Memory ["-t", "\xf233 mem: <usedratio>% (<used>M)"] 20
            -- HDD
@@ -27,7 +28,7 @@ Config { font = "Berkeley Mono 18"
 
          -- Volume
          -- , Run Alsa "default" "Master" ["--", "--alsactl=/usr/bin/alsactl"]
-         , Run Com "pactl" ["get-sink-volume", "alsa_output.pci-0000_2a_00.1.hdmi-stereo", "|", "awk", "'/Volume/{print $5}'"] "volume" 50
+         , Run Com "/bin/sh" ["-c","pactl get-sink-volume alsa_output.pci-0000_2a_00.1.hdmi-stereo | awk '/front-left/ {print $5}'"] "volume" 50
 
            -- Date
          , Run Date "\xf133 %a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 50
@@ -43,7 +44,7 @@ Config { font = "Berkeley Mono 18"
                      \<fc=#ddbd94> gpu: %gpu%°C</fc><fc=#666> | </fc>\
                      \<fc=#8b8f78>%memory%</fc><fc=#666> | </fc>\
                      \<fc=#5a8c93>%disku%</fc><fc=#666> | </fc>\
-                     \<fc=#8d6947>%volume%</fc><fc=#666> | </fc>\
+                     \<fc=#8d6947> %volume%</fc><fc=#666> | </fc>\
                      \<fc=#118a71>%date% </fc><fc=#666> | </fc>\
                      \%_XMONAD_TRAYPAD%"
        }
