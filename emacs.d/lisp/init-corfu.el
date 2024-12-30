@@ -121,6 +121,8 @@ https://github.com/minad/corfu."
          ("M-m" . corfu-move-to-minibuffer)
          ("M-SPC" . corfu-insert-separator)
          ("C-g" . corfu-quit)
+         ("M-g" . corfu-info-location)
+         ("M-h" . corfu-info-documentation)
          ;; Free RET key for less instrusive behavior.
          ;; ("RET" . nil)
          )
@@ -144,6 +146,11 @@ https://github.com/minad/corfu."
   :custom-face
   (corfu-popupinfo ((t (:height 1.0))))
   :init (corfu-popupinfo-mode))
+
+(use-package corfu-info
+  :straight nil
+  :after corfu
+  :commands (corfu-info-location corfu-info-documentation))
 
 (use-package corfu-history
   :straight nil
@@ -170,9 +177,17 @@ https://github.com/minad/corfu."
     (corfu-mode 1)))
 ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
+(use-package corfu-candidate-overlay
+  :straight (:type git :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay" :files (:defaults "*.el"))
+  :after corfu
+  :config
+  (corfu-candidate-overlay-mode +1))
+
 (use-package kind-icon
   :after corfu
-  :custom (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  (kind-icon-default-style '(:padding 0 :stroke 0 :margin 0 :radius 0 :height 0.9 :scale 1))
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
