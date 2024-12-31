@@ -14,8 +14,8 @@
           ("C-c v" . markdown-mode)))
   :init (setq markdown-command "multimarkdown")
   :custom-face
-  (markdown-bold-face ((t (:font "Univers"))))
-  (markdown-italic-face ((t (:font "Univers")))))
+  (markdown-bold-face ((t (:weight bold))))
+  (markdown-italic-face ((t (:font "TX-02")))))
 
 (use-package markdown-toc)
 
