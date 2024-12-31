@@ -13,6 +13,7 @@ import XMonad.Actions.CopyWindow (kill1, killAllOtherCopies, copyToAll, copy)
 import qualified XMonad.Actions.CycleWS as WS
 import XMonad.Actions.MouseResize
 import XMonad.Actions.Promote
+import XMonad.Actions.Minimize
 import qualified XMonad.Actions.Search as S
 
 -- Hooks
@@ -21,6 +22,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.Minimize
 
 -- Utils
 import XMonad.Util.Run
@@ -37,6 +39,7 @@ import XMonad.Layout.ResizableThreeColumns
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
 import XMonad.Layout.LayoutModifier (ModifiedLayout)
+import XMonad.Layout.Minimize
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -60,6 +63,7 @@ myManageHook = composeAll
         , className =? "crx_nkbihfbeogaeaoehlefnkodbefgpgknn"      --> doFloat
         , (className =? "firefox" <&&> resource =? "Dialog")       --> doFloat
         , (className =? "brave-browser" <&&> resource =? "Dialog") --> doFloat
+        , (className =? "zen-browser" <&&> resource =? "Dialog") --> doFloat
         , title     =? "Volume Control"                       --> doCenterFloat
         , title     =? "Bluetooth Devices"                    --> doCenterFloat
         , title     =? "Save As"                              --> doCenterFloat
@@ -83,7 +87,7 @@ myStartupHook = do
 
 -- Variables
 myTerminal :: String
-myTerminal = "alacritty"
+myTerminal = "ghostty"
 
 myBrowser :: String
 myBrowser = "zen-browser"
@@ -117,12 +121,14 @@ myKeys =
   [ ("M1-<Space>", spawn myLauncher)
   , ("M1-S-3", unGrab *> spawn "scrot ~/Pictures/screenshots/")
   , ("M1-S-4", unGrab *> spawn "scrot -s ~/Pictures/screenshots/")
-  , ("M1-\\", spawn my1Password)
+  , ("M-x 1", spawn my1Password)
   , ("M-x a", spawn mySpotify)
   , ("M-x b", spawn myBrowser)
   , ("M-x t", spawn myTelegram)
   , ("M-x d", spawn myDiscord)
   , ("M-x e", spawn myEditor)
+  , ("M-m",   withFocused minimizeWindow) -- Minimize current window
+  , ("M-S-m", withLastMinimized maximizeWindowAndFocus) -- Restore current window
   ]
 
 -- workspaces
@@ -157,7 +163,7 @@ main = do
       modMask = mod4Mask
     , workspaces = myWorkspaces
     , manageHook = myManageHook <+> manageHook def
-    , layoutHook = avoidStruts $ mySpacing 10 $ layoutHook def
+    , layoutHook = avoidStruts $ mySpacing 10 $ minimize (layoutHook def)
     , logHook = dynamicLogWithPP xmobarPP
       { ppOutput          = hPutStrLn xmproc
       , ppCurrent         = xmobarColor "#ddbd94" "" . wrap "[" "]" -- Current workspace in xmobar
@@ -175,6 +181,7 @@ main = do
     , normalBorderColor = "#9ece6a"
     , focusedBorderColor = "#e0af68"
     , handleEventHook = handleEventHook def
-      <> Hacks.windowedFullscreenFixEventHook
-      <> Hacks.trayPaddingXmobarEventHook (className =? "stalonetray") "_XMONAD_TRAYPAD"
+      <+> minimizeEventHook
+      <+> Hacks.windowedFullscreenFixEventHook
+      <+> Hacks.trayPaddingXmobarEventHook (className =? "stalonetray") "_XMONAD_TRAYPAD"
   } `additionalKeysP` myKeys
