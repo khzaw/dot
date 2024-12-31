@@ -1,11 +1,12 @@
-background = 000000
-foreground = ffffff
-
-font-family = Berkeley Mono
-window-theme = system
-theme = light:Belafonte Day,dark:Belafonte Night
+font-family = TX-02
+font-size = 10
+window-theme = dark
+theme = ayu
 
 window-padding-x = 20
 window-padding-y = 20
 
+window-decoration = false
+window-colorspace = display-p3
 macos-titlebar-style = hidden
+confirm-close-surface = false
