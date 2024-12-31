@@ -6,7 +6,7 @@ Config { font = "TX-02 Medium 18"
        -- an integer for the percentage width
        -- an integer for th minimum pixel height for xmobar
        --    height should be the same as stalonetray height
-       , position = TopSize L 100 52
+       , position = TopSize L 97 52
        , overrideRedirect = True
        , lowerOnStart = False
        , allDesktops = True
@@ -28,7 +28,7 @@ Config { font = "TX-02 Medium 18"
 
          -- Volume
          -- , Run Alsa "default" "Master" ["--", "--alsactl=/usr/bin/alsactl"]
-         , Run Com "/bin/sh" ["-c","pactl get-sink-volume alsa_output.pci-0000_2a_00.1.hdmi-stereo | awk '/front-left/ {print $5}'"] "volume" 50
+         , Run Com "/bin/sh" ["-c","pulseaudio-ctl volume | awk '/Volume level/{print $4}' | sed 's/\x1b\\[[0-9;]*m//g'"] "volume" 50
 
            -- Date
          , Run Date "\xf133 %a %d %b <fc=#8be9fd>%H:%M</fc>" "date" 50
