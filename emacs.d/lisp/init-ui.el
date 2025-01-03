@@ -21,9 +21,9 @@
 
 (when (eq system-type 'darwin)
   (setq-default line-spacing 1)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 130 :width 'semi-condensed)
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "CommitMono" :weight 'normal :height 1.0))
+  (set-face-attribute 'default nil :font "TX-02" :weight 'medium :height 140 :width 'condensed)
+  (set-face-attribute 'fixed-pitch nil :font "TX-02" :weight 'normal :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "TX-02" :weight 'normal :height 1.0))
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
