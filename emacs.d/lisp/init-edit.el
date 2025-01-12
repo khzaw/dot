@@ -19,6 +19,12 @@
          ("M-p" . symbol-overlay-jump-prev))
   :commands (symbol-overlay-mode symbol-overlay-put))
 
+(use-package symbol-overlay-mc
+  :straight (:type git :host github :repo "xenodium/symbol-overlay-mc")
+  :config
+  (with-eval-after-load 'casual-symbol-overlay
+    (symbol-overlay-mc-insert-into-casual-tmenu)))
+
 (use-package avy
   :bind (("M-g c" . avy-goto-char)
          ("M-g C" . avy-goto-char-2)
