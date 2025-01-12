@@ -54,7 +54,7 @@
 
   (setq eldoc-echo-area-use-multiline-p t)
   (setq eglot-strict-mode nil)
-  ;; (setq eglot-events-buffer-size 0)
+  (setq eglot-events-buffer-size 10)
   (setq completion-category-defaults nil)
   (setq eglot-confirm-server-initiated-edits nil)
   ;; (setq eglot-stay-out-of '(eldoc-documentation-strategy))
@@ -81,7 +81,7 @@
                     (cons #'flymake-eldoc-function
                           (remove #'flymake-eldoc-function eldoc-documentation-functions)))
               ;; Show all eldoc feedback.
-              (setq eldoc-documentation-strategy #'eldoc-documentation-compose)))
+              (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)))
 
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
 
@@ -97,9 +97,14 @@
   :after eglot
   :config (eglot-booster-mode))
 
+;; Get hierarchy
+(use-package eglot-hierarchy
+  :commands (eglot-hierarchy-call-hierarchy eglot-hierarchy-type-hierarchy)
+  :straight (:type git :host github :repo "dolmens/eglot-hierarchy"))
+
 (use-package consult-eglot
   :bind (:map eglot-mode-map
-              ([remap xref-find-apropos] .  consult-eglot-symbols)))
+         ([remap xref-find-apropos] .  consult-eglot-symbols)))
 
 (use-package flycheck-eglot
   :straight (:type git :repo "intramurz/flycheck-eglot" :host github)

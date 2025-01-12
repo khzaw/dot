@@ -37,7 +37,6 @@
 (use-package magit-todos
   :after magit)
 
-
 (setq auth-sources (list
                     (concat (getenv "XDG_CONFIG_HOME") "/authinfo.gpg")
                     "~/.authinfo"
@@ -104,6 +103,10 @@
           ("gr" . code-review-reload)
           ("RET" . code-review-comment-add-or-edit)
           ("d" . code-review-submit-single-diff-comment-at-point))))
+
+(use-package github-review
+  :after forge
+  :commands (github-review-start github-review-forge-pr-at-point))
 
 ;; (use-package pr-review
 ;;   :straight (:type git :host github :repo "blahgeek/emacs-pr-review")
