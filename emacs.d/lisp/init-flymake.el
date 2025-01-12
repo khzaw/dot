@@ -32,8 +32,9 @@
     (quick-peek-show (concat flymake-diagnostic-at-point-error-prefix text)))
   :hook
   (flymake-mode . flymake-diagnostic-at-point-mode)
-  :init
-  (setq flymake-diagnostic-at-point-error-prefix nil))
+  :config
+  (setq flymake-diagnostic-at-point-error-prefix "! ")
+  (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
 
 (use-package flymake-json
   :straight (:type git :host github :repo "purcell/flymake-json")
