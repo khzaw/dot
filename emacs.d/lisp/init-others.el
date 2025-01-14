@@ -1,8 +1,4 @@
 ;; -*- lexical-binding: t; -*-
-
-(use-package gptel
-  :straight (gptel :type git :host github :repo "karthink/gptel"))
-
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode)
   :config
@@ -22,7 +18,6 @@
 
 (use-package bookmark-view
   :straight (bookmark-view :type git :host github :repo "minad/bookmark-view"))
-
 
 ;; (use-package mugur
 ;;  :straight (mugur :type git :host github :repo "mihaiolteanu/mugur"))
@@ -53,5 +48,25 @@
                 leetcode-save-solutions t
                 leetcode-directory "~/Dropbox/code/leetcode"))
 
+(define-advice zone (:around (orig-fn &rest _) "zone-all-buffer")
+  (save-window-excursion
+    (let ((op-win (car (window-list))))
+      (mapc (lambda (w)
+              (with-selected-window w
+                (switch-to-buffer "*zone*")))
+            (cdr (window-list)))
+      (with-selected-window op-win
+        (funcall orig-fn)))))
+
+(use-package leetcode-emacs
+  :disabled t
+  :straight (:host github :repo "ginqi7/leetcode-emacs")
+  :config
+  (setq leetcode-language "python3"))
+
+(use-package leetcode
+  :straight (:host github :repo "kaiwk/leetcode.el")
+  :config (setq leetcode-prefer-language "python3"
+                leetcode-prefer-sql "mysql"))
 
 (provide 'init-others)

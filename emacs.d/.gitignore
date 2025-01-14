@@ -22,3 +22,4 @@ places
 straight/
 *.swp
 multisession
+undo-fu-session/

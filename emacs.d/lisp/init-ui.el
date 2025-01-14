@@ -1,5 +1,4 @@
 ;; -*- lexical-binding: t; -*-
-
 (setq which-func-update-delay 1.0)
 
 (setq-default cursor-in-non-selected-windows nil)
@@ -21,7 +20,7 @@
 
 (when (eq system-type 'darwin)
   (setq-default line-spacing 1)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'medium :height 140)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
 
@@ -244,8 +243,7 @@
 (use-package sideline-lsp :after lsp-mode)
 
 (use-package sideline-flycheck
-  :hook
-  (flycheck-mode . sideline-flycheck-setup))
+  :hook (flycheck-mode . sideline-flycheck-setup))
 
 (use-package sideline
   :after (evil evil-leader)
@@ -277,26 +275,6 @@
     (if elt (setcdr elt new) (push `(alpha ,@new) default-frame-alist))
     (set-frame-parameter nil 'alpha new)))
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
-
-(use-package nova
-  :straight (:type git :host github :repo "thisisran/nova"))
-
-(use-package nova-vertico
-  :straight nil
-  :config (nova-vertico 1))
-
-(use-package nova-corfu
-  :straight nil
-  :config (nova-corfu 1))
-
-(use-package nova-corfu-popupinfo
-  :straight nil
-  :config (nova-corfu-popupinfo 1))
-
-(use-package nova-eldoc
-  :after (eldoc-box)
-  :straight nil
-  :config (nova-eldoc 1))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

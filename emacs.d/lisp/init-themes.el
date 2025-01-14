@@ -41,13 +41,13 @@
        `(window-divider ((t :background ,bg :foreground ,bg)))
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
-  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
+  (load-theme 'modus-vivendi-tritanopia t))
 
 (use-package ef-themes)
 
 (use-package color-theme-sanityinc-tomorrow
-  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow")
-  :config (load-theme 'sanityinc-tomorrow-bright t))
+  :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
 (use-package tomorrow-night-deepblue-theme
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
@@ -56,7 +56,6 @@
   :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
 ;; (custom-set-faces
 ;;  `(shadow ((t :foreground "#cccccc")))))
-
 
 (use-package grandshell-theme)
 
