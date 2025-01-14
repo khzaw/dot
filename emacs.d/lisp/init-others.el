@@ -44,4 +44,10 @@
               scroll-margin 0)
   :config (ultra-scroll-mode 1))
 
+(use-package leetcode
+  :straight (:type git :host github :repo "kaiwk/leetcode.el")
+  :config (setq leetcode-prefer-language "python3"
+                leetcode-show-problem-by-slug t
+                leetcode-prefer-sql "mysql"))
+
 (provide 'init-others)

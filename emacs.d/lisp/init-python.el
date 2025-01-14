@@ -49,13 +49,13 @@
   "Find a poetry venv."
   (run-command-in-directory nil "poetry" "env" "info" "-p"))
 
-
 (use-package auto-virtualenv
   :init
   (use-package pyvenv)
   :config
-  (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
-  (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv))
+  (setq auto-virtualenv-reload-lsp t)
+  (setq auto-virtualenv-verbose t)
+  (auto-virtualenv-setup))
 
 (use-package python-mode
   :mode ("\\.py\\'" . python-mode)
