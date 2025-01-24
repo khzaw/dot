@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package gptel
   :straight (gptel :type git :host github :repo "karthink/gptel"))
 
@@ -47,7 +49,9 @@
 (use-package leetcode
   :straight (:type git :host github :repo "kaiwk/leetcode.el")
   :config (setq leetcode-prefer-language "python3"
-                leetcode-show-problem-by-slug t
-                leetcode-prefer-sql "mysql"))
+                leetcode-prefer-sql "mysql"
+                leetcode-save-solutions t
+                leetcode-directory "~/Dropbox/code/leetcode"))
+
 
 (provide 'init-others)

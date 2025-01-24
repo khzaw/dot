@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package solo-jazz-theme)
 
 (use-package kaolin-themes

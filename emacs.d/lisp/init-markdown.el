@@ -15,7 +15,7 @@
   :init (setq markdown-command "multimarkdown")
   :custom-face
   (markdown-bold-face ((t (:weight bold))))
-  (markdown-italic-face ((t (:font "TX-02")))))
+  (markdown-italic-face ((t (:font "Berkeley Mono")))))
 
 (use-package markdown-toc)
 

@@ -1,13 +1,15 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package elisp-mode
   :straight (:type built-in)
   :bind (:map emacs-lisp-mode-map
-          ("C-c C-x" . ielm)
-          ("C-c C-c" . eval-defun)
-          ("C-c C-b" . eval-buffer))
+         ("C-c C-x" . ielm)
+         ("C-c C-c" . eval-defun)
+         ("C-c C-b" . eval-buffer))
   :hook (emacs-lisp-mode . (lambda ()
                              "Disable the checkdoc checker."
                              (setq-local flycheck-disabled-checkers
-                               '(emacs-lisp-checkdoc))))
+                                         '(emacs-lisp-checkdoc))))
   :config
   (use-package highlight-defined
     :hook (emacs-lisp-mode . highlight-defined-mode)
@@ -37,55 +39,55 @@ it specifies how to indent.  The property value can be:
 This function returns either the indentation to use, or nil if the
 Lisp function does not specify a special indentation."
       (let ((normal-indent (current-column))
-             (orig-point (point)))
+            (orig-point (point)))
         (goto-char (1+ (elt state 1)))
         (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
         (cond
-          ;; car of form doesn't seem to be a symbol, or is a keyword
-          ((and (elt state 2)
-             (or (not (looking-at "\\sw\\|\\s_"))
-               (looking-at ":")))
-            (if (not (> (save-excursion (forward-line 1) (point))
-                       calculate-lisp-indent-last-sexp))
+         ;; car of form doesn't seem to be a symbol, or is a keyword
+         ((and (elt state 2)
+               (or (not (looking-at "\\sw\\|\\s_"))
+                   (looking-at ":")))
+          (if (not (> (save-excursion (forward-line 1) (point))
+                      calculate-lisp-indent-last-sexp))
               (progn (goto-char calculate-lisp-indent-last-sexp)
-                (beginning-of-line)
-                (parse-partial-sexp (point)
-                  calculate-lisp-indent-last-sexp 0 t)))
-            ;; Indent under the list or under the first sexp on the same
-            ;; line as calculate-lisp-indent-last-sexp.  Note that first
-            ;; thing on that line has to be complete sexp since we are
-            ;; inside the innermost containing sexp.
-            (backward-prefix-chars)
-            (current-column))
-          ((and (save-excursion
-                  (goto-char indent-point)
-                  (skip-syntax-forward " ")
-                  (not (looking-at ":")))
-             (save-excursion
-               (goto-char orig-point)
-               (looking-at ":")))
-            (save-excursion
-              (goto-char (+ 2 (elt state 1)))
-              (current-column)))
-          (t
-            (let ((function (buffer-substring (point)
-                              (progn (forward-sexp 1) (point))))
-                   method)
-              (setq method (or (function-get (intern-soft function)
-                                 'lisp-indent-function)
+                     (beginning-of-line)
+                     (parse-partial-sexp (point)
+                                         calculate-lisp-indent-last-sexp 0 t)))
+          ;; Indent under the list or under the first sexp on the same
+          ;; line as calculate-lisp-indent-last-sexp.  Note that first
+          ;; thing on that line has to be complete sexp since we are
+          ;; inside the innermost containing sexp.
+          (backward-prefix-chars)
+          (current-column))
+         ((and (save-excursion
+                 (goto-char indent-point)
+                 (skip-syntax-forward " ")
+                 (not (looking-at ":")))
+               (save-excursion
+                 (goto-char orig-point)
+                 (looking-at ":")))
+          (save-excursion
+            (goto-char (+ 2 (elt state 1)))
+            (current-column)))
+         (t
+          (let ((function (buffer-substring (point)
+                                            (progn (forward-sexp 1) (point))))
+                method)
+            (setq method (or (function-get (intern-soft function)
+                                           'lisp-indent-function)
                              (get (intern-soft function) 'lisp-indent-hook)))
-              (cond ((or (eq method 'defun)
+            (cond ((or (eq method 'defun)
                        (and (null method)
-                         (length> function 3)
-                         (string-match "\\`def" function)))
-                      (lisp-indent-defform state indent-point))
-                ((integerp method)
-                  (lisp-indent-specform method state
-                    indent-point normal-indent))
-                (method
-                  (funcall method indent-point state))))))))
+                            (length> function 3)
+                            (string-match "\\`def" function)))
+                   (lisp-indent-defform state indent-point))
+                  ((integerp method)
+                   (lisp-indent-specform method state
+                                         indent-point normal-indent))
+                  (method
+                   (funcall method indent-point state))))))))
     (add-hook 'emacs-lisp-mode-hook
-      (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))))
+              (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))))
 
 (use-package eldoc
   :straight (:type built-in)
@@ -111,7 +113,18 @@ Lisp function does not specify a special indentation."
   ([remap describe-function] . helpful-function)
   ([remap describe-variable] . helpful-variable)
   ([remap describe-command] . helpful-command)
-  ([remap describe-symbol] . helpful-symbol))
+  ([remap describe-symbol] . helpful-symbol)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("*helpful.*"
+                 (display-buffer-reuse-window display-buffer-in-side-window)
+                 (side . bottom)
+                 (window-height . 0.33))))
+
+(use-package elisp-demos
+  :straight t
+  :config
+  (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
 (use-package eros :init (eros-mode))
 
