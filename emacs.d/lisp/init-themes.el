@@ -21,15 +21,14 @@
 
 (use-package modus-themes
   :config
-  (setq
-   modus-themes-bold-constructs t
-   modus-themes-mixed-fonts t
-   modus-themes-completions '((t . (extrabold)))
-   ;; Keep the border of mode line but make it the same color as the background of the mode line
-   modus-themes-common-palette-overrides
-   '((border-mode-line-active bg-mode-line-active)
-     (border-mode-line-inactive bg-mode-line-inactive)
-     (fringe unspecified)))
+  (setq modus-themes-bold-constructs t
+        modus-themes-mixed-fonts t
+        modus-themes-completions '((t . (extrabold)))
+        ;; Keep the border of mode line but make it the same color as the background of the mode line
+        modus-themes-common-palette-overrides
+        '((border-mode-line-active bg-mode-line-active)
+          (border-mode-line-inactive bg-mode-line-inactive)
+          (fringe unspecified)))
 
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
 
@@ -58,10 +57,6 @@
 ;;  `(shadow ((t :foreground "#cccccc")))))
 
 (use-package grandshell-theme)
-
-(use-package doom-kyoto-night-theme
-  :after doom-themes
-  :straight (:type git :host github :repo "shrikecode/doom-kyoto-night-theme"))
 
 (use-package eink-theme
   :straight (:type git :host github :repo "maio/eink-emacs"))
