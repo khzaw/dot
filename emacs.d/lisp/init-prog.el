@@ -111,6 +111,7 @@
   :mode (("\\.mermaid\\'" . mermaid-mode)))
 
 (use-package makefile-executor
+  :disabled t
   :hook (makefile-mode . makefile-executor-mode))
 
 (advice-add 'risky-local-variable-p :override #'ignore)

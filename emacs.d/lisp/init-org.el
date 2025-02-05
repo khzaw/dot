@@ -6,15 +6,18 @@
   (visual-fill-column-center-text t)
   (visual-fill-column-split-window-sensibly t))
 
+(setq org-directory (file-truename "~/Dropbox/notes"))
+
 (use-package org
-  :after (verb)
-  :straight (:type built-in)
+  :after verb
   :bind (("C-c C-c" . org-edit-src-exit))
+  :init
+  (setq org-directory (file-truename "~/Dropbox/notes"))
   :custom
-  (org-directory (concat (getenv "HOME") "/Dropbox/notes/"))
   (org-agenda-files '("~/Dropbox/notes/agenda"))
   (org-todo-keywords
    '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
+  (org-tags-alist '(("inbox" . ?i)))
   ;; (org-agenda-start-with-log-mode t)
   ;; (org-log-into-drawer t)
   (org-log-done 'time) ; Record the task completion date.
@@ -26,7 +29,7 @@
   (org-hide-emphasis-markers t)
   (org-startup-truncated nil)
   (org-imenu-depth 6)
-  ;; (org-startup-indented t)
+  (org-startup-indented t)
   (org-startup-folded t)
   (org-special-ctrl-a/e t)
   (org-link-search-must-match-exact-headline nil)
@@ -42,13 +45,14 @@
   (org-link-elisp-confirm-function nil)
   (org-startup-with-inline-images t) ; always display images
   (org-confirm-babel-evaluate nil) ; just evaluate
-
-  (org-refile-targets '(("~/Dropbox/notes/todo.org" :maxlevel .1))) ; Allow moving task from anywhere into todo
+  (org-refile-targets `((,(expand-file-name "Dropbox/notes/todo.org" (getenv "HOME")) :maxlevel . 1))) ; Allow moving task from anywhere into todo
   (org-capture-templates
    '(("t" "todo" entry (file "~/Dropbox/notes/inbox.org")
       "* TODO %?\n/Entered on/ %U\n")
      ("j" "Journal" entry (file+olp+datetree "~/Dropbox/notes/journal.org")
       "* %?\n")))
+  (org-agenda-window-setup 'current-window) ; Open agenda in current window
+  (org-agenda-restore-windows-after-quit t) ; Restore window configuration after quitting agenda
   :hook
   ((org-babel-after-execute . org-redisplay-inline-images)
    (org-babel-after-execute . org-display-inline-images)
@@ -57,11 +61,13 @@
                  (setq visual-fill-column-center-text nil)
                  (visual-fill-column-mode))))
   :config
+  (message "Final org-directory: %s" org-directory)
+
+  (org-agenda-file-to-front)
+
   (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
   (global-set-key (kbd "<f6>") 'org-capture)
   (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
-
-
 
   ;; The GTD view
   (setq-default org-agenda-custom-commands
@@ -69,7 +75,11 @@
                    ((agenda ""
                             ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
                              (org-deadline-warning-days 0)))
-                    (todo "NEXT"
+                    (todo "DOING"  ; Changed from NEXT to DOING to match your keywords
+                          ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                           (org-agenda-prefix-format "  %i %-12:c [%e] ")
+                           (org-agenda-overriding-header "\nOngoing Tasks\n")))
+                    (todo "TODO"
                           ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
                            (org-agenda-prefix-format "  %i %-12:c [%e] ")
                            (org-agenda-overriding-header "\nTasks\n")))
@@ -276,11 +286,9 @@
   :defer t
   :hook (org-mode . quickroam-enable-cache))
 
-
-
 (use-package evil-org
   :after org
-  :hook (org-mode . (lambda () evil-org-mode))
+  :hook (org-mode . (lambda () (evil-org-mode)))
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
