@@ -39,7 +39,10 @@
   ;;        (python-ts-mode . treesitter-context-focus-mode)
   ;;        (yaml-ts-mode . treesitter-context-focus-mode))
   :bind (("C-c e C-t" . treesitter-context-toggle-show)
-         ("C-c e F" . treesitter-context-focus-mode)))
+         ("C-c e C-f" . treesitter-context-fold-mode)
+         ("C-c e F" . treesitter-context-focus-mode))
+  (:map treesitter-context-fold-mode-map
+   ("C-`" . treesitter-context-fold-toggle)))
 
 (use-package combobulate
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
@@ -75,9 +78,8 @@
   (tree-sitter-hl-face:property ((t (:slant normal))))
   (tree-sitter-hl-face:function.call ((t (:weight normal))))
   (tree-sitter-hl-face:method.call ((t (:weight normal))))
-  (tree-sitter-hl-face:attribute ((t (:weight normal))))
-  ;; TODO <TAB> in normal mode should fold
-  :bind ("C-`" . ts-fold-toggle))
+  (tree-sitter-hl-face:attribute ((t (:weight normal)))))
+;; TODO <TAB> in normal mode should fold
 
 (use-package ts-fold-indicators
   :disabled t
