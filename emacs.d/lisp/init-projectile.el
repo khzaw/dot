@@ -1,5 +1,8 @@
+
+;; -*- lexical-binding: t; -*-
+
 (use-package projectile
-  :delight '(:eval (concat " " (projectile-projct-name)))
+  :delight '(:eval (concat " " (projectile-project-name)))
   :bind (:map projectile-mode-map
          ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
