@@ -17,9 +17,12 @@
 
         warning-suppress-log-types '((comp))))
 
+(setq native-comp-enable-subr-trampolines nil
+      native-comp-jit-compilation nil)
+
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum
-  gc-cons-percentage 0.6)
+      gc-cons-percentage 0.6)
 (add-hook 'emacs-startup-hook
   (lambda ()
     (setq gc-cons-threshold 16777216
