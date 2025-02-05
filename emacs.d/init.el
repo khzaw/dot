@@ -55,7 +55,7 @@
 (require 'init-themes)
 (require 'init-ui)
 (require 'init-modeline)
-(require 'init-dashboard)
+;; (require 'init-dashboard)
 
 (require 'init-evil)
 (require 'init-edit)
@@ -106,7 +106,7 @@
 (require 'init-spell)
 (require 'init-others)
 (require 'init-presentation)
-(require 'init-jira)
+;; (require 'init-jira)
 ;; (require 'init-slack)
 
 (provide 'init)

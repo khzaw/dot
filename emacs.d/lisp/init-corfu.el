@@ -177,12 +177,6 @@ https://github.com/minad/corfu."
     (corfu-mode 1)))
 ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
-(use-package corfu-candidate-overlay
-  :straight (:type git :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay" :files (:defaults "*.el"))
-  :after corfu
-  :config
-  (corfu-candidate-overlay-mode +1))
-
 (use-package kind-icon
   :after corfu
   :custom

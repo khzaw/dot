@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package org-jira
+  :disabled t
   :straight (:type git :host github :repo "ahungry/org-jira")
   :custom
   (jiralib-url "https://deliveryhero.atlassian.net")

@@ -47,7 +47,8 @@
 (use-package aggressive-indent
   :diminish
   :hook ((clojure-mode . aggressive-indent-mode)
-         (emacs-lisp-mode . aggressive-indent-mode)))
+         (emacs-lisp-mode . aggressive-indent-mode))
+  :config (setq aggressive-indent-sit-for-time 0))
 
 
 

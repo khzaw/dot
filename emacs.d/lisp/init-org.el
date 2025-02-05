@@ -6,64 +6,57 @@
   (visual-fill-column-center-text t)
   (visual-fill-column-split-window-sensibly t))
 
-(setq org-directory (file-truename "~/Dropbox/notes"))
-
 (use-package org
-  :after verb
   :bind (("C-c C-c" . org-edit-src-exit))
   :init
   (setq org-directory (file-truename "~/Dropbox/notes"))
-  :custom
-  (org-agenda-files '("~/Dropbox/notes/agenda"))
-  (org-todo-keywords
-   '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
-  (org-tags-alist '(("inbox" . ?i)))
-  ;; (org-agenda-start-with-log-mode t)
-  ;; (org-log-into-drawer t)
-  (org-log-done 'time) ; Record the task completion date.
-  (org-pretty-entities t)
-  (org-src-fontify-natively t)
-  (org-src-preserve-indentation t)        ; use native major-mode indentation
-  (org-src-tab-acts-natively t)
-  (org-src-window-setup 'other-window)
-  (org-hide-emphasis-markers t)
-  (org-startup-truncated nil)
-  (org-imenu-depth 6)
-  (org-startup-indented t)
-  (org-startup-folded t)
-  (org-special-ctrl-a/e t)
-  (org-link-search-must-match-exact-headline nil)
-  (org-M-RET-may-split-line nil)
-  (org-auto-align-tags t)
-  (org-tags-column 0)
-  (org-catch-invisible-edits 'show-and-error)
-  (org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
-  ;; (org-priority-faces
-  ;;   '((?A . error)
-  ;;      (?B . warning)
-  ;;      (?C . success)))
-  (org-link-elisp-confirm-function nil)
-  (org-startup-with-inline-images t) ; always display images
-  (org-confirm-babel-evaluate nil) ; just evaluate
-  (org-refile-targets `((,(expand-file-name "Dropbox/notes/todo.org" (getenv "HOME")) :maxlevel . 1))) ; Allow moving task from anywhere into todo
-  (org-capture-templates
-   '(("t" "todo" entry (file "~/Dropbox/notes/inbox.org")
-      "* TODO %?\n/Entered on/ %U\n")
-     ("j" "Journal" entry (file+olp+datetree "~/Dropbox/notes/journal.org")
-      "* %?\n")))
-  (org-agenda-window-setup 'current-window) ; Open agenda in current window
-  (org-agenda-restore-windows-after-quit t) ; Restore window configuration after quitting agenda
   :hook
   ((org-babel-after-execute . org-redisplay-inline-images)
-   (org-babel-after-execute . org-display-inline-images)
    (org-mode . (lambda ()
                  (variable-pitch-mode)
                  (setq visual-fill-column-center-text nil)
                  (visual-fill-column-mode))))
   :config
-  (message "Final org-directory: %s" org-directory)
-
-  (org-agenda-file-to-front)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
+  (setq org-tags-alist '(("inbox" . ?i)))
+  ;; (org-agenda-start-with-log-mode t)
+  ;; (org-log-into-drawer t)
+  (setq org-log-done 'time) ; Record the task completion date.
+  (setq org-pretty-entities t)
+  (setq org-src-fontify-natively t)
+  (setq org-src-preserve-indentation t)        ; use native major-mode indentation
+  (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'other-window)
+  (setq org-hide-emphasis-markers t)
+  (setq org-startup-truncated nil)
+  (setq org-imenu-depth 6)
+  (setq org-startup-indented t)
+  (setq org-startup-folded t)
+  (setq org-special-ctrl-a/e t)
+  (setq org-link-search-must-match-exact-headline nil)
+  (setq org-M-RET-may-split-line nil)
+  (setq org-auto-align-tags t)
+  (setq org-tags-column 0)
+  (setq org-catch-invisible-edits 'show-and-error)
+  (setq org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
+  ;; (org-priority-faces
+  ;;   '((?A . error)
+  ;;      (?B . warning)
+  ;;      (?C . success)))
+  (setq org-link-elisp-confirm-function nil)
+  (setq org-startup-with-inline-images t) ; always display images
+  (setq org-confirm-babel-evaluate nil) ; just evaluate
+  (setq org-refile-targets `((,(expand-file-name "Dropbox/notes/todo.org" (getenv "HOME")) :maxlevel . 1))) ; Allow moving task from anywhere into todo
+  (setq org-capture-templates
+        '(("t" "todo" entry (file "~/Dropbox/notes/inbox.org")
+           "* TODO %?\n/Entered on/ %U\n")
+          ("j" "Journal" entry (file+olp+datetree "~/Dropbox/notes/journal.org")
+           "* %?\n")))
+  (setq org-agenda-window-setup 'current-window) ; Open agenda in current window
+  (setq org-agenda-restore-windows-after-quit t) ; Restore window configuration after quitting agenda
+  (setq org-agenda-files
+        (directory-files-recursively (expand-file-name "agenda" org-directory) "\\.org$"))
 
   (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
   (global-set-key (kbd "<f6>") 'org-capture)
@@ -110,25 +103,12 @@
       (setq org-archive-subtree-save-file-p t))
     (org-save-all-org-buffers))
 
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (font-lock-add-keywords
-               nil
-               '(("^-\\{5,\\}"  0 '(:foreground "black" :weight bold))))))
 
-  (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
+  ;; (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   (require 'org-indent)
-  (custom-set-faces
-   '(org-level-1 ((t (:weight bold  :height 1.0))))
-   '(org-level-2 ((t (:weight bold :height 1.0))))
-   ;; '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
-   ;; '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-   ;; '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-   )
 
   (setq sentence-end-double-space nil)
-  (setq visual-fill-column-center-text t)
-  (visual-line-mode t)
+
 
   (use-package org-contrib)
 
@@ -152,6 +132,10 @@
   (use-package ox-gfm :after org)
   (add-to-list 'org-export-backends 'md)
 
+  (setq org-babel-shell-names '("sh" "bash" "zsh")
+        org-babel-default-header-args:shell
+        `((:shebang . ,(format "#!/usr/bin/env %s"
+                               (or (executable-find "zsh") "bash")))))
   (defconst load-language-alist
     '((emacs-lisp . t)
       (perl . t)
@@ -219,8 +203,7 @@
     (org-roam-directory (file-truename org-directory))
     (org-roam-completion-everywhere t)
     (org-roam-capture-templates
-     '(
-       ("d" "default" plain
+     '(("d" "default" plain
         "%?"
         :if-new (file+head "personal/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+startup: showall\n")
         :immediate-finish t
@@ -246,9 +229,7 @@
         :if-new (file+head "fp/${slug}.org" "#+title: ${title}\n#+date: %<%Y-%m-%d %a %R>\n#+updated: \n\n")
         :immediate-finish t
         :empty-lines 1
-        :unnarrowed t))
-
-     time-stamp-start "#\\+updated: [\t]*")
+        :unnarrowed t)))
 
     :bind (("C-c n g" . org-roam-graph)
            ("C-c n c" . org-roam-capture)
