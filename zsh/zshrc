@@ -72,8 +72,6 @@ cd() {
 	fi
 }
 
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-
 # local config
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 

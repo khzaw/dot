@@ -1,4 +1,3 @@
-
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
@@ -37,60 +36,11 @@ if [[ "$OSTYPE" == "darwin"* && -f /etc/zprofile ]]; then
 fi
 
 # path
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
-# arm gcc, avr-gcc, needed by qmk
-path+=("$(brew --prefix)/opt/avr-gcc@8/bin" "$(brew --prefix)/opt/arm-gcc-bin@8/bin")
-
-# go
-path+=$(go env GOPATH)/bin
-
-# foundry
-path+=$HOME/.foundry/bin
-
-# android
-path+=($ANDROID_HOME/tools $ANDROID_HOME/platform-tools)
-
-# pipx
-path+=$HOME/.local/bin
-
-path+=/System/Cryptexes/App/usr/bin
-
-# jetbrains toolbox
-path+=($HOME/Library/Application Support/JetBrains/Toolbox/scripts)
-
-# personal
-path+=($HOME/.bin)
-
-path=($HOME/.cargo/bin $path)
-
-
-# fnm
-path=("$HOME/Library/Cache/fnm_multishells/1425_1670498189025/bin" $path)
-export FNM_LOGLEVEL="info"
-export FNM_NODE_DIST_MIRROR="https://nodejs.org/dist"
-export FNM_ARCH="arm64"
-export FNM_MULTISHELL_PATH="$HOME/Library/Caches/fnm_multishells/1425_1670498189025"
-export FNM_DIR="$HOME/Library/Application Support/fnm"
-export FNM_VERSION_FILE_STRATEGY="local"
-autoload -U add-zsh-hook
-_fnm_autoload_hook() {
-  if [[ -f .node-version || -f .nvmrc ]]; then
-    fnm use --silent-if-unchanged
-  fi
-}
-
-add-zsh-hook chpwd _fnm_autoload_hook \
-             && _fnm_autoload_hook
-rehash
 
 export PYENV_ROOT="$HOME/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then
   path=$(PYENV_ROOT/bin $path)
   eval "$(pyenv init -)"
 fi
-
-export SDKMAN_DIR=$HOME/.sdkman
-source "${SDKMAN_DIR}/bin/sdkman-init.sh"
