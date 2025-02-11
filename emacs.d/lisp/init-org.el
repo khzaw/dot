@@ -59,7 +59,7 @@
         (directory-files-recursively (expand-file-name "agenda" org-directory) "\\.org$"))
 
   (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
-  (global-set-key (kbd "<f6>") 'org-capture)
+
   (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
 
   ;; The GTD view
