@@ -47,19 +47,29 @@
   (setq org-link-elisp-confirm-function nil)
   (setq org-startup-with-inline-images t) ; always display images
   (setq org-confirm-babel-evaluate nil) ; just evaluate
-  (setq org-refile-targets `((,(expand-file-name "Dropbox/notes/todo.org" (getenv "HOME")) :maxlevel . 1))) ; Allow moving task from anywhere into todo
+  (setq org-agenda-files
+        (directory-files-recursively (expand-file-name "agenda" org-directory) "\\.org$"))
+  (setq org-refile-targets
+        (quote ((nil :maxlevel . 9)
+                (org-agenda-files :maxlevel . 9))))
+  ;; (setq org-refile-targets `((,(expand-file-name "Dropbox/notes/todo.org" (getenv "HOME")) :maxlevel . 1))) ; Allow moving task from anywhere into todo
   (setq org-capture-templates
         '(("t" "todo" entry (file "~/Dropbox/notes/inbox.org")
-           "* TODO %?\n/Entered on/ %U\n")
+           "* TODO %?\n/Entered on/ %U\n" :clock-in t :clock-resume t)
+          ("m" "Meeting" entry (file "~/Dropbox/notes/meetings.org")
+           "* MEETING with %? :MEETING:\n%t" :clock-in t :clock-resume t)
           ("j" "Journal" entry (file+olp+datetree "~/Dropbox/notes/journal.org")
            "* %?\n")))
   (setq org-agenda-window-setup 'current-window) ; Open agenda in current window
   (setq org-agenda-restore-windows-after-quit t) ; Restore window configuration after quitting agenda
-  (setq org-agenda-files
-        (directory-files-recursively (expand-file-name "agenda" org-directory) "\\.org$"))
+
+  (setq org-agenda-prefix-format
+        '((agenda . " %i %-12:c%?-12t% s")
+          (todo   . " %i %-12:c")
+          (tags   . " %i %-12:c")
+          (search . " %i %-12:c")))
 
   (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
-
   (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
 
   ;; The GTD view
@@ -291,7 +301,7 @@
   ("C-c n d" . deft))
 
 (use-package org-journal
-  :bind ("C-c n j" . org-journal-new-entry)
+  :bind ("C-c n J" . org-journal-new-entry)
   :custom
   (org-journal-date-prefix "#+title: "))
 
