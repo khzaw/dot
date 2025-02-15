@@ -241,7 +241,16 @@
                     (t              `(,(car old) ,arg)))))
     (if elt (setcdr elt new) (push `(alpha ,@new) default-frame-alist))
     (set-frame-parameter nil 'alpha new)))
+
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
+
+(use-package holo-layer
+  :straight (holo-layer :type git :host github :repo "manateelazycat/holo-layer" :files ("*" (:exclude (".git" "test"))))
+  :commands holo-layer-enable
+  :hook (after-init . holo-layer-enable)
+  :init
+  (setq holo-layer-enable-cursor-animation t))
+
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
