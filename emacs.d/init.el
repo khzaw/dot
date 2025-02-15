@@ -106,6 +106,7 @@
 (require 'init-spell)
 (require 'init-others)
 (require 'init-presentation)
+(require 'init-erc)
 ;; (require 'init-jira)
 ;; (require 'init-slack)
 
