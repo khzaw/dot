@@ -19,7 +19,7 @@
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
 (when (eq system-type 'darwin)
-  (setq-default line-spacing 1)
+  (setq-default line-spacing -0.1)
   (set-face-attribute 'default nil :font "Departure Mono" :weight 'normal :height 120)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
@@ -250,7 +250,6 @@
   :hook (after-init . holo-layer-enable)
   :init
   (setq holo-layer-enable-cursor-animation t))
-
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
