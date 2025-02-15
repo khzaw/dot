@@ -7,8 +7,26 @@
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)
-          ("C--" . er/contract-region)
-          ("C-(" . er/mark-outside-pairs)))
+         ("C--" . er/contract-region)
+         ("C-(" . er/mark-outside-pairs)
+         (:map evil-visual-state-map
+          ("v" . er/expand-region)
+          ("V" . er/contract-region)))
+  :config
+  (defun treesit-mark-bigger-node ()
+    "Use tree-sitter to mark regions"
+    (let* ((root (treesit-buffer-root-node))
+           (node (treesit-node-descendant-for-range root (region-beginning) (region-end)))
+           (node-start (treesit-node-start node))
+           (node-end (treesit-node-end node)))
+      ;; Node fits the region exactly. Try its parent node instead.
+      (when (and (= (region-beginning) node-start) (= (region-end) node-end))
+        (when-let* ((node (treesit-node-parent node)))
+          (setq node-start (treesit-node-start node)
+                node-end (treesit-node-end node))))
+      (set-mark node-end)
+      (goto-char node-start)))
+  (add-to-list 'er/try-expand-list 'treesit-mark-bigger-node))
 
 (use-package symbol-overlay
   :diminish
@@ -206,6 +224,7 @@
         indent-bars-display-on-blank-lines nil))
 
 (use-package anzu
+  :diminish
   :config
   (global-set-key [remap query-replace] 'anzu-query-replace)
   (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
