@@ -35,13 +35,13 @@
   (evil-escape-mode))
 
 (use-package evil-collection
-  :diminish
   :after (evil magit)
   :config
   (evil-collection-define-key 'normal 'emacs-lisp-mode-map "K" 'helpful-at-point)
   ;; (setq evil-collection-outline-bind-tab-p t) ;; enable <tab>-based bindings in Outline mode.
   ;; q is enough; ESC is way too easy to accidentally press
-  (evil-collection-init))
+  (evil-collection-init)
+  (diminish 'evil-collection-unimpaired-mode))
 
 (use-package outline-indent
   :ensure t
