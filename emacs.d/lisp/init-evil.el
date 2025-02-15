@@ -28,12 +28,14 @@
 
 (use-package evil-escape
   :straight (evil-escape :type git :host github :repo "syl20bnr/evil-escape")
+  :diminish
   :init
   (setq-default evil-escape-key-sequence "kj")
   :config
   (evil-escape-mode))
 
 (use-package evil-collection
+  :diminish
   :after (evil magit)
   :config
   (evil-collection-define-key 'normal 'emacs-lisp-mode-map "K" 'helpful-at-point)

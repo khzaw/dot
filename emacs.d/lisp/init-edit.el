@@ -244,6 +244,7 @@
   :bind ("s-;" . transform-symbol-at-point))
 
 (use-package smartparens
+  :diminish
   :straight (smartparens :type git
                          :host github
                          :repo "Fuco1/smartparens")

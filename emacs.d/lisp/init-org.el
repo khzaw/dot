@@ -323,6 +323,7 @@
 (use-package org-download)
 
 (use-package consult-org-roam
+  :diminish
   :init
   (consult-org-roam-mode 1)
   :custom

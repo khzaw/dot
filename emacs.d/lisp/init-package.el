@@ -42,6 +42,7 @@
 
 ;; Garbage Collector Magic Hack
 (use-package gcmh
+  :diminish
   :init
   (setq gcmh-idle-delay 5)
   (setq gcmh-high-cons-threshold (* 16 1024 1024))

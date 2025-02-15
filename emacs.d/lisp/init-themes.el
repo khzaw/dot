@@ -40,10 +40,10 @@
        `(window-divider ((t :background ,bg :foreground ,bg)))
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
-  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
-  (load-theme 'modus-vivendi-tritanopia t))
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
 
-(use-package ef-themes)
+(use-package ef-themes
+  :config (load-theme 'ef-dark t))
 
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
