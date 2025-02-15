@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package dired
   :straight (:type built-in)
   :commands (dired)
@@ -57,7 +59,6 @@
     :init (diredfl-global-mode 1))
 
   (use-package dired-sidebar))
-
 
 (use-package dired-subtree
   :after dired

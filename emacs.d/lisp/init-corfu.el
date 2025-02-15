@@ -118,6 +118,7 @@ https://github.com/minad/corfu."
   :bind (:map corfu-map
          ("C-p" . corfu-previous)
          ("C-n" . corfu-next)
+         ("C-f" . corfu-insert)
          ("M-m" . corfu-move-to-minibuffer)
          ("M-SPC" . corfu-insert-separator)
          ("C-g" . corfu-quit)
