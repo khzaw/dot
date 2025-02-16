@@ -45,7 +45,6 @@ do
 done
 unset file
 
-# eval "$(pyenv virtualenv-init -)"
 
 if [[ `uname` == "Linux" ]] then
    source "$HOME/Code/dot/zsh/zshrc.linux"
@@ -84,3 +83,6 @@ cd() {
 # This section can be safely removed at any time if needed.
 [[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
 # END opam configuration
+
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"

@@ -19,28 +19,57 @@ export LESS_TERMCAP_md="${yellow}"
 # android
 export ANDROID_HOME=$HOME/Library/Android/sdk
 
-# python
-export PYENV_ROOT="$HOME/.pyenv"
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-
+####################################
+# PATH
 
 # https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
 
 # https://unix.stackexchange.com/questions/246751/how-to-know-why-and-where-the-path-env-variable-is-set
 
+# https://apple.stackexchange.com/questions/432226/homebrew-path-set-in-zshenv-is-overridden
+
+####################################
 if [[ "$OSTYPE" == "darwin"* && -f /etc/zprofile ]]; then
   # everytime mac os updates it puts a file back in /etc/zprofile which overrides $path in .zshenv
   echo "Need sudo to move /etc/zprofile since it will override $path in .zshenv"
   sudo mv /etc/zprofile /etc/zshenv
 fi
 
-# path
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+# homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-
+# Python - pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then
-  path=$(PYENV_ROOT/bin $path)
+  path=($PYENV_ROOT/bin $path)
   eval "$(pyenv init -)"
 fi
+
+# Go - gobrew
+export GOPATH=$HOME/.go
+path=($HOME/.gobrew/current/bin $HOME/.gobrew/bin $path)
+path+=$(go env GOPATH)/bin
+
+# rust
+path+=$HOME/.cargo/bin
+# Foundry
+path+=$HOME/.foundry/bin
+# Android
+path+=($ANDROID_HOME/tools $ANDROID_HOME/platform-tools)
+# pipx
+path+=$HOME/.local/bin
+# ARM GCC, AVR-GCC, needed by qmk
+path+=($(brew --prefix)/opt/avr-gcc@8/bin $(brew --prefix)/opt/arm-gcc-bin@8/bin)
+# osx cryptexes
+path+=(/usr/local/bin /System/Cryptexes/App/usr/bin /usr/bin /bin /usr/sbin /sbin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin)
+# jetbrains
+path+="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+# postgres app
+path+=/Applications/Postgres.app/Contents/Versions/latest/bin
+# personal stuffs
+path+=$HOME/.bin
+# fnm
+eval "$(fnm env --use-on-cd)"
+
+# path
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :

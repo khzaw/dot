@@ -1,12 +1,29 @@
 setopt no_global_rcs
 
-# home
+####################################
+# Home
+####################################
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export HOME="/Users/$(whoami)"
 fi
-
-# XDG_CONFIG_HOME
 export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export ANDROID_HOME=$HOME/Library/Android/sdk
+
+####################################
+# Shell
+####################################
+export ESHELL=$SHELL
+
+####################################
+# AWS
+####################################
+export AWS_SDK_LOAD_CONFIG=1
+
+####################################
+# LSP
+####################################
+export LSP_USE_PLISTS=true
 
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -14,9 +31,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
   source "$HOME/Code/dot/zsh/zshenv.linux"
 fi
-
-export LSP_USE_PLISTS=true
-
 
 # local config
 [[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"
