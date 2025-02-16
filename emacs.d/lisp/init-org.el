@@ -47,6 +47,9 @@
   (setq org-link-elisp-confirm-function nil)
   (setq org-startup-with-inline-images t) ; always display images
   (setq org-confirm-babel-evaluate nil) ; just evaluate
+
+  (define-key global-map (kbd "C-c a") 'org-agenda)
+
   (setq org-agenda-files
         (directory-files-recursively (expand-file-name "agenda" org-directory) "\\.org$"))
   (setq org-refile-targets
@@ -54,10 +57,11 @@
                 (org-agenda-files :maxlevel . 9))))
   ;; (setq org-refile-targets `((,(expand-file-name "Dropbox/notes/todo.org" (getenv "HOME")) :maxlevel . 1))) ; Allow moving task from anywhere into todo
   (setq org-capture-templates
-        '(("t" "todo" entry (file "~/Dropbox/notes/inbox.org")
+        '(("t" "Todo" entry (file "~/Dropbox/notes/inbox.org")
            "* TODO %?\n/Entered on/ %U\n" :clock-in t :clock-resume t)
           ("m" "Meeting" entry (file "~/Dropbox/notes/meetings.org")
-           "* MEETING with %? :MEETING:\n%t" :clock-in t :clock-resume t)
+           ,(concat "* %? :meeting:\n"
+                    "<%<%Y-%m-%d %a %H:00>>"))
           ("j" "Journal" entry (file+olp+datetree "~/Dropbox/notes/journal.org")
            "* %?\n")))
   (setq org-agenda-window-setup 'current-window) ; Open agenda in current window

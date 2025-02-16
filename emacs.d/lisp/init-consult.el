@@ -2,8 +2,7 @@
 
 (use-package consult
   :after projectile
-  :bind (("C-c a" . consult-ag)
-         ("C-c h" . consult-history)
+  :bind (("C-c h" . consult-history)
          ;; ("C-c i" . consult-imenu)
          ("C-c r". consult-recent-file)
          ("C-c m" . consult-mode-command)
