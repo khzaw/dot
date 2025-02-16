@@ -64,5 +64,7 @@
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
 
+(use-package miasma-theme)
+
 (provide 'init-themes)
 ;; init-themes.el ends here

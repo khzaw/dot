@@ -225,7 +225,8 @@
   (spacious-padding-mode 1))
 
 (use-package quick-peek
-  :straight (:type git :host github :repo "cpitclaudel/quick-peek"))
+  :straight (:type git :host github :repo "cpitclaudel/quick-peek")
+  :commands (quick-peek-show))
 
 (use-package peek
   :straight (:host sourcehut :repo "meow_king/peek")

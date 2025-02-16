@@ -1,11 +1,10 @@
-(use-package quick-peek
-  :commands (quick-peek-show))
+;; -*- lexical-binding: t; -*-
 
 (use-package flymake
   :straight (:type built-in)
   :bind (("C-c f n" . flymake-goto-next-error)
-          ("C-c f p" . flymake-goto-prev-error)
-          ("C-c f c" . flymake-start))
+         ("C-c f p" . flymake-goto-prev-error)
+         ("C-c f c" . flymake-start))
   :config
   (setq flymake-suppress-zero-counters t)
   (setq flymake-fringe-indicator-position 'right-fringe)

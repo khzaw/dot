@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package flycheck
   :custom
   (flycheck-indication-mode 'right-fringe)
@@ -25,8 +27,8 @@
   (flycheck-error ((t (:underline (:color "#fb4934" :style line :position line)))))
   (flycheck-info ((t (:underline (:color "#83a598" :style line :position line)))))
   :bind (:map flycheck-error-list-mode-map
-          ("C-n" . flycheck-error-list-next-error)
-          ("C-p" . flycheck-error-list-previous-error)))
+         ("C-n" . flycheck-error-list-next-error)
+         ("C-p" . flycheck-error-list-previous-error)))
 
 (use-package flycheck-popup-tip
   :hook (flycheck-mode . flycheck-popup-tip-mode)
@@ -45,9 +47,12 @@
   (add-hook 'flycheck-posframe-inhibit-functions #'evil-insert-state-p)
   (add-hook 'flycheck-posframe-inhibit-functions #'evil-replace-state-p)
   (setq flycheck-posframe-warning-prefix "! "
-    flycheck-posframe-info-prefix "··· "
-    flycheck-posframe-error-prefix "X ")
-  )
+        flycheck-posframe-info-prefix "··· "
+        flycheck-posframe-error-prefix "X "))
+
+(use-package flycheck-overlay
+  :straight (flycheck-overlay :type git :host github :repo "konrad1977/flycheck-overlay")
+  :hook (flycheck-mode . flycheck-overlay-mode))
 
 (provide 'init-flycheck)
 ;;; init-flycheck.el ends here
