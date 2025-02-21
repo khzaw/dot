@@ -64,12 +64,6 @@
 ;; No cursor in inactive windows
 (setq cursor-in-non-selected-windows nil)
 
-;; Text mode is initial mode
-(setq initial-major-mode 'text-mode)
-
-;; Text mode is default major mode
-(setq default-major-mode 'text-mode)
-
 ;; No line break space points
 (setq auto-fill-mode nil)
 
@@ -182,7 +176,6 @@
     ad-do-it))
 (ad-activate 'term-sentinel)
 
-
 (use-package emacs
   :straight nil
   :custom
@@ -246,14 +239,13 @@
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
   :hook (on-first-file . recentf-mode)
-  :init (setq
-          recentf-max-saved-items 300
-          recentf-exclude
-          '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
-             "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
-             "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
-             "^/tmp/" "^/var/folders/.+$" "^/ssh:" "/persp-confs/"
-             (lambda (file) (file-in-directory-p file package-user-dir))))
+  :init (setq recentf-max-saved-items 300
+              recentf-exclude
+              '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
+                "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+                "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
+                "^/tmp/" "^/var/folders/.+$" "^/ssh:" "/persp-confs/"
+                (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
   (push (expand-file-name recentf-save-file) recentf-exclude)
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
@@ -288,6 +280,9 @@
          ("k" . image-kill-buffer)
          ("<right>" . image-next-file)
          ("<left>" . image-previous-file)))
+
+(use-package man
+  :custom (Man-notify-method 'friendly))
 
 (provide 'init-basics)
 ;;; init-basics.el ends here

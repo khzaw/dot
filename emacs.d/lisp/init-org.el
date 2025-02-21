@@ -10,6 +10,8 @@
   :bind (("C-c C-c" . org-edit-src-exit))
   :init
   (setq org-directory (file-truename "~/Dropbox/notes"))
+  :custom-face
+  (org-list-dt ((t (:inherit default))))
   :hook
   ((org-babel-after-execute . org-redisplay-inline-images)
    (org-mode . (lambda ()
@@ -370,6 +372,10 @@
   :hook (org-mode . org-autolist-mode))
 
 (use-package denote)
+
+(use-package ox-beamer
+  :straight nil
+  :after org)
 
 (use-package org-ref
   :config

@@ -19,10 +19,14 @@ Thumbs.db
 Thumbs.db
 Desktop.ini
 *.msi
+
 node_modules
-.dir-locals.el
+
 
 .idea
 .vscode
 .log
 .ignore
+
+.dir-locals.el
+.projectile-cache.eld

@@ -54,7 +54,6 @@
 
   (setq eldoc-echo-area-use-multiline-p t)
   (setq eglot-strict-mode nil)
-  (setq eglot-events-buffer-size 10)
   (setq completion-category-defaults nil)
   (setq eglot-confirm-server-initiated-edits nil)
   ;; (setq eglot-stay-out-of '(eldoc-documentation-strategy))

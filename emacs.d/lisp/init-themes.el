@@ -58,9 +58,6 @@
 
 (use-package grandshell-theme)
 
-(use-package eink-theme
-  :straight (:type git :host github :repo "maio/eink-emacs"))
-
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
 

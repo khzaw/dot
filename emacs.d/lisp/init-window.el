@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 
 (use-package ace-window
   :init (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
@@ -54,6 +55,8 @@
      helpful-mode
      devdocs-mode
      utop-mode
+     vterm-mode
+     term-mode
      "\\*Warnings\\*"
      "\\*eldoc\\*"
      "\\*Flymake log\\*"
@@ -61,7 +64,6 @@
      "\\*Go Test\\*"
      flycheck-error-list-mode
      compilation-mode
-     "^\\*vterm.*\\*$" vterm-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*term.*\\*$" term-mode
      "^\\*shell.*\\*$" shell-mode)))

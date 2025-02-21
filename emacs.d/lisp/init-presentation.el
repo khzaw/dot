@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun khz/org-present-hook ()
   (org-present-big)
   (org-display-inline-images)
