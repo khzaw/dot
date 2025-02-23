@@ -20,7 +20,7 @@
 
 (when (eq system-type 'darwin)
   (setq-default line-spacing -0.1)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 120)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
 
@@ -214,10 +214,10 @@
 
 (use-package spacious-padding
   :config (setq spacious-padding-widths
-                '(:mode-line-width 4
-                  :tab-width 0
-                  :right-divider-width 0))
-  (spacious-padding-mode 1))
+                (list :mode-line-width 4
+                      :tab-width 0
+                      :right-divider-width 0))
+  (spacious-padding-mode))
 
 (use-package quick-peek
   :straight (:type git :host github :repo "cpitclaudel/quick-peek")

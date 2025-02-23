@@ -39,7 +39,7 @@
   (shackle-mode 1))
 
 (use-package popper
-  :bind (("C-\\" . popper-toggle-latest)
+  :bind (("C-\\" . popper-toggle)
          ("M-\\" . popper-cycle)
          ("C-M-\\" . popper-toggle-type))
   :config
@@ -47,23 +47,32 @@
   (popper-echo-mode +1)
   :custom
   (popper-reference-buffers
-   '("\\*Messages\\*"
-     "Output\\*$"
-     "\\*Async Shell Command\\*"
-     xref--xref-buffer-mode
+   '(Custom-mode
+     compilation-mode
+     messages-mode
      help-mode
      helpful-mode
+     occur-mode
      devdocs-mode
      utop-mode
      vterm-mode
      term-mode
+     xref--xref-buffer-mode
+     "\\*evil-registers\\*"
+     "^\\*Apropos"
+     "\\*Messages\\*"
+     "^\\*Compile-Log\\*"
+     "[Oo]utput\\*$"
+     "\\*Shell Command Output\\*"
+     "\\*Async Shell Command\\*"
+     "\\*Completions\\*"
      "\\*Warnings\\*"
      "\\*eldoc\\*"
      "\\*Flymake log\\*"
      "\\*xref\\*"
+     "^\\*ielm\\*"
      "\\*Go Test\\*"
      flycheck-error-list-mode
-     compilation-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*term.*\\*$" term-mode
      "^\\*shell.*\\*$" shell-mode)))

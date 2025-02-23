@@ -185,8 +185,7 @@ of `flymake-eslint-executable-name.'"
 (use-package eglot-codelens
   :after eglot
   :straight (:type git :host github :repo "Gavinok/eglot-codelens")
-  :config
-  (eglot-codelens-mode +1))
+  :hook (eglot-managed-mode . eglot-codelens-mode))
 
 (use-package eglot-menu
   :straight (eglot-menu
