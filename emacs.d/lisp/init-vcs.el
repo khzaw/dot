@@ -1,10 +1,11 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package magit
+  :init
+  (setq-default magit-git-executable (executable-find "git"))
   :defer t
   :commands (magit-status magit-blame magit-get-current-branch)
   :bind ("C-x g" . magit-status)
-  :init (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
   :custom
   (magit-auto-revert-mode t)
   :config
@@ -13,6 +14,8 @@
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
   ;; Suppress the message
+
+  (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
                                         ;
   (setq magit-no-message '("Turning on magit-auto-revert-mode..."))
   ;; (setq magit-bury-buffer-function #'quit-window) ;; let shackle handle this
@@ -35,7 +38,8 @@
   (add-to-list 'magit-delta-delta-args "--light" "--no-gitconfig"))
 
 (use-package magit-todos
-  :after magit)
+  :after magit
+  :config (magit-todos-mode 1))
 
 (setq auth-sources (list
                     (concat (getenv "XDG_CONFIG_HOME") "/authinfo.gpg")
@@ -161,7 +165,6 @@
   (blamer-min-offset 70))
 
 (use-package consult-gh
-  :disabled t
   :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :files (:defaults "*.el"))
   :after consult
   :config
@@ -170,7 +173,6 @@
   (require 'consult-gh-forge)
   (consult-gh-embark-mode +1)
   (consult-gh-forge-mode +1)
-  (setq consult-gh-default-orgs-list '("khzaw" "projectrangoon" "algo-koans" "deliveryhero"))
   (setq consult-gh-default-clone-directory "~/Code")
   (setq consult-gh-show-preview t
         consult-gh-preview-key "M-.")
@@ -183,14 +185,6 @@
 (use-package consult-git-log-grep
   :custom
   (consult-git-log-grep-open-function #'magit-show-commit))
-
-(use-package ediff
-  :straight (:type built-in)
-  :hook
-  ;; show org ediffs unfolded
-  (edit-prepare-buffer . outline-show-all)
-  ;; restore window layout when done
-  (ediff-quit . winner-undo))
 
 (use-package conventional-commit
   :straight (:host github :repo "akirak/conventional-commit.el")
@@ -335,8 +329,34 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                                    (when smerge-mode
                                      (unpackaged/smerge-hydra/body)))))
 
+(use-package ediff
+  :straight (:type built-in)
+  :custom
+  (ediff-diff-options "-w")
+  :config
+  (add-hook 'ediff-quit-hook 'winner-undo)
+
+  ;; Custom function to kill the ediff buffers on quit
+  (defun khz/ediff-cleanup-hook ()
+    (when (and ediff-buffer-A (buffer-live-p ediff-buffer-A))
+      (kill-buffer ediff-buffer-A))
+    (when (and ediff-buffer-B (buffer-live-p ediff-buffer-B))
+      (kill-buffer ediff-buffer-B))
+    (when (and ediff-buffer-C (buffer-live-p ediff-buffer-C))
+      (kill-buffer ediff-buffer-C)))
+
+  (add-hook 'ediff-quit-hook 'khz/ediff-cleanup-hook))
+
 (use-package magit-gitflow
   :hook (magit-mode . turn-on-magit-gitflow))
+
+(use-package magit-tbdiff
+  :after magit)
+
+(use-package consult-vc-modified-files
+  :straight (:type git :host github :repo "chmouel/consult-vc-modified-files")
+  :bind
+  ("C-x v /" . consult-vc-modified-files))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

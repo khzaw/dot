@@ -63,5 +63,9 @@
 
 (use-package miasma-theme)
 
+(use-package fleetish-theme)
+
+(use-package tok-theme)
+
 (provide 'init-themes)
 ;; init-themes.el ends here

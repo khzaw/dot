@@ -15,7 +15,8 @@
   :custom
   (eglot-autoshutdown t)
   (eglot-report-progress nil) ; Prevent minibuffer spams
-  :bind (("C-c e e" . #'eglot)
+  :bind (:map eglot-mode-map
+         ("C-c e e" . #'eglot)
          ("C-c e f" . #'eglot-format)
          ("C-c e a" . #'eglot-code-actions)
          ("C-c e o" . #'eglot-code-action-organize-imports)
@@ -105,6 +106,10 @@
   :bind (:map eglot-mode-map
          ([remap xref-find-apropos] .  consult-eglot-symbols)))
 
+(use-package consult-eglot-embark
+  :after (embark consult-eglot)
+  :config (consult-eglot-embark-mode))
+
 (use-package flycheck-eglot
   :straight (:type git :repo "intramurz/flycheck-eglot" :host github)
   :after (flycheck eglot)
@@ -178,7 +183,6 @@ of `flymake-eslint-executable-name.'"
   (eglot-inactive-regions-mode 1))
 
 (use-package eglot-codelens
-  :disabled t
   :after eglot
   :straight (:type git :host github :repo "Gavinok/eglot-codelens")
   :config

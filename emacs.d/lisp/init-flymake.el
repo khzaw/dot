@@ -40,5 +40,4 @@
   :if (executable-find "jsonlint")
   :hook ((json-ts-mode . flymake-json-maybe-load)))
 
-
 (provide 'init-flymake)

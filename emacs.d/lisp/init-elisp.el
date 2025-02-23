@@ -124,7 +124,10 @@ Lisp function does not specify a special indentation."
 (use-package elisp-demos
   :straight t
   :config
-  (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
+  (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
+  (advice-add 'describe-function-1
+              :after #'elisp-demos-advice-describe-function-1))
+
 
 (use-package eros :init (eros-mode))
 

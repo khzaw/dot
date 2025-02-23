@@ -69,4 +69,8 @@
   :config (setq leetcode-prefer-language "python3"
                 leetcode-prefer-sql "mysql"))
 
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t)
+
 (provide 'init-others)

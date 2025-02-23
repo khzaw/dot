@@ -75,7 +75,6 @@
       inhibit-startup-echo-area-message user-login-name
       inhibit-default-init t)
 
-
 ;; Easily adjust the font size in all frames
 (use-package default-text-scale
   :hook (after-init . default-text-scale-mode))
@@ -141,19 +140,13 @@
 
 (use-package theme-magic)
 
-;; set discord status
 (use-package elcord
+  ;; set discord status
   :commands elcord-mode
   :config (setq elcord-use-major-mode-as-main-icon t)
   (elcord-mode t))
 
 (use-package keycast)
-
-;; (use-package zone
-;;   :straight (:type built-in)
-;;   :config
-;;   (zone-when-idle (* 20 60)))
-
 
 ;; Make a clean & minimalist frame
 (use-package frame
@@ -221,7 +214,9 @@
 
 (use-package spacious-padding
   :config (setq spacious-padding-widths
-                '(:mode-line-width 0))
+                '(:mode-line-width 4
+                  :tab-width 0
+                  :right-divider-width 0))
   (spacious-padding-mode 1))
 
 (use-package quick-peek
