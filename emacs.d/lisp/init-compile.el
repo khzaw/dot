@@ -30,4 +30,24 @@
 (use-package recompile-on-save
   :commands (recompile-on-save))
 
+(use-package compile-multi :straight t)
+
+(use-package consult-compile-multi
+  :straight t
+  :after compile-multi
+  :config (consult-compile-multi-mode))
+
+(use-package compile-multi-all-the-icons
+  :straight t
+  :after all-the-icons-completion
+  :after compile-multi)
+
+(use-package compile-multi-embark
+  :straight t
+  :after embark
+  :after compile-multi
+  :config (compile-multi-embark-mode +1))
+
+
+
 (provide 'init-compile)

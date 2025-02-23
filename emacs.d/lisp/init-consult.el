@@ -221,7 +221,7 @@
 
 (use-package fzf
   :if (executable-find "fzf")
-  ;; :bind (("C-c f" . fzf))
+  :bind (("C-c f z" . fzf))
   :config
   ;; (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
   (setq fzf/args "-x --print-query --margin=1,0 --no-hscroll"
@@ -472,9 +472,23 @@ targets."
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package consult-xref-stack
-  :after consult
   :straight (:type git :host github :repo "brett-lempereur/consult-xref-stack" :branch "main")
   :bind (("C-," . consult-xref-stack-backward)))
 
+(use-package consult-todo
+  :straight (:type git :host github :repo "eki3z/consult-todo"))
+
+(use-package consult-tex)
+
+(use-package consult-codesearch
+  :if (executable-find "codesearch")
+  :bind
+  (("C-c h f" . consult-codesearch-find-file)
+   ("C-c h t" . consult-codesearch)
+   ("C-c h I" . consult-codesearch-build-index)
+   :map minibuffer-local-map
+   ("C-c h" . consult-history)
+   ("C-c s" . embark-export)))
+
 (provide 'init-consult)
-;;; init-consult.el ends here
+;;init-consult.el ends here
