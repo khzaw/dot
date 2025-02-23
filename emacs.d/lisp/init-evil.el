@@ -10,7 +10,7 @@
         evil-mode-line-format nil
         evil-kill-on-visual-paste nil
         evil-symbol-word-search t
-        evil-respect-visual-line-mode nil
+        evil-respect-visual-line-mode t
         evil-split-window-below t
         evil-vsplit-window-right t
         evil-want-C-u-scroll nil
@@ -62,6 +62,8 @@
       "b" 'consult-buffer)))
 
 (use-package evil-surround :config (global-evil-surround-mode 1))
+
+(use-package evil-goggles :config (evil-goggles-mode))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

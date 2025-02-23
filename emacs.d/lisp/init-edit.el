@@ -1,5 +1,9 @@
 ;; -*- lexical-binding: t; -*-
 
+(use-package emacs
+  :straight (:type built-in)
+  :config (global-visual-line-mode 1))
+
 (use-package autorevert
   :straight (:type built-in)
   :diminish
@@ -271,6 +275,7 @@
   :config (require 'smartparens-config)
   :commands (smartparens-mode sp-forward-slurp-sexp))
 
+(use-package goto-chg)
 
 (provide 'init-edit)
 ;;; init-edit.el ends here
