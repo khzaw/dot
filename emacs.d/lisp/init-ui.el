@@ -247,5 +247,33 @@
   :init
   (setq holo-layer-enable-cursor-animation t))
 
+(use-package show-font)
+
+(use-package logos
+  :config
+  ;; (setq logos-outlines-are-pages t) ;; use outlines instead of page breaks (^L)
+
+  (defun logos-reveal-entry ()
+    "Reveal Org or Outline entry."
+    (cond
+     ((and (eq major-mode 'org-mode)
+           (org-at-heading-p))
+      (org-show-subtree))
+     ((or (eq major-mode 'outline-mode)
+          (bound-and-true-p outline-minor-mode))
+      (outline-show-subtree))))
+
+  (defvar my-logos-no-recenter-top-modes
+    '(emacs-lisp-mode lisp-interaction-mode))
+
+  (defun my-logos-recenter-top ()
+    "Use `recenter' to position the view at the top."
+    (unless (memq major-mode my-logos-no-recenter-top-modes)
+      (recenter 0)))
+
+  (add-hook 'logos-page-motion-hook #'my-logos-recenter-top))
+
+(use-package lin)
+
 (provide 'init-ui)
 ;;; init-ui.el ends here
