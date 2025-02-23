@@ -12,6 +12,7 @@
 (use-package hide-mode-line)
 
 (use-package moody
+  :disabled t
   :config
   (setq x-underline-at-descent-line t)
   (moody-replace-mode-line-front-space)
@@ -42,5 +43,8 @@
           (evil . (s2))))
   (setq telephone-line-height 24)
   (telephone-line-mode t))
+
+(use-package mood-line
+  :config (mood-line-mode))
 
 (provide 'init-modeline)
