@@ -277,5 +277,17 @@
 
 (use-package goto-chg)
 
+(use-package outline-indent
+  :ensure t
+  :commands outline-indent-minor-mode
+  :custom
+  (outline-indent-ellipsis " ▼ ")
+  :init
+  (add-hook 'python-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
+  :config (setq outline-blank-line t))
+
 (provide 'init-edit)
 ;;; init-edit.el ends here

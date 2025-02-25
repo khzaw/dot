@@ -43,12 +43,6 @@
   (evil-collection-init)
   (diminish 'evil-collection-unimpaired-mode))
 
-(use-package outline-indent
-  :ensure t
-  :custom
-  (outline-indent-ellipsis " ▼ ")
-  :config (setq outline-blank-line t))
-
 (use-package evil-leader
   :commands (evil-leader-mode)
   :init (global-evil-leader-mode)
