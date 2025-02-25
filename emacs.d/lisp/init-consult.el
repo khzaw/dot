@@ -5,13 +5,16 @@
   :bind (("C-c h" . consult-history)
          ;; ("C-c i" . consult-imenu)
          ("C-c r". consult-recent-file)
-         ("C-c m" . consult-mode-command)
+         ("C-c M-x". consult-mode-command)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
          ("C-c k" . consult-kmacro)
          ("C-c l t" . consult-theme)
          ("C-c n a" . consult-org-agenda)
          ;; C-x bindings (ctl-x-map)
          ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
          ("C-x b" . consult-buffer) ;; orig . switch-to-buffer
+         ("C-x p b" . consult-project-buffer)
          ;; b Buffers
          ;; SPC Hidden buffers
          ;; * Modified buffers
@@ -19,6 +22,7 @@
          ;; r File registers
          ;; m Bookmarks
          ;; p Project
+         ("C-x t b" . consult-buffer-other-tab)
          ("C-x 4 b" . consult-buffer-other-window)
          ("C-x 5 b" . consult-buffer-other-frame)
          ("C-x r b" . consult-bookmark)
