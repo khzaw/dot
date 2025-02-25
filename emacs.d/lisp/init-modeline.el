@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+(display-time-mode 1) ;; display time in modeline
+
 (use-package doom-modeline
   :disabled t
   :hook (after-init . doom-modeline-mode)

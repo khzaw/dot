@@ -113,5 +113,29 @@
    ("C-x C-a g" . activities-revert)
    ("C-x C-a l" . activities-list)))
 
+(use-package easysession
+  :commands (easysession-switch-to
+             easysession-save-as
+             easysession-save-mode
+             easysession-load-including-geometry)
+
+  :custom
+  (easysession-mode-line-misc-info t)  ; Display the session in the modeline
+  (easysession-save-interval (* 10 60))  ; Save every 10 minutes
+
+  :init
+  ;; Key mappings:
+  ;; C-c l for switching sessions
+  ;; and C-c s for saving the current session
+  (global-set-key (kbd "C-c l") 'easysession-switch-to)
+  (global-set-key (kbd "C-c s") 'easysession-save-as)
+
+  ;; The depth 102 and 103 have been added to to `add-hook' to ensure that the
+  ;; session is loaded after all other packages. (Using 103/102 is particularly
+  ;; useful for those using minimal-emacs.d, where some optimizations restore
+  ;; `file-name-handler-alist` at depth 101 during `emacs-startup-hook`.)
+  (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
+  (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
+
 (provide 'init-window)
 ;;; init-window.el ends here

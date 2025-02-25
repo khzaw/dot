@@ -66,6 +66,9 @@
   (corfu-auto-delay 0.7)
   (corfu-quit-no-match 'separator) ;; or t
   (corfu-auto-prefix 3)
+
+  ;; Hide commands in M-x which do not apply to the current mode.
+  (read-extended-command-predicate #'command-completion-default-include-p)
   ;; :bind
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
@@ -211,7 +214,7 @@ https://github.com/minad/corfu."
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   ;; (add-to-list 'completion-at-point-functions #'cape-history)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
   ;;(add-to-list 'completion-at-point-functions #'cape-tex)
   ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
   ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)

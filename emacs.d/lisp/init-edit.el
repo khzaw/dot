@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+(delete-selection-mode 1) ; replace selected text with typed text
+
 (use-package emacs
   :straight (:type built-in)
   :config (global-visual-line-mode 1))
