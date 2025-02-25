@@ -77,6 +77,8 @@
 	trustctime = false
 	commitGraph = true
   pager = delta
+  fsmonitor = true
+  untrackedCache = true
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
@@ -84,6 +86,7 @@
 [push]
 	default = matching
 	followTags = true
+  autoSetupRemote = true
 [grep]
 	lineNumber = true
 [filter "hawser"]
@@ -97,21 +100,30 @@
 	process = git-lfs filter-process
 [diff]
 	renames = copies
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 [help]
 	autocorrect = 1
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 	log = 1000
 [rebase]
-  autosquash = true
+  autoSquash = true
+  autoStash = true
 [fetch]
   prune = true
+  pruneTags = true
+  all = true
 [gpg]
   program = /usr/local/MacGPG2/bin/gpg2
 [commit]
 	template = ~/.stCommitMsg
+  verbose = true
 [rerere]
 	enabled = true
+  autoupdate = true
 [http]
 	sslVerify = false
 [init]
@@ -128,3 +140,7 @@
   line-numbers = true
 [delta "magit-delta"]
   line-numbers = false
+[column]
+  ui = auto
+[tag]
+  sort = versin:refname
