@@ -138,7 +138,9 @@
   :bind (:map vc-prefix-map
           ("B" . browse-at-remote)))
 
-(use-package git-modes)
+(use-package git-modes
+  :init
+  (add-to-list 'auto-mode-alist '("gitignore_global\\'" . gitignore-mode)))
 
 (use-package gitignore-templates)
 

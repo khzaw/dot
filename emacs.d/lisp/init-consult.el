@@ -67,8 +67,7 @@
          ;; Minibuffer history
          :map minibuffer-local-map
          ("M-s" . consult-history) ;; orig. next-matching-history-element
-         ("M-r" . consult-history) ;; orig. previous-matching-history-element
-         )
+         ("M-r" . consult-history)) ;; orig. previous-matching-history-element
 
   ;; Enable automatic preview at point in the *Completion* buffer. This is
   ;; relevant when you use the default completion UI.
@@ -361,7 +360,6 @@
     (save-selected-window
       (let ((embark-quit-after-action nil))
         (embark-dwim)))))
-
 
 (use-package consult-ls-git
   :straight (consult-ls-git :type git :host github :repo "rcj/consult-ls-git")

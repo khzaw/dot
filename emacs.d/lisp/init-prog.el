@@ -1,15 +1,17 @@
+;; -*- lexical-binding: t; -*-
+
 ;; enable prettified symbols on comments
 (defun setup-compose-predicate ()
   (setq prettify-symbols-compose-predicate
-    (defun my-prettify-symbols-default-compose-p (start end _match)
-      "Same as `prettify-symbols-default-compose-p', except compose symbols in comments as well."
-      (let* ((syntaxes-beg (if (memq (char-syntax (char-after start)) '(?w ?_))
-                             '(?w ?_) '(?. ?\\)))
-              (syntaxes-end (if (memq (char-syntax (char-before end)) '(?w ?_))
-                              '(?w ?_) '(?. ?\\))))
-        (not (or (memq (char-syntax (or (char-before start) ?\s)) syntaxes-beg)
-               (memq (char-syntax (or (char-after end) ?\s)) syntaxes-end)
-               (nth 3 (syntax-ppss))))))))
+        (defun my-prettify-symbols-default-compose-p (start end _match)
+          "Same as `prettify-symbols-default-compose-p', except compose symbols in comments as well."
+          (let* ((syntaxes-beg (if (memq (char-syntax (char-after start)) '(?w ?_))
+                                   '(?w ?_) '(?. ?\\)))
+                 (syntaxes-end (if (memq (char-syntax (char-before end)) '(?w ?_))
+                                   '(?w ?_) '(?. ?\\))))
+            (not (or (memq (char-syntax (or (char-before start) ?\s)) syntaxes-beg)
+                     (memq (char-syntax (or (char-after end) ?\s)) syntaxes-end)
+                     (nth 3 (syntax-ppss))))))))
 
 (use-package prog-mode
   :straight (:type built-in)
