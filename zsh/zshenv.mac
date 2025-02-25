@@ -66,6 +66,8 @@ path+=(/usr/local/bin /System/Cryptexes/App/usr/bin /usr/bin /bin /usr/sbin /sbi
 path+="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 # postgres app
 path+=/Applications/Postgres.app/Contents/Versions/latest/bin
+# sqlite
+path+=$(brew --prefix)/opt/sqlite/bin
 # personal stuffs
 path+=$HOME/.bin
 # fnm
