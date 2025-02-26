@@ -30,3 +30,5 @@ node_modules
 
 .dir-locals.el
 .projectile-cache.eld
+
+mikro.mk

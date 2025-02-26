@@ -43,7 +43,8 @@
          ("C-c e C-f" . treesitter-context-fold-mode)
          ("C-c e F" . treesitter-context-focus-mode))
   (:map treesitter-context-fold-mode-map
-   ("C-`" . treesitter-context-fold-toggle)))
+   ("C-`" . treesitter-context-fold-toggle))
+  (treesitter-context-focus-mode 1))
 
 (use-package combobulate
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
