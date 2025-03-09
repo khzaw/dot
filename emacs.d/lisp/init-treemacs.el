@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package treemacs
   :after doom-themes
   :commands (treemacs-follow-mode

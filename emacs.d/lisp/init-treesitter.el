@@ -1,4 +1,5 @@
 ;; -*- lexical-binding: t; -*-
+
 (use-package tree-sitter
   :disabled t
   :hook (tree-sitter-after-on . tree-sitter-hl-mode)
@@ -31,20 +32,21 @@
 
 (use-package treesitter-context
   :straight (:type git :host github :repo "zbelial/treesitter-context.el" :files ("*.el"))
-  :config
-  (setq treesitter-context-idle-time 0.5
-        treesitter-context-show-context-always t
-        treesitter-context-frame-autohide-timeout 15)
   ;; :hook ((go-ts-mode . treesitter-context-focus-mode)
   ;;        (typescript-ts-mode . treesitter-context-focus-mode)
   ;;        (python-ts-mode . treesitter-context-focus-mode)
   ;;        (yaml-ts-mode . treesitter-context-focus-mode))
   :bind (("C-c e C-t" . treesitter-context-toggle-show)
          ("C-c e C-f" . treesitter-context-fold-mode)
-         ("C-c e F" . treesitter-context-focus-mode))
-  (:map treesitter-context-fold-mode-map
-   ("C-`" . treesitter-context-fold-toggle))
-  (treesitter-context-focus-mode 1))
+         ("C-c e F" . treesitter-context-focus-mode)
+         (:map treesitter-context-fold-mode-map
+          ("C-`" . treesitter-context-fold-toggle)))
+  :config
+  (setq treesitter-context-idle-time 0.5
+        treesitter-context-show-context-always t
+        treesitter-context-frame-autohide-timeout 15)
+  ;; (treesitter-context-focus-mode 1)
+  (treesitter-context-fold-mode 1))
 
 (use-package combobulate
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
@@ -56,7 +58,8 @@
    (html-ts-mode . combobulate-mode)
    (css-ts-mode . combobulate-mode)
    (yaml-ts-mode . combobulate-mode)
-   (go-ts-mode . combobulate-mode)
+   (yaml-mode . combobulate-mode)
+   ;; (go-ts-mode . combobulate-mode)
    (typescript-ts-mode . combobulate-mode)
    (tsx-ts-mode . combobulate-mode)))
 

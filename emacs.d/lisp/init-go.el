@@ -37,7 +37,9 @@
 
 (use-package gorepl-mode
   :if (executable-find "gore")
-  :hook ((go-mode go-ts-mode) . gorepl-mode))
+  :hook ((go-mode go-ts-mode) . gorepl-mode)
+  :bind (:map gorepl-mode-map
+         ("C-c C-g" . nil))) ; Unbind C-c C-g, it's very easy to hit, I will type gorepl-run manually
 
 (use-package flycheck-golangci-lint
   :after (flycheck go-mode)
