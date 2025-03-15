@@ -1,6 +1,6 @@
 #+title: Elfeed Feeds
 
-* Programming :elfeed:
-
-** Emacs
-Anything emacs related
+* Blogs                                                              :elfeed:
+** https://christiantietze.de/feed.atom
+** https://protesilaos.com/master.xml
+** https://www.gilesthomas.com/feed/rss.xml

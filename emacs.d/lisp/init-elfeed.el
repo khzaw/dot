@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; (setq shr-max-width fill-column)
 (setq shr-use-fonts nil)
 
@@ -15,6 +16,6 @@
 (use-package elfeed-org
   :config
   (elfeed-org)
-  (setq rmh-elfeed-org-files (list  (expand-file-name "elfeed.org" user-emacs-directory))))
+  (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" user-emacs-directory))))
 
 (provide 'init-elfeed)

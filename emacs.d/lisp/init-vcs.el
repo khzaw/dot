@@ -218,9 +218,6 @@ branch than the one you're currently working on."
 (use-package magit-pretty-graph
   :straight (:type git :host github :repo "georgek/magit-pretty-graph"))
 
-(use-package ov
-  :straight (:type git :host github :repo "emacsorphanage/ov"))
-
 (defun unpackaged/magit-log--add-date-headers (&rest _ignore)
   "Add date headers to Magit log buffers."
   (when (derived-mode-p 'magit-log-mode)

@@ -291,5 +291,8 @@
   (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
   :config (setq outline-blank-line t))
 
+(use-package ov
+  :straight (:type git :host github :repo "emacsorphanage/ov"))
+
 (provide 'init-edit)
 ;;; init-edit.el ends here
