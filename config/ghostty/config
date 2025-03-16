@@ -7,5 +7,5 @@ window-padding-y = 20
 
 # window-decoration = false
 window-colorspace = display-p3
-macos-titlebar-style = hidden
+macos-titlebar-style = tabs
 confirm-close-surface = false

@@ -156,6 +156,13 @@
   :hook ((sql-mode . sqlup-mode)
          (sql-interactive-mode . sqlup-mode)))
 
+(use-package sqlformat
+  :commands (sqlformat sqlformat-buffer sqlformat-region)
+  :hook (sql-mode . sqlformat-on-save-mode)
+  :if (executable-find "pgformatter")
+  :init (setq sqlformat-command 'pgformatter
+              sqlformat-args '("-s2" "-g" "-u1")))
+
 (use-package kubernetes)
 
 (use-package graphql-mode
