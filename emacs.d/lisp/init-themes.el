@@ -1,17 +1,17 @@
 ;; -*- lexical-binding: t; -*-
-
 (use-package solo-jazz-theme)
 
 (use-package kaolin-themes
   :after all-the-icons
   :config
   (setq kaolin-themes-modeline-border nil)
+  (load-theme 'kaolin-mono-dark t)
   (kaolin-treemacs-theme))
 
 (use-package doom-themes
-  :config
-  (setq doom-themes-enable-italic nil
-        doom-themes-enable-bold t)
+  :config (setq doom-themes-enable-italic nil
+                doom-themes-enable-bold t)
+  (load-theme 'doom-one t)
   (doom-themes-visual-bell-config)
   (if (display-graphic-p)
       (progn
@@ -42,8 +42,7 @@
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
 
-(use-package ef-themes
-  :config (load-theme 'ef-dark t))
+(use-package ef-themes)
 
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
@@ -66,6 +65,8 @@
 (use-package fleetish-theme)
 
 (use-package tok-theme)
+
+(use-package parchment-theme)
 
 (provide 'init-themes)
 ;; init-themes.el ends here
