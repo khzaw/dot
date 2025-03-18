@@ -176,5 +176,7 @@
 (use-package promql-mode
   :straight (:type git :host github :repo "Andor/promql-mode"))
 
+(use-package dotenv-mode)
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
