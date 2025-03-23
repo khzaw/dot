@@ -9,3 +9,4 @@
 ** https://qntm.org/rss.php?blog
 ** https://tsdh.org/rss.xml
 ** https://emacsredux.com/atom.xml
+** https://lethain.com/feeds.xml
