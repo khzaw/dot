@@ -73,4 +73,7 @@
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :ensure t)
 
+(use-package monkeytype
+  :straight (:type git :host github :repo "jpablobr/emacs-monkeytype"))
+
 (provide 'init-others)
