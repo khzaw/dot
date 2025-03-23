@@ -68,5 +68,16 @@
 
 (use-package parchment-theme)
 
+(use-package alect-themes
+  :straight (:type git :host github :repo "alezost/alect-themes"))
+
+(use-package faff-theme
+  :straight (:type git :host github :repo "WJCFerguson/emacs-faff-theme"))
+
+(use-package catppuccin-theme
+  :straight (:type git :host github :repo "catppuccin/emacs")
+  :config (setq catppuccin-flavor 'mocha)
+  (catppuccin-reload))
+
 (provide 'init-themes)
 ;; init-themes.el ends here
