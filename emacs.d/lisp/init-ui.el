@@ -36,6 +36,7 @@
 (setq x-underline-at-descent-line t)
 
 (use-package solaire-mode
+  :disabled t
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)
@@ -213,6 +214,7 @@
     (evil-leader/set-key "s" 'sideline-mode)))
 
 (use-package spacious-padding
+  :disabled t
   :config (setq spacious-padding-widths
                 (list :mode-line-width 4
                       :tab-width 0

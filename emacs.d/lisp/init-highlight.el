@@ -2,6 +2,7 @@
 
 ;; Highlight the current line
 (use-package hl-line
+  :disabled t
   :straight (:type built-in)
   :hook ((on-first-buffer . global-hl-line-mode)
          ((dashboard-mode eshell-mode shell-mode term-mode vterm-mode) .
