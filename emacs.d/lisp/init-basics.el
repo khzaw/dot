@@ -176,6 +176,8 @@
     ad-do-it))
 (ad-activate 'term-sentinel)
 
+(use-package general :demand t)
+
 (use-package emacs
   :straight nil
   :custom
@@ -283,6 +285,8 @@
 
 (use-package man
   :custom (Man-notify-method 'friendly))
+
+
 
 (provide 'init-basics)
 ;;; init-basics.el ends here

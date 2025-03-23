@@ -99,13 +99,14 @@ Lisp function does not specify a special indentation."
   (eldoc-add-command-completions "combobulate-")
   :diminish)
 
+
 (use-package help-mode
   :straight (:type built-in)
   :bind
   ("C-h K" . describe-keymap)
   (:map help-mode-map
-    ("<" . help-go-back)
-    (">" . help-go-forward)))
+   ("<" . help-go-back)
+   (">" . help-go-forward)))
 
 (use-package helpful
   :bind
@@ -121,6 +122,9 @@ Lisp function does not specify a special indentation."
                  (side . bottom)
                  (window-height . 0.33))))
 
+(use-package paren-face
+  :hook (emacs-lisp-mode . paren-face-mode))
+
 (use-package elisp-demos
   :straight t
   :config
@@ -129,7 +133,10 @@ Lisp function does not specify a special indentation."
               :after #'elisp-demos-advice-describe-function-1))
 
 
-(use-package eros :init (eros-mode))
+(use-package elisp-def
+  :hook (emacs-lisp-mode . elisp-def-mode))
+
+(use-package eros :hook (emacs-lisp-mode . eros-mode))
 
 (use-package racket-mode
   :bind (:map racket-repl-mode-map

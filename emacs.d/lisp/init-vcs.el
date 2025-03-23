@@ -357,5 +357,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :bind
   ("C-x v /" . consult-vc-modified-files))
 
+(use-package eldoc-diffstat
+  :straight (:type git :host github :repo "kljohann/eldoc-diffstat")
+  :config (global-eldoc-diffstat-mode))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

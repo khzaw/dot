@@ -1,3 +1,7 @@
+;; -*- lexical-binding: t; -*-
+
+
+
 (use-package docker
   :defer t
   :bind ("C-c D" . docker)

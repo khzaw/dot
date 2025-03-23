@@ -294,5 +294,27 @@
 (use-package ov
   :straight (:type git :host github :repo "emacsorphanage/ov"))
 
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-prefer-searcher 'rg
+        xref-history-storage #'xref-window-local-history
+        xref-show-definitions-function #'xref-show-definitions-completing-read)
+
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  ;; Do not use the etags backend.
+  (remove-hook 'xref-backend-functions #'etags--xref-backend))
+
+(use-package emacs
+  :straight (:type built-in)
+  :general (:states 'normal
+            "g ." '("find def"       . xref-find-definitions)
+            "g >" '("find def o/win" . xref-find-definitions-other-window)
+            "g ," '("def go back"    . xref-go-back)
+            "g <" '("def go forward" . xref-go-forward)
+            "g /" '("find refs"      . xref-find-references)
+            "g ?" '("find/rep refs"  . xref-find-references-and-replace)
+            "g h" '("find apropos"   . xref-find-apropos)
+            "g b" '("def go back"    . xref-go-back)))
+
 (provide 'init-edit)
 ;;; init-edit.el ends here
