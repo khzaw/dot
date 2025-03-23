@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package eglot
   :commands (eglot
              eglot-rename
@@ -25,6 +27,25 @@
          ("C-c e d" . #'eglot-find-declaration)
          ("C-c e p" . #'eldoc-print-current-symbol-info))
   :config
+
+  (defun khz/toggle-eldoc-doc-buffer ()
+    "Toggle eldoc doc buffer for thing at point.
+    Only toggles off if pressing K on the same symbol."
+    (interactive)
+    (let ((current-symbol (thing-at-point 'symbol)))
+      (if (and (get-buffer-window "*eldoc*")
+               current-symbol
+               (string= current-symbol khz/current-eldoc-symbol))
+          (progn
+            (setq khz/current-eldoc-symbol nil)
+            (quit-windows-on "*eldoc*"))
+        (progn
+          (setq khz/current-eldoc-symbol current-symbol)
+          (eldoc-doc-buffer t)))))
+
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal eglot-mode-map
+      "K" #'khz/toggle-eldoc-doc-buffer))
 
   ;; Optimizations
   (fset #'jsonrpc--log-event #'ignore)

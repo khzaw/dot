@@ -14,9 +14,9 @@
   (setq shackle-default-alignment 'below
         shackle-default-size 0.4
         shackle-inhibit-window-quit-on-same-windows t
-        shackle-rules '((help-mode :align below :size 0.25 :select t :inhibit-window-quit nil)
+        shackle-rules '((help-mode :align below :size 0.3 :select t :inhibit-window-quit nil)
                         (helpful-mode :align below :inhibit-window-quit nil)
-                        (devdocs-mode :align below :size 0.5 :select t :inhibit-window-quit nil)
+                        (devdocs-mode :align below :size 0.3 :select t :inhibit-window-quit nil)
                         (compilation-mode :select nil :size 0.25)
                         ("*ag search*" :select nil :size 0.25)
                         ("*Warnings*" :select nil :size 0.25)
@@ -30,7 +30,7 @@
                         ;; (magit-diff-mode :same t  :inhibit-window-quit t)
                         ;; (forge-pullreq-mode :align t :size 0.7 :same t :inhibit-window-quit t)
                         ("work.org" :align bottom :size 0.25 :same t :inhibit-window-quit t)
-                        ("*eldoc*" :align bottom :size 0.2)
+                        ("*eldoc*" :align bottom :size 0.4)
                         ;; (git-commit-mode :same t)
                         ;; (forge-post-mode :same t :inhibit-window-quit t)
                         ;; (forge-topic-list-mode :same t :inhibit-window-quit t)
