@@ -15,7 +15,10 @@
 
 (use-package elfeed-org
   :config
-  (elfeed-org)
-  (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" user-emacs-directory))))
+  (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" user-emacs-directory)))
+  (elfeed-org))
+
+(use-package elfeed-goodies
+  :config (elfeed-goodies/setup))
 
 (provide 'init-elfeed)

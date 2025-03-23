@@ -4,3 +4,8 @@
 ** https://christiantietze.de/feed.atom
 ** https://protesilaos.com/master.xml
 ** https://www.gilesthomas.com/feed/rss.xml
+** https://sachachua.com/blog/feed/index.xml
+** https://mtlynch.io/
+** https://qntm.org/rss.php?blog
+** https://tsdh.org/rss.xml
+** https://emacsredux.com/atom.xml
