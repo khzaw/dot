@@ -178,5 +178,7 @@
 
 (use-package dotenv-mode)
 
+(use-package sicp)
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
