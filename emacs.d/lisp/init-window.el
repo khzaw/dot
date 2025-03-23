@@ -71,7 +71,6 @@
      "\\*Flymake log\\*"
      "\\*xref\\*"
      "^\\*ielm\\*"
-     "\\*Go Test\\*"
      flycheck-error-list-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*term.*\\*$" term-mode
