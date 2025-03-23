@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode)
          ("\\.restclient$" . restclient-mode))
@@ -19,5 +21,14 @@
     :hook (restclient-mode . restclient-test-mode)))
 
 (use-package verb)
+
+(use-package grpcclient
+  :if (executable-find "grpcurl")
+  :straight (:type git :host github :repo "Prikaz98/grpclient.el")
+  :init (add-to-list 'auto-mode-alist '("\\.grpc\\'" . grpclient-mode)))
+
+(use-package openapi-preview
+  :if (executable-find "redoc-cli")
+  :straight (:type git :host github :repo "merrickluo/openapi-preview"))
 
 (provide 'init-restclient)
