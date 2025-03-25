@@ -214,12 +214,10 @@
     (evil-leader/set-key "s" 'sideline-mode)))
 
 (use-package spacious-padding
-  :disabled t
   :config (setq spacious-padding-widths
-                (list :mode-line-width 4
+                (list :mode-line-width 2
                       :tab-width 0
-                      :right-divider-width 0))
-  (spacious-padding-mode))
+                      :right-divider-width 0)))
 
 (use-package quick-peek
   :straight (:type git :host github :repo "cpitclaudel/quick-peek")
