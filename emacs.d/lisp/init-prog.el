@@ -180,5 +180,8 @@
 
 (use-package sicp)
 
+(use-package anki-editor
+  :straight (:type git :host github :repo "anki-editor/anki-editor"))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here

@@ -38,6 +38,7 @@
   (add-to-list 'magit-delta-delta-args "--light" "--no-gitconfig"))
 
 (use-package magit-todos
+  :disabled t  ;; super slow in big repos
   :after magit
   :config (magit-todos-mode 1))
 
@@ -360,6 +361,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package eldoc-diffstat
   :straight (:type git :host github :repo "kljohann/eldoc-diffstat")
   :config (global-eldoc-diffstat-mode))
+
+(use-package igist
+  :straight (igist
+             :repo "KarimAziev/igist"
+             :type git
+             :host github))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

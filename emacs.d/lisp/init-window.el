@@ -138,4 +138,4 @@
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
 
 (provide 'init-window)
-;;; init-window.el ends here
+;; init-window.el ends here
