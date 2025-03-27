@@ -5,13 +5,11 @@
   :after all-the-icons
   :config
   (setq kaolin-themes-modeline-border nil)
-  (load-theme 'kaolin-mono-dark t)
   (kaolin-treemacs-theme))
 
 (use-package doom-themes
   :config (setq doom-themes-enable-italic nil
                 doom-themes-enable-bold t)
-  (load-theme 'doom-one t)
   (doom-themes-visual-bell-config)
   (if (display-graphic-p)
       (progn
@@ -55,7 +53,8 @@
 ;; (custom-set-faces
 ;;  `(shadow ((t :foreground "#cccccc")))))
 
-(use-package grandshell-theme)
+(use-package grandshell-theme
+  :config (load-theme 'grandshell t))
 
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
