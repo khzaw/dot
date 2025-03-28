@@ -86,8 +86,11 @@ Lisp function does not specify a special indentation."
                                          indent-point normal-indent))
                   (method
                    (funcall method indent-point state))))))))
-    (add-hook 'emacs-lisp-mode-hook
-              (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))))
+
+    ;; (add-hook 'emacs-lisp-mode-hook
+    ;;           (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))
+    ))
+
 
 (use-package eldoc
   :straight (:type built-in)
@@ -141,6 +144,7 @@ Lisp function does not specify a special indentation."
 (use-package racket-mode
   :bind (:map racket-repl-mode-map
          ("C-RET" . newline-and-indent)))
+
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here

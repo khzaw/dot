@@ -67,13 +67,10 @@
   :straight (:type git :host github :repo "aatmunbaxi/lasgun.el")
   :after (avy embark))
 
-;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
+  ;; Minor mode to aggressively keep your code always indented
   :diminish
-  :hook ((clojure-mode . aggressive-indent-mode)
-         (emacs-lisp-mode . aggressive-indent-mode))
-  :config (setq aggressive-indent-sit-for-time 0))
-
+  :hook (emacs-lisp-mode . aggressive-indent-mode))
 
 
 ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=55340
@@ -90,7 +87,14 @@
                    (char-before (1- (point))))
                  (matching-paren (char-after))))
     (save-excursion (newline-and-indent))))
-(advice-add 'electric-pair-open-newline-between-pairs-psif :override #'fix-electric-indent)
+
+;; (advice-add 'electric-pair-open-newline-between-pairs-psif :override #'fix-electric-indent)
+
+;; (advice-add 'indent-region :around
+;;             (lambda (orig-fun &rest args)
+;;               (let ((inhibit-message t)) ; Suppress echo area messages
+;;                 (apply orig-fun args)))
+;;             '((name . "silence-indent-region")))
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
@@ -142,9 +146,10 @@
   :bind
   (("C-c w r" . writeroom-mode)
    (:map writeroom-mode-map
-    ("C-M-<" . writeroom-decrease-width)
-    ("C-M->" . writeroom-increase-width)
-    ("C-M-=" . writeroom-adjust-width)))
+         ("C-M-<" . writeroom-decrease-width)
+         ("C-M->" . writeroom-increase-width)
+         ("C-M-=" . writeroom-adjust-width)))
+
   :config
   (setq writeroom-width 140
         writeroom-fullscreen-effect nil
