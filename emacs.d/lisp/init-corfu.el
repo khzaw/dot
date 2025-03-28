@@ -63,9 +63,9 @@
   (corfu-preselect 'directory)
   (corfu-auto t)
   (corfu-separator ?_)         ;; Set to orderless separator, if not using space
-  (corfu-auto-delay 0.7)
+  (corfu-auto-delay 0)
   (corfu-quit-no-match 'separator) ;; or t
-  (corfu-auto-prefix 3)
+  (corfu-auto-prefix 1)
 
   ;; Hide commands in M-x which do not apply to the current mode.
   (read-extended-command-predicate #'command-completion-default-include-p)
@@ -138,14 +138,15 @@ https://github.com/minad/corfu."
   :straight nil
   :after corfu
   :commands (corfu-echo-mode)
-  :init (corfu-echo-mode))
+  :init (corfu-echo-mode)
+  :custom (corfu-echo-delay '(0 . 0)))
 
 (use-package corfu-popupinfo-mode
   :straight nil
   :after corfu
   :commands corfu-popupinfo-mode
   :custom
-  (corfu-popupinfo-delay '(0.4 . 0.2))
+  (corfu-popupinfo-delay '(0.3 . 0.2))
   (corfu-popupinfo-direction 'vertical)
   :custom-face
   (corfu-popupinfo ((t (:height 1.0))))
