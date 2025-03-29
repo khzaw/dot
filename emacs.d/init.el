@@ -95,6 +95,7 @@
 (require 'init-solidity)
 (require 'init-tex)
 (require 'init-web)
+(require 'init-yaml)
 (require 'init-prog)
 '
 ;; programming tools
