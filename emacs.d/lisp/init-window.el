@@ -113,6 +113,7 @@
    ("C-x C-a l" . activities-list)))
 
 (use-package easysession
+  :disabled t
   :diminish
   :commands (easysession-switch-to
              easysession-save-as
