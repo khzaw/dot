@@ -156,7 +156,10 @@
   (setq treesit-jump-queries-filter-list '("inner" "test" "param")))
 
 (use-package treesit-fold
-  :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold"))
+  :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
+  :config
+  (global-treesit-fold-mode 1)
+  (global-treesit-fold-indicators-mode 1))
 
 (use-package symbols-outline
   :bind ("C-c e i" . symbols-outline-show)
