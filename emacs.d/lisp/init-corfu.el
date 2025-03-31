@@ -62,10 +62,10 @@
   :custom
   (corfu-preselect 'directory)
   (corfu-auto t)
-  (corfu-separator ?_)         ;; Set to orderless separator, if not using space
-  (corfu-auto-delay 0)
-  (corfu-quit-no-match 'separator) ;; or t
+  (corfu-auto-delay 1)
   (corfu-auto-prefix 1)
+  (corfu-separator ?_)         ;; Set to orderless separator, if not using space
+  (corfu-quit-no-match 'separator) ;; or t
 
   ;; Hide commands in M-x which do not apply to the current mode.
   (read-extended-command-predicate #'command-completion-default-include-p)
@@ -119,17 +119,17 @@ https://github.com/minad/corfu."
     (add-to-list 'savehist-additional-variables 'corfu-history))
 
   :bind (:map corfu-map
-         ("C-p" . corfu-previous)
-         ("C-n" . corfu-next)
-         ("C-f" . corfu-insert)
-         ("M-m" . corfu-move-to-minibuffer)
-         ("M-SPC" . corfu-insert-separator)
-         ("C-g" . corfu-quit)
-         ("M-g" . corfu-info-location)
-         ("M-h" . corfu-info-documentation)
-         ;; Free RET key for less instrusive behavior.
-         ;; ("RET" . nil)
-         )
+              ("C-p" . corfu-previous)
+              ("C-n" . corfu-next)
+              ("C-f" . corfu-insert)
+              ("M-m" . corfu-move-to-minibuffer)
+              ("M-SPC" . corfu-insert-separator)
+              ("C-g" . corfu-quit)
+              ("M-g" . corfu-info-location)
+              ("M-h" . corfu-info-documentation)
+              ;; Free RET key for less instrusive behavior.
+              ;; ("RET" . nil)
+              )
   :init
   (global-corfu-mode))
 
