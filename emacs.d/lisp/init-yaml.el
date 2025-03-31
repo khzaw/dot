@@ -1,10 +1,20 @@
 
 ;; -*- lexical-binding: t; -*-
+
+(use-package yaml-ts-mode
+  :straight (:type built-in)
+  :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-ts-mode)
+         ("kubeconfig\\'" . yaml-ts-mode)))
+
 (use-package yaml-pro
-  :hook ((yaml-ts-mode . yaml-pro-ts-mode)
-         (yaml-mode . yaml-pro-mode)))
+  :hook (yaml-ts-mode . yaml-pro-mode)
+  :hook (yaml-ts-mode . yaml-pro-ts-mode)
+  :config
+  (evil-define-key 'insert yaml-pro-ts-mode-map
+    (kbd "C-<return>") 'yaml-pro-ts-meta-return))
 
 (use-package major-mode-hydra
+  :disabled t
   :after yaml-pro
   :config
   (major-mode-hydra-define yaml-ts-mode (:foreign-keys run)

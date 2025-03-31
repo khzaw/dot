@@ -137,8 +137,6 @@
   :init (setq sqlformat-command 'pgformatter
               sqlformat-args '("-s2" "-g" "-u1")))
 
-(use-package kubernetes)
-
 (use-package graphql-mode
   :straight (:type git :host github :repo "davazp/graphql-mode"))
 
