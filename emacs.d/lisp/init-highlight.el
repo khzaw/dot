@@ -26,10 +26,9 @@
 (use-package highlight-indent-guides
   :diminish
   :hook
-  (yaml-mode . highlight-indent-guides-mode)
+  ((yaml-mode yaml-ts-mode) . highlight-indent-guides-mode)
   :custom
-  (highlight-indent-guides-character ?\xFFE8)
-  (highlight-indent-guides-responsive 'top)
+  ;; (highlight-indent-guides-responsive 'top)
   (highlight-indent-guides-method 'character))
 
 (provide 'init-highlight)

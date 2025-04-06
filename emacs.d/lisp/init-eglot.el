@@ -13,6 +13,7 @@
   ((java-mode java-ts-mode) . eglot-ensure)
   ((tsx-ts-mode typescript-ts-mode) . eglot-ensure)
   (tuareg-mode . eglot-ensure)
+  (terraform-mode . eglot-ensure)
   ((yaml-mode yaml-ts-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
