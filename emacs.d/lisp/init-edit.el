@@ -182,9 +182,11 @@
 
 (use-package repeat-mode
   :straight (:type built-in)
+  :diminish
   :hook (after-init . repeat-mode))
 
 (use-package repeat-help
+  :diminish
   :straight (:type git :host github :repo "karthink/repeat-help")
   :hook (repeat-mode . repeat-help-mode))
 
