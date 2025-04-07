@@ -1,5 +1,4 @@
 ;; -*- lexical-binding: t; -*-
-
 (use-package ace-window
   :init (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
               aw-char-position 'left
@@ -137,6 +136,14 @@
   ;; `file-name-handler-alist` at depth 101 during `emacs-startup-hook`.)
   (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
+
+(use-package sinister
+  :straight (sinister :type git
+                      :host github
+                      :repo "positron-solutions/sinister")
+  :config
+  (sinister-stillness-mode 1)
+  (sinister-misc-settings))
 
 (provide 'init-window)
 ;; init-window.el ends here

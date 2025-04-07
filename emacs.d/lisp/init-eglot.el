@@ -72,6 +72,9 @@ and CONFIG is the configuration plist for that server.")
 
   (add-hook 'eglot-managed-mode-hook #'khz/update-eglot-workspace-config)
 
+  (defvar khz/current-eldoc-symbol nil
+    "Stores the symbol for which the Eldoc doc buffer was last toggled in the current buffer.")
+
   (defun khz/toggle-eldoc-doc-buffer ()
     "Toggle Eldoc documentation buffer for the symbol at point."
     (interactive)

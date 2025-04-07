@@ -87,8 +87,7 @@
                    (char-before (1- (point))))
                  (matching-paren (char-after))))
     (save-excursion (newline-and-indent))))
-
-;; (advice-add 'electric-pair-open-newline-between-pairs-psif :override #'fix-electric-indent)
+(advice-add 'electric-pair-open-newline-between-pairs-psif :override #'fix-electric-indent)
 
 ;; (advice-add 'indent-region :around
 ;;             (lambda (orig-fun &rest args)
@@ -314,14 +313,16 @@
 (use-package emacs
   :straight (:type built-in)
   :general (:states 'normal
-            "g ." '("find def"       . xref-find-definitions)
-            "g >" '("find def o/win" . xref-find-definitions-other-window)
-            "g ," '("def go back"    . xref-go-back)
-            "g <" '("def go forward" . xref-go-forward)
-            "g /" '("find refs"      . xref-find-references)
-            "g ?" '("find/rep refs"  . xref-find-references-and-replace)
-            "g h" '("find apropos"   . xref-find-apropos)
-            "g b" '("def go back"    . xref-go-back)))
+                    "g ." '("find def"       . xref-find-definitions)
+                    "g >" '("find def o/win" . xref-find-definitions-other-window)
+                    "g ," '("def go back"    . xref-go-back)
+                    "g <" '("def go forward" . xref-go-forward)
+                    "g /" '("find refs"      . xref-find-references)
+                    "g ?" '("find/rep refs"  . xref-find-references-and-replace)
+                    "g h" '("find apropos"   . xref-find-apropos)
+                    "g b" '("def go back"    . xref-go-back)))
+
+(use-package ws-butler)
 
 (provide 'init-edit)
 ;; init-edit.el ends here

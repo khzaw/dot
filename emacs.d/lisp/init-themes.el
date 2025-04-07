@@ -78,7 +78,7 @@
   :config (setq catppuccin-flavor 'mocha)
   (catppuccin-reload))
 
-(use-package perltidy
+(use-package tokyo
   :straight (:type git :host github :repo "rawleyfowler/tokyo-theme.el" :branch "main"))
 
 (provide 'init-themes)

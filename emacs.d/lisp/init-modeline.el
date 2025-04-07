@@ -23,7 +23,6 @@
   (moody-replace-eldoc-minibuffer-message-function))
 
 (use-package telephone-line
-  :disabled t
   :init
   (setq telephone-line-primary-left-separator 'telephone-line-identity-left
         telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
@@ -32,7 +31,7 @@
   (telephone-line-defsegment s1 () "Emacs")
   (telephone-line-defsegment s2 () "λ")
   (setq telephone-line-lhs
-        '((evil . (s1))
+        '((accent . (s1))
           (accent . (telephone-line-vc-segment
                      telephone-line-erc-modified-channels-segment
                      telephone-line-process-segment))
@@ -40,6 +39,7 @@
                   telephone-line-buffer-segment))))
   (setq telephone-line-rhs
         '((nil . (telephone-line-flycheck-segment
+                  telephone-line-flymake-segment
                   telephone-line-misc-info-segment))
           (accent . (telephone-line-major-mode-segment))
           (evil . (s2))))
@@ -47,6 +47,9 @@
   (telephone-line-mode t))
 
 (use-package mood-line
-  :config (mood-line-mode))
+  :config
+  (setq mood-line-format mood-line-format-default)
+  (setq mood-line-glyph-alist mood-line-glyphs-ascii)
+  (mood-line-mode 0))
 
 (provide 'init-modeline)
