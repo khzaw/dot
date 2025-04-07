@@ -86,5 +86,7 @@
     (comment-or-uncomment-region beg end))
   (evil-define-key 'normal 'global (kbd "gc") 'my-evil-comment-or-uncomment))
 
+(use-package evil-lion :config (evil-lion-mode))
+
 (provide 'init-evil)
 ;;; init-evil.el ends here
