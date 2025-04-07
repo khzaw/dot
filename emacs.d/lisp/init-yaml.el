@@ -1,10 +1,39 @@
 
 ;; -*- lexical-binding: t; -*-
 
+(defun my-yaml-backtab ()
+  "Decrease indentation of the current line using standard-indent."
+  (interactive)
+  (let ((offset (or (bound-and-true-p standard-indent) 2))) ; Default to 2 if standard-indent is nil
+    (when (> (current-indentation) 0)
+      ;; Ensure we don't de-indent beyond column 0
+      (indent-rigidly (line-beginning-position) (line-end-position) (- (min offset (current-indentation)))))))
+
+(defun my-yaml-ts-mode-setup ()
+  "Custom setup applied when `yaml-ts-mode` starts."
+  ;; Let yaml-ts-mode (Tree-sitter) handle its own indentation logic.
+  ;; indent-for-tab-command should delegate to the mode's indent-line-function.
+  ;; Ensure no global setting is overriding yaml-ts-mode's indent-line-function.
+
+  ;; treesit-indent has a bug a doesn't work well in yaml-ts-mode
+  (setq-local indent-line-function #'yaml-indent-line)
+
+  ;; --- Keybindings for Evil Insert State ---
+  ;; Bind TAB to indent using the mode's logic in insert mode
+  (define-key evil-insert-state-local-map (kbd "<tab>") #'indent-for-tab-command)
+
+  ;; Bind Shift-Tab to de-indent using our custom function in insert mode
+  (define-key evil-insert-state-local-map (kbd "<backtab>") #'my-yaml-backtab)
+
+  ;; Other mode-specific settings can go here if needed
+  ;; e.g., (setq-local comment-line-break-function #'adaptive-fill-comment-line)
+  )
+
 (use-package yaml-ts-mode
   :straight (:type built-in)
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-ts-mode)
-         ("kubeconfig\\'" . yaml-ts-mode)))
+         ("kubeconfig\\'" . yaml-ts-mode))
+  :hook (yaml-ts-mode . my-yaml-ts-mode-setup))
 
 (use-package yaml-pro
   :hook (yaml-ts-mode . yaml-pro-mode)

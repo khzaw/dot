@@ -53,8 +53,7 @@
 ;; (custom-set-faces
 ;;  `(shadow ((t :foreground "#cccccc")))))
 
-(use-package grandshell-theme
-  :config (load-theme 'grandshell t))
+(use-package grandshell-theme)
 
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))

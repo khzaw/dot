@@ -28,8 +28,12 @@
   :hook
   ((yaml-mode yaml-ts-mode) . highlight-indent-guides-mode)
   :custom
-  ;; (highlight-indent-guides-responsive 'top)
-  (highlight-indent-guides-method 'character))
+  (highlight-indent-guides-responsive 'top)
+  (highlight-indent-guides-method 'character)
+  :config
+  (setq highlight-indent-guides-character ?\┆) ; Example: light vertical bar unicode
+  (set-face-attribute 'highlight-indent-guides-odd-face nil :foreground "gray40")
+  (set-face-attribute 'highlight-indent-guides-even-face nil :foreground "gray30"))
 
 (provide 'init-highlight)
 ;;; init-highlight.el ends here

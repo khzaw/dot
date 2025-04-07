@@ -2,10 +2,6 @@
 
 (delete-selection-mode 1) ; replace selected text with typed text
 
-(use-package emacs
-  :straight (:type built-in)
-  :config (global-visual-line-mode 1))
-
 (use-package autorevert
   :straight (:type built-in)
   :diminish
@@ -72,7 +68,6 @@
   :diminish
   :hook (emacs-lisp-mode . aggressive-indent-mode))
 
-
 ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=55340
 (defun fix-electric-indent ()
   "Honour `electric-pair-open-newline-between-pairs'.
@@ -87,6 +82,7 @@
                    (char-before (1- (point))))
                  (matching-paren (char-after))))
     (save-excursion (newline-and-indent))))
+
 (advice-add 'electric-pair-open-newline-between-pairs-psif :override #'fix-electric-indent)
 
 ;; (advice-add 'indent-region :around
@@ -215,25 +211,31 @@
 (use-package indent-bars
   :disabled t
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
-  :hook ((python-mode yaml-mode) . indent-bars-mode)
+  :commands (indent-bars-mode)
+  :hook ((python-mode . indent-bars-mode)
+         (python-ts-mode . indent-bars-mode)
+         (yaml-mode . indent-bars-mode)
+         (yaml-ts-mode . indent-bars-mode))
   :custom
   (indent-bars-treesit-support t)
+
   (indent-bars-treesit-ignore-blank-lines-types '("module"))
   ;; Add other languages as needed
-  (indent-bars-treesit-scope '((python function_definition class_definition for_statement if_statement with_statement while_statement)))
+  ;; (indent-bars-treesit-scope '((python function_definition class_definition for_statement if_statement with_statement while_statement)))
   ;; wrap may not be needed if no-descend-list is enough
   ;; (indent-bars-treesit-wrap '((python argument_list parameters ; for python , as an example list list_comprehension
   ;; dictionary dictionary_comprehension paranthesized_expression subscript)))
-  :hook ((python-base-mode yaml-mode) . indent-bars-mode)
   :config
-  (setq indent-bars-color '(highlight :face-bg t :blend 0.2)
-        indent-bars-pattern "."
-        indent-bars-width-frac 0.1
-        indent-bars-pad-frac 0.1
-        indent-bars-zigzag nil
-        indent-bars-color-by-depth nil
-        indent-bars-highlight-current-depth nil
-        indent-bars-display-on-blank-lines nil))
+  (setq indent-bars-prefer-character nil)
+  ;; (setq indent-bars-color '(highlight :face-bg t :blend 0.2)
+  ;;       indent-bars-pattern "."
+  ;;       indent-bars-width-frac 0.1
+  ;;       indent-bars-pad-frac 0.1
+  ;;       indent-bars-zigzag nil
+  ;;       indent-bars-color-by-depth nil
+  ;;       indent-bars-highlight-current-depth nil
+  ;;       indent-bars-display-on-blank-lines nil)
+  )
 
 (use-package anzu
   :diminish
@@ -287,15 +289,15 @@
 
 (use-package outline-indent
   :ensure t
-  :commands outline-indent-minor-mode
+  :commands (outline-indent-minor-mode
+             outline-indent-insert-heading)
   :custom
   (outline-indent-ellipsis " ▼ ")
-  :init
-  (add-hook 'python-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'python-ts-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'yaml-mode-hook #'outline-indent-minor-mode)
-  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode)
-  :config (setq outline-blank-line t))
+  :hook
+  ((python-mode . outline-indent-minor-mode)
+   (python-ts-mode . outline-indent-minor-mode)
+   (yaml-mode . outline-indent-minor-mode)
+   (yaml-ts-mode . outline-indent-minor-mode)))
 
 (use-package ov
   :straight (:type git :host github :repo "emacsorphanage/ov"))

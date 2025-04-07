@@ -94,10 +94,10 @@
 
 (use-package mermaid-ts-mode
   :straight (:type git
-             :host github
-             :repo "d4ncer/mermaid-ts-mode"
-             :branch "main"
-             :files ("mermaid-ts-mode.el"))
+                   :host github
+                   :repo "d4ncer/mermaid-ts-mode"
+                   :branch "main"
+                   :files ("mermaid-ts-mode.el"))
   :mode (("\\.mermaid\\'" . mermaid-ts-mode))
   :config
   (defun khz/preview-mermaid ()
@@ -121,9 +121,6 @@
 </body>")
           (write-file path)))
       (xwidget-webkit-browse-url (format "file://%s" path)))))
-
-(use-package promql-mode
-  :straight (:type git :host github :repo "Andor/promql-mode"))
 
 (use-package sqlup-mode
   :straight (:type git :host github :repo "Trevoke/sqlup-mode.el")
