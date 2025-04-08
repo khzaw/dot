@@ -14,7 +14,6 @@
         evil-split-window-below t
         evil-vsplit-window-right t
         evil-want-C-u-scroll nil
-        evil-want-integration t
         evil-ex-interactive-search-highlight 'selected-window
         evil-kbd-macro-suppress-motion-error t)
   :config
