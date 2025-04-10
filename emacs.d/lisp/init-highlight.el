@@ -15,7 +15,10 @@
   :init (setq show-paren-when-point-inside-paren t
               show-paren-when-point-in-periphery t))
 
-(use-package rainbow-mode)
+(use-package colorful-mode
+  :straight (:type git :host github :repo "DevelopmentCool2449/colorful-mode")
+  :config
+  (add-to-list 'global-colorful-modes 'helpful-mode))
 
 (use-package prism
   :diminish
