@@ -10,6 +10,8 @@ antigen bundle git
 antigen bundle git-extras
 antigen bundle github
 antigen bundle z
+antigen bundle kubectl
+antigen bundle eza
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
