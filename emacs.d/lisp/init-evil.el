@@ -23,6 +23,7 @@
   (evil-set-initial-state 'fundamental-mode 'emacs)
   (evil-set-initial-state 'chronos-mode 'emacs)
   (evil-set-initial-state 'vterm-mode 'emacs)
+  (evil-set-initial-state 'neotree-mode 'emacs)
   (evil-mode 1))
 
 (use-package evil-escape

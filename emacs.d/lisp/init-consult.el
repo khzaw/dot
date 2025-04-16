@@ -126,7 +126,17 @@
    consult--source-bookmark consult--source-file-register
    consult--source-recent-file consult--source-project-recent-file
    ;; preview-key (kdb "M-.")
-   :preview-key '(:debounce 0.2 any))
+   :preview-key '(:debounce 0.5 any))
+
+  (consult-customize
+   consult-line
+   :add-history (seq-some #'thing-at-point '(region symbol)))
+
+  (defalias 'consult-line-thing-at-point 'consult-line)
+
+  (consult-customize
+   consult-line-thing-at-point
+   :initial (thing-at-point 'symbol))
 
 
   ;; Optinally make narrowing help available in the minibuffer.

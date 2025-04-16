@@ -44,12 +44,15 @@
           (accent . (telephone-line-major-mode-segment))
           (evil . (s2))))
   (setq telephone-line-height 24)
-  (telephone-line-mode t))
+  (telephone-line-mode nil))
 
 (use-package mood-line
   :config
   (setq mood-line-format mood-line-format-default)
   (setq mood-line-glyph-alist mood-line-glyphs-ascii)
-  (mood-line-mode 0))
+  (mood-line-mode 1))
+
+(use-package nerd-icons)
+
 
 (provide 'init-modeline)
