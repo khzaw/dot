@@ -11,3 +11,6 @@
 ** https://emacsredux.com/atom.xml
 ** https://lethain.com/feeds.xml
 ** https://www.benkuhn.net/
+** https://coppolaemilio.com/rss.xml
+** https://amitp.blogspot.com/
+** https://babbagefiles.xyz/
