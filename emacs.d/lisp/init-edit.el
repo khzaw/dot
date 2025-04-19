@@ -45,6 +45,10 @@
   (with-eval-after-load 'casual-symbol-overlay
     (symbol-overlay-mc-insert-into-casual-tmenu)))
 
+(use-package smartscan
+  :disabled t
+  :config (smartscan-mode))
+
 (use-package avy
   :bind (("M-g c" . avy-goto-char)
          ("M-g C" . avy-goto-char-2)
@@ -324,7 +328,8 @@
                     "g h" '("find apropos"   . xref-find-apropos)
                     "g b" '("def go back"    . xref-go-back)))
 
-(use-package ws-butler)
+;; (use-package ws-butler
+;;   :straight (:type git :host github :repo "lewang/ws-butler"))
 
 (provide 'init-edit)
 ;; init-edit.el ends here

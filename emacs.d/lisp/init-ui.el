@@ -36,7 +36,6 @@
 (setq x-underline-at-descent-line t)
 
 (use-package solaire-mode
-  :disabled t
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
   (after-load-theme . solaire-global-mode)
@@ -214,10 +213,14 @@
     (evil-leader/set-key "s" 'sideline-mode)))
 
 (use-package spacious-padding
-  :config (setq spacious-padding-widths
-                (list :mode-line-width 2
-                      :tab-width 0
-                      :right-divider-width 0)))
+  :config
+  (setq spacious-padding-widths
+        (list :mode-line-width 4
+              :tab-width 0
+              :right-divider-width 0))
+  (setq spacious-padding-subtle-mode-line
+        '(:mode-line-active lazy-highlight :mode-line-inactive shadow))
+  (spacious-padding-mode t))
 
 (use-package quick-peek
   :straight (:type git :host github :repo "cpitclaudel/quick-peek")
@@ -237,6 +240,15 @@
                     (t              `(,(car old) ,arg)))))
     (if elt (setcdr elt new) (push `(alpha ,@new) default-frame-alist))
     (set-frame-parameter nil 'alpha new)))
+
+(defun sanityinc/adjust-opacity (frame incr)
+  (let* ((oldalpha (or (frame-parameter frame 'alpha) 100))
+         (newalpha (+ incr oldalpha)))
+    (when (and (<= frame-alpha-lower-limit newalpha) (>= 100 newalpha))
+      (modify-frame-parameters frame (list (cons 'alpha newalpha))))))
+(keymap-global-set "C-M-8" (lambda () (interactive) (sanityinc/adjust-opacity nil -2)))
+(keymap-global-set "C-M-9" (lambda () (interactive) (sanityinc/adjust-opacity nil 2)))
+(keymap-global-set "C-M-0" (lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
 
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
 

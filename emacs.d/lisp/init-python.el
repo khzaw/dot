@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; Run Jupyter notebooks in emacs
 (use-package ein)
 

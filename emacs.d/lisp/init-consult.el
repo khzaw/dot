@@ -230,7 +230,8 @@
 
 (use-package consult-git-log-grep
   :custom (consult-git-log-grep-open-function #'magit-show-commit)
-  :bind (("C-c g l" . consult-git-log-grep)))
+  :bind (("C-c g l" . consult-git-log-grep)
+         ("C-c g s" . consult-ls-git-ls-status)))
 
 (use-package fzf
   :if (executable-find "fzf")

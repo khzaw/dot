@@ -1,4 +1,7 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package dape
+  :after eglot
   :config
   (setq dape-buffer-window-arrangement 'left)
   (setq dape-inlay-hints t) ;; show inlay hints

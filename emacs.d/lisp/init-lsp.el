@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package lsp-mode
   :diminish
   :commands (lsp-enable-which-key-integration
@@ -15,9 +17,9 @@
                        (add-hook 'before-save-hook #'lsp-format-buffer t t)
                        (add-hook 'before-save-hook #'lsp-organize-imports t t))))
   :bind (:map lsp-mode-map
-         ("C-c C-d" . lsp-describe-thing-at-point)
-         ([remap xref-find-definitions] . lsp-find-definitions)
-         ([remap xref-find-references] . lsp-find-references))
+              ("C-c C-d" . lsp-describe-thing-at-point)
+              ([remap xref-find-definitions] . lsp-find-definitions)
+              ([remap xref-find-references] . lsp-find-references))
   :init (setq lsp-keymap-prefix "C-c l"
 							lsp-keep-workspace-alive nil
 							lsp-signature-auto-activate nil

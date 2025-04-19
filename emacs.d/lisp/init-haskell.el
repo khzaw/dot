@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package haskell-mode
   :straight (haskell-mode :type git
                           :host github

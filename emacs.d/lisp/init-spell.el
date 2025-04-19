@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package ispell
   :disabled t
   :defer 15

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; (use-package java-mode
 ;;   :straight (:type built-in))
 

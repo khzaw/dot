@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; Curly quotes when writing in markup languages
 (use-package typo :defer t)
 
