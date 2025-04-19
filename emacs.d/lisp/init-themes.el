@@ -74,6 +74,8 @@
 
 (use-package catppuccin-theme
   :straight (:type git :host github :repo "catppuccin/emacs")
+  :custom-face
+  (vertico-current ((t (:background "#45475a"))))
   :config
   (setq catppuccin-flavor 'mocha)
   ;; `Overlay0` is too dim AA (3.35:1). `Overlay2` on base is (5.81:1).
@@ -87,6 +89,9 @@
   (catppuccin-set-color 'crust "#000000" 'mocha)
   (load-theme 'catppuccin t)
   (catppuccin-reload))
+
+(use-package rg-themes
+  :straight (:host github :repo "raegnald/rg-themes"))
 
 
 (provide 'init-themes)

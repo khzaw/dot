@@ -47,6 +47,9 @@
                     "~/.authinfo"
                     "~/.authinfo.gpg"))
 
+(use-package magit-blame-color-by-age
+  :straight (:repo "jdtsmith/magit-blame-color-by-age" :host github))
+
 (use-package git-commit
   :straight nil
   :config
@@ -59,6 +62,37 @@
   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
   (global-diff-hl-mode))
+
+(use-package difftastic
+  :if (executable-find "difft")
+  :straight (:type git :host github :repo "pkryger/difftastic.el")
+  :init
+  (use-package transient
+    :autoload (transient-get-suffix
+               transient-parse-suffix))
+  (let ((suffix [("D" "Difftastic diff (dwim)" difftastic-magit-diff)
+                 ("S" "Difftastic show" difftastic-magit-show)]))
+    (use-package magit-blame
+      :straight nil
+      :bind
+      (:map magit-blame-read-only-mode-map
+            ("D" . #'difftastic-magit-diff)
+            ("S" . #'difftastic-magit-show))
+      :config
+      (unless (equal (transient-parse-suffix 'magit-blame suffix)
+                     (transient-get-suffix 'magit-blame '(-1)))
+        (transient-append-suffix 'magit-blame '(-1) suffix)))
+    (use-package magit-diff
+      :straight nil
+      :config
+      (unless (equal (transient-parse-suffix 'magit-diff suffix)
+                     (transient-get-suffix 'magit-diff '(-1 -1)))
+        (transient-append-suffix 'magit-diff '(-1 -1) suffix)))))
+
+(use-package difftastic-bindings
+  :after difftastic
+  :straight nil
+  :config (difftastic-bindings-mode))
 
 (use-package forge
   :after magit
