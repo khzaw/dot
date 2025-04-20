@@ -20,6 +20,7 @@
                         ("*ag search*" :select nil :size 0.25)
                         ("*Warnings*" :select nil :size 0.25)
                         ("*Error*" :select nil :size 0.25)
+                        (flymake-diagnostics-buffer-mode :align below :inhibit-window-quit nil)
                         ;; (magit-status-mode :quit t :align bottom :size 0.5 :select t)
                         ;; (magit-revision-mode :same t :inhibit-window-quit t)
                         ;; (magit-log-mode :same t :inhibit-window-quit t)
@@ -56,6 +57,7 @@
      utop-mode
      vterm-mode
      term-mode
+     flymake-diagnostics-buffer-mode
      xref--xref-buffer-mode
      "\\*evil-registers\\*"
      "^\\*Apropos"

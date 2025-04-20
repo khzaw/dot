@@ -2,15 +2,19 @@
 
 (use-package flymake
   :straight (:type built-in)
-  :bind (("C-c f n" . flymake-goto-next-error)
-         ("C-c f p" . flymake-goto-prev-error)
-         ("C-c f c" . flymake-start))
+  :bind (("C-c f c" . flymake-start)
+         ("C-c f d" . flymake-show-buffer-diagnostics)
+         :map flymake-mode-map
+         ("C-c f n" . flymake-goto-next-error)
+         ("C-c f p" . flymake-goto-prev-error))
   :config
   (setq flymake-suppress-zero-counters t)
   (setq flymake-fringe-indicator-position 'right-fringe)
+  (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
   ;; (setq flymake-no-changes-timeout nil)
   ;; (flymake-mode)
   )
+
 
 (use-package help-at-pt
   :init
@@ -33,7 +37,8 @@
   (flymake-mode . flymake-diagnostic-at-point-mode)
   :config
   (setq flymake-diagnostic-at-point-error-prefix "! ")
-  (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
+  ;; (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer)
+  (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-popup))
 
 (use-package flymake-json
   :straight (:type git :host github :repo "purcell/flymake-json")
