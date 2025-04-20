@@ -4,6 +4,21 @@
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
 
+(use-package astro-ts-mode
+  :straight (:type git :host github :repo "Sorixelle/astro-ts-mode")
+  :mode "\\.astro\\'"
+  :config
+  (defclass eglot-astro (eglot-lsp-server) ()
+    :documentation "Astro language server")
+
+  (cl-defmethod eglot-initialization-options ((server eglot-astro))
+    "Required initialization options for Astro language server."
+    `(:typescript
+      (:tsdk
+       ,(expand-file-name (concat (project-root (project-current)) "node_modules/typescript/lib")))))
+  (add-hook 'astro-ts-mode-hook 'eglot-ensure)
+  (add-to-list 'eglot-server-programs '(astro-ts-mode . (eglot-astro "astro-ls" "--stdio"))))
+
 (use-package css-mode
   :init (setq css-indent-offset 2))
 
@@ -24,8 +39,8 @@
   :hook ((js-mode js2-mode rjsx-mode tsx-ts-mode typescript-ts-mode web-mode) . prettier-js-mode))
 
 (use-package js2-mode
-  :disabled t
   :init (setq js-indent-level 2))
+(add-to-list 'auto-mode-alist '("\\.[cm]js\\'" . js2-mode))
 
 (use-package rjsx-mode
   :disabled t

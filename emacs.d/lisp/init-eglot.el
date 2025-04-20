@@ -19,15 +19,15 @@
   (eglot-autoshutdown t)
   (eglot-report-progress nil) ; Prevent minibuffer spams
   :bind (:map eglot-mode-map
-              ("C-c e e" . #'eglot)
-              ("C-c e f" . #'eglot-format)
-              ("C-c e a" . #'eglot-code-actions)
-              ("C-c e o" . #'eglot-code-action-organize-imports)
-              ("C-c e t" . #'eglot-find-typeDefinition)
-              ("C-c e i" . #'eglot-find-implementation)
-              ("C-c e d" . #'eglot-find-declaration)
-              ("C-c e p" . #'eldoc-print-current-symbol-info)
-              ("C-c e r" . #'eglot-rename)
+              ("C-c e e"   . #'eglot)
+              ("C-c e f"   . #'eglot-format)
+              ("C-c e a"   . #'eglot-code-actions)
+              ("C-c e o"   . #'eglot-code-action-organize-imports)
+              ("C-c e t"   . #'eglot-find-typeDefinition)
+              ("C-c e i"   . #'eglot-find-implementation)
+              ("C-c e d"   . #'eglot-find-declaration)
+              ("C-c e p"   . #'eldoc-print-current-symbol-info)
+              ("C-c e r"   . #'eglot-rename)
               ("C-c e h c" . #'eglot-hierarchy-call-hierarchy)
               ("C-c e h t" . #'eglot-hierarchy-type-hierarchy))
   :config
@@ -90,6 +90,7 @@ and CONFIG is the configuration plist for that server.")
     (evil-define-key 'normal eglot-mode-map
       "K" #'khz/toggle-eldoc-doc-buffer))
 
+
   ;; Performance optimizations
   (fset #'jsonrpc--log-event #'ignore)
   (setq jsonrpc-event-hook nil)
@@ -100,6 +101,9 @@ and CONFIG is the configuration plist for that server.")
            '(((js-mode jsx-mode rjsx-mode typescript-mode typescript-ts-mode tsx-ts-mode)
               . ("typescript-language-server" "--stdio"))
              (solidity-mode . ("nomicfoundation-solidity-language-server" "--stdio"))
+             (astro-ts-mode . ("astro-ls" "--stdio"
+                               :initializationOptions
+                               (:typescript (:tsdk "./node_modules/typescript/lib"))))
              (yaml-mode . ("yaml-language-server" "--stdio"))))
     (add-to-list 'eglot-server-programs server-programs))
 
@@ -129,7 +133,7 @@ and CONFIG is the configuration plist for that server.")
   (defun khz/eglot-actions-before-save ()
     "Run Eglot format and organize imports before saving, except in TypeScript modes."
     (when (eglot-managed-p)
-      (unless (memq major-mode '(tsx-ts-mode typescript-ts-mode))
+      (unless (memq major-mode '(tsx-ts-mode typescript-ts-mode astro-ts-mode))
         (condition-case err
             (progn
               (eglot-format-buffer)

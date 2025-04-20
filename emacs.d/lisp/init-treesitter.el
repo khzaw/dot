@@ -28,6 +28,13 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (setq treesit-font-lock-level 4)
+  (let ((astro-recipe (make-treesit-auto-recipe
+                       :lang 'astro
+                       :ts-mode 'astro-ts-mode
+                       :url "https://github.com/virchau13/tree-sitter-astro"
+                       :revision "master"
+                       :source-dir "src")))
+    (add-to-list 'treesit-auto-recipe-list astro-recipe))
   (global-treesit-auto-mode))
 
 (use-package treesitter-context
@@ -40,7 +47,7 @@
          ("C-c e C-f" . treesitter-context-fold-mode)
          ("C-c e F" . treesitter-context-focus-mode)
          (:map treesitter-context-fold-mode-map
-          ("C-`" . treesitter-context-fold-toggle)))
+               ("C-`" . treesitter-context-fold-toggle)))
   :config
   (setq treesitter-context-idle-time 0.5
         treesitter-context-show-context-always t
