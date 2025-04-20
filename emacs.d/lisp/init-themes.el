@@ -72,10 +72,23 @@
 (use-package faff-theme
   :straight (:type git :host github :repo "WJCFerguson/emacs-faff-theme"))
 
+(defun my-apply-catppuccin-vertico-face (theme)
+  "Apply custom vertico-current background if THEME is 'catppuccin."
+  (when (and (eq theme 'catppuccin) (facep 'vertico-current))
+    (let ((vertico-bg (catppuccin-color 'surface1)))
+      (when vertico-bg ; Ensure the color name exists and returned a value
+        (set-face-attribute 'vertico-current nil :background vertico-bg)))))
+
+(defun my-reset-catppuccin-vertico-face (theme)
+  "Reset vertico-current background if THEME being disabled is 'catppuccin."
+  (when (and (eq theme 'catppuccin) (facep 'vertico-current))
+    (set-face-attribute 'vertico-current nil :background nil)))
+
+(add-hook 'enable-theme-functions #'my-apply-catppuccin-vertico-face)
+(add-hook 'disable-theme-functions #'my-reset-catppuccin-vertico-face)
+
 (use-package catppuccin-theme
   :straight (:type git :host github :repo "catppuccin/emacs")
-  :custom-face
-  (vertico-current ((t (:background "#45475a"))))
   :config
   (setq catppuccin-flavor 'mocha)
   ;; `Overlay0` is too dim AA (3.35:1). `Overlay2` on base is (5.81:1).
@@ -89,9 +102,6 @@
   (catppuccin-set-color 'crust "#000000" 'mocha)
   (load-theme 'catppuccin t)
   (catppuccin-reload))
-
-(use-package rg-themes
-  :straight (:host github :repo "raegnald/rg-themes"))
 
 
 (provide 'init-themes)
