@@ -64,14 +64,8 @@
   :config
   (setq leetcode-language "python3"))
 
-(use-package leetcode
-  :straight (:host github :repo "kaiwk/leetcode.el")
-  :config (setq leetcode-prefer-language "python3"
-                leetcode-prefer-sql "mysql"))
-
 (use-package copilot
-  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-  :ensure t)
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 
 (use-package monkeytype
   :straight (:type git :host github :repo "jpablobr/emacs-monkeytype"))

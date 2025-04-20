@@ -250,6 +250,8 @@
 (keymap-global-set "C-M-9" (lambda () (interactive) (sanityinc/adjust-opacity nil 2)))
 (keymap-global-set "C-M-0" (lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
 
+
+(set-frame-parameter nil 'alpha '(95 95))
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
 
 (use-package holo-layer
