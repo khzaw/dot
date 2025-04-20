@@ -1,11 +1,10 @@
 ;; -*- lexical-binding: t; -*-
-
 (use-package elisp-mode
   :straight (:type built-in)
   :bind (:map emacs-lisp-mode-map
-         ("C-c C-x" . ielm)
-         ("C-c C-c" . eval-defun)
-         ("C-c C-b" . eval-buffer))
+              ("C-c C-x" . ielm)
+              ("C-c C-c" . eval-defun)
+              ("C-c C-b" . eval-buffer))
   :hook (emacs-lisp-mode . (lambda ()
                              "Disable the checkdoc checker."
                              (setq-local flycheck-disabled-checkers

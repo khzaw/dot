@@ -23,6 +23,7 @@
   (moody-replace-eldoc-minibuffer-message-function))
 
 (use-package telephone-line
+  :disabled t
   :init
   (setq telephone-line-primary-left-separator 'telephone-line-identity-left
         telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
@@ -44,15 +45,12 @@
           (accent . (telephone-line-major-mode-segment))
           (evil . (s2))))
   (setq telephone-line-height 24)
-  (telephone-line-mode nil))
+  (telephone-line-mode 1))
 
 (use-package mood-line
   :config
   (setq mood-line-format mood-line-format-default)
   (setq mood-line-glyph-alist mood-line-glyphs-ascii)
   (mood-line-mode 1))
-
-(use-package nerd-icons)
-
 
 (provide 'init-modeline)
