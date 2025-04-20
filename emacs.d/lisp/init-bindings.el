@@ -28,13 +28,13 @@
   (define-key org-mode-map (kbd "<M-return>") 'toggle-frame-fullscreen))
 
 ;; Close frame if not the last, kill emacs else
-(defun nano--delete-frame-or-kill-emacs ()
-  "Delete frame or kill Emacs if there is only one frame."
-  (interactive)
-  (if (> (length (frame-list)) 1)
-      (delete-frame)
-    (save-buffers-kill-terminal)))
-(global-set-key (kbd "C-x C-c") 'nano--delete-frame-or-kill-emacs)
+;; (defun nano--delete-frame-or-kill-emacs ()
+;;   "Delete frame or kill Emacs if there is only one frame."
+;;   (interactive)
+;;   (if (> (length (frame-list)) 1)
+;;       (delete-frame)
+;;     (save-buffers-kill-terminal)))
+;; (global-set-key (kbd "C-x C-c") 'nano--delete-frame-or-kill-emacs)
 
 ;; Open recent files
 (global-set-key (kbd "C-c r") 'recentf-open-files)
