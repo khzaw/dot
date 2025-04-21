@@ -219,7 +219,7 @@
               :tab-width 0
               :right-divider-width 0))
   (setq spacious-padding-subtle-mode-line
-        '(:mode-line-active lazy-highlight :mode-line-inactive shadow))
+        '(:mode-line-active shadow :mode-line-inactive line-number))
   (spacious-padding-mode t))
 
 (use-package quick-peek

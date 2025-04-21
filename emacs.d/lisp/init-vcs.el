@@ -6,14 +6,14 @@
   :defer t
   :commands (magit-status magit-blame magit-get-current-branch)
   :bind ("C-x g" . magit-status)
-  :custom
-  (magit-auto-revert-mode t)
   :config
 
   ;; (customize-set-variable
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
   ;; Suppress the message
+
+  (setq magit-auto-revert-mode t)
 
   (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
                                         ;
@@ -61,6 +61,8 @@
   :config
   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
+  (setq vc-git-diff-switches '("--histogram"))
+  (setq diff-hl-disable-on-remote t)
   (global-diff-hl-mode))
 
 (use-package difftastic
