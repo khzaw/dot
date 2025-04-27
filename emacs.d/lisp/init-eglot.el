@@ -189,7 +189,7 @@ and CONFIG is the configuration plist for that server.")
   :config (consult-eglot-embark-mode))
 
 (use-package flycheck-eglot
-  :straight (:type git :repo "intramurz/flycheck-eglot" :host github)
+  :straight (:type git :repo "flycheck/flycheck-eglot" :host github)
   :after (flycheck eglot)
   :custom (flycheck-eglot-exclusive nil)
   :config

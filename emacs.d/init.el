@@ -74,7 +74,7 @@
 (require 'init-docker)
 (require 'init-projectile)
 (require 'init-flymake)
-;; (require 'init-flycheck)
+(require 'init-flycheck)
 (require 'init-eglot)
 (require 'init-dape)
 (require 'init-lsp)

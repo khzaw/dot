@@ -3,18 +3,14 @@
 (use-package consult
   :after projectile
   :bind (("C-c h" . consult-history)
-         ;; ("C-c i" . consult-imenu)
          ("C-c r". consult-recent-file)
          ("C-c M-x". consult-mode-command)
          ("C-c m" . consult-man)
-         ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
          ("C-c k" . consult-kmacro)
          ("C-c l t" . consult-theme)
          ("C-c n a" . consult-org-agenda)
          ;; C-x bindings (ctl-x-map)
-         ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
-         ("C-x b" . consult-buffer) ;; orig . switch-to-buffer
-         ("C-x p b" . consult-project-buffer)
          ;; b Buffers
          ;; SPC Hidden buffers
          ;; * Modified buffers
@@ -22,6 +18,8 @@
          ;; r File registers
          ;; m Bookmarks
          ;; p Project
+         ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
+         ("C-x b"   . consult-buffer) ;; orig . switch-to-buffer
          ("C-x t b" . consult-buffer-other-tab)
          ("C-x 4 b" . consult-buffer-other-window)
          ("C-x 5 b" . consult-buffer-other-frame)
@@ -35,16 +33,16 @@
          ("M-y" . consult-yank-pop)
          ("<help> a" . consult-apropos)
          ;; M-g bindings (goto-map)
-         ("M-g e" . consult-compile-error)
-         ("M-g !" . consult-flymake)
-         ("M-g f" . consult-flycheck)
+         ("M-g e"   . consult-compile-error)
+         ("M-g !"   . consult-flymake)
+         ("M-g f"   . consult-flycheck)
          ("M-g M-g" . consult-goto-line)
-         ("s-l" . consult-goto-line)
-         ("M-g o" . consult-outline)
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
-         ("M-g i" . consult-imenu)
-         ("M-g I" . consult-imenu-multi)
+         ("s-l"     . consult-goto-line)
+         ("M-g o"   . consult-outline)
+         ("M-g m"   . consult-mark)
+         ("M-g k"   . consult-global-mark)
+         ("M-g i"   . consult-imenu)
+         ("M-g I"   . consult-imenu-multi)
          ;; M-s bindings (search-map)
          ("M-s f" . consult-find)
          ;; ("C-c f" . consult-find)
