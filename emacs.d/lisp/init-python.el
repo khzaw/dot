@@ -51,6 +51,14 @@
 ;;   "Find a poetry venv."
 ;;   (run-command-in-directory nil "poetry" "env" "info" "-p"))
 
+(use-package python-pytest)
+
+;; (use-package python-black)
+
+(use-package python-isort)
+
+(use-package ruff-format)
+
 (use-package python-mode
   :disabled t
   :mode ("\\.py\\'" . python-mode)
@@ -78,6 +86,8 @@
                           python-shell-virtualenv-root (pet-virtualenv-root))
               (pet-eglot-setup)
               (eglot-ensure)
+              (pet-flycheck-setup)
+              (flycheck-mode)
               (setq-local lsp-jedi-executable-command
                           (pet-executable-find "jedi-language-server"))
               (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter
@@ -100,7 +110,8 @@
               (when-let ((isort-executable (pet-executable-find "isort")))
                 (setq-local python-isort-command isort-executable)
                 (python-isort-on-save-mode))
-              )))
+              ))
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
 
 (provide 'init-python)
 ;; init-python.el ends here

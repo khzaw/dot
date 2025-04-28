@@ -106,7 +106,8 @@ and CONFIG is the configuration plist for that server.")
              (astro-ts-mode . ("astro-ls" "--stdio"
                                :initializationOptions
                                (:typescript (:tsdk "./node_modules/typescript/lib"))))
-             (yaml-mode . ("yaml-language-server" "--stdio"))))
+             (yaml-mode . ("yaml-language-server" "--stdio"))
+             ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))))
     (add-to-list 'eglot-server-programs server-programs))
 
   ;; enable cache busting
