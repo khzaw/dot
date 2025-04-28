@@ -70,7 +70,8 @@
 (use-package aggressive-indent
   ;; Minor mode to aggressively keep your code always indented
   :diminish
-  :hook (emacs-lisp-mode . aggressive-indent-mode))
+  :hook (emacs-lisp-mode . aggressive-indent-mode)
+  :config (setq aggressive-indent-region-function #'aggressive-indent-indent-defun))
 
 ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=55340
 (defun fix-electric-indent ()
