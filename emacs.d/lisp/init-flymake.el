@@ -27,6 +27,11 @@
   (setq-local flymake-diagnostic-functions
     (append flymake-diagnostic-functions (flymake-flycheck-all-chained-diagnostic-functions))))
 
+(use-package flymake-ruff
+  :config
+  (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+  (add-hook 'python-ts-mode-hook 'ruff-format-on-save-mode))
+
 (use-package flymake-diagnostic-at-point
   :after flymake
   :preface
