@@ -19,17 +19,11 @@
 (eval-when-compile
   (require 'use-package))
 (setq straight-use-package-by-default t)
+;; https://github.com/radian-software/straight.el/issues/1146
+(setq straight-built-in-pseudo-packages
+  (append straight-built-in-pseudo-packages '(project xref)))
 (straight-use-package 'org)
 
-
-;; `require-with-check' is a very new function
-;; projectile loads project but doesn't declare it as a dependency
-;; and straight.el does not know that it needs to `project and the built-in version gets loaded.
-;; But then eglot declare `project' as a dependency which causes striaght.el to install project.
-;; But ther other version was already loaded, so `require-with-check correctly identifies that
-;; there is a confusing situation.
-;; So load `project before everything else.'
-(use-package project)
 
 ;; Required by `use-package'
 (use-package diminish)
