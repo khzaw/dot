@@ -9,6 +9,8 @@ antigen use oh-my-zsh
 antigen bundle git
 antigen bundle git-extras
 antigen bundle github
+antigen bundle gitfast
+antigen bundle history
 antigen bundle z
 antigen bundle kubectl
 antigen bundle eza
