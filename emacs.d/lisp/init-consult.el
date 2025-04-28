@@ -356,6 +356,11 @@
                                       (right-fringe . 10))
         vertico-posframe-border-width 5))
 
+(use-package nerd-icons-completion
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
 ;; Enable rich annotations in completion UI
 (use-package marginalia
   :after vertico
