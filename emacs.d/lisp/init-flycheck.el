@@ -31,8 +31,7 @@
          ("C-p" . flycheck-error-list-previous-error)))
 
 (use-package flycheck-popup-tip
-  :hook (flycheck-mode . flycheck-popup-tip-mode)
-  :config (setq flycheck-popup-tip-error-prefix "X "))
+  :hook (flycheck-mode . flycheck-popup-tip-mode))
 
 (use-package consult-flycheck
   :after (consult flycheck))

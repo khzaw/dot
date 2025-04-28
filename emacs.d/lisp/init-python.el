@@ -64,6 +64,7 @@
   :mode ("\\.py\\'" . python-mode)
   :commands python-mode
   :config
+  (setq python-indent-offset 4)
   ;; Remove guess indent python message
   (setq python-indent-guess-indent-offset-verbose nil)
   (when (executable-find "ipython")
