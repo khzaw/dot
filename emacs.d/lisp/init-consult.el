@@ -126,6 +126,18 @@
    ;; preview-key (kdb "M-.")
    :preview-key '(:debounce 0.5 any))
 
+
+(consult-customize
+ consult--source-buffer
+ :preview-key
+ (lambda ()
+   (let ((buf (get-buffer candidate)))
+     (when buf
+       (with-current-buffer buf
+         (if (derived-mode-p 'org-mode)
+             '(:debounce 1.5 any)
+           '(:debounce 0.4 any)))))))
+
   (consult-customize
    consult-line
    :add-history (seq-some #'thing-at-point '(region symbol)))

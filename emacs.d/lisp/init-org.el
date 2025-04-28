@@ -355,6 +355,13 @@
              consult-notes-org-roam-find-node
              consult-notes-org-roam-find-node-relation)
   :config
+  (consult-customize
+   consult-notes
+   consult-notes-search-in-all-notes
+   consult-notes-org-roam-find-node
+   consult-notes-org-roam-find-node-relation
+   :preview-key '(:debounce 1.5 any))
+
   (setq consult-notes-file-dir-sources
         '(("fp"  ?w  "~/Dropbox/notes/fp")
           ("tech" ?t "~/Dropbox/notes/tech")
