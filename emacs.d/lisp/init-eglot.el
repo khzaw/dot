@@ -35,20 +35,22 @@
   (defvar khz/eglot-server-configs
     ;; Define a mapping of major modes to language server configurations
     '((go-mode go-ts-mode
-               :gopls (:hints (:parameterNames t
-                                               :rangeVariableTypes t
-                                               :functionTypeParameters t
-                                               :assignVariableTypes t
-                                               :compositeLiteralFields t
-                                               :compositeLiteralTypes t
-                                               :constantValues t)
-                              :semanticTokens t
-                              :usePlaceholders t
-                              :completeUnimported t
-                              :matcher "Fuzzy"
-                              :deepCompletion t
-                              :completionBudget "100ms"
-                              :maxCompletionItems 50))
+               :gopls
+               (:hints (:parameterNames t
+                                        :rangeVariableTypes t
+                                        :functionTypeParameters t
+                                        :assignVariableTypes t
+                                        :compositeLiteralFields t
+                                        :compositeLiteralTypes t
+                                        :constantValues t)
+                       :semanticTokens t
+                       :usePlaceholders t
+                       :completeUnimported t
+                       :matcher "Fuzzy"
+                       :deepCompletion t
+                       :completionBudget "100ms"
+                       :maxCompletionItems 50
+                       :gofumpt t))
       (tsx-ts-mode typescript-ts-mode
                    :typescript-language-server (:inlayHints (:parameterNames "all")))
 

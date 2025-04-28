@@ -101,8 +101,7 @@
   (catppuccin-set-color 'mantle "#000000" 'mocha)
   (catppuccin-set-color 'crust "#000000" 'mocha)
 
-  (load-theme 'catppuccin t)
-  (catppuccin-reload))
+  (load-theme 'catppuccin t))
 
 
 (provide 'init-themes)
