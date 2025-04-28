@@ -59,6 +59,7 @@
 (use-package diff-hl
   :custom (diff-refine 'navigation)
   :config
+  (diff-hl-flydiff-mode)
   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
   (setq vc-git-diff-switches '("--histogram"))

@@ -165,6 +165,7 @@
 (use-package treesit-fold
   :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
   :config
+  (setq treesit-fold-line-count-show 1)
   (global-treesit-fold-mode 1)
   (global-treesit-fold-indicators-mode 1))
 

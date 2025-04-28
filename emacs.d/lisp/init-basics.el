@@ -231,7 +231,7 @@
   :diminish
   :config
   (setq editorconfig-lisp-use-default-indent t)
-  (editorconfig-mode 1))
+  :hook (after-init . editorconfig-mode))
 
 ;; History
 (use-package saveplace

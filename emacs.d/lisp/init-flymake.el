@@ -50,4 +50,8 @@
   :if (executable-find "jsonlint")
   :hook ((json-ts-mode . flymake-json-maybe-load)))
 
+;; (use-package flymake-popon
+;;   :straight (:type git :host github :repo "doomelpa/flymake-popon")
+;;   :hook (flymake-mode . flymake-popon-mode))
+
 (provide 'init-flymake)

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (defun corfu-beginning-of-prompt ()
   "Move to end of completion input."
   (interactive)
@@ -181,6 +183,11 @@ https://github.com/minad/corfu."
                 corfu-popupinfo-delay nil)
     (corfu-mode 1)))
 ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+
+(use-package corfu-pixel-perfect
+  :straight (:type git :host github :repo "wyuenho/emacs-corfu-pixel-perfect")
+  :after corfu
+  :hook (global-corfu-mode . corfu-pixel-perfect-mode))
 
 (use-package kind-icon
   :after corfu

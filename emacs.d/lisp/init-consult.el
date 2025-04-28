@@ -88,8 +88,9 @@
   (advice-add #'register-preview :override #'consult-register-window)
 
   ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+  (with-eval-after-load 'xref
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref))
 
   :config
 
@@ -118,7 +119,8 @@
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
-   consult-theme :preview-key '(:debounce 0.5 any)
+   consult-buffer consult-recent-file consult-theme :preview-key '(:debounce 0.5 any)
+   consult-goto-line :preview-key '(:debounce 0.5 any)
    consult-ripgrep consult-git-grep consult-grep
    consult-ag consult-bookmark consult-recent-file consult-xref
    consult--source-bookmark consult--source-file-register
@@ -126,17 +128,10 @@
    ;; preview-key (kdb "M-.")
    :preview-key '(:debounce 0.5 any))
 
+  (consult-customize
+   consult--source-buffer
+   :preview-key '(:debounce 1.5 any))
 
-(consult-customize
- consult--source-buffer
- :preview-key
- (lambda ()
-   (let ((buf (get-buffer candidate)))
-     (when buf
-       (with-current-buffer buf
-         (if (derived-mode-p 'org-mode)
-             '(:debounce 1.5 any)
-           '(:debounce 0.4 any)))))))
 
   (consult-customize
    consult-line
@@ -157,6 +152,10 @@
   (setq consult-project-function (lambda (_) (projectile-project-root)))
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
+
+(use-package consult-flyspell)
+
+(use-package consult-yasnippet)
 
 (defun down-from-outside ()
   "Move to next candidate in minibuffer, even when minibuffer isn't selected."
@@ -419,6 +418,7 @@
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
+
   ;; hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -435,28 +435,29 @@
           (vertico-multiform-unobtrusive)))))
   (add-hook 'embark-collect-mode-hook #'+embark-live-vertico)
 
-  (defun embark-which-key-indicator ()
-    "An embark indicator that displays keymaps using which-key.
-The which-key help message will show the type and value of the
-current target followed by an ellipsis if there are further
-targets."
-    (lambda (&optional keymap targets prefix)
-      (if (null keymap)
-          (which-key--hide-popup-ignore-command)
-        (which-key--show-keymap
-         (if (eq (plist-get (car targets) :type) 'embark-become)
-             "Become"
-           (format "Act on %s '%s'%s"
-                   (plist-get (car targets) :type)
-                   (embark--truncate-target (plist-get (car targets) :target))
-                   (if (cdr targets) "…" "")))
-         (if prefix
-             (pcase (lookup-key keymap prefix 'accept-default)
-               ((and (pred keymapp) km) km)
-               (_ (key-binding prefix 'accept-default)))
-           keymap)
-         nil nil t (lambda (binding)
-                     (not (string-suffix-p "-argument" (cdr binding))))))))
+  (with-eval-after-load 'which-key
+    (defun embark-which-key-indicator ()
+      "An embark indicator that displays keymaps using which-key.
+  The which-key help message will show the type and value of the
+  current target followed by an ellipsis if there are further
+  targets."
+      (lambda (&optional keymap targets prefix)
+        (if (null keymap)
+            (which-key--hide-popup-ignore-command)
+          (which-key--show-keymap
+          (if (eq (plist-get (car targets) :type) 'embark-become)
+              "Become"
+            (format "Act on %s '%s'%s"
+                    (plist-get (car targets) :type)
+                    (embark--truncate-target (plist-get (car targets) :target))
+                    (if (cdr targets) "…" "")))
+          (if prefix
+              (pcase (lookup-key keymap prefix 'accept-default)
+                ((and (pred keymapp) km) km)
+                (_ (key-binding prefix 'accept-default)))
+            keymap)
+          nil nil t (lambda (binding)
+                      (not (string-suffix-p "-argument" (cdr binding)))))))))
 
   (setq embark-indicators
         '(embark-which-key-indicator

@@ -13,6 +13,38 @@
                      (memq (char-syntax (or (char-after end) ?\s)) syntaxes-end)
                      (nth 3 (syntax-ppss))))))))
 
+(use-package eldoc
+  :straight (:type built-in)
+  :preface
+  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  :diminish
+  :config
+  (setq max-mini-window-height 0.2)
+  (eldoc-add-command-completions "paredit-")
+  (eldoc-add-command-completions "combobulate-")
+  (use-package eldoc-box
+    :bind (:map eglot-mode-map
+                ("C-c e m" . eldoc-box-help-at-point))
+    :custom
+    (eldoc-box-lighter nil)
+    (eldoc-box-only-multi-line t)
+    (eldoc-box-clear-with-C-g t)
+    :custom-face
+    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+    (eldoc-box-body ((t (:inherit tooltip))))
+    :config
+    (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+          (alist-get 'right-fringe eldoc-box-frame-parameters) 8)))
+
+
+(use-package xref
+  :straight (:type built-in))
+
+;; Run commands quickly
+(use-package quickrun
+  :bind (("C-<f5>" . quickrun)
+         ("C-c X" . quickrun)))
+
 (use-package prog-mode
   :straight (:type built-in)
   :commands (prettify-symbols-mode global-prettify-symbols-mode)
@@ -31,7 +63,11 @@
 ;; :bind (:map hs-minor-mode-map
 ;;         ("C-`" . hs-toggle-hiding)))
 
-(use-package protobuf-mode)
+
+(use-package protobuf-mode
+  :hook (protobuf-mode . (lambda ()
+                           (setq imenu-generic-expression
+                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
 (use-package terraform-mode)
 

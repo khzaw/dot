@@ -35,7 +35,15 @@
 
 (use-package godoctor)
 
-(use-package go-fill-struct)
+(use-package go-fill-struct
+  :if (executable-find "fillstruct"))
+
+(use-package go-impl
+  :if (executable-find "impl"))
+
+(use-package go-gen-test
+    :bind (:map go-mode-map
+           ("C-c t g" . go-gen-test-dwim)))
 
 (use-package gorepl-mode
   :if (executable-find "gore")

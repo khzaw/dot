@@ -90,17 +90,12 @@ Lisp function does not specify a special indentation."
     ;;           (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))
     ))
 
-
-(use-package eldoc
-  :straight (:type built-in)
-  :preface
-  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-  :config
-  (setq max-mini-window-height 0.2)
-  (eldoc-add-command-completions "paredit-")
-  (eldoc-add-command-completions "combobulate-")
-  :diminish)
-
+;; Interactive macro expander
+(use-package macrostep
+  :bind (:map emacs-lisp-mode-map
+         ("C-c e" . macrostep-expand)
+         :map lisp-interaction-mode-map
+         ("C-c e" . macrostep-expand)))
 
 (use-package help-mode
   :straight (:type built-in)

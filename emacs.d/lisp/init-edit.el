@@ -99,12 +99,16 @@
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :straight (:type built-in)
+  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
   :hook ((after-init . electric-pair-mode)
          (org-mode . (lambda ()
                        (setq-local electric-pair-inhibit-predicate
                                    `(lambda (c)
                                       (if (char-equal c ?<) t
                                         (,electric-pair-inhibit-predicate c))))))))
+
+;; Visual `align-regexp'
+(use-package ialign)
 
 (use-package vundo
   :bind ("C-x u" . vundo)
@@ -140,7 +144,29 @@
   :bind (:map hl-todo-mode-map
          ("C-! h p" . hl-todo-previous)
          ("C-! h n" . hl-todo-next)
-         ("C-! h o" . hl-todo-occur)))
+         ("C-! h o" . hl-todo-occur)
+         ("C-! h r" . hl-todo-rg-project)
+         ("C-! h R" . hl-todo-rg))
+  :config
+
+  (defun hl-todo-rg (regexp &optional files dir)
+    "Use `rg' to find all TODO or similar keywords."
+    (interactive
+     (progn
+       (unless (require 'rg nil t)
+         (error "`rg' is not installed"))
+       (let ((regexp (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp))))
+         (list regexp
+               (rg-read-files)
+               (read-directory-name "Base directory: " nil default-directory t)))))
+    (rg regexp files dir))
+
+   (defun hl-todo-rg-project ()
+    "Use `rg' to find all TODO or similar keywords in current project."
+    (interactive)
+    (unless (require 'rg nil t)
+      (error "`rg' is not installed"))
+    (rg-project (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp)) "everything")))
 
 (use-package writeroom-mode
   :bind

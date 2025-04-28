@@ -194,7 +194,7 @@ and CONFIG is the configuration plist for that server.")
 (use-package flycheck-eglot
   :straight (:type git :repo "flycheck/flycheck-eglot" :host github)
   :after (flycheck eglot)
-  :custom (flycheck-eglot-exclusive nil)
+  :custom (flycheck-eglot-exclusive t)
   :config
   (global-flycheck-eglot-mode 1))
 
@@ -226,15 +226,6 @@ of `flymake-eslint-executable-name.'"
   ;; (add-hook 'js-ts-mode-hook #'khz/use-local-eslint)
   )
 
-(use-package eldoc-box
-  :bind (:map eglot-mode-map
-              ("C-c e m" . eldoc-box-help-at-point))
-  :config
-  (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
-        (alist-get 'right-fringe eldoc-box-frame-parameters) 8))
-
-(use-package xref
-  :straight (:type built-in))
 
 (use-package dape
   :config

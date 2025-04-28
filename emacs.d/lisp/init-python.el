@@ -60,22 +60,12 @@
 (use-package ruff-format)
 
 (use-package python-mode
-  :disabled t
-  :mode ("\\.py\\'" . python-mode)
-  :commands python-mode
   :config
   (setq python-indent-offset 4)
   ;; Remove guess indent python message
   (setq python-indent-guess-indent-offset-verbose nil)
   (when (executable-find "ipython")
-    (setq python-shell-interpreter "ipython"))
-  :hook
-  ((python-mode . (lambda ()
-                    (when (executable-find "poetry")
-                      (let ((venv (locate-venv-poetry))) (when venv
-                                                           (setq-default eglot-workspace-configuration
-                                                                         (list (cons ':python (list ':venvPath venv ':pythonPath (concat venv "/bin/python"))))))))
-                    (eglot-ensure)))))
+    (setq python-shell-interpreter "ipython")))
 
 
 (use-package pet
@@ -87,8 +77,8 @@
                           python-shell-virtualenv-root (pet-virtualenv-root))
               (pet-eglot-setup)
               (eglot-ensure)
-              (pet-flycheck-setup)
-              (flycheck-mode)
+              ;; (pet-flycheck-setup)
+              ;; (flycheck-mode)
               (setq-local lsp-jedi-executable-command
                           (pet-executable-find "jedi-language-server"))
               (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter

@@ -103,6 +103,8 @@
 
   (load-theme 'catppuccin t))
 
+(use-package nord-theme
+  :straight (:type git :host github :repo "nordtheme/emacs" :local-repo "nordtheme"))
 
 (provide 'init-themes)
 ;; init-themes.el ends here
