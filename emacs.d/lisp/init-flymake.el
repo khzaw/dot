@@ -7,14 +7,18 @@
          :map flymake-mode-map
          ("C-c f n" . flymake-goto-next-error)
          ("C-c f p" . flymake-goto-prev-error))
+  :custom
+  (flymake-indicator-type 'margins)
+  (flymake-margin-indicator-position 'right-margin)
+  ;; (flymake-fringe-indicator-position 'right-fringe)
+  (flymake-margin-indicators-string
+     '((error "!»" compilation-error)
+       (warning "»" compilation-warning)
+       (note "»" compilation-info)))
   :config
-  (setq flymake-suppress-zero-counters t)
-  (setq flymake-fringe-indicator-position 'right-fringe)
   (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
-  ;; (setq flymake-no-changes-timeout nil)
   ;; (flymake-mode)
-  )
-
+)
 
 (use-package help-at-pt
   :init

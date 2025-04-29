@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package eglot
+  :straight (:host github :repo "joaotavora/eglot" :tag "v1.18")
   :commands (eglot
              eglot-rename
              eglot-format-buffer
@@ -191,12 +192,24 @@ and CONFIG is the configuration plist for that server.")
   :after (embark consult-eglot)
   :config (consult-eglot-embark-mode))
 
+(use-package eldoc-box
+    :bind (:map eglot-mode-map
+                ("C-c e m" . eldoc-box-help-at-point))
+    :custom
+    (eldoc-box-lighter nil)
+    (eldoc-box-only-multi-line t)
+    (eldoc-box-clear-with-C-g t)
+    :custom-face
+    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+    (eldoc-box-body ((t (:inherit tooltip))))
+    :config
+    (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+          (alist-get 'right-fringe eldoc-box-frame-parameters) 8))
+
 (use-package flycheck-eglot
   :straight (:type git :repo "flycheck/flycheck-eglot" :host github)
   :after (flycheck eglot)
-  :custom (flycheck-eglot-exclusive t)
-  :config
-  (global-flycheck-eglot-mode 1))
+  :custom (flycheck-eglot-exclusive t))
 
 (use-package flymake-eslint
   :config

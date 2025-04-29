@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package flycheck
+  :disabled t
   :custom
   (flycheck-indication-mode 'right-fringe)
   (flycheck-check-syntax-automatically '(save mode-enabled))
