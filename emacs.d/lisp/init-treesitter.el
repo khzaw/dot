@@ -103,58 +103,34 @@
                                       :repo "meain/evil-textobj-tree-sitter"
                                       :files (:defaults "queries" "treesit-queries"))
   :config
-  ;; (defvar +tree-sitter-inner-text-objects-map (make-sparse-keymap))
-  ;; (defvar +tree-sitter-outer-text-objects-map (make-sparse-keymap))
-  ;; (defvar +tree-sitter-goto-previous-map (make-sparse-keymap))
-  ;; (defvar +tree-sitter-goto-next-map (make-sparse-keymap))
+  (defvar khz/tree-sitter-mappings '(("a" "parameter" ("parameter.inner") ("parameter.outer"))
+                                     ("v" "conditional" ("conditional.inner" "loop.inner") ("conditional.outer" "loop.outer"))
+                                     ("c" "class" ("class.inner") ("class.outer"))
+                                     ("f" "function" ("function.inner") ("function.outer"))
+                                     ("n" "comment" ("comment.outer") ("comment.outer"))))
 
-  ;; (evil-define-key '(visual operator) 'tree-sitter-mode
-  ;;   "i" +tree-sitter-inner-text-objects-map
-  ;;   "a" +tree-sitter-outer-text-objects-map)
-  ;; (evil-define-key 'normal 'tree-sitter-mode
-  ;;   "[g" +tree-sitter-goto-previous-map
-  ;;   "]g" +tree-sitter-goto-next-map))
+  (dolist (mapping khz/tree-sitter-mappings)
+    (let ((key (car mapping))
+          (name (cadr mapping))
+          (inner (caddr mapping))
+          (outer (cadddr mapping)))
+      ;; Need this weird `eval' here as `evil-textobj-tree-sitter-get-textobj' is a macro
+      (eval `(define-key evil-inner-text-objects-map ,key (cons ,(concat "evil-inner-" name) (evil-textobj-tree-sitter-get-textobj ,inner))))
+      (eval `(define-key evil-outer-text-objects-map ,key (cons ,(concat "evil-outer-" name) (evil-textobj-tree-sitter-get-textobj ,outer))))
+      (define-key evil-normal-state-map (kbd (concat "]" key)) (cons (concat "goto-" name "-start") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer))))
+      (define-key evil-normal-state-map (kbd (concat "[" key)) (cons (concat "goto-" name "-start") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer t))))
+      (define-key evil-normal-state-map (kbd (concat "]" (upcase key))) (cons (concat "goto-" name "-end") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer nil t))))
+      (define-key evil-normal-state-map (kbd (concat "[" (upcase key))) (cons (concat "goto-" name "-end") (lambda () (interactive) (evil-textobj-tree-sitter-goto-textobj outer t t))))))
 
-  ;; bind `function.outer`(entire function block) to `f` for use in things like `vaf`, `yaf`
-  (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
-  ;; bind `function.inner`(function block without name and args) to `f` for use in things like `vif`, `yif`
-  (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
+  (define-key evil-outer-text-objects-map "m"
+              (evil-textobj-tree-sitter-get-textobj
+                "import"
+                '((python-mode . ((import_statement) @import))
+                  (python-ts-mode . ((import_statement) @import))
+                  (go-mode . ((import_spec) @import))
+                  (go-ts-mode . ((import_spec) @import))
+                  (rust-mode . ((use_declaration) @import))))))
 
-  ;; You can also bind multiple items and we will match the first one we can find
-  (define-key evil-outer-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj ("conditional.outer" "loop.outer")))
-
-  ;; The first arguemnt to `evil-textobj-tree-sitter-get-textobj' will be the capture group to use
-  ;; and the second arg will be an alist mapping major-mode to the corresponding query to use.
-  (define-key evil-outer-text-objects-map "m" (evil-textobj-tree-sitter-get-textobj "import"
-                                                '((python-mode . [(import_statement) @import])
-                                                  (rust-mode . [(use_declaration) @import]))))
-  ;; Goto start of next function
-  (define-key evil-normal-state-map
-    (kbd "]f")
-    (lambda ()
-      (interactive)
-      (evil-textobj-tree-sitter-goto-textobj "function.outer")))
-
-  ;; Goto start of previous function
-  (define-key evil-normal-state-map
-    (kbd "[f")
-    (lambda ()
-      (interactive)
-      (evil-textobj-tree-sitter-goto-textobj "function.outer" t)))
-
-  ;; Goto end of next function
-  (define-key evil-normal-state-map
-    (kbd "]F")
-    (lambda ()
-      (interactive)
-      (evil-textobj-tree-sitter-goto-textobj "function.outer" nil t)))
-
-  ;; Goto end of previous function
-  (define-key evil-normal-state-map
-    (kbd "[F")
-    (lambda ()
-      (interactive)
-      (evil-textobj-tree-sitter-goto-textobj "function.outer" t t))))
 
 (use-package treesit-jump
   :straight (:host github :repo "dmille56/treesit-jump" :files ("*.el" "treesit-queries"))
@@ -174,10 +150,14 @@
   (setq treesit-fold-line-count-show 1))
 
 (use-package symbols-outline
-  :bind ("C-c e i" . symbols-outline-show)
+  :bind ("C-c C-s" . symbols-outline-show)
   :custom
-  (symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
+  (symbols-outline-window-width 55)
+  (symbols-outline-ignore-variable-symbols nil)
   :config
+  ;; brew install universal-ctags
+  (unless (executable-find "ctags")
+    (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   (symbols-outline-follow-mode 1))
 
 
