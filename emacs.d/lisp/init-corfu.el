@@ -64,8 +64,8 @@
   :custom
   (corfu-preselect 'directory)
   (corfu-auto t)
-  (corfu-auto-delay 1)
-  (corfu-auto-prefix 1)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 2)
   (corfu-separator ?_)         ;; Set to orderless separator, if not using space
   (corfu-quit-no-match 'separator) ;; or t
 
@@ -152,7 +152,12 @@ https://github.com/minad/corfu."
   (corfu-popupinfo-direction 'vertical)
   :custom-face
   (corfu-popupinfo ((t (:height 1.0))))
-  :init (corfu-popupinfo-mode))
+  :init (corfu-popupinfo-mode)
+  :config
+  (define-key corfu-map (kbd "M-p") #'corfu-popupinfo-scroll-down) ;; corfu-next
+  (define-key corfu-map (kbd "M-n") #'corfu-popupinfo-scroll-up)  ;; corfu-previous
+  (define-key corfu-map (kbd "M-d") #'corfu-popupinfo-documentation)
+  (define-key corfu-map (kbd "M-D") #'corfu-popupinfo-location))
 
 (use-package corfu-info
   :straight nil
@@ -235,3 +240,5 @@ https://github.com/minad/corfu."
   )
 
 (provide 'init-corfu)
+
+;;; init-corfu.el ends here

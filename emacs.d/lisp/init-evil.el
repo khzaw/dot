@@ -89,5 +89,19 @@
 
 (use-package evil-lion :config (evil-lion-mode))
 
+;; Evil commentary
+(use-package evil-commentary
+  :config (evil-commentary-mode))
+
+;; Evil text objects
+(use-package evil-textobj-line)
+(use-package evil-textobj-syntax)
+(use-package evil-indent-plus
+  :config
+  (define-key evil-inner-text-objects-map "i" 'evil-indent-plus-i-indent)
+  (define-key evil-outer-text-objects-map "i" 'evil-indent-plus-a-indent)
+  (define-key evil-inner-text-objects-map "I" 'evil-indent-plus-i-indent-up-down)
+  (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up-down))
+
 (provide 'init-evil)
 ;;; init-evil.el ends here

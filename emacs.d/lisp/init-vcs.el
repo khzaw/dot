@@ -58,13 +58,23 @@
 
 (use-package diff-hl
   :custom (diff-refine 'navigation)
+  :after evil-leader
   :config
-  ;; (diff-hl-flydiff-mode)
+  (diff-hl-flydiff-mode)
   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
   (setq vc-git-diff-switches '("--histogram"))
   (setq diff-hl-disable-on-remote t)
-  (global-diff-hl-mode))
+  (global-diff-hl-mode)
+  (evil-set-command-property 'diff-hl-revert-hunk :jump t)
+  (evil-set-command-property 'diff-hl-next-hunk :jump t)
+  (evil-set-command-property 'diff-hl-previous-hunk :jump t)
+  (evil-leader/set-key "gs" 'diff-hl-show-hunk)
+  (evil-leader/set-key "gr" 'diff-hl-revert-hunk)
+  (evil-leader/set-key "gj" 'diff-hl-next-hunk)
+  (evil-leader/set-key "gk" 'diff-hl-previous-hunk)
+  (evil-leader/set-key "gn" 'diff-hl-next-hunk)
+  (evil-leader/set-key "gp" 'diff-hl-previous-hunk))
 
 (use-package difftastic
   :if (executable-find "difft")
