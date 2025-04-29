@@ -21,6 +21,8 @@
                         ("*Warnings*" :select nil :size 0.25)
                         ("*Error*" :select nil :size 0.25)
                         (flymake-diagnostics-buffer-mode :align below :inhibit-window-quit nil)
+                        (flycheck-error-message-mode :align below :inhibit-window-quit nil)
+                        (flycheck-error-list-mode :align below :inhibit-window-quit nil)
                         ;; (magit-status-mode :quit t :align bottom :size 0.5 :select t)
                         ;; (magit-revision-mode :same t :inhibit-window-quit t)
                         ;; (magit-log-mode :same t :inhibit-window-quit t)
@@ -73,6 +75,7 @@
      "\\*xref\\*"
      "^\\*ielm\\*"
      flycheck-error-list-mode
+     flycheck-error-message-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*term.*\\*$" term-mode
      "^\\*shell.*\\*$" shell-mode)))

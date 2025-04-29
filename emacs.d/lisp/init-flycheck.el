@@ -55,8 +55,11 @@
   :straight (flycheck-overlay :type git :host github :repo "konrad1977/flycheck-overlay")
   :hook (flycheck-mode . flycheck-overlay-mode)
   :config
+  (setq flycheck-overlay-debug nil)
   (setq flycheck-overlay-background-lightness 30)
   (setq flycheck-overlay-text-tint 'lighter)
+  (setq flycehck-overlay-show-virtual-line nil)
+  (setq flycheck-overlay-hide-when-cursor-is-on-same-line nil)
   (setq flycheck-overlay-text-tint-percent 10)
   (setq flycheck-overlay-use-theme-colors t)
   (setq flycheck-overlay-debounce-interval 0.3))
