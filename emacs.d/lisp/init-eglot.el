@@ -211,6 +211,10 @@ and CONFIG is the configuration plist for that server.")
   :after (flycheck eglot)
   :custom (flycheck-eglot-exclusive t))
 
+;; show breadcrumbs; not on by default
+(use-package breadcrumb
+  :straight (:repo "joaotavora/breadcrumb" :host github :type git))
+
 (use-package flymake-eslint
   :config
   (setq flymake-eslint-prefer-json-diagonistics t)
