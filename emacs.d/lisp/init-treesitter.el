@@ -1,27 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(use-package tree-sitter
-  :disabled t
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
-  :config
-  (global-tree-sitter-mode)
-
-  ;; Makes every node a link to a section of code
-  (setq tree-sitter-debug-jump-buttons t)
-  ;; highlights entire sub tree in your code
-  (setq tree-sitter-debug-highlight-jump-region t)
-
-  (global-set-key (kbd "C-c t D") 'tree-sitter-debug-mode))
-
-(use-package tree-sitter-langs :disabled t :after tree-siter)
-
-(use-package tree-sitter-indent :disabled t)
-
-(defun treesit--ts-find-parent (node pattern)
-  (let ((pred (lambda (n)
-                (string-match-p patterts-node-textts-node-textn (treesit-node-type n)))))
-    (treesit-parent-until node pred)))
-
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
@@ -37,24 +15,6 @@
     (add-to-list 'treesit-auto-recipe-list astro-recipe))
   (global-treesit-auto-mode))
 
-(use-package treesitter-context
-  :straight (:type git :host github :repo "zbelial/treesitter-context.el" :files ("*.el"))
-  ;; :hook ((go-ts-mode . treesitter-context-focus-mode)
-  ;;        (typescript-ts-mode . treesitter-context-focus-mode)
-  ;;        (python-ts-mode . treesitter-context-focus-mode)
-  ;;        (yaml-ts-mode . treesitter-context-focus-mode))
-  :bind (("C-c e C-t" . treesitter-context-toggle-show)
-         ("C-c e C-f" . treesitter-context-fold-mode)
-         ("C-c e F" . treesitter-context-focus-mode)
-         (:map treesitter-context-fold-mode-map
-               ("C-`" . treesitter-context-fold-toggle)))
-  :config
-  (setq treesitter-context-idle-time 0.5
-        treesitter-context-show-context-always t
-        treesitter-context-frame-autohide-timeout 15)
-  ;; (treesitter-context-focus-mode 1)
-  (treesitter-context-fold-mode 1))
-
 (use-package combobulate
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
   :custom
@@ -66,36 +26,10 @@
    (css-ts-mode . combobulate-mode)
    (yaml-ts-mode . combobulate-mode)
    (yaml-mode . combobulate-mode)
-   ;; (go-ts-mode . combobulate-mode)
+   (go-ts-mode . combobulate-mode)
    (typescript-ts-mode . combobulate-mode)
    (tsx-ts-mode . combobulate-mode)))
 
-;; (use-package tree-sitter-langs)
-
-;; (use-package tree-sitter-indent)
-
-
-(defun khz/toggle-fold ()
-  (interactive)
-  (if (equal tree-sitter-mode nil)
-      (call-interactively 'evil-toggle-fold)
-    (call-interactively 'ts-fold-toggle)))
-
-(use-package ts-fold
-  :disabled t
-  :after tree-sitter
-  :straight (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold")
-  :config (global-ts-fold-mode)
-  :custom-face
-  (tree-sitter-hl-face:property ((t (:slant normal))))
-  (tree-sitter-hl-face:function.call ((t (:weight normal))))
-  (tree-sitter-hl-face:method.call ((t (:weight normal))))
-  (tree-sitter-hl-face:attribute ((t (:weight normal)))))
-;; TODO <TAB> in normal mode should fold
-
-(use-package ts-fold-indicators
-  :disabled t
-  :straight (ts-fold-indicators :type git :host github :repo "emacs-tree-sitter/ts-fold"))
 
 (use-package evil-textobj-tree-sitter
   :straight (evil-textobj-tree-sitter :type git
@@ -160,5 +94,22 @@
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   (symbols-outline-follow-mode 1))
 
+(use-package posframe-plus
+  :straight (:host github :type git :repo "zbelial/posframe-plus"))
+
+(use-package treesitter-context
+  :straight (:type git :host github :repo "zbelial/treesitter-context.el" :files ("*.el"))
+  :after (posframe-plus)
+  :commands (treesitter-context-toggle-show)
+  :bind (("C-c e C-t" . treesitter-context-toggle-show)
+         ("C-c e F" . treesitter-context-focus-mode)
+         (:map treesitter-context-fold-mode-map
+               ("C-`" . treesitter-context-fold-toggle)))
+  :config
+  (setq treesitter-context-idle-time 0.5
+        treesitter-context-show-context-always t
+        treesitter-context-frame-autohide-timeout 15)
+  ;; (treesitter-context-focus-mode 1)
+)
 
 (provide 'init-treesitter)
