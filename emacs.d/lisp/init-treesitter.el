@@ -112,4 +112,11 @@
   ;; (treesitter-context-focus-mode 1)
 )
 
+;; Show scope info of block
+(use-package scopeline
+  :commands (scopeline-mode)
+  :config (setq scopeline-overlay-prefix " ~")
+  :init (add-hook 'prog-mode-hook #'scopeline-mode))
+
+
 (provide 'init-treesitter)
