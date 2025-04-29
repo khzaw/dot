@@ -246,7 +246,9 @@ of `flymake-eslint-executable-name.'"
     (interactive)
     (call-interactively #'eglot-find-definition)
     (dape))
-  (bind-key "C-c e D" #'khz/eglot-dape-debug-at-point eglot-mode-map)
+
+  (with-eval-after-load 'eglot
+    (bind-key "C-c e D" #'khz/eglot-dape-debug-at-point eglot-mode-map))
 
   ;; (setq dape-configs
   ;;       (append dape-configs
