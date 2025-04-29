@@ -64,5 +64,7 @@
   :hook ((go-mode . flymake-golangci-load)
          (go-ts-mode . flymake-golangci-load)))
 
+(use-package go-stacktracer :commands (go-stacktracer-region))
+
 (provide 'init-go)
 ;;; init-go.el ends here
