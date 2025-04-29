@@ -13,7 +13,8 @@
   :straight (:type built-in)
   :hook (after-init . show-paren-mode)
   :init (setq show-paren-when-point-inside-paren t
-              show-paren-when-point-in-periphery t))
+              show-paren-when-point-in-periphery t)
+  :config (setq show-paren-delay 0))
 
 (use-package colorful-mode
   :straight (:type git :host github :repo "DevelopmentCool2449/colorful-mode")
