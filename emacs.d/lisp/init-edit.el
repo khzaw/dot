@@ -99,13 +99,33 @@
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :straight (:type built-in)
-  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+  ;; :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
   :hook ((after-init . electric-pair-mode)
          (org-mode . (lambda ()
                        (setq-local electric-pair-inhibit-predicate
                                    `(lambda (c)
                                       (if (char-equal c ?<) t
-                                        (,electric-pair-inhibit-predicate c))))))))
+                                        (,electric-pair-inhibit-predicate c)))))))
+  :config
+  ;; https://www.reddit.com/r/emacs/comments/1hwf46n/comment/m63mddk
+  ;; This ensures multiple quotes are not added at the beginning or end of a word
+  ;; https://github.com/meain/dotfiles/blob/81ecc82265d4b4c59bc742015c6ba7502b30299a/emacs/.config/emacs/init.el#L366C3-L383C83
+  (defun khz/electric-pair-conservative-inhibit (char)
+    (or
+     ;; I find it more often preferable not to pair when the
+     ;; same char is next.
+     (eq char (char-after))
+     ;; Don't pair up when we insert the second of "" or of ((.
+     (and (eq char (char-before))
+          (eq char (char-before (1- (point)))))
+     ;; I also find it often preferable not to pair next to a word.
+     (eq (char-syntax (following-char)) ?w)
+     ;; Don't pair at the end of a word, unless parens.
+     (and
+      (eq (char-syntax (char-before (1- (point)))) ?w)
+      (eq (preceding-char) char)
+      (not (eq (char-syntax (preceding-char)) ?\()))))
+  (setq electric-pair-inhibit-predicate 'khz/electric-pair-conservative-inhibit))
 
 ;; Visual `align-regexp'
 (use-package ialign)
