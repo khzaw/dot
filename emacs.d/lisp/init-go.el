@@ -52,14 +52,15 @@
          ("C-c C-g" . nil))) ; Unbind C-c C-g, it's very easy to hit, I will type gorepl-run manually
 
 (use-package flycheck-golangci-lint
+  :disabled t
   :if (executable-find "golangci-lint")
-  :after (flycheck go-mode)
+  :after (flycheck-mode go-mode)
   :hook ((go-mode . flycheck-golangci-lint-setup)
          (go-ts-mode . flycheck-golangci-lint-setup)))
 
 (use-package flymake-golangci
   :disabled t
-  :after (go-mode flymake)
+  :after (go-mode flymake-mode)
   :hook ((go-mode . flymake-golangci-load)
          (go-ts-mode . flymake-golangci-load)))
 

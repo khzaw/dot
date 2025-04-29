@@ -1,10 +1,9 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package flycheck
-  :commands (flycheck-list-errors flycheck-buffer)
   :custom
   (flycheck-indication-mode 'right-fringe)
-  (flycheck-check-syntax-automatically '(save idle-change mode-enabled))
+  (flycheck-check-syntax-automatically '(save mode-enabled))
   :hook (flycheck-mode . flycheck-set-indication-mode)
   :config
   (setq flycheck-indication-mode 'right-margin)
@@ -21,7 +20,7 @@
   (setq flycheck-buffer-switch-check-intermediate-buffers t)
 
   ;; Display errors a little quicker (default is 0.9s)
-  (setq flycheck-display-errors-delay 0.25)
+  (setq flycheck-display-errors-delay 0.2)
 
   :custom-face
   (flycheck-warning ((t (:underline (:color "#fabd2f" :style line :position line)))))
@@ -52,6 +51,7 @@
         flycheck-posframe-error-prefix "X "))
 
 (use-package flycheck-overlay
+  :disabled t
   :straight (flycheck-overlay :type git :host github :repo "konrad1977/flycheck-overlay")
   :hook (flycheck-mode . flycheck-overlay-mode)
   :config
