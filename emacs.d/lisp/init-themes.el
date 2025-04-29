@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t; -*-
-(use-package solo-jazz-theme)
+
+;; useful for debugging themes
+(use-package fontify-face)
+
 
 (use-package kaolin-themes
   :after all-the-icons
@@ -42,6 +45,9 @@
 
 (use-package ef-themes)
 
+(use-package hima-theme
+  :straight (:type git :host github :repo "meain/hima-theme"))
+
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
@@ -58,16 +64,9 @@
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
 
-(use-package miasma-theme)
-
 (use-package fleetish-theme)
 
 (use-package tok-theme)
-
-(use-package parchment-theme)
-
-(use-package alect-themes
-  :straight (:type git :host github :repo "alezost/alect-themes"))
 
 (use-package faff-theme
   :straight (:type git :host github :repo "WJCFerguson/emacs-faff-theme"))
