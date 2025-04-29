@@ -77,7 +77,7 @@
   :config
 
   ;; disable corfu for org-tempo
-  (defun khz/completion-at-point-org-tempo (orig-fun &rest :args)
+  (defun khz/completion-at-point-org-tempo (orig-fun &rest args)
     (unless (and (equal (char-before) ?<)
                  (derived-mode-p 'org-mode))
       (apply orig-fun args)))
@@ -190,6 +190,7 @@ https://github.com/minad/corfu."
 ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
 (use-package corfu-pixel-perfect
+  :disabled t
   :straight (:type git :host github :repo "wyuenho/emacs-corfu-pixel-perfect")
   :after corfu
   :config (corfu-pixel-perfect-mode 1))

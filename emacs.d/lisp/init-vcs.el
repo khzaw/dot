@@ -60,7 +60,7 @@
   :custom (diff-refine 'navigation)
   :after evil-leader
   :config
-  (diff-hl-flydiff-mode)
+  ;; (diff-hl-flydiff-mode)
   (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
   (setq vc-git-diff-switches '("--histogram"))

@@ -16,7 +16,6 @@
        (warning "»" compilation-warning)
        (note "»" compilation-info)))
   :config
-  (add-hook 'find-file-hook 'flymake-find-file-hook)
   (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
   (setq flymake-show-diagnostics-at-end-of-line nil)
   (evil-set-command-property 'flymake-goto-next-error :jump t)
