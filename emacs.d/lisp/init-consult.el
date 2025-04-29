@@ -323,11 +323,16 @@
   ;; M-U -> vertico-multiform-unobtrusive
 
   (setq vertico-multiform-commands
-    '((projectile-switch-project grid indexed)))
+    '((projectile-switch-project grid indexed)
+      (consult-ripgrep buffer indexed)
+      (consult-imenu buffer)
+      (xref-find-references buffer)
+      (consult-xref buffer indexed)))
 
   (setq vertico-multiform-categories
     '((file grid)
-       (jinx grid (vertico-grid-annotate . 20))))
+      (consult-grep buffer)
+      (jinx grid (vertico-grid-annotate . 20))))
 
   (vertico-multiform-mode 1))
 
@@ -354,11 +359,6 @@
   (setq vertico-posframe-parameters `((left-fringe . 10)
                                       (right-fringe . 10))
         vertico-posframe-border-width 5))
-
-(use-package nerd-icons-completion
-  :config
-  (nerd-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 ;; Enable rich annotations in completion UI
 (use-package marginalia
