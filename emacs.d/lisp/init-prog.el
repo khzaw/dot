@@ -22,7 +22,6 @@
   (eldoc-add-command-completions "paredit-")
   (eldoc-add-command-completions "combobulate-"))
 
-
 (use-package xref
   :straight (:type built-in))
 
@@ -34,21 +33,12 @@
 (use-package prog-mode
   :straight (:type built-in)
   :commands (prettify-symbols-mode global-prettify-symbols-mode)
-  :init
-  (setq prettify-symbols-unprettify-at-point 'right-edge)
-  ;; :hook (prog-mode . prettify-hook)
+  :init (setq prettify-symbols-unprettify-at-point 'right-edge)
   :config
-  :hook ((prog-mode . (lambda () (yafolding-mode)))
-         (prog-mode . prettify-hook))
-  (global-prettify-symbols-mode))
-
+  (prettify-symbols-mode 1))
 
 (use-package hideshow
   :straight (:type built-in))
-;; :hook (prog-mode . hs-minor-mode)
-;; :bind (:map hs-minor-mode-map
-;;         ("C-`" . hs-toggle-hiding)))
-
 
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda ()

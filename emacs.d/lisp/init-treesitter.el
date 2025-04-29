@@ -164,17 +164,14 @@
 
 (use-package treesit-fold
   :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
-  :config
-  (setq treesit-fold-line-count-show 1)
-  (global-treesit-fold-mode 1)
-  (global-treesit-fold-indicators-mode 1)
-  (add-hook 'treesit-fold-mode-hook
-          (lambda ()
-            (when (and (bound-and-true-p yafolding-mode)
-                       (fboundp 'yafolding-mode))
-              (yafolding-mode -1))))
   :bind (:map treesit-fold-mode-map
-              ("C-<return>" . treesit-fold-toggle)))
+              ("C-<return>" . treesit-fold-toggle))
+  :hook ((after-init . global-treesit-fold-mode)
+         (after-init . global-treesit-fold-indicators-mode)
+         (after-init . treesit-fold-line-comment-mode))
+  :config
+  (setq treesit-fold-indicators-fringe 'left-fringe)
+  (setq treesit-fold-line-count-show 1))
 
 (use-package symbols-outline
   :bind ("C-c e i" . symbols-outline-show)
