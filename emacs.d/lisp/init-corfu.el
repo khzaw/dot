@@ -187,7 +187,7 @@ https://github.com/minad/corfu."
 (use-package corfu-pixel-perfect
   :straight (:type git :host github :repo "wyuenho/emacs-corfu-pixel-perfect")
   :after corfu
-  :hook (global-corfu-mode . corfu-pixel-perfect-mode))
+  :config (corfu-pixel-perfect-mode 1))
 
 (use-package kind-icon
   :after corfu
