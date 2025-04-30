@@ -29,7 +29,11 @@
   (setq magit-save-repository-buffers 'dontask
         display-line-numbers-type 'visual
         markdown-display-remote-images t
-        magit-section-disable-line-numbers nil))
+        magit-section-disable-line-numbers nil)
+
+  ;; Just type C-c C-d to show the diff at committing
+  (remove-hook 'server-switch-hook 'magit-commit-diff)
+  (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff))
 
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode)
