@@ -1,4 +1,5 @@
 ;; -*- lexical-binding: t; -*-
+;;; Code:
 
 (use-package flymake
   :after evil
@@ -16,8 +17,9 @@
        (warning "»" compilation-warning)
        (note "»" compilation-info)))
   :config
-  (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
+  (setq flymake-proc-allowed-file-name-masks t)
   (setq flymake-show-diagnostics-at-end-of-line nil)
+  (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 
