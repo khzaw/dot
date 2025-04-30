@@ -323,15 +323,10 @@
   ;; M-U -> vertico-multiform-unobtrusive
 
   (setq vertico-multiform-commands
-    '((projectile-switch-project grid indexed)
-      (consult-ripgrep buffer indexed)
-      (consult-imenu buffer)
-      (xref-find-references buffer)
-      (consult-xref buffer indexed)))
+    '((projectile-switch-project grid indexed)))
 
   (setq vertico-multiform-categories
     '((file grid)
-      (consult-grep buffer)
       (jinx grid (vertico-grid-annotate . 20))))
 
   (vertico-multiform-mode 1))
