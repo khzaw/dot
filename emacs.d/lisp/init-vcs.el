@@ -12,7 +12,6 @@
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
   ;; Suppress the message
-
   (setq magit-auto-revert-mode t)
 
   (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
@@ -30,6 +29,12 @@
         display-line-numbers-type 'visual
         markdown-display-remote-images t
         magit-section-disable-line-numbers nil)
+
+  (setq magit-section-initial-visibility-alist
+        '((untracked . show)
+          (unstaged . show)
+          (staged . show)
+          (stashes . hide)))
 
   ;; Just type C-c C-d to show the diff at committing
   (remove-hook 'server-switch-hook 'magit-commit-diff)
