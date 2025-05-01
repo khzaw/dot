@@ -1,7 +1,6 @@
 
 ;; -*- lexical-binding: t; -*-
 
-
 (defun my-yaml-ts-mode-setup ()
   "Custom setup applied when `yaml-ts-mode` starts."
   ;; Let yaml-ts-mode (Tree-sitter) handle its own indentation logic.
@@ -11,11 +10,8 @@
   ;; treesit-indent has a bug a doesn't work well in yaml-ts-mode
   (setq-local indent-line-function #'yaml-indent-line)
 
-  ;; --- Keybindings for Evil Insert State ---
-  ;; Bind TAB to indent using the mode's logic in insert mode
-  (define-key evil-insert-state-local-map (kbd "<tab>") #'indent-for-tab-command)
-
-  ;; Other mode-specific settings can go here if needed
+  ;; Other mode-specific settings
+  ;; (define-key evil-insert-state-local-map (kbd "<tab>") #'indent-for-tab-command)
   ;; e.g., (setq-local comment-line-break-function #'adaptive-fill-comment-line)
   )
 
