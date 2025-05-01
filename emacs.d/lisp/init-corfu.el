@@ -49,7 +49,7 @@
   ;; (global-tempel-abbrev-mode)
   )
 
-(use-package tempel-collection)
+(use-package tempel-collection :after tempel)
 
 (use-package orderless
   :config

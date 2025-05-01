@@ -1,0 +1,30 @@
+fundamental-mode
+
+(today (format-time-string "%Y-%m-%d"))
+
+yaml-ts-mode
+
+(ylshelmrepo "# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrepository-source-v1.json")
+(ylshelmrel "# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json")
+(hlmr "apiVersion: helm.toolkit.fluxcd.io/v2" n "kind: HelmRelease")
+(ylskustomize "# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json")
+(kustcfg "apiVersion: kustomize.config.k8s.io/v1beta1" n "kind: Kustomization")
+(kusttlkt "apiVersion: kustomize.toolkit.fluxcd.io/v1" n "kind: Kustomization")
+
+prog-mode
+
+(todo (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "TODO ")
+
+lisp-mode emacs-lisp-mode
+
+(lambda "(lambda (" p ")" n> r> ")")
+
+emacs-lisp-mode
+
+(autoload ";;;###autoload")
+(pt "(point)")
+(fun "(defun " p " (" p ")\n  \"" p "\"" n> r> ")")
+
+org-mode
+
+(nme "#+name: ")
