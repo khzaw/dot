@@ -289,21 +289,5 @@
 
 (use-package lin)
 
-(use-package parrot
-  ;; This package is not yet the version in MELPA, so you will need to explicitly specify it.
-  ;; :straight '(parrot :type git :host github :repo "positron-solutions/parrot")
-  :straight  (parrot :type git :host github :repo "positron-solutions/parrot" :files (:defaults "img"))
-  :custom
-  (parrot-type 'emacs) ; see parrot types below
-  (parrot-animate 'hide-static) ; hides after animation
-
-  ;; A selection of default values.  M-x customize-group parrot to see full list of options
-  ;; (parrot-animate-on-load t) ; do animation after load (also startup)
-  ;; (parrot-rotate-animate-after-rotation t) ; enable animation on included rotation commands
-  ;; (parrot-party-on-org-todo-states '("DONE"))
-  ;; (parrot-party-on-magit-push t)
-
-  (parrot-mode t))
-
 (provide 'init-ui)
 ;;; init-ui.el ends here
