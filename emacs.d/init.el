@@ -98,7 +98,7 @@
 (require 'init-yaml)
 (require 'init-kubernetes)
 (require 'init-prog)
-'
+
 ;; programming tools
 (require 'init-restclient)
 
