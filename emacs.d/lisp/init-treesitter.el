@@ -112,11 +112,18 @@
   ;; (treesitter-context-focus-mode 1)
 )
 
+(defun treesit-enabled-p ()
+  "Checks if the current buffer has treesit parser."
+  (and (fboundp 'treesit-available-p)
+       (treesit-available-p)
+       (treesit-language-at (point))))
+
 ;; Show scope info of block
 (use-package scopeline
   :commands (scopeline-mode)
-  :config (setq scopeline-overlay-prefix " ~")
-  :init (add-hook 'prog-mode-hook #'scopeline-mode))
-
+  :init (add-hook 'prog-mode-hook (lambda ()
+                                    (when (treesit-enabled-p)
+                                      (scopeline-mode))))
+  :config (setq scopeline-overlay-prefix " ~"))
 
 (provide 'init-treesitter)
