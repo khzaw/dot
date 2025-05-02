@@ -159,5 +159,8 @@
   (setq coverlay:untested-line-background-color "#f8ced3")
   (setq coverlay:mark-tested-lines nil))
 
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
