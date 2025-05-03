@@ -30,8 +30,11 @@
               ("C-c e p"   . #'eldoc-print-current-symbol-info)
               ("C-c e r"   . #'eglot-rename)
               ("C-c e h c" . #'eglot-hierarchy-call-hierarchy)
-              ("C-c e h t" . #'eglot-hierarchy-type-hierarchy))
+              ("C-c e h t" . #'eglot-hierarchy-type-hierarchy)
+              ("C-c e C-i" . #'eglot-inlay-hints-mode))
   :config
+
+  (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
 
   (defvar khz/eglot-server-configs
     ;; Define a mapping of major modes to language server configurations
@@ -193,18 +196,18 @@ and CONFIG is the configuration plist for that server.")
   :config (consult-eglot-embark-mode))
 
 (use-package eldoc-box
-    :bind (:map eglot-mode-map
-                ("C-c e m" . eldoc-box-help-at-point))
-    :custom
-    (eldoc-box-lighter nil)
-    (eldoc-box-only-multi-line t)
-    (eldoc-box-clear-with-C-g t)
-    :custom-face
-    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
-    (eldoc-box-body ((t (:inherit tooltip))))
-    :config
-    (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
-          (alist-get 'right-fringe eldoc-box-frame-parameters) 8))
+  :bind (:map eglot-mode-map
+              ("C-c e m" . eldoc-box-help-at-point))
+  :custom
+  (eldoc-box-lighter nil)
+  (eldoc-box-only-multi-line t)
+  (eldoc-box-clear-with-C-g t)
+  :custom-face
+  (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+  (eldoc-box-body ((t (:inherit tooltip))))
+  :config
+  (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+        (alist-get 'right-fringe eldoc-box-frame-parameters) 8))
 
 (use-package flycheck-eglot
   :straight (:type git :repo "flycheck/flycheck-eglot" :host github)
