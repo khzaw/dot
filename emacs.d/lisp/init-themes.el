@@ -56,7 +56,7 @@
 
 (use-package almost-mono-themes
   :straight (:type git :host github :repo "khzaw/almost-mono-themes")
-  :config (load-theme 'almost-mono-white t))
+  :config (load-theme 'almost-mono-cream t))
 ;; (custom-set-faces
 ;;  `(shadow ((t :foreground "#cccccc")))))
 
