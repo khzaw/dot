@@ -155,7 +155,7 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(set-language-environment   'utf-8)
+(set-language-environment   "UTF-8")
 
 ;; Revert (updatet) buffers automatically when underlying files are changed externally.
 (global-auto-revert-mode t)
