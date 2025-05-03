@@ -60,12 +60,38 @@
 (use-package ruff-format)
 
 (use-package python-mode
+  :straight (python-mode :type git
+                         :host gitlab
+                         :repo "python-mode-devs/python-mode")
   :config
-  (setq python-indent-offset 4)
+  (setq py-indent-offset 4)
   ;; Remove guess indent python message
-  (setq python-indent-guess-indent-offset-verbose nil)
+  ;; (setq python-indent-guess-indent-offset-verbose nil)
   (when (executable-find "ipython")
-    (setq python-shell-interpreter "ipython")))
+    (setq python-shell-interpreter "ipython"))
+
+  (advice-add 'python-shell-completion-at-point :around
+            (lambda (fun &optional arg)
+              (cape-wrap-noninterruptible (lambda () (funcall fun arg)))))
+
+  (defun turn-off-corfu-auto ()
+    "turn off corfu-auto"
+    (setq-local corfu-auto nil)
+    (setq-local corfu-auto-delay 3.0)
+    (corfu-mode))
+
+  (add-hook 'inferior-python-mode-hook 'turn-off-corfu-auto)
+  (add-hook 'py-shell-mode-hook 'turn-off-corfu-auto))
+
+(use-package python-mls
+  :disabled t
+  ;; :custom
+  ;; (python-mls-multiline-history-modifier '(meta shift))
+  :straight (python-mls :type git
+                        :host github
+                        :repo "jdtsmith/python-mls")
+  :hook
+  (inferior-python-mode . python-mls-mode))
 
 
 (use-package pet
