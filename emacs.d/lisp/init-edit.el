@@ -229,7 +229,8 @@
 (use-package repeat-mode
   :straight (:type built-in)
   :diminish
-  :hook (after-init . repeat-mode))
+  :hook (after-init . repeat-mode)
+  :config (setq repeat-message-function #'ignore))
 
 (use-package repeat-help
   :diminish

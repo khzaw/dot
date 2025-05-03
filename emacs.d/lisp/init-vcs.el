@@ -8,6 +8,9 @@
   :bind ("C-x g" . magit-status)
   :config
 
+  ;; speed up Git process, won't have prompt for passphrases
+  (setq magit-process-connection-type nil)
+
   ;; (customize-set-variable
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
