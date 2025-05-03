@@ -139,6 +139,9 @@ Lisp function does not specify a special indentation."
   :bind (:map racket-repl-mode-map
          ("C-RET" . newline-and-indent)))
 
+(use-package mode-minder
+  :straight (:type git :host github :repo "jdtsmith/mode-minder"))
+
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here
