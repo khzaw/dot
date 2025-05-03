@@ -55,7 +55,8 @@
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
 
 (use-package almost-mono-themes
-  :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
+  :straight (:type git :host github :repo "khzaw/almost-mono-themes")
+  :config (load-theme 'almost-mono-white t))
 ;; (custom-set-faces
 ;;  `(shadow ((t :foreground "#cccccc")))))
 
@@ -100,7 +101,8 @@
   (catppuccin-set-color 'mantle "#000000" 'mocha)
   (catppuccin-set-color 'crust "#000000" 'mocha)
 
-  (load-theme 'catppuccin t))
+  ;; (load-theme 'catppuccin t)
+  )
 
 (use-package nord-theme
   :straight (:type git :host github :repo "nordtheme/emacs" :local-repo "nordtheme"))
