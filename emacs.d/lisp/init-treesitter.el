@@ -84,15 +84,24 @@
   (setq treesit-fold-line-count-show 1))
 
 (use-package symbols-outline
-  :bind ("C-c C-s" . symbols-outline-show)
+  :bind ("C-c e C-s" . symbols-outline-show)
   :custom
   (symbols-outline-window-width 55)
   (symbols-outline-ignore-variable-symbols nil)
   :config
-  ;; brew install universal-ctags
-  (unless (executable-find "ctags")
-    (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
-  (symbols-outline-follow-mode 1))
+
+  (symbols-outline-follow-mode 1)
+
+  (defun khz/symbols-outline-fetch-fn ()
+    (if (or (bound-and-true-p eglot--managed-mode)
+            (bound-and-true-p lsp-managed-mode))
+        #'symbols-outline-lsp-fetch
+      ;; brew install universal-ctags
+      #'symbols-outline-ctags-fetch))
+
+  (advice-add 'symbols-outline-show :before
+              (lambda (&rest _)
+                (setq-local symbols-outline-fetch-fn (khz/symbols-outline-fetch-fn)))))
 
 (use-package posframe-plus
   :straight (:host github :type git :repo "zbelial/posframe-plus"))
@@ -124,6 +133,7 @@
   :init (add-hook 'prog-mode-hook (lambda ()
                                     (when (treesit-enabled-p)
                                       (scopeline-mode))))
-  :config (setq scopeline-overlay-prefix " ~"))
+  :config (setq scopeline-overlay-prefix " ~"
+                scopeline-min-lines 15))
 
 (provide 'init-treesitter)
