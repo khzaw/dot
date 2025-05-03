@@ -1,23 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(defun corfu-beginning-of-prompt ()
-  "Move to end of completion input."
-  (interactive)
-  (corfu--goto -1)
-  (goto-char (car completion-in-region--data)))
-
-(defun corfu-end-of-prompt ()
-  "Move to end of completion input."
-  (interactive)
-  (corfu--goto -1)
-  (goto-char (cadr completion-in-region--data)))
-
-(defun corfu-move-to-minibuffer ()
-  (interactive)
-  (let ((completion-extra-properties corfu--extra)
-        completion-cycle-threshold completion-cycling)
-    (apply #'consult-completion-in-region completion-in-region--data)))
-
 (use-package tempel
   ;; Require trigger prefix before template name when completing.
   ;; :custom
@@ -178,6 +160,7 @@ https://github.com/minad/corfu."
   :after corfu
   :bind (:map corfu-map
          ("C-q" . corfu-quick-insert)))
+  (interactive)
 
 (defun corfu-enable-always-in-minibuffer ()
   "Enable Corfu in the minibuffer if Vertico/Mct are not active."
@@ -237,6 +220,7 @@ https://github.com/minad/corfu."
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
   ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  ;; (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
   )
 

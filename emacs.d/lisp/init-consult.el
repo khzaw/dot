@@ -94,6 +94,8 @@
 
   :config
 
+  (use-package consult-ag)
+
   ;; exclude these directories from `consult-find'
   (setq consult-find-args "find . -not ( -wholename */.* -prune -o -name -node_modules -prune )")
 
@@ -152,6 +154,35 @@
   (setq consult-project-function (lambda (_) (projectile-project-root)))
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
+
+(use-package consult-projectile
+  :straight (consult-projectile :type git
+                                :host gitlab
+                                :repo "OlMon/consult-projectile"
+                                :branch "master")
+  :after consult)
+
+(use-package consult-project-extra
+  :straight (consult-project-extra :type git
+                                   :host github
+                                   :repo "Qkessler/consult-project-extra")
+  :bind
+  (("C-c p f" . consult-project-extra-find)
+   ("C-c p o" . consult-project-extra-find-other-window))
+  :after consult)
+
+(use-package consult-jump-project
+  :after (consult recentf)
+  :straight (consult-jump-project :type git
+                                  :host github
+                                  :repo "jdtsmith/consult-jump-project")
+  :custom
+  (consult-jump-direct-jump-modes '(dired-mode))
+  :init
+  (add-to-list 'recentf-filename-handlers '((lambda (f)  ; avoid remote ~/abbreviations to recentf files can be matched
+			       (if (file-remote-p f) f
+				 (abbreviate-file-name f)))))
+  :bind ("C-x p p" . consult-jump-project))
 
 (use-package consult-flyspell)
 
@@ -228,8 +259,6 @@
 (defun consult-dogears ()
   (interactive)
   (consult--multi '(consult--source-dogears)))
-
-(use-package consult-ag :after consult)
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
