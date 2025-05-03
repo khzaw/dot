@@ -42,13 +42,18 @@
 
 
 (use-package corfu
-  :straight (corfu :type git :host github :repo "minad/corfu" :files (:defaults "extensions/*"))
+  :straight (corfu :type git
+                   :host github
+                   :repo "minad/corfu"
+                   :files (:defaults "extensions/*"))
   :custom
+  (corfu-cycle t)
+  (corfu-quit-at-boundry nil)      ;; never quit a completion boundary
   (corfu-preselect 'directory)
   (corfu-auto t)
-  (corfu-auto-delay 0.2)
+  (corfu-auto-delay 0.5)
   (corfu-auto-prefix 2)
-  (corfu-separator ?_)         ;; Set to orderless separator, if not using space
+  (corfu-separator ?_)             ;; Set to orderless separator, if not using space
   (corfu-quit-no-match 'separator) ;; or t
 
   ;; Hide commands in M-x which do not apply to the current mode.
@@ -97,6 +102,7 @@ https://github.com/minad/corfu."
            (fboundp 'comint-send-input))
       (comint-send-input))))
   (advice-add #'corfu-insert :after #'corfu-send-shell)
+
   ;; Sort by input history (no need to modify `corfu-sort-function').
   (with-eval-after-load 'savehist
     (corfu-history-mode 1)
@@ -115,6 +121,9 @@ https://github.com/minad/corfu."
               ;; ("RET" . nil)
               )
   :init
+  (advice-add 'python-shell-completion-at-point :around
+              (lambda (fun &optional arg)
+                (cape-wrap-noninterruptible (lambda () (funcall fun arg)))))
   (global-corfu-mode))
 
 ;; show candidate doc in echo area
@@ -123,7 +132,14 @@ https://github.com/minad/corfu."
   :after corfu
   :commands (corfu-echo-mode)
   :init (corfu-echo-mode)
-  :custom (corfu-echo-delay '(0 . 0)))
+  :custom (corfu-echo-delay '(0.3 . 0.2))) ;; (initial-delay . subsequent delay)
+
+;; (setq debug-on-error t)
+;; (defun force-debug (func &rest args)
+;;   (condition-case e
+;;       (apply func args)
+;;     ((debug error) (signal (car e) (cdr e)))))
+;; (advice-add #'corfu--post-command :around #'force-debug)
 
 (use-package corfu-popupinfo-mode
   :straight nil
@@ -137,7 +153,7 @@ https://github.com/minad/corfu."
   :init (corfu-popupinfo-mode)
   :config
   (define-key corfu-map (kbd "M-p") #'corfu-popupinfo-scroll-down) ;; corfu-next
-  (define-key corfu-map (kbd "M-n") #'corfu-popupinfo-scroll-up)  ;; corfu-previous
+  (define-key corfu-map (kbd "M-n") #'corfu-popupinfo-scroll-up)   ;; corfu-previous
   (define-key corfu-map (kbd "M-d") #'corfu-popupinfo-documentation)
   (define-key corfu-map (kbd "M-D") #'corfu-popupinfo-location))
 
@@ -159,8 +175,13 @@ https://github.com/minad/corfu."
   :straight nil
   :after corfu
   :bind (:map corfu-map
-         ("C-q" . corfu-quick-insert)))
+              ("C-q" . corfu-quick-insert)))
+
+(defun corfu-move-to-minibuffer ()
   (interactive)
+  (let ((completion-extra-properties corfu--extra)
+        completion-cycle-threshold completion-cycling)
+    (apply #'consult-completion-in-region completion-in-region--data)))
 
 (defun corfu-enable-always-in-minibuffer ()
   "Enable Corfu in the minibuffer if Vertico/Mct are not active."
@@ -218,8 +239,7 @@ https://github.com/minad/corfu."
   ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
   ;;(add-to-list 'completion-at-point-functions #'cape-ispell)
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-  ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
   ;; (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
   )
