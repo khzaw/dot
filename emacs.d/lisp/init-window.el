@@ -23,6 +23,7 @@
                         (flymake-diagnostics-buffer-mode :align below :inhibit-window-quit nil)
                         (flycheck-error-message-mode :align below :inhibit-window-quit nil)
                         (flycheck-error-list-mode :align below :inhibit-window-quit nil)
+                        (inferior-python-mode :align below :size 0.4 :select t)
                         (py-shell-mode :align below :size 0.4 :select t)
                         ;; (magit-status-mode :quit t :align bottom :size 0.5 :select t)
                         ;; (magit-revision-mode :same t :inhibit-window-quit t)
@@ -77,6 +78,7 @@
      "^\\*ielm\\*"
      flycheck-error-list-mode
      flycheck-error-message-mode
+     inferior-python-mode
      py-shell-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*term.*\\*$" term-mode
