@@ -1,8 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package magit
-  :init
-  (setq-default magit-git-executable (executable-find "git"))
   :defer t
   :commands (magit-status magit-blame magit-get-current-branch)
   :bind ("C-x g" . magit-status)
@@ -39,6 +37,15 @@
           (staged . show)
           (stashes . hide)))
 
+  ;; Turn ref links into clickable buttons.
+  (add-hook 'magit-process-mode-hook #'goto-address-mode)
+
+  (add-hook 'magit-status-mode
+            (defun +magit-optimize-process-calls-h ()
+              "Cache git executable path for current session."
+              (when-let (path (executable-find magit-git-executable t))
+                (setq-local magit-git-executable path))))
+
   ;; Just type C-c C-d to show the diff at committing
   (remove-hook 'server-switch-hook 'magit-commit-diff)
   (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff))
@@ -65,7 +72,7 @@
 (use-package git-commit
   :straight nil
   :config
-  (add-to-list 'git-commit-style-convention-checks 'overlong-summary-line)
+  (setq git-commit-style-convention-checks '(overlong-summary-line non-empty-second-line))
   (global-git-commit-mode))
 
 (use-package diff-hl
