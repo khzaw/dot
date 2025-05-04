@@ -63,6 +63,7 @@
         ;; Disable start-up screen
         inhibit-startup-screen t
         inhibit-startup-message t
+        inhibit-startup-echo-area-message (user-login-name)
         ;; We'll provide our own splash screen, thanks
         inhibit-splash-screen t
         ;; No message in initial scratch buffer
