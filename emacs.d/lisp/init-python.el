@@ -70,6 +70,16 @@
   (when (executable-find "ipython")
     (setq python-shell-interpreter "ipython"))
 
+   ;; Only allow the python-mode's capf to run in python buffers:
+  (defun khz/python-capf-only-in-python-modes (fn &rest args)
+    (when (derived-mode-p 'python-mode 'inferior-python-mode)
+      (apply fn args)))
+  (advice-add 'python-shell-completion-at-point :around #'khz/python-capf-only-in-python-modes)
+
+  ;; If you want, you can do the same for py-fast-complete or similar
+  (when (fboundp 'py-fast-complete)
+    (advice-add 'py-fast-complete :around #'khz/python-capf-only-in-python-modes))
+
   (advice-add 'python-shell-completion-at-point :around
             (lambda (fun &optional arg)
               (cape-wrap-noninterruptible (lambda () (funcall fun arg)))))
@@ -78,10 +88,12 @@
     "turn off corfu-auto"
     (setq-local corfu-auto nil)
     (setq-local corfu-auto-delay 3.0)
-    (corfu-mode))
+    (corfu-mode -1)
+    (corfu-mode 1))
 
   (add-hook 'inferior-python-mode-hook 'turn-off-corfu-auto)
   (add-hook 'py-shell-mode-hook 'turn-off-corfu-auto))
+  ;; (remove-hook 'completion-at-point-functions #'python-completion-at-point t))
 
 (use-package python-mls
   :disabled t
