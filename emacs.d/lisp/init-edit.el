@@ -235,7 +235,13 @@
 (use-package repeat-help
   :diminish
   :straight (:type git :host github :repo "karthink/repeat-help")
-  :hook (repeat-mode . repeat-help-mode))
+  :hook (repeat-mode . repeat-help-mode)
+  :config
+  (defun silence-repeat-modemessage (orig-fun &rest args)
+    "Silence repeat-mode modeline messages"
+    (cl-letf (((symbol-function 'message) #'ignore))
+      (apply orig-fun args)))
+  (advice-add 'repeat-mode :around #'silence-repeat-modemessage))
 
 
 (use-package hippie-exp
