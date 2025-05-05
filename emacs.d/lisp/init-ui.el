@@ -140,11 +140,17 @@
 
 (use-package theme-magic)
 
-(use-package elcord
-  ;; set discord status
-  :commands elcord-mode
-  :config (setq elcord-use-major-mode-as-main-icon t)
-  (elcord-mode t))
+(if (file-directory-p "~/Code/elcord")
+    (use-package elcord
+      :load-path "~/Code/elcord"
+      :commands elcord-mode
+      :config (setq elcord-use-major-mode-as-main-icon t)
+      (elcord-mode t))
+  (use-package elcord
+    ;; set discord status
+    :commands elcord-mode
+    :config (setq elcord-use-major-mode-as-main-icon t)
+    (elcord-mode t)))
 
 (use-package keycast)
 
