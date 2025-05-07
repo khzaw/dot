@@ -7,6 +7,9 @@
   (visual-fill-column-split-window-sensibly t)
   :config (global-visual-fill-column-mode))
 
+(use-package auctex :straight t)
+(use-package cdlatex :straight t)
+
 (use-package org
   :bind (("C-c C-c" . org-edit-src-exit))
   :init
@@ -18,7 +21,8 @@
    (org-mode . (lambda ()
                  (variable-pitch-mode)
                  (setq visual-fill-column-center-text nil)
-                 (visual-fill-column-mode))))
+                 (visual-fill-column-mode)))
+   (org-mode . turn-on-org-cdlatex))
   :config
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
@@ -43,6 +47,8 @@
   (setq org-tags-column 0)
   (setq org-catch-invisible-edits 'show-and-error)
   (setq org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+  (setq org-format-latex-options (plist-put org-format-latex-options :dpi 600))
   ;; (org-priority-faces
   ;;   '((?A . error)
   ;;      (?B . warning)
@@ -149,6 +155,8 @@
   (use-package ox-gfm :after org)
   (add-to-list 'org-export-backends 'md)
 
+  (use-package ob-emacs-lisp :straight nil)
+
   (setq org-babel-shell-names '("sh" "bash" "zsh")
         org-babel-default-header-args:shell
         `((:shebang . ,(format "#!/usr/bin/env %s"
@@ -161,8 +169,10 @@
       (js . t)
       (css . t)
       (sass . t)
+      (latex . t)
       (plantuml . t))
     "Alist of org ob languages.")
+
 
   ;; ob-sh renamed to ob-shell since 26.1.
   (use-package ob-shell
