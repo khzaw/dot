@@ -41,7 +41,31 @@
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
-(global-set-key (kbd "C-h M-f") #'what-face)
+(defun all-faces-at-point (pos)
+  "Show all faces at POS (or point if called interactively)."
+  (interactive "d")
+  (let* ((faces '())
+         ;; Get faces from overlays
+         (overlays (overlays-at pos)))
+    (dolist (ov overlays)
+      (let ((face (overlay-get ov 'face)))
+        (when face
+          (if (listp face)
+              (setq faces (append face faces))
+            (push face faces)))))
+    ;; Get face from text properties
+    (let ((text-face (get-text-property pos 'face)))
+      (when text-face
+        (if (listp text-face)
+            (setq faces (append text-face faces))
+          (push text-face faces))))
+    ;; Deduplicate
+    (setq faces (delete-dups (delq nil faces)))
+    (if faces
+        (message "Faces at %d: %s" pos faces)
+      (message "No faces at %d" pos))))
+
+(global-set-key (kbd "C-h M-f") #'all-faces-at-point)
 
 (use-package fontaine)
 
