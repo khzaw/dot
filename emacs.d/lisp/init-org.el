@@ -47,7 +47,7 @@
   (setq org-tags-column 0)
   (setq org-catch-invisible-edits 'show-and-error)
   (setq org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (setq org-format-latex-options (plist-put org-format-latex-options :dpi 600))
   ;; (org-priority-faces
   ;;   '((?A . error)
