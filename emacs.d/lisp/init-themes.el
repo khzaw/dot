@@ -114,7 +114,7 @@
 
 (use-package berrys-theme)
 
-(use-package sexy-monochrome
+(use-package sexy-monochrome-theme
   :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
 
 (provide 'init-themes)
