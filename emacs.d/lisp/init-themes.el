@@ -109,5 +109,13 @@
 (use-package nord-theme
   :straight (:type git :host github :repo "nordtheme/emacs" :local-repo "nordtheme"))
 
+(use-package nothing
+  :straight (:type git :host github :repo "jaredgorski/nothing.el"))
+
+(use-package berrys-theme)
+
+(use-package sexy-monochrome
+  :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
+
 (provide 'init-themes)
 ;; init-themes.el ends here

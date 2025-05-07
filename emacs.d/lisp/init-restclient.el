@@ -22,7 +22,7 @@
 
 (use-package verb)
 
-(use-package grpcclient
+(use-package grpclient
   :if (executable-find "grpcurl")
   :straight (:type git :host github :repo "Prikaz98/grpclient.el")
   :init (add-to-list 'auto-mode-alist '("\\.grpc\\'" . grpclient-mode)))

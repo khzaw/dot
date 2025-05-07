@@ -160,7 +160,7 @@
 
 (use-package code-review
   :straight (:type git :host github :repo "phelrine/code-review" :branch "fix/closql-update")
-  :after (forge emojify)
+  :after (forge emojify magit)
   :hook (code-review-mode . emojify-mode)
   :config
   (setq code-review-fill-column 120)
