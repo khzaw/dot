@@ -68,11 +68,13 @@
   ;; Remove guess indent python message
   ;; (setq python-indent-guess-indent-offset-verbose nil)
   (when (executable-find "ipython")
-    (setq python-shell-interpreter "ipython"))
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "--simple-prompt -i"))
 
    ;; Only allow the python-mode's capf to run in python buffers:
   (defun khz/python-capf-only-in-python-modes (fn &rest args)
-    (when (derived-mode-p 'python-mode 'inferior-python-mode)
+    (when (and (derived-mode-p 'python-mode 'inferior-python-mode)
+               (not (bound-and-true-p org-src-mode)))
       (apply fn args)))
   (advice-add 'python-shell-completion-at-point :around #'khz/python-capf-only-in-python-modes)
 
