@@ -53,13 +53,9 @@
 (use-package tomorrow-night-deepblue-theme
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
 
-(if (file-directory-p "~/Code/almost-mono-themes")
-    (use-package almost-mono-themes
-      :load-path "~/Code/almost-mono-themes"
-      :config (load-theme 'almost-mono-cream t))
-  (use-package almost-mono-themes
+(use-package almost-mono-themes
     :straight (:type git :host github :repo "khzaw/almost-mono-themes")
-    :config (load-theme 'almost-mono-cream t)))
+    :config (load-theme 'almost-mono-white t))
 
 (use-package grandshell-theme)
 
