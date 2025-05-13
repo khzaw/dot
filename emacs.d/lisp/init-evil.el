@@ -103,7 +103,11 @@
   (define-key evil-inner-text-objects-map "I" 'evil-indent-plus-i-indent-up-down)
   (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up-down))
 
-(use-package evil-paredit)
+(use-package evil-paredit
+  :hook ((emacs-lisp-mode . evil-paredit-mode)
+         (scheme-mode . evil-paredit-mode)
+         (racket-mode . evil-paredit-mode)
+         (lisp-mode . evil-paredit-mode)))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here
