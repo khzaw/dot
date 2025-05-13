@@ -1,7 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-(use-package paredit-mode
-  :straight (:type built-in))
+(use-package paredit)
 
 (use-package elisp-mode
   :straight (:type built-in)
