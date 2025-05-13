@@ -97,7 +97,9 @@
 (require 'init-web)
 (require 'init-yaml)
 (require 'init-kubernetes)
+(require 'init-latex)
 (require 'init-prog)
+
 
 ;; programming tools
 (require 'init-restclient)

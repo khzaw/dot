@@ -7,8 +7,6 @@
   (visual-fill-column-split-window-sensibly t)
   :config (global-visual-fill-column-mode))
 
-(use-package auctex :straight t)
-(use-package cdlatex :straight t)
 
 (use-package org
   :bind (("C-c C-c" . org-edit-src-exit))
