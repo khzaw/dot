@@ -431,7 +431,7 @@
 (use-package org-visual-indent
     :after org
     :straight (:type git :host github :repo "legalnonsense/org-visual-outline" :files ("*.el"))
-    :hook (org-mode . org-visual-indent-mode)
+    ;; :hook (org-mode . org-visual-indent-mode)
     :config
     ;; Function to update indent colors for org-visual-indent
     (defun +org-visual-outline-indent-color-update (&rest _)
