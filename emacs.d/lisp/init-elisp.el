@@ -155,6 +155,9 @@ Lisp function does not specify a special indentation."
 (use-package mode-minder
   :straight (:type git :host github :repo "jdtsmith/mode-minder"))
 
+(use-package geiser
+  :straight (:type git :host github :repo "emacsmirror/geiser" :files ("elisp/*.el"))
+  :config (use-package geiser-racket :straight nil))
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here
