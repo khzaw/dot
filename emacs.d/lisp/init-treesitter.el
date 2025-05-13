@@ -136,4 +136,39 @@
   :config (setq scopeline-overlay-prefix " ~"
                 scopeline-min-lines 15))
 
+;; provides grammatical edit based on treesit
+(use-package fingertip
+  :straight (:type git :host github :repo "manateelazycat/fingertip")
+  :hook ((go-ts-mode            . fingertip-mode)
+         (python-ts-mode        . fingertip-mode)
+         (web-mode              . fingertip-mode)
+         (js-ts-mode            . fingertip-mode)
+         (typescript-ts-mode    . fingertip-mode)
+         (makefile-gmake-mode   . fingertip-mode)
+         (haskell-mode          . fingertip-mode)
+         (lisp-mode             . fingertip-mode)
+         (lisp-interaction-mode . fingertip-mode)
+         (java-ts-mode          . fingertip-mode)
+         (php-mode              . fingertip-mode)
+         (css-ts-mode           . fingertip-mode)
+         (rust-ts-mode          . fingertip-mode)
+         (bash-ts-mode          . fingertip-mode)
+         (emacs-lisp-mode       . fingertip-mode))
+  :bind (:map fingertip-mode-map
+              ("("   . fingertip-open-round)
+              ("["   . fingertip-open-bracket)
+              ("{"   . fingertip-open-curly)
+              (")"   . fingertip-close-round)
+              ("]"   . fingertip-close-bracket)
+              ("}"   . fingertip-close-curly)
+              ("="   . fingertip-equal)
+              ("\""  . fingertip-double-quote)
+              ("'"   . fingertip-single-quote)
+              ("SPC" . fingertip-space)
+              ("RET" . fingertip-newline)
+              ("M-o" . fingertip-backward-delete)
+              ("C-k" . fingertip-kill)))
+
+
+
 (provide 'init-treesitter)

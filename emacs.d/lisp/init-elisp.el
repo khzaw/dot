@@ -104,6 +104,16 @@ Lisp function does not specify a special indentation."
   (:map help-mode-map
    ("<" . help-go-back)
    (">" . help-go-forward)))
+;; -*- lexical-binding: t; -*-
+
+(use-package lispy
+  :straight (:type git :host github :repo "abo-abo/lispy"))
+
+(use-package symex
+  :straight (:type git :host github :repo "drym-org/symex.el")
+  :config
+  (symex-initialize)
+  (global-set-key (kbd "s-;") 'symex-mode-interface))
 
 (use-package helpful
   :bind
