@@ -3,7 +3,6 @@
 ;; useful for debugging themes
 (use-package fontify-face)
 
-
 (use-package kaolin-themes
   :after all-the-icons
   :config
@@ -109,7 +108,7 @@
 (use-package nord-theme
   :straight (:type git :host github :repo "nordtheme/emacs" :local-repo "nordtheme"))
 
-(use-package nothing
+(use-package nothing-theme
   :straight (:type git :host github :repo "jaredgorski/nothing.el"))
 
 (use-package berrys-theme)
