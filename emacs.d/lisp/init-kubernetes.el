@@ -1,5 +1,16 @@
 ;; -*- lexical-binding: t; -*-
 
+(defun set-kubeconfig (config-path)
+  "Set the KUBECONFIG environment variable to the specified path."
+  (interactive "fSelect kubeconfig file: ")
+  (setenv "KUBECONFIG" config-path)
+  (message "KUBECONFIG set to %s" config-path))
+
+(defun set-homelab-kubeconfig ()
+  "Set KUBECONFIG to homelab cluster"
+  (interactive)
+  (set-kubeconfig "~/Code/rangoonpulse/kubeconfig"))
+
 (use-package kubernetes
   :commands (kubernetes-overview)
   :config
