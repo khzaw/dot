@@ -7,7 +7,6 @@
   (visual-fill-column-split-window-sensibly t)
   :config (global-visual-fill-column-mode))
 
-
 (use-package org
   :bind (("C-c C-c" . org-edit-src-exit))
   :init
@@ -33,6 +32,8 @@
   (setq org-src-preserve-indentation t)        ; use native major-mode indentation
   (setq org-src-tab-acts-natively t)
   (setq org-src-window-setup 'other-window)
+  (setq org-fontify-quote-and-verse-blocks t) ; highlight quote and verse blocks
+  (setq org-fontify-whole-heading-line t)     ; highlight the whole line for headings
   (setq org-hide-emphasis-markers t)
   (setq org-startup-truncated nil)
   (setq org-imenu-depth 6)
@@ -45,15 +46,21 @@
   (setq org-tags-column 0)
   (setq org-catch-invisible-edits 'show-and-error)
   (setq org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
-  (setq org-format-latex-options (plist-put org-format-latex-options :dpi 600))
+
+  ;; Better org LaTeX preview
+  (setq org-startup-with-latex-preview t
+        org-highlight-latex-and-related '(latex))
+  (plist-put org-format-latex-options :scale 1.7)
+  (plist-put org-format-latex-options :dpi 600)
+
+
   ;; (org-priority-faces
   ;;   '((?A . error)
   ;;      (?B . warning)
   ;;      (?C . success)))
   (setq org-link-elisp-confirm-function nil)
   (setq org-startup-with-inline-images t) ; always display images
-  (setq org-confirm-babel-evaluate nil) ; just evaluate
+  (setq org-confirm-babel-evaluate nil)   ; just evaluate
 
   (define-key global-map (kbd "C-c a") 'org-agenda)
 
@@ -389,6 +396,14 @@
 
 (use-package denote)
 
+(use-package ox
+  :straight (:type built-in)
+  :config
+  (setq org-export-with-smart-quotes t
+        org-html-validation-link nil
+        org-latex-prefer-user-labels t
+        org-export-with-latex t))
+
 (use-package ox-beamer
   :straight nil
   :after org)
@@ -412,6 +427,44 @@
 (use-package orgit)
 
 (use-package orgit-forge)
+
+(use-package org-visual-indent
+    :after org
+    :straight (:type git :host github :repo "legalnonsense/org-visual-outline" :files ("*.el"))
+    :hook (org-mode . org-visual-indent-mode)
+    :config
+    ;; Function to update indent colors for org-visual-indent
+    (defun +org-visual-outline-indent-color-update (&rest _)
+      "Update colors for org-visual-indent based on current theme."
+      (let (bufs)
+        ;; Collect buffers with org-visual-indent-mode enabled
+        (dolist (buf (buffer-list))
+          (with-current-buffer buf
+            (when org-visual-indent-mode
+              (push buf bufs)
+              (org-visual-indent-mode -1))))
+        ;; Calculate color values for indent levels based on org-level faces
+        (setq org-visual-indent-color-indent
+              (cl-loop for x from 1 to 8
+                       with color = nil
+                       do (setq color (or (face-foreground (intern (concat "org-level-" (number-to-string x))) nil t)
+                                          (face-foreground 'org-level-1)))
+                       collect `(,x ,(list :background color :foreground color :height .1))))
+        ;; Set face attributes for indent pipe faces
+        (set-face-attribute 'org-visual-indent-pipe-face nil
+                            :foreground (face-attribute 'default :foreground)
+                            :background (face-attribute 'default :foreground))
+        (set-face-attribute 'org-visual-indent-blank-pipe-face nil
+                            :foreground (face-attribute 'default :background)
+                            :background (face-attribute 'default :background))
+        ;; Re-enable org-visual-indent-mode in collected buffers
+        (dolist (buf bufs)
+          (with-current-buffer buf
+            (org-visual-indent-mode t)))))
+    ;; Add the color update function to theme change hooks and call it immediately
+    (add-hook 'enable-theme-functions #'+org-visual-outline-indent-color-update)
+    ;; Call the function immediately to set initial colors
+    (+org-visual-outline-indent-color-update))
 
 (provide 'init-org)
 ;;; init-org.el ends here
