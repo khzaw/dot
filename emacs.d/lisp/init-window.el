@@ -20,6 +20,7 @@
                         ("*ag search*" :select nil :size 0.25)
                         ("*Warnings*" :select nil :size 0.25)
                         ("*Error*" :select nil :size 0.25)
+                        ("*Org-Babel Error Output*" :select nil :size 0.25)
                         (flymake-diagnostics-buffer-mode :align below :inhibit-window-quit nil)
                         (flycheck-error-message-mode :align below :inhibit-window-quit nil)
                         (flycheck-error-list-mode :align below :inhibit-window-quit nil)
@@ -69,6 +70,7 @@
      "^\\*Compile-Log\\*"
      "[Oo]utput\\*$"
      "\\*Shell Command Output\\*"
+     "\\*Org-Babel Error Output\\*"
      "\\*Async Shell Command\\*"
      "\\*Completions\\*"
      "\\*Warnings\\*"
