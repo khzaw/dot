@@ -356,6 +356,11 @@
   (consult-customize
    consult-org-roam-forward-links
    :preview-key (kbd "M-."))
+
+  (consult-customize
+   consult-notes-org-roam-find-node
+   :preview-key '(:debounce 2.0 any))
+
   :bind
   ("C-c n e" . consult-org-roam-find-file)
   ("C-c n b" . consult-org-roam-backlinks)
