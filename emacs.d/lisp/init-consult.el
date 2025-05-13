@@ -324,8 +324,17 @@
   :hook (on-first-input . vertico-mode)
   :custom
   (vertico-scroll-margin 0) ;; different scroll margin
+  (vertico-count 20)        ;; maximum number of candidates to show
   (vertico-resize t)
-  (vertico-cycle t))
+  (vertico-cycle t)
+  :config
+  (when (< emacs-major-version 31)
+  (advice-add #'completing-read-multiple :filter-args
+              (lambda (args)
+                (cons (format "[CRM%s] %s"
+                              (string-replace "[ \t]*" "" crm-separator)
+                              (car args))
+                      (cdr args))))))
 
 (use-package vertico-mouse :after vertico :straight nil :config (vertico-mouse-mode))
 
@@ -375,6 +384,13 @@
   :bind (:map vertico-map
          ("M-q" . vertico-quick-insert)
          ("C-q" . vertico-quick-exit)))
+
+(use-package vertico-buffer
+  :straight nil
+  :after vertico)
+
+(use-package vertico-suspend :straight nil :after vertico
+  :config (keymap-global-set "M-S" #'vertico-suspend))
 
 (use-package vertico-posframe
   :init (vertico-posframe-cleanup)
