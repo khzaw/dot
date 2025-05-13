@@ -217,7 +217,6 @@
   :hook (on-first-input . which-key-mode))
 
 (use-package which-key-posframe
-  :disabled t
   :after (posframe which-key)
   :config
   (setq which-key-posframe-parameters `((left-fringe . 10)
@@ -286,6 +285,13 @@
 (use-package man
   :custom (Man-notify-method 'friendly))
 
+(use-package bookmark-plus
+  :straight (bookmark-plus :type git :host github :repo "emacsmirror/bookmark-plus")
+  :defer 3
+  :init
+  (require 'bookmark+)
+  ;; save bookmark on every change
+  (setq bookmark-save-flag 1))
 
 
 (provide 'init-basics)
