@@ -13,14 +13,15 @@
   (setq shackle-default-alignment 'below
         shackle-default-size 0.4
         shackle-inhibit-window-quit-on-same-windows t
-        shackle-rules '((help-mode :align below :size 0.3 :select t :inhibit-window-quit nil)
+        shackle-rules '((help-mode :align below :select t :inhibit-window-quit nil)
                         (helpful-mode :align below :inhibit-window-quit nil)
-                        (devdocs-mode :align below :size 0.3 :select t :inhibit-window-quit nil)
+                        (devdocs-mode :align below :select t :inhibit-window-quit nil)
                         (compilation-mode :select nil :size 0.25)
                         ("*ag search*" :select nil :size 0.25)
                         ("*Warnings*" :select nil :size 0.25)
                         ("*Error*" :select nil :size 0.25)
                         ("*Org-Babel Error Output*" :select nil :size 0.25)
+                        ("*Org Links*" :same t)
                         (flymake-diagnostics-buffer-mode :align below :inhibit-window-quit nil)
                         (flycheck-error-message-mode :align below :inhibit-window-quit nil)
                         (flycheck-error-list-mode :align below :inhibit-window-quit nil)
