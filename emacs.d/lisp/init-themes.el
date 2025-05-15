@@ -54,8 +54,7 @@
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
 
 (use-package almost-mono-themes
-    :straight (:type git :host github :repo "khzaw/almost-mono-themes")
-    :config (load-theme 'almost-mono-white t))
+    :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
 
 (use-package grandshell-theme)
 
@@ -111,6 +110,10 @@
 
 (use-package sexy-monochrome-theme
   :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
+
+(use-package doric-themes
+  :straight (:type git :host github :repo "protesilaos/doric-themes")
+  :config (load-theme 'doric-dark t))
 
 (provide 'init-themes)
 ;; init-themes.el ends here
