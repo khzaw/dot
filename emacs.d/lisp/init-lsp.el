@@ -5,7 +5,8 @@
   :commands (lsp-enable-which-key-integration
              lsp-format-buffer
              lsp-organize-imports)
-  :hook ((kotlin-mode . lsp-deferred)
+  :hook (
+         ;; (kotlin-mode . lsp-deferred)
          ;;(typescript-tsx-mode . lsp-deferred)
          ;; ((go-mode sh-mode) . lsp-deferred)
          ;; (prog-mode . (lambda ()

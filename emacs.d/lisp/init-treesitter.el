@@ -166,7 +166,7 @@
               ("'"   . fingertip-single-quote)
               ("SPC" . fingertip-space)
               ("RET" . fingertip-newline)
-              ("M-o" . fingertip-backward-delete)
+              ;; ("M-o" . fingertip-backward-delete)
               ("C-k" . fingertip-kill)))
 
 
