@@ -328,6 +328,7 @@
   (org-journal-date-prefix "#+title: "))
 
 (use-package org-download
+  :defer t
   :after org
   :bind
   (:map org-mode-map
@@ -426,8 +427,19 @@
   (require 'org-ref))
 
 (use-package org-appear
+  :defer t
   :straight (org-appear :type git :host github :repo "awth13/org-appear")
-  :hook (org-mode . org-appear-mode))
+  :custom
+  (org-appear-trigger 'manual)
+  :hook (org-mode . (lambda ()
+                      (add-hook 'evil-insert-state-entry-hook
+                                #'org-appear-manual-start
+                                nil
+                                t)
+                      (add-hook 'evil-insert-state-exit-hook
+                                #'org-appear-manual-stop
+                                nil
+                                t))))
 
 (use-package orgit)
 

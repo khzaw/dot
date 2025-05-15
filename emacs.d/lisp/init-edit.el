@@ -137,9 +137,9 @@
 (use-package undo-tree
   :diminish
   :hook (after-init . global-undo-tree-mode)
-  :init
-  (setq undo-tree-visualizer-timestamps t
-        undo-tree-auto-save-history nil))
+  :custom
+  (undo-tree-visualizer-timestamps t)
+  (undo-tree-auto-save-history nil))
 
 ;; Narrow/Widen
 (use-package fancy-narrow

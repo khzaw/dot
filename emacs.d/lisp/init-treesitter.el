@@ -103,9 +103,6 @@
               (lambda (&rest _)
                 (setq-local symbols-outline-fetch-fn (khz/symbols-outline-fetch-fn)))))
 
-(use-package posframe-plus
-  :straight (:host github :type git :repo "zbelial/posframe-plus"))
-
 (use-package treesitter-context
   :straight (:type git :host github :repo "zbelial/treesitter-context.el" :files ("*.el"))
   :after (posframe-plus)

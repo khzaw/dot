@@ -19,8 +19,7 @@
 
 (use-package prog-mode
   :straight (:type built-in)
-  :commands (prettify-symbols-mode global-prettify-symbols-mode)
-  :init (setq prettify-symbols-unprettify-at-point 'right-edge)
+  :custom (prettify-symbols-unprettify-at-point 'right-edge)
   :config
   (prettify-symbols-mode 1))
 
@@ -130,8 +129,9 @@
   :commands (sqlformat sqlformat-buffer sqlformat-region)
   :hook (sql-mode . sqlformat-on-save-mode)
   :if (executable-find "pgformatter")
-  :init (setq sqlformat-command 'pgformatter
-              sqlformat-args '("-s2" "-g" "-u1")))
+  :custom
+  (sqlformat-command 'pgformatter)
+  (sqlformat-args '("-s2" "-g" "-u1")))
 
 (use-package graphql-mode
   :straight (:type git :host github :repo "davazp/graphql-mode"))

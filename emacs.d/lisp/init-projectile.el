@@ -6,12 +6,12 @@
   :bind (:map projectile-mode-map
          ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
-  :init
-  (setq projectile-sort-order 'recentf
-        projectile-use-git-grep t
-        projectile-enable-caching t
-        projectile-verbose nil
-        projectile-completion-system 'default)
+  :custom
+  (projectile-sort-order 'recentf)
+  (projectile-use-git-grep t)
+  (projectile-enable-caching t)
+  (projectile-verbose nil)
+  (projectile-completion-system 'default)
   :config
   (add-to-list 'projectile-globally-ignored-directories "node_modules"))
 
