@@ -1,15 +1,16 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package consult
+  :straight (:type git :host github :repo "minad/consult")
   :after projectile
-  :bind (("C-c h" . consult-history)
-         ("C-c r". consult-recent-file)
-         ("C-c M-x". consult-mode-command)
-         ("C-c m" . consult-man)
+  :bind (("C-c h"             . consult-history)
+         ("C-c r"             . consult-recent-file)
+         ("C-c M-x"           . consult-mode-command)
+         ("C-c m"             . consult-man)
          ([remap Info-search] . consult-info)
-         ("C-c k" . consult-kmacro)
-         ("C-c l t" . consult-theme)
-         ("C-c n a" . consult-org-agenda)
+         ("C-c k"             . consult-kmacro)
+         ("C-c l t"           . consult-theme)
+         ("C-c n a"           . consult-org-agenda)
          ;; C-x bindings (ctl-x-map)
          ;; b Buffers
          ;; SPC Hidden buffers
@@ -26,8 +27,8 @@
          ("C-x r b" . consult-bookmark)
          ("C-c p b" . consult-project-buffer)
          ;; Custom M-# bindings for fast register access
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)
+         ("M-#"   . consult-register-load)
+         ("M-'"   . consult-register-store)
          ("C-M-#" . consult-register)
          ;; Other custom bindings
          ("M-y" . consult-yank-pop)
@@ -47,10 +48,10 @@
          ("M-s f" . consult-find)
          ;; ("C-c f" . consult-find)
          ("M-s D" . consult-locate)
-         ("M-s g" . consult-grep)
-         ("M-s G" . consult-git-grep)
+         ("M-s G" . consult-grep)
+         ("M-s g" . consult-git-grep)
          ("M-s r" . consult-ripgrep)
-         ("C-s" . consult-line)
+         ("C-s"   . consult-line)
          ("M-s L" . consult-line-multi)
          ("M-s m" . consult-multi-occur)
          ("M-s k" . consult-keep-lines)
@@ -58,13 +59,13 @@
          ;; Isearch integration
          ("M-s e" . consult-isearch-history)
          :map isearch-mode-map
-         ("M-e" . consult-isearch-history)   ;; orig. isearch-edit-string
+         ("M-e"   . consult-isearch-history) ;; orig. isearch-edit-string
          ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
-         ("M-s l" . consult-line)       ;; needed by consult-line to detect isearch
-         ("M-s L" . consult-line-multi) ;; needed by consult-line to detect isearch
+         ("M-s l" . consult-line)            ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi)      ;; needed by consult-line to detect isearch
          ;; Minibuffer history
          :map minibuffer-local-map
-         ("M-s" . consult-history) ;; orig. next-matching-history-element
+         ("M-s" . consult-history)  ;; orig. next-matching-history-element
          ("M-r" . consult-history)) ;; orig. previous-matching-history-element
 
   ;; Enable automatic preview at point in the *Completion* buffer. This is
@@ -94,8 +95,6 @@
 
   :config
 
-  (use-package consult-ag)
-
   ;; exclude these directories from `consult-find'
   (setq consult-find-args "find . -not ( -wholename */.* -prune -o -name -node_modules -prune )")
 
@@ -121,20 +120,14 @@
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
-   consult-buffer consult-recent-file consult-theme :preview-key '(:debounce 0.5 any)
+   consult-recent-file consult-theme :preview-key '(:debounce 0.5 any)
    consult-goto-line :preview-key '(:debounce 0.5 any)
-   consult-ripgrep consult-git-grep consult-grep
-   consult-ag consult-bookmark consult-recent-file consult-xref
+   consult-ripgrep consult-grep consult-git-grep xref-find-references :preview-key "M-."
+   consult-buffer consult--source-buffer
+   consult-bookmark consult-recent-file consult-xref
    consult--source-bookmark consult--source-file-register
    consult--source-recent-file consult--source-project-recent-file
-   ;; preview-key (kdb "M-.")
    :preview-key '(:debounce 0.5 any))
-
-  (consult-customize
-   consult--source-buffer
-    xref-find-references
-   :preview-key '(:debounce 1.5 any))
-
 
   (consult-customize
    consult-line
@@ -145,7 +138,6 @@
   (consult-customize
    consult-line-thing-at-point
    :initial (thing-at-point 'symbol))
-
 
   ;; Optinally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.

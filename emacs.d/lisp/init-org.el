@@ -354,13 +354,11 @@
   (consult-org-roam-buffer-narrow-key ?r)
   ;; (consult-org-roam-buffer-after-buffers t)
   :config
-  (consult-customize
-   consult-org-roam-forward-links
-   :preview-key (kbd "M-."))
 
   (consult-customize
+   consult-org-roam-forward-links
    consult-notes-org-roam-find-node
-   :preview-key '(:debounce 2.0 any))
+   :preview-key "M-.")
 
   :bind
   ("C-c n e" . consult-org-roam-find-file)
@@ -381,7 +379,7 @@
    consult-notes-search-in-all-notes
    consult-notes-org-roam-find-node
    consult-notes-org-roam-find-node-relation
-   :preview-key '(:debounce 1.5 any))
+   :preview-key "M-.")
 
   (setq consult-notes-file-dir-sources
         '(("fp"  ?w  "~/Dropbox/notes/fp")
