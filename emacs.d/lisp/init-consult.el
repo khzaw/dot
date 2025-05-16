@@ -102,9 +102,9 @@
   (setq consult-narrow-key "<"
         consult-line-numbers-widen t
         consult-async-min-input 2
-        consult-async-refresh-delay 0.15
-        consult-async-input-throttle 0.2
-        consult-async-input-debounce 0.1)
+        consult-async-refresh-delay 0
+        consult-async-input-throttle 0
+        consult-async-input-debounce 0)
 
   ;; Load the latest search again in `consult-line' when pressing C-s C-s
   (defvar my-consult-line-map
