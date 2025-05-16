@@ -132,6 +132,7 @@
 
   (consult-customize
    consult--source-buffer
+    xref-find-references
    :preview-key '(:debounce 1.5 any))
 
 
