@@ -15,3 +15,8 @@
 ** https://amitp.blogspot.com/
 ** https://babbagefiles.xyz/
 ** https://stephango.com/feed.xml
+** https://karl-voit.at/feeds/lazyblorg-all.atom_1.0.links-only.xml
+** https://dave.cheney.net/feed/atom
+** https://www.howardism.org/index.xml
+** http://tromey.com/elpa/elpa.rss
+** https://batsov.com/atom.xml
