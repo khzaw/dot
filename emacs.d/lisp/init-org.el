@@ -19,7 +19,8 @@
                  (variable-pitch-mode)
                  (setq visual-fill-column-center-text nil)
                  (visual-fill-column-mode)))
-   (org-mode . turn-on-org-cdlatex))
+   (org-mode . turn-on-org-cdlatex)
+   (org-mode . word-wrap-whitespace-mode))
   :config
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
@@ -31,7 +32,7 @@
   (setq org-src-fontify-natively t)
   (setq org-src-preserve-indentation t)        ; use native major-mode indentation
   (setq org-src-tab-acts-natively t)
-  (setq org-src-window-setup 'other-window)
+  (setq org-src-window-setup 'split-window-below)
   (setq org-fontify-quote-and-verse-blocks t) ; highlight quote and verse blocks
   (setq org-fontify-whole-heading-line t)     ; highlight the whole line for headings
   (setq org-hide-emphasis-markers t)
@@ -178,7 +179,6 @@
       (plantuml . t))
     "Alist of org ob languages.")
 
-
   ;; ob-sh renamed to ob-shell since 26.1.
   (use-package ob-shell
     :straight nil
@@ -278,12 +278,9 @@
              ("C-c n l" . org-roam-buffer-toggle))))
     :config
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
-    (setq org-roam-dailies-directory "daily")
-    (toggle-word-wrap))
+    (setq org-roam-dailies-directory "daily"))
 
-  (use-package org-roam-protocol
-    :straight nil
-    :after org-roam)
+  (use-package org-roam-protocol :straight nil :after org-roam)
 
   (use-package org-roam-export :straight nil :after org-roam)
 
@@ -347,6 +344,7 @@
 
 (use-package consult-org-roam
   :diminish
+  :after org-roam
   :init
   (consult-org-roam-mode 1)
   :custom
@@ -368,6 +366,7 @@
 
 (use-package consult-notes
   :straight (:type git :host github :repo "mclear-tools/consult-notes")
+  :after org-roam
   :commands (consult-notes
              consult-notes-search-in-all-notes
              ;; if using org-roam
@@ -423,21 +422,6 @@
   :after org-roam
   :config
   (require 'org-ref))
-
-(use-package org-appear
-  :defer t
-  :straight (org-appear :type git :host github :repo "awth13/org-appear")
-  :custom
-  (org-appear-trigger 'manual)
-  :hook (org-mode . (lambda ()
-                      (add-hook 'evil-insert-state-entry-hook
-                                #'org-appear-manual-start
-                                nil
-                                t)
-                      (add-hook 'evil-insert-state-exit-hook
-                                #'org-appear-manual-stop
-                                nil
-                                t))))
 
 (use-package orgit)
 
