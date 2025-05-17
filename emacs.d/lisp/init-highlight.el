@@ -1,5 +1,20 @@
 ;; -*- lexical-binding: t; -*-
 
+(use-package symbol-overlay
+  :diminish
+  :hook (prog-mode . symbol-overlay-mode)
+  :bind-keymap ("M-s M-s" . symbol-overlay-map)
+  :bind (:map symbol-overlay-mode-map
+         ("M-n" . symbol-overlay-jump-next)
+         ("M-p" . symbol-overlay-jump-prev))
+  :commands (symbol-overlay-mode symbol-overlay-put))
+
+(use-package symbol-overlay-mc
+  :straight (:type git :host github :repo "xenodium/symbol-overlay-mc")
+  :config
+  (with-eval-after-load 'casual-symbol-overlay
+    (symbol-overlay-mc-insert-into-casual-tmenu)))
+
 ;; Highlight the current line
 (use-package hl-line
   :disabled t
@@ -19,7 +34,9 @@
 (use-package colorful-mode
   :straight (:type git :host github :repo "DevelopmentCool2449/colorful-mode")
   :config
-  (add-to-list 'global-colorful-modes 'helpful-mode))
+  (add-to-list 'global-colorful-modes 'help-mode)
+  (add-to-list 'global-colorful-modes 'helpful-mode)
+  (global-colorful-mode))
 
 (use-package prism
   :diminish
