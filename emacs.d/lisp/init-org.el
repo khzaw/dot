@@ -50,13 +50,14 @@
 
   ;; Better org LaTeX preview
   (setq org-startup-with-latex-preview t
-        org-highlight-latex-and-related '(latex))
+        org-highlight-latex-and-related '(native latex))
 
   (when (executable-find "dvisvgm")
     ;; Use dvisvgm for SVG LaTeX previews in Org-mode
     (setq org-latex-create-formula-image-program 'dvisvgm)
     (setq org-preview-latex-default-process 'dvisvgm))
 
+  (plist-put org-format-latex-options :background "Transparent")
   (plist-put org-format-latex-options :scale 1.7)
   (plist-put org-format-latex-options :dpi 600)
 
@@ -345,6 +346,10 @@
 (use-package org-modern
   :config
   (with-eval-after-load 'org (global-org-modern-mode)))
+
+(use-package org-modern-indent
+  :straight (:type git :host github :repo "jdtsmith/org-modern-indent")
+  :config (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 (use-package org-download)
 
