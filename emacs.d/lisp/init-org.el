@@ -51,6 +51,12 @@
   ;; Better org LaTeX preview
   (setq org-startup-with-latex-preview t
         org-highlight-latex-and-related '(latex))
+
+  (when (executable-find "dvisvgm")
+    ;; Use dvisvgm for SVG LaTeX previews in Org-mode
+    (setq org-latex-create-formula-image-program 'dvisvgm)
+    (setq org-preview-latex-default-process 'dvisvgm))
+
   (plist-put org-format-latex-options :scale 1.7)
   (plist-put org-format-latex-options :dpi 600)
 
