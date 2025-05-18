@@ -65,6 +65,7 @@
                          :repo "python-mode-devs/python-mode")
   :config
   (setq py-indent-offset 4)
+  (setq python-indent-offset 4)
   ;; Remove guess indent python message
   ;; (setq python-indent-guess-indent-offset-verbose nil)
   (when (executable-find "ipython")
@@ -74,6 +75,7 @@
    ;; Only allow the python-mode's capf to run in python buffers:
   (defun khz/python-capf-only-in-python-modes (fn &rest args)
     (when (and (derived-mode-p 'python-mode 'inferior-python-mode)
+               (not (bound-and-true-p leetcode-solution-mode))
                (not (bound-and-true-p org-src-mode)))
       (apply fn args)))
   (advice-add 'python-shell-completion-at-point :around #'khz/python-capf-only-in-python-modes)
