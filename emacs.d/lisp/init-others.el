@@ -46,7 +46,7 @@
   :config (setq leetcode-prefer-language "python3"
                 leetcode-prefer-sql "mysql"
                 leetcode-save-solutions t
-                leetcode-directory "~/Dropbox/code/leetcode"))
+                leetcode-directory "~/Code/algorithms/leetcode"))
 
 (define-advice zone (:around (orig-fn &rest _) "zone-all-buffer")
   (save-window-excursion
