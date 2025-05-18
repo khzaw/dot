@@ -40,7 +40,9 @@
        `(window-divider ((t :background ,bg :foreground ,bg)))
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
-  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers))
+  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
+
+  (load-theme 'modus-vivendi t))
 
 (use-package ef-themes)
 
@@ -112,8 +114,7 @@
   :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
 
 (use-package doric-themes
-  :straight (:type git :host github :repo "protesilaos/doric-themes")
-  :config (load-theme 'doric-dark t))
+  :straight (:type git :host github :repo "protesilaos/doric-themes"))
 
 (provide 'init-themes)
 ;; init-themes.el ends here
