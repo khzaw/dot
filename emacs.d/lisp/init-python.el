@@ -113,7 +113,7 @@
   :config
   (add-hook 'python-mode-hook
             (lambda ()
-              (setq-local python-shell-interpreter (pet-executable-find "python")
+              (setq-local python-shell-interpreter (pet-executable-find "ipython")
                           python-shell-virtualenv-root (pet-virtualenv-root))
               (pet-eglot-setup)
               (eglot-ensure)
