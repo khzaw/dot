@@ -148,16 +148,16 @@ Lisp function does not specify a special indentation."
 
 (use-package eros :hook (emacs-lisp-mode . eros-mode))
 
-(use-package racket-mode
-  :bind (:map racket-repl-mode-map
-         ("C-RET" . newline-and-indent)))
-
 (use-package mode-minder
   :straight (:type git :host github :repo "jdtsmith/mode-minder"))
 
-(use-package geiser
-  :straight (:type git :host github :repo "emacsmirror/geiser" :files ("elisp/*.el"))
-  :config (use-package geiser-racket :straight nil))
+(use-package geiser)
+
+(use-package geiser-racket :after geiser)
+
+(use-package racket-mode
+  :bind (:map racket-repl-mode-map
+         ("C-RET" . newline-and-indent)))
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here
