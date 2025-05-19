@@ -14,8 +14,12 @@
   :defer t
   :commands (magit-status magit-blame magit-get-current-branch)
   :bind ("C-x g" . magit-status)
+  :custom
+  (magit-log-show-refname-after-summary t)
+  (magit-list-refs-sortby "-creatordate")
+  (magit-diff-refine-hunk t)        ;; show granular diffs in selected hunk
+  (magit-refresh-status-buffer nil) ;; don't refresh status buffer automatically
   :config
-
   ;; speed up Git process, won't have prompt for passphrases
   (setq magit-process-connection-type nil)
 
@@ -25,14 +29,11 @@
   ;; Suppress the message
   (setq magit-auto-revert-mode t)
 
-  (setq magit-diff-refine-hunk t) ;; show granular diffs in selected hunk
-                                        ;
   (setq magit-no-message '("Turning on magit-auto-revert-mode..."))
   ;; (setq magit-bury-buffer-function #'quit-window) ;; let shackle handle this
-  (setq magit-bury-buffer-function #'magit-mode-quit-window)
+  ;; (setq magit-bury-buffer-function #'magit-mode-quit-window)
+  (setq magit-bury-buffer-function #'magit-restore-window-configuration)
 
-  ;; don't refresh status buffer automatically
-  (setq magit-refresh-status-buffer nil)
   ;; Don't display parent/related refs in commit buffers
   (setq magit-revision-insert-related-refs nil)
 
@@ -272,6 +273,8 @@
 
 (use-package git-link
   :straight (:type git :host github :repo "sshaw/git-link")
+  :custom
+  (git-link-use-commit t)
   :config
   (defun git-link-diffrent-branch (branch)
     "Invoke `git-link', but with the `branch' name set to a different
