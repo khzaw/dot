@@ -1,5 +1,15 @@
 ;; -*- lexical-binding: t; -*-
 
+(use-package eshell
+  :defer t
+  :config
+  (defun khz/reset-scrolling-vars-for-term ()
+    "Locally reset scrolling behavior in term-like buffers"
+    (setq-local scroll-conservatively 0)
+    (setq-local scroll-margin 0))
+  (add-hook 'term-mode-hook #'khz/reset-scrolling-vars-for-term)
+  (add-hook 'eshell-mode-hook #'khz/reset-scrolling-vars-for-term))
+
 (use-package vterm
   :defer t
   :bind (:map vterm-mode-map

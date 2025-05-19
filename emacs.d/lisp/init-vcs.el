@@ -1,5 +1,15 @@
 ;; -*- lexical-binding: t; -*-
 
+(use-package vc
+  :straight (:type built-in)
+  :defer t
+  :config
+  (setopt
+   vc-git-diff-switches '("--patch-with-stat" "--histogram")
+   vc-git-log-switches '("--stat")
+   vc-make-backup-files nil
+   vc-git-print-log-follow t))
+
 (use-package magit
   :defer t
   :commands (magit-status magit-blame magit-get-current-branch)
