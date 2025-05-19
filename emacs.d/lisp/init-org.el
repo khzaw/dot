@@ -166,7 +166,6 @@
   (add-to-list 'org-structure-template-alist
                '("m" . "src mermaid :file %^{filename}.png :exports results"))
 
-
   (use-package ox-gfm :after org)
   (add-to-list 'org-export-backends 'md)
 
@@ -507,6 +506,14 @@
   (use-package org-remark-info :after info :config (org-remark-info-mode +1))
   ;; (use-package org-remark-eww  :after eww  :config (org-remark-eww-mode +1))
   (use-package org-remark-nov  :after nov  :config (org-remark-nov-mode +1)))
+
+(use-package org-drill
+  :straight (:type git :host gitlab :repo "phillord/org-drill"))
+
+;; (use-package org-fc
+;;   :straight (:type git :repo "https://git.sr.ht/~l3kn/org-fc" :files (:defaults "awk" "demo.org"))
+;;   :custom (org-fc-directories '("~/org/"))
+;;   :config (require 'org-fc-hydra))
 
 
 (use-package codetabs
