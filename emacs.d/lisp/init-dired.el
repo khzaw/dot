@@ -91,6 +91,12 @@
    ("C-<right>" . image-dired-display-next)
    ("C-<left>" . image-dired-display-previous)))
 
+(use-package wdired
+  :commands (wdired-change-to-wdired-mode)
+  :config
+  (setq wdired-allow-to-change-permissions t)
+  (setq wdired-create-parent-directories t))
+
 
 (provide 'init-dired)
 ;;; init-dired.el ends here
