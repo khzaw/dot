@@ -8,7 +8,9 @@
   :config (global-visual-fill-column-mode))
 
 (use-package org
-  :bind (("C-c C-c" . org-edit-src-exit))
+  :bind (("C-c C-c" . org-edit-src-exit)
+         :map org-mode-map
+         ("M-g i" . consult-org-heading))
   :init
   (setq org-directory (file-truename "~/Dropbox/notes"))
   :custom-face
