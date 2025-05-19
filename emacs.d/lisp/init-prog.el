@@ -162,5 +162,11 @@
 (use-package envrc
   :hook (after-init . envrc-global-mode))
 
+(use-package jq-mode
+  :straight (:type git :host github :repo "ljos/jq-mode")
+  :mode "\\.jq\\'"
+  :bind (:map json-ts-mode-map
+              ("C-c C-j" . jq-interactively)))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
