@@ -23,6 +23,7 @@
   :config
   (setq modus-themes-bold-constructs t
         modus-themes-mixed-fonts t
+        modus-themes-prompts '(bold intense)
         modus-themes-completions '((t . (extrabold)))
         ;; Keep the border of mode line but make it the same color as the background of the mode line
         modus-themes-common-palette-overrides
