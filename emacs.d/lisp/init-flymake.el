@@ -13,7 +13,7 @@
   (flymake-indicator-type 'margins)
   (flymake-margin-indicator-position 'right-margin)
   (flymake-margin-indicators-string
-     '((error "!" compilation-error)
+     `((error "!" compilation-error)
        (warning "»" compilation-warning)
        (note "»" compilation-info)))
   :config
