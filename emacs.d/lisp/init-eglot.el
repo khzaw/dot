@@ -19,6 +19,9 @@
   :custom
   (eglot-autoshutdown t)
   (eglot-report-progress nil) ; Prevent minibuffer spams
+  (eglot-events-buffer-size 0)
+  (eglot-events-buffer-config '(:size 0 :format full))
+  (jsonrpc-event-hook nil)
   :bind (:map eglot-mode-map
               ("C-c e e"   . #'eglot)
               ("C-c e f"   . #'eglot-format)
@@ -32,6 +35,9 @@
               ("C-c e h c" . #'eglot-hierarchy-call-hierarchy)
               ("C-c e h t" . #'eglot-hierarchy-type-hierarchy)
               ("C-c e C-i" . #'eglot-inlay-hints-mode))
+  :init
+  ;; Performance optimizations
+  (fset #'jsonrpc--log-event #'ignore)
   :config
 
   (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
@@ -97,11 +103,7 @@ and CONFIG is the configuration plist for that server.")
       "K" #'khz/toggle-eldoc-doc-buffer))
 
 
-  ;; Performance optimizations
-  (fset #'jsonrpc--log-event #'ignore)
-  (setq jsonrpc-event-hook nil)
   (setq eglot-extend-to-xref t)
-  (setq eglot-events-buffer-size 0)
 
   (dolist (server-programs
            '(((js-mode jsx-mode rjsx-mode typescript-mode typescript-ts-mode tsx-ts-mode)
@@ -199,7 +201,7 @@ and CONFIG is the configuration plist for that server.")
 
 (use-package eldoc-box
   :bind (:map eglot-mode-map
-              ("C-c e m" . eldoc-box-help-at-point))
+              ("C-c e h m" . eldoc-box-help-at-point))
   :custom
   (eldoc-box-lighter nil)
   (eldoc-box-only-multi-line t)
@@ -209,7 +211,26 @@ and CONFIG is the configuration plist for that server.")
   (eldoc-box-body ((t (:inherit tooltip))))
   :config
   (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
-        (alist-get 'right-fringe eldoc-box-frame-parameters) 8))
+        (alist-get 'right-fringe eldoc-box-frame-parameters) 8)
+
+  (defun khz/eldoc-box-scroll-up ()
+    "Scroll up in `eldoc-box--frame'"
+    (interactive)
+    (with-current-buffer eldoc-box-buffer
+      (with-selected-frame eldoc-box--frame
+        (scroll-down 3))))
+
+  (defun khz/eldoc-box-scroll-down ()
+    "Scroll down in `eldoc-box--frame'"
+    (interactive)
+    (with-current-buffer eldoc-box-buffer
+      (with-selected-frame eldoc-box--frame
+        (scroll-up 3))))
+
+  :general
+  (:keymaps 'eglot-mode-map
+            ("C-n" 'khz/eldoc-box-scroll-down
+             "C-p" 'khz/eldoc-box-scroll-up)))
 
 (use-package flycheck-eglot
   :straight (:type git :repo "flycheck/flycheck-eglot" :host github)
