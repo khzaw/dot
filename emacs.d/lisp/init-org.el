@@ -478,5 +478,40 @@
     ;; Call the function immediately to set initial colors
     (+org-visual-outline-indent-color-update))
 
+(use-package org-expose-emphasis-markers
+  :straight (:type git :host github :repo "lorniu/org-expose-emphasis-markers")
+  :hook (org-mode . org-expose-emphasis-markers-mode))
+
+(use-package org-remark
+  :bind (;; :bind keyword also implicitly defers org-remark itself.
+         ;; Keybindings before :map is set for global-map. Adjust the keybinds
+         ;; as you see fit.
+         ("C-c l m" . org-remark-mark)
+         ("C-c l l" . org-remark-mark-line)
+         :map org-remark-mode-map
+         ("C-c l o" . org-remark-open)
+         ("C-c l ]" . org-remark-view-next)
+         ("C-c l [" . org-remark-view-prev)
+         ("C-c l r" . org-remark-remove)
+         ("C-c l d" . org-remark-delete)))
+
+(use-package org-remark-global-tracking
+  :straight nil
+  ;; It is recommended that `org-remark-global-tracking-mode' be
+  ;; enabled when Emacs initializes. You can set it in
+  ;; `after-init-hook'.
+  :hook after-init
+  :config
+  ;; Selectively keep or comment out the following if you want to use
+  ;; extensions for Info-mode, EWW, and NOV.el (EPUB) respectively.
+  (use-package org-remark-info :after info :config (org-remark-info-mode +1))
+  ;; (use-package org-remark-eww  :after eww  :config (org-remark-eww-mode +1))
+  (use-package org-remark-nov  :after nov  :config (org-remark-nov-mode +1)))
+
+
+(use-package codetabs
+  :after org
+  :straight (:type git :host github :repo "Clement-Jean/codetabs.el"))
+
 (provide 'init-org)
 ;;; init-org.el ends here
