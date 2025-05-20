@@ -200,6 +200,7 @@ and CONFIG is the configuration plist for that server.")
   :config (consult-eglot-embark-mode))
 
 (use-package eldoc-box
+  :after general
   :bind (:map eglot-mode-map
               ("C-c e h m" . eldoc-box-help-at-point))
   :custom
@@ -229,8 +230,8 @@ and CONFIG is the configuration plist for that server.")
 
   :general
   (:keymaps 'eglot-mode-map
-            ("C-n" 'khz/eldoc-box-scroll-down
-             "C-p" 'khz/eldoc-box-scroll-up)))
+            "C-n" #'khz/eldoc-box-scroll-down
+            "C-p" #'khz/eldoc-box-scroll-up))
 
 (use-package flycheck-eglot
   :straight (:type git :repo "flycheck/flycheck-eglot" :host github)

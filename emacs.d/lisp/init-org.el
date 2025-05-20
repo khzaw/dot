@@ -482,6 +482,12 @@
   :hook (org-mode . org-expose-emphasis-markers-mode))
 
 (use-package org-remark
+  :straight (org-remark :type git :host github :repo "nobiot/org-remark")
+  :commands org-remark-global-tracking-mode
+  :config (org-remark-global-tracking-mode)
+  (use-package org-remark-info :straight nil :after info :config (org-remark-info-mode +1))
+  (use-package org-remark-nov :straight nil :after nov :config (org-remark-nov-mode +1))
+  ;; (use-package org-remark-eww :straight nil :after eww :config (org-remark-eww-mode +1))
   :bind (;; :bind keyword also implicitly defers org-remark itself.
          ;; Keybindings before :map is set for global-map. Adjust the keybinds
          ;; as you see fit.
@@ -494,19 +500,6 @@
          ("C-c l r" . org-remark-remove)
          ("C-c l d" . org-remark-delete)))
 
-(use-package org-remark-global-tracking
-  :straight nil
-  ;; It is recommended that `org-remark-global-tracking-mode' be
-  ;; enabled when Emacs initializes. You can set it in
-  ;; `after-init-hook'.
-  :hook after-init
-  :config
-  ;; Selectively keep or comment out the following if you want to use
-  ;; extensions for Info-mode, EWW, and NOV.el (EPUB) respectively.
-  (use-package org-remark-info :after info :config (org-remark-info-mode +1))
-  ;; (use-package org-remark-eww  :after eww  :config (org-remark-eww-mode +1))
-  (use-package org-remark-nov  :after nov  :config (org-remark-nov-mode +1)))
-
 (use-package org-drill
   :straight (:type git :host gitlab :repo "phillord/org-drill"))
 
@@ -515,10 +508,10 @@
 ;;   :custom (org-fc-directories '("~/org/"))
 ;;   :config (require 'org-fc-hydra))
 
-
 (use-package codetabs
+  :disabled t
   :after org
-  :straight (:type git :host github :repo "Clement-Jean/codetabs.el"))
+  :straight (:type git :host github :repo "Clement-Jean/codetabs.el" :files ("codetabs.el" "codetabs.js")))
 
 (provide 'init-org)
 ;;; init-org.el ends here
