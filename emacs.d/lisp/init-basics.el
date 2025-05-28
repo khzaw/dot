@@ -52,6 +52,10 @@
 ;; No popup windows
 (setq pop-up-windows nil)
 
+;; reuse existing frames whenever possiblekj:w
+
+(setq ns-pop-up-frames nil)
+
 ;; User name
 (setq user-full-name "Kaung Htet")
 
