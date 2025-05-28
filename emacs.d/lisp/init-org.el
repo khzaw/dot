@@ -10,6 +10,7 @@
 (use-package org
   :bind (("C-c C-c" . org-edit-src-exit)
          :map org-mode-map
+         ("C-c C-v" . verb-command-map)
          ("M-g i" . consult-org-heading))
   :init
   (setq org-directory (file-truename "~/Dropbox/notes"))
@@ -24,6 +25,7 @@
    (org-mode . turn-on-org-cdlatex)
    (org-mode . word-wrap-whitespace-mode))
   :config
+
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
   (setq org-tags-alist '(("inbox" . ?i)))
@@ -499,6 +501,19 @@
          ("C-c l [" . org-remark-view-prev)
          ("C-c l r" . org-remark-remove)
          ("C-c l d" . org-remark-delete)))
+
+(use-package org-remark-global-tracking
+  :straight nil
+  ;; It is recommended that `org-remark-global-tracking-mode' be
+  ;; enabled when Emacs initializes. You can set it in
+  ;; `after-init-hook'.
+  :hook (after-init . org-remark-global-tracking-mode)
+  :config
+  ;; Selectively keep or comment out the following if you want to use
+  ;; extensions for Info-mode, EWW, and NOV.el (EPUB) respectively.
+  (use-package org-remark-info :after info :config (org-remark-info-mode +1))
+  ;; (use-package org-remark-eww  :after eww  :config (org-remark-eww-mode +1))
+  (use-package org-remark-nov  :after nov  :config (org-remark-nov-mode +1)))
 
 (use-package org-drill
   :straight (:type git :host gitlab :repo "phillord/org-drill"))
