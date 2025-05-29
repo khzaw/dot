@@ -168,5 +168,8 @@
   :bind (:map json-ts-mode-map
               ("C-c C-j" . jq-interactively)))
 
+(use-package edit-indirect
+  :defer t)
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
