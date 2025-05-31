@@ -447,5 +447,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
              :type git
              :host github))
 
+(use-package vc-jj
+  :if (executable-find "jj")
+  :straight (vc-jj :repo "emacs-jj-vc/vc-jj.el" :host codeberg :type git))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

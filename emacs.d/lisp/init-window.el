@@ -9,7 +9,7 @@
          ("M-O" . ace-swap-window)))
 
 (use-package shackle
-  :init
+  :config
   (setq shackle-default-alignment 'below
         shackle-default-size 0.4
         shackle-inhibit-window-quit-on-same-windows t
@@ -156,7 +156,29 @@
                       :repo "positron-solutions/sinister")
   :config
   (sinister-stillness-mode 1)
+
   (sinister-misc-settings))
+
+(use-package winnie
+  :straight (:type git :host github :repo "QiangF/emacs-winnie")
+  :bind (("C-w u" . winnie-previous)
+         ("C-w U" . winne-next))
+  :hook after-init)
+
+(use-package beacon
+  :straight nil
+  :after winnie
+  :hook after-init
+  :config (setq beacon-color 0.5
+                beacon-blink-delay 0.4)
+  (advice-add 'pop-global-mark :around
+              (defun my/pop-global-mark-display-buffer (pgm)
+                (interactive)
+                (cl-left (((symbol-function 'switch-to-buffer)
+                           #'pop-to-buffer))
+                         (funcall pgm)))))
+
+
 
 (provide 'init-window)
 ;; init-window.el ends here

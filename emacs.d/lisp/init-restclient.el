@@ -31,4 +31,7 @@
   :if (executable-find "redoc-cli")
   :straight (:type git :host github :repo "merrickluo/openapi-preview"))
 
+(use-package impostman
+  :straight (:type git :host github :repo "flashcode/impostman"))
+
 (provide 'init-restclient)
