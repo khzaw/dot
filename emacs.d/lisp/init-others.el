@@ -172,4 +172,16 @@
 (use-package fretboard
   :straight (:host github :repo "skyefreeman/fretboard.el"))
 
+(use-package el-easydraw
+  :straight (:host github :repo "misohena/el-easydraw")
+  :config
+  (with-eval-after-load 'org
+    (require 'edraw-org)
+    (edraw-org-setup-default))
+
+  (with-eval-after-load "ox"
+    (require 'edraw-org)
+    (edraw-org-setup-default)))
+
+
 (provide 'init-others)
