@@ -2,7 +2,7 @@
 
 (use-package visual-fill-column
   :custom
-  (visual-fill-column-width 120)
+  (visual-fill-column-width 150)
   (visual-fill-column-center-text t)
   (visual-fill-column-split-window-sensibly t)
   :config (global-visual-fill-column-mode))
@@ -92,12 +92,10 @@
            "* %?\n")))
   (setq org-agenda-window-setup 'current-window) ; Open agenda in current window
   (setq org-agenda-restore-windows-after-quit t) ; Restore window configuration after quitting agenda
-
-  (setq org-agenda-prefix-format
-        '((agenda . " %i %-12:c%?-12t% s")
-          (todo   . " %i %-12:c")
-          (tags   . " %i %-12:c")
-          (search . " %i %-12:c")))
+  (setq org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s")
+                                   (todo   . " %i %-12:c")
+                                   (tags   . " %i %-12:c")
+                                   (search . " %i %-12:c")))
 
   (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
   (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
@@ -126,9 +124,8 @@
   (global-set-key (kbd "<f4>") (lambda () (interactive) (org-agenda nil "g")))
 
 
-  ;; With auto save disabled
   (defun org-archive-done-tasks ()
-    "Archive all tasks marked DONE in the file."
+    "Archive all tasks marked DONE in the file. With auto save disabled."
     (interactive)
     ;; Disable auto save to avoid repeated file write.
     (setq org-archive-subtree-save-file-p nil)
@@ -143,12 +140,9 @@
       (setq org-archive-subtree-save-file-p t))
     (org-save-all-org-buffers))
 
-
-  ;; (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   (require 'org-indent)
 
   (setq sentence-end-double-space nil)
-
 
   (use-package org-contrib)
 
@@ -206,12 +200,12 @@
     :init (cl-pushnew '(rust . t) load-language-alist))
 
   (use-package ob-racket
+    :straight (ob-racket :type git :host github :repo "hasu/emacs-ob-racket" :files ("*.el" "*.rkt"))
     :after org
+    :init (cl-pushnew '(racket . t) load-language-alist)
     :config
     (add-hook 'ob-racket-pre-runtime-library-load-hook
-              #'ob-racket-raco-make-runtime-library)
-    :straight (ob-racket :type git :host github :repo "hasu/emacs-ob-racket" :files ("*.el" "*.rkt"))
-    :init (cl-pushnew '(racket . t) load-language-alist))
+              #'ob-racket-raco-make-runtime-library))
 
   ;; npm install -g @mermaid-js/mermaid-cli
   (use-package ob-mermaid
@@ -233,10 +227,10 @@
 
   (use-package org-preview-html
     :diminish
+    :config (when (featurep 'xwidget-internal)
+              (setq org-preview-html-viewer 'xwidget))
     :bind (:map org-mode-map
-           ("C-c C-h" . org-preview-html-mode))
-    :init (when (featurep 'xwidget-internal)
-            (setq org-preview-html-viewer 'xwidget)))
+           ("C-c C-h" . org-preview-html-mode)))
 
   (use-package org-roam
     :straight (org-roam :type git :host github :repo "org-roam/org-roam"
