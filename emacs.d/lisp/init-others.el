@@ -172,8 +172,9 @@
 (use-package fretboard
   :straight (:host github :repo "skyefreeman/fretboard.el"))
 
-(use-package el-easydraw
-  :straight (:host github :repo "misohena/el-easydraw")
+(use-package edraw
+  :straight (edraw :host github :repo "misohena/el-easydraw")
+  :defer t
   :config
   (with-eval-after-load 'org
     (require 'edraw-org)

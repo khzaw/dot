@@ -117,6 +117,8 @@
             (lambda ()
               (setq-local python-shell-interpreter (pet-executable-find "ipython")
                           python-shell-virtualenv-root (pet-virtualenv-root))
+              (setq-local python-indent-offset 4)
+              (setq-local py-indent-offset 4)
               (pet-eglot-setup)
               (eglot-ensure)
               ;; (pet-flycheck-setup)

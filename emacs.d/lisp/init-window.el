@@ -161,8 +161,8 @@
 
 (use-package winnie
   :straight (:type git :host github :repo "QiangF/emacs-winnie")
-  :bind (("C-w u" . winnie-previous)
-         ("C-w U" . winne-next))
+  :bind (("C-c w u" . winnie-previous)
+         ("C-c w U" . winne-next))
   :hook after-init)
 
 (use-package beacon
