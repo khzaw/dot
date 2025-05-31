@@ -285,13 +285,7 @@
 (use-package man
   :custom (Man-notify-method 'friendly))
 
-(use-package bookmark-plus
-  :straight (bookmark-plus :type git :host github :repo "emacsmirror/bookmark-plus")
-  :defer 3
-  :init
-  (require 'bookmark+)
-  ;; save bookmark on every change
-  (setq bookmark-save-flag 1))
+
 
 
 (provide 'init-basics)

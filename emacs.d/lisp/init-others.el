@@ -16,8 +16,107 @@
 
 (use-package calibredb)
 
+(use-package bookmark-plus
+  :straight (bookmark-plus :type git :host github :repo "emacsmirror/bookmark-plus")
+  :defer 3
+  :init
+  (require 'bookmark+)
+  ;; save bookmark on every change
+  (setq bookmark-save-flag 1))
+
 (use-package bookmark-view
   :straight (bookmark-view :type git :host github :repo "minad/bookmark-view"))
+
+(use-package bookmark-view
+  :ensure nil
+  :commands my-bookmark-view-create
+  :bind*
+  (("M-8" . my-bookmark-view-previous)
+   ("M-9" . my-bookmark-view-next)
+   ("M-0" . my-bookmark-view-dwim)
+   ("M-1" . my-bookmark-view)
+   ("M-2" . my-bookmark-view)
+   ("M-3" . my-bookmark-view)
+   ("M-4" . my-bookmark-view)
+   ("M-5" . my-bookmark-view)
+   ("M-6" . my-bookmark-view))
+  :config
+  (setq bookmark-view-name-format "<count> <buffers>"
+        bookmark-view-name-regexp "\\`[0-9]+ ")
+
+  (defun bookmark-view-buffer-names ()
+    (string-join (sort (mapcar #'buffer-name (bookmark-view--buffers nil))
+                       #'string-lessp) " "))
+
+  (defun my-bookmark-view-dwim (&optional arg)
+    (interactive "P")
+    (if arg (bookmark-view-delete)
+      (if (my-bookmark-view-after-hopping-p)
+          (my-bookmark-view "0")
+        (call-interactively 'bookmark-view))))
+
+  (defun my-bookmark-rotate (forward)
+    ;; Two functions append to a list: append and nconc, both would want a list as the append value
+    ;; which I create with (cons 'value ())
+    (if forward
+        (let ((target (pop bookmark-view-history)))
+          (add-to-list 'bookmark-view-history target t)
+          target)
+      (let ((target (last bookmark-view-history)))
+        (setq bookmark-view-history
+              (nconc target (butlast bookmark-view-history)))
+        (car target))))
+
+  (defun my-bookmark-view-after-hopping-p ()
+    (or (equal last-command 'my-bookmark-view-previous)
+        (equal last-command 'my-bookmark-view-next)))
+
+  (defun my-bookmark-view-previous ()
+    (interactive)
+    (unless (my-bookmark-view-after-hopping-p)
+      ;; save place-before-hopping to slot 0
+      (my-bookmark-view-create "0" 'omit-history))
+    (when bookmark-view-history
+      (when (equal last-command 'my-bookmark-view-next)
+        (my-bookmarkrotate t))
+      (bookmark-view-open (my-bookmark-rotate t))))
+
+  (defun my-bookmark-view-next ()
+    (interactive)
+    (unless (my-bookmark-view-after-hopping-p)
+      ;; save place-before-hopping to slot 0
+      (my-bookmark-view-create "0" 'omit-history))
+    (when bookmark-view-history
+      (when (equal last-command 'my-bookmark-view-previous)
+        (my-bookmark-rotate nil))
+      (bookmark-view-open (my-bookmark-rotate nil))))
+
+  (defun bookmark-view--get-slot (slot &optional delete)
+    (let ((slot-name (seq-find (apply-partially #'string-match-p (format "\\`%s:" slot))
+                               (bookmark-view-names))))
+      (and slot-name delete
+           (progn (bookmark-view-delete slot-name)
+                  (setq bookmark-view-history
+                        (delete slot-name bookmark-view-history))))
+      slot-name))
+
+  (defun my-bookmark-view (&optional slot)
+    (interactive)
+    (let ((slot (or slot (substring (key-description (this-command-keys-vector)) -1))))
+      (let ((slot-name (bookmark-view--get-slot slot)))
+        (if slot-name (bookmark-view slot-name)
+          (message "No view in slot %s" slot)))))
+
+  (defun my-bookmark-view-create (&optional slot omit-history)
+    (interactive)
+    (let* ((slot (or slot (substring (key-description (this-command-keys-vector)) -1)))
+           (name (format "%s:%s" slot (bookmark-view-buffer-names))))
+      (bookmark-view--get-slot slot 'delete)
+      (bookmark-view-save name nil)
+      (unless omit-history
+        (add-to-history 'bookmark-view-history name))
+      ;; (add-to-ordered-list 'bookmark-view-history name 0)
+      (message "View saved to slot %s" slot))))
 
 ;; (use-package mugur
 ;;  :straight (mugur :type git :host github :repo "mihaiolteanu/mugur"))
