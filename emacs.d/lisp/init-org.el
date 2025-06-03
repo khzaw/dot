@@ -537,5 +537,15 @@
   :after org
   :straight (:type git :host github :repo "Clement-Jean/codetabs.el" :files ("codetabs.el" "codetabs.js")))
 
+(use-package org-backlinks
+  :straight (org-backlinks :host github :repo "bcardoso/org-backlinks"
+                           :files ("org-backlinks.el"))
+  :bind ("C-c z o" . org-backlinks))
+
+(use-package consult-org-backlinks
+  :straight (consult-org-backlinks :host github :repo "bcardoso/org-backlinks"
+                                   :files ("consult-org-backlinks.el"))
+  :bind ("C-c z c" . consult-org-backlinks))
+
 (provide 'init-org)
 ;;; init-org.el ends here
