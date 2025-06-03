@@ -20,3 +20,4 @@
 ** https://www.howardism.org/index.xml
 ** http://tromey.com/elpa/elpa.rss
 ** https://batsov.com/atom.xml
+** http://yummymelon.com/devnull/feeds/tags/emacs.atom.xml

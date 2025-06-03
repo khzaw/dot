@@ -184,5 +184,14 @@
     (require 'edraw-org)
     (edraw-org-setup-default)))
 
+  (use-package reader
+    :straight '(reader
+                :type git
+                :host codeberg
+                :repo "divyaranjan/emacs-reader"
+                :files ("*.el" "render-core.so")
+                :pre-build ("make" "all")))
+
+
 
 (provide 'init-others)
