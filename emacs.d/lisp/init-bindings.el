@@ -67,31 +67,49 @@
 ;;                (setq this-command 'keyboard-quit)))))))
 ;; (define-key global-map [remap keyboard-quit] #'khz/keyboard-quit-dwim)
 
-(defun khz/keyboard-quit-dwim ()
-  "Do-What-I-Mean behaviour for a general `keyboard-quit'.
+(define-advice keyboard-quit
+    (:around (quit) quit-current-context)
+  "Quit the current context.
 
-The generic `keyboard-quit' does not do the expected thing when
-the minibuffer is open.  Whereas we want it to close the
-minibuffer, even without explicitly focusing it.
+When there is an active minibuffer and we are not inside it close
+it.  When we are inside the minibuffer use the regular
+`minibuffer-keyboard-quit' which quits any active region before
+exiting.  When there is no minibuffer `keyboard-quit' unless we
+are defining or executing a macro."
+  (if (active-minibuffer-window)
+      (if (minibufferp)
+          (minibuffer-keyboard-quit)
+        (abort-recursive-edit))
+    (unless (or defining-kbd-macro
+                executing-kbd-macro)
+      (funcall-interactively quit))))
 
-The DWIM behaviour of this command is as follows:
 
-- When the region is active, disable it.
-- When a minibuffer is open, but not focused, close the minibuffer.
-- When the Completions buffer is selected, close it.
-- In every other case use the regular `keyboard-quit'."
-  (interactive)
-  (cond
-   ((region-active-p)
-    (keyboard-quit))
-   ((derived-mode-p 'completion-list-mode)
-    (delete-completion-window))
-   ((> (minibuffer-depth) 0)
-    (abort-recursive-edit))
-   (t
-    (keyboard-quit))))
+;; (defun khz/keyboard-quit-dwim ()
+;;   "Do-What-I-Mean behaviour for a general `keyboard-quit'.
 
-(define-key global-map (kbd "C-g") #'khz/keyboard-quit-dwim)
+;; The generic `keyboard-quit' does not do the expected thing when
+;; the minibuffer is open.  Whereas we want it to close the
+;; minibuffer, even without explicitly focusing it.
+
+;; The DWIM behaviour of this command is as follows:
+
+;; - When the region is active, disable it.
+;; - When a minibuffer is open, but not focused, close the minibuffer.
+;; - When the Completions buffer is selected, close it.
+;; - In every other case use the regular `keyboard-quit'."
+;;   (interactive)
+;;   (cond
+;;    ((region-active-p)
+;;     (keyboard-quit))
+;;    ((derived-mode-p 'completion-list-mode)
+;;     (delete-completion-window))
+;;    ((> (minibuffer-depth) 0)
+;;     (abort-recursive-edit))
+;;    (t
+;;     (keyboard-quit))))
+
+;; (define-key global-map (kbd "C-g") #'khz/keyboard-quit-dwim)
 
 (provide 'init-bindings)
 ;;; init-bindings.el ends here
