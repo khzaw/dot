@@ -8,6 +8,31 @@
   :config (global-visual-fill-column-mode))
 
 (use-package org
+  :defer
+  :straight (org
+             :fork (:host nil
+                          :repo "https://git.tecosaur.net/tec/org-mode.git"
+                          :branch "dev"
+                          :remote "tecosaur")
+             :files (:defaults "etc")
+             :build t
+             :pre-build
+             (with-temp-file "org-version.el"
+               (require 'lisp-mnt)
+               (let ((version
+                      (with-temp-buffer
+                        (insert-file-contents "lisp/org.el")
+                        (lm-header "version")))
+                     (git-version
+                      (string-trim
+                       (with-temp-buffer
+                         (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
+                         (buffer-string)))))
+                (insert
+                 (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
+                 (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
+                 "(provide 'org-version)\n")))
+              :pin nil)
   :bind (("C-c C-c" . org-edit-src-exit)
          :map org-mode-map
          ("C-c C-v" . verb-command-map)
@@ -23,8 +48,10 @@
                  (setq visual-fill-column-center-text nil)
                  (visual-fill-column-mode)))
    (org-mode . turn-on-org-cdlatex)
-   (org-mode . word-wrap-whitespace-mode))
+   (org-mode . word-wrap-whitespace-mode)
+   (org-mode . org-latex-preview-auto-mode))
   :config
+
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
@@ -52,18 +79,23 @@
   (setq org-catch-invisible-edits 'show-and-error)
   (setq org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
 
+  ;; Turn on live previews.  This shows you a live preview of a LaTeX
+  ;; fragment and updates the preview in real-time as you edit it.
+  ;; To preview only environments, set it to '(block edit-special) instead
+  (setq org-latex-preview-live t)
+  (setq org-latex-preview-live-debounce 0.25) ;; More immediate live-previews
+  (plist-put org-format-latex-options :scale 2.0)
+
+
   ;; Better org LaTeX preview
-  (setq org-startup-with-latex-preview t
-        org-highlight-latex-and-related '(native latex))
+  ;; (setq org-startup-with-latex-preview t
+  ;;       org-highlight-latex-and-related '(native latex))
 
-  (when (executable-find "dvisvgm")
-    ;; Use dvisvgm for SVG LaTeX previews in Org-mode
-    (setq org-latex-create-formula-image-program 'dvisvgm)
-    (setq org-preview-latex-default-process 'dvisvgm))
 
-  (plist-put org-format-latex-options :background "Transparent")
-  (plist-put org-format-latex-options :scale 1.7)
-  (plist-put org-format-latex-options :dpi 600)
+  ;; (when (executable-find "dvisvgm")
+  ;;   ;; Use dvisvgm for SVG LaTeX previews in Org-mode
+  ;;   (setq org-latex-create-formula-image-program 'dvisvgm)
+  ;;   (setq org-preview-latex-default-process 'dvisvgm))
 
 
   ;; (org-priority-faces
@@ -223,14 +255,14 @@
 
   (use-package org-rich-yank
     :bind (:map org-mode-map
-           ("C-M-y" . org-rich-yank)))
+                ("C-M-y" . org-rich-yank)))
 
   (use-package org-preview-html
     :diminish
     :config (when (featurep 'xwidget-internal)
               (setq org-preview-html-viewer 'xwidget))
     :bind (:map org-mode-map
-           ("C-c C-h" . org-preview-html-mode)))
+                ("C-c C-h" . org-preview-html-mode)))
 
   (use-package org-roam
     :straight (org-roam :type git :host github :repo "org-roam/org-roam"
@@ -275,11 +307,11 @@
            ;; Dailies
            ("C-c n j" . org-roam-dailies-capture-today)
            (:map org-mode-map
-            (("C-c n i" . org-roam-node-insert)
-             ("C-c n o" . org-id-get-create)
-             ("C-c n t" . org-roam-tag-add)
-             ("C-c n a" . org-roam-alias-add)
-             ("C-c n l" . org-roam-buffer-toggle))))
+                 (("C-c n i" . org-roam-node-insert)
+                  ("C-c n o" . org-id-get-create)
+                  ("C-c n t" . org-roam-tag-add)
+                  ("C-c n a" . org-roam-alias-add)
+                  ("C-c n l" . org-roam-buffer-toggle))))
     :config
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
     (setq org-roam-dailies-directory "daily"))
@@ -303,7 +335,7 @@
   :hook (org-mode . quickroam-enable-cache))
 
 (use-package evil-org
-  :after org
+  :after (evil)
   :hook (org-mode . (lambda () (evil-org-mode)))
   :config
   (require 'evil-org-agenda)
@@ -335,10 +367,6 @@
   (:map org-mode-map
    (("s-Y" . org-download-screenshot)
     ("s-y" . org-download-yank))))
-
-;; Auto toggle LaTeX rendering
-(use-package org-fragtog
-  :hook (org-mode . org-fragtog-mode))
 
 (use-package org-modern
   :config

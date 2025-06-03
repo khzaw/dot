@@ -100,7 +100,6 @@
 (require 'init-latex)
 (require 'init-prog)
 
-
 ;; programming tools
 (require 'init-restclient)
 

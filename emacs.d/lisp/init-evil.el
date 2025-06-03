@@ -1,9 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package evil
-  :straight t
-  :init
-  (setq evil-want-keybinding nil) ;; this needs to be first
+  :preface (setq evil-want-keybinding nil)
+  :config
   (setq evil-want-integration t
         evil-want-minibuffer nil
         evil-undo-system 'undo-fu
@@ -16,7 +15,6 @@
         evil-want-C-u-scroll nil
         evil-ex-interactive-search-highlight 'selected-window
         evil-kbd-macro-suppress-motion-error t)
-  :config
   (evil-select-search-module 'evil-search-module 'evil-search)
   (evil-set-initial-state 'help-mode 'emacs)
   (evil-set-initial-state 'dashboard-mode 'emacs)
@@ -104,6 +102,7 @@
   (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up-down))
 
 (use-package evil-paredit
+  :after (paredit evil)
   :hook ((emacs-lisp-mode . evil-paredit-mode)
          (scheme-mode . evil-paredit-mode)
          (racket-mode . evil-paredit-mode)
