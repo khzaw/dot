@@ -152,7 +152,6 @@
     :config (setq elcord-use-major-mode-as-main-icon t)
     (elcord-mode t)))
 
-(use-package keycast)
 
 ;; Make a clean & minimalist frame
 (use-package frame

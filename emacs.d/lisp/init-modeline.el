@@ -48,9 +48,27 @@
   (telephone-line-mode 1))
 
 (use-package mood-line
+  :disabled t
   :config
   (setq mood-line-format mood-line-format-default)
   (setq mood-line-glyph-alist mood-line-glyphs-ascii)
   (mood-line-mode 1))
+
+(use-package keycast
+    ;; :hook (after-init . keycast-mode)
+    :config
+    (define-minor-mode keycast-mode
+      "Show current command and its key binding in the mode line."
+      :global t
+      (if keycast-mode
+          (add-hook 'pre-command-hook 'keycast--update t)
+        (remove-hook 'pre-command-hook 'keycast--update))))
+
+  (use-package modusregel
+    :straight (:host codeberg :repo "jjba23/modusregel" :branch "trunk")
+    :after (keycast)
+    :config
+    (add-to-list 'modusregel-format '("" keycast-mode-line " " display-time-string) t)
+    (setq-default mode-line-format modusregel-format))
 
 (provide 'init-modeline)
