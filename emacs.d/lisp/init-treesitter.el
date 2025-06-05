@@ -127,11 +127,10 @@
 ;; Show scope info of block
 (use-package scopeline
   :commands (scopeline-mode)
-  :init (add-hook 'prog-mode-hook (lambda ()
-                                    (when (treesit-enabled-p)
-                                      (scopeline-mode))))
+  :hook (prog-mode . (lambda () (when (treesit-enabled-p)
+                                  (scopeline-mode))))
   :config (setq scopeline-overlay-prefix " ~"
-                scopeline-min-lines 15))
+                scopeline-min-lines 20))
 
 ;; provides grammatical edit based on treesit
 (use-package fingertip

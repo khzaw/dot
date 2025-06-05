@@ -48,10 +48,10 @@
   (telephone-line-mode 1))
 
 (use-package mood-line
-  :disabled t
+  :straight (:type git :host gitlab :repo "jessieh/mood-line")
   :config
   (setq mood-line-format mood-line-format-default)
-  (setq mood-line-glyph-alist mood-line-glyphs-ascii)
+  (setq mood-line-glyph-alist mood-line-glyphs-unicode)
   (mood-line-mode 1))
 
 (use-package keycast
@@ -65,6 +65,7 @@
         (remove-hook 'pre-command-hook 'keycast--update))))
 
   (use-package modusregel
+    :disabled t
     :straight (:host codeberg :repo "jjba23/modusregel" :branch "trunk")
     :after (keycast)
     :config

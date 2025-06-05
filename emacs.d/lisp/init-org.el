@@ -58,15 +58,18 @@
   (setq org-tags-alist '(("inbox" . ?i)))
   ;; (org-agenda-start-with-log-mode t)
   ;; (org-log-into-drawer t)
+  (setq org-auto-align-tags nil)
+  (setq org-tags-column 0)
+
   (setq org-log-done 'time) ; Record the task completion date.
   (setq org-pretty-entities t)
   (setq org-src-fontify-natively t)
-  (setq org-src-preserve-indentation t)        ; use native major-mode indentation
+  (setq org-src-preserve-indentation nil)        ; this to be nil to work well with org-modern-indent
   (setq org-src-tab-acts-natively t)
   (setq org-src-window-setup 'split-window-below)
   (setq org-fontify-quote-and-verse-blocks t) ; highlight quote and verse blocks
   (setq org-fontify-whole-heading-line t)     ; highlight the whole line for headings
-  (setq org-hide-emphasis-markers t)
+  (setq org-hide-emphasis-markers t)          ; org styling, hide markup etc
   (setq org-startup-truncated nil)
   (setq org-imenu-depth 6)
   (setq org-startup-indented t)
@@ -78,6 +81,7 @@
   (setq org-tags-column 0)
   (setq org-catch-invisible-edits 'show-and-error)
   (setq org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
+  (setq org-agenda-tags-column 0)
 
   ;; Turn on live previews.  This shows you a live preview of a LaTeX
   ;; fragment and updates the preview in real-time as you edit it.
@@ -369,8 +373,12 @@
     ("s-y" . org-download-yank))))
 
 (use-package org-modern
-  :config
-  (with-eval-after-load 'org (global-org-modern-mode)))
+  :custom
+  (org-modern-hide-stars nil)
+  (org-modern-table nil)
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda))
 
 (use-package org-modern-indent
   :straight (:type git :host github :repo "jdtsmith/org-modern-indent")
