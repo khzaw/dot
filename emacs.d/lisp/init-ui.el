@@ -22,7 +22,7 @@
   (setq-default line-spacing -0.1)
   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 150)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
+  (set-face-attribute 'variable-pitch nil :font "Iosevka" :weight 'normal :height 1.0))
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
