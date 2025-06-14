@@ -54,6 +54,7 @@
                                         :compositeLiteralTypes t
                                         :constantValues t)
                        :semanticTokens t
+                       :staticcheck "unset"
                        :usePlaceholders t
                        :completeUnimported t
                        :matcher "Fuzzy"

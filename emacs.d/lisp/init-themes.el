@@ -20,6 +20,7 @@
   (doom-themes-org-config))
 
 (use-package modus-themes
+  :straight (:type git :host github :repo "protesilaos/modus-themes")
   :config
   (setq modus-themes-bold-constructs t
         modus-themes-mixed-fonts t
