@@ -51,7 +51,7 @@
   :straight (:type git :host gitlab :repo "jessieh/mood-line")
   :config
   (setq mood-line-format mood-line-format-default)
-  (setq mood-line-glyph-alist mood-line-glyphs-unicode)
+  ;; (setq mood-line-glyph-alist mood-line-glyphs-unicode)
   (mood-line-mode 1))
 
 (use-package keycast

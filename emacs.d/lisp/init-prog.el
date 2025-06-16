@@ -80,9 +80,7 @@
           eos))
 
 (use-package mermaid-mode
-  :disabled t
-  :if (executable-find "mmdc")
-  :mode (("\\.mermaid\\'" . mermaid-mode)))
+  :if (executable-find "mmdc"))
 
 (use-package makefile-executor
   :disabled t

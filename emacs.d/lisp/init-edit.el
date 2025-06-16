@@ -137,12 +137,15 @@
              undo-fu-only-redo-all
              undo-fu-disable-checkpoint)
   :custom
-  ;; 3 times the default values
-  (undo-limit (* 3 160000))
-  (undo-strong-limit (* 3 240000)))
+  (undo-limit 67108864) ; 64mb.
+  (undo-strong-limit 100663296) ; 96mb.
+  (undo-outer-limit 1006632960) ; 960mb.
+  (undo-fu-allow-undo-in-region t))
 
 (use-package undo-fu-session
-  :config (undo-fu-session-global-mode))
+  :config
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+  (undo-fu-session-global-mode))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)

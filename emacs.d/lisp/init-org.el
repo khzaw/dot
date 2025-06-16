@@ -247,7 +247,8 @@
   (use-package ob-mermaid
     :if (executable-find "mmdc")
     :straight (ob-mermaid :type git :host github :repo "arnm/ob-mermaid")
-    :init (cl-pushnew '(mermaid . t) load-language-alist))
+    :init (cl-pushnew '(mermaid . t) load-language-alist)
+    :config (setq ob-mermaid-cli-path (executable-find "mmdc")))
 
   (use-package ob-dot
     :if (executable-find "dot")

@@ -160,12 +160,14 @@
   (sinister-misc-settings))
 
 (use-package winnie
+  :disabled t
   :straight (:type git :host github :repo "QiangF/emacs-winnie")
   :bind (("C-c w u" . winnie-previous)
          ("C-c w U" . winne-next))
   :hook after-init)
 
 (use-package beacon
+  :disabled t
   :straight nil
   :after winnie
   :hook after-init

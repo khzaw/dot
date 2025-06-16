@@ -2,10 +2,11 @@
 
 (use-package evil
   :preface (setq evil-want-keybinding nil)
+  :init
+  (setq evil-undo-system 'undo-fu)
   :config
   (setq evil-want-integration t
         evil-want-minibuffer nil
-        evil-undo-system 'undo-fu
         evil-mode-line-format nil
         evil-kill-on-visual-paste nil
         evil-symbol-word-search t
@@ -102,6 +103,7 @@
   (define-key evil-outer-text-objects-map "I" 'evil-indent-plus-a-indent-up-down))
 
 (use-package evil-paredit
+  :disabled t
   :after (paredit evil)
   :hook ((emacs-lisp-mode . evil-paredit-mode)
          (scheme-mode . evil-paredit-mode)
