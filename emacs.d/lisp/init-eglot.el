@@ -103,7 +103,6 @@ and CONFIG is the configuration plist for that server.")
     (evil-define-key 'normal eglot-mode-map
       "K" #'khz/toggle-eldoc-doc-buffer))
 
-
   (setq eglot-extend-to-xref t)
 
   (dolist (server-programs
@@ -114,7 +113,9 @@ and CONFIG is the configuration plist for that server.")
                                :initializationOptions
                                (:typescript (:tsdk "./node_modules/typescript/lib"))))
              (yaml-mode . ("yaml-language-server" "--stdio"))
-             ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))))
+             ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))
+             ;; ((python-mode python-ts-mode) . ("ty server"))
+             ))
     (add-to-list 'eglot-server-programs server-programs))
 
   ;; enable cache busting
