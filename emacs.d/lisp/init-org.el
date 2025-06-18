@@ -441,7 +441,9 @@
 (use-package org-autolist
   :hook (org-mode . org-autolist-mode))
 
-(use-package denote)
+(use-package denote
+  :cusutom
+  (denote-directory (file-truename "~/Dropbox/notes/denote")))
 
 (use-package ox
   :straight (:type built-in)
