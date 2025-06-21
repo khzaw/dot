@@ -4,7 +4,7 @@
   :config (setq gofmt-command "gofumpt"))
 
 (use-package go-ts-mode
-  :custom (go-ts-mode-indent-offset 8)
+  ;; :custom (go-ts-mode-indent-offset 8)
   :bind (:map go-ts-mode-map
          ("C-c C-a" . go-import-add)
          ("C-c C-d" . godef-describe)

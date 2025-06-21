@@ -142,7 +142,7 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Tab.space equivalence
-(setq-default tab-width 2)
+;; (setq-default tab-width 2)
 
 ;; Size of temporary buffers
 (temp-buffer-resize-mode)
@@ -232,8 +232,8 @@
 (use-package editorconfig
   :defer 1
   :diminish
-  :config
-  (setq editorconfig-lisp-use-default-indent t)
+  :custom
+  (editorconfig-lisp-use-default-indent t)
   :hook (after-init . editorconfig-mode))
 
 ;; History
@@ -243,7 +243,7 @@
 
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
-  :hook (on-first-file . recentf-mode)
+  :hook (after-init . recentf-mode)
   :init (setq recentf-max-saved-items 300
               recentf-exclude
               '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
