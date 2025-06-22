@@ -208,16 +208,16 @@
 
 (use-package which-key
   :diminish
-  :init
-  (setq which-key-idle-delay 0.5)
-  (setq which-key-idle-secondary-delay 0.1)
-  (setq which-key-allow-multiple-replacements t)
+  :custom
+  (echo-keystrokes 0.01)
+  (which-key-idle-delay 0.5)
+  (which-key-idle-secondary-delay 0.1)
+  (which-key-allow-multiple-replacements t)
+  (which-key-max-description-length nil)
   :config
   (push '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1")) which-key-replacement-alist)
   (push '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")) which-key-replacement-alist)
   (setq which-key-unicode-correction 5)
-  :custom
-  (which-key-max-description-length nil)
   :hook (on-first-input . which-key-mode))
 
 (use-package which-key-posframe
@@ -257,7 +257,20 @@
 
 (use-package time
   :straight (:type built-in)
-  :init (setq display-time-24hr-format t))
+  :hook (after-init . display-time-mode)
+  :custom
+  (display-time-24hr-format t)
+  (display-time-default-load-average nil)
+  (word-clock-list
+  '(("UTC" "UTC")
+    ("Australia/Sydney" "Sydney")
+    ("America/New_York" "NY")
+    ("Asia/Seoul" "Seoul")
+    ("Europe/London" "London")
+    ("Europe/Berlin" "Berlin"))))
+
+(use-package tzc
+  :custom (tzc-favorite-time-zones-alist world-clock-list))
 
 (use-package so-long
   :hook (after-init . global-so-long-mode))

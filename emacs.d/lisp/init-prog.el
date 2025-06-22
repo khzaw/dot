@@ -2,8 +2,11 @@
 
 (use-package eldoc
   :straight t
-  :preface
-  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  :custom
+  (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  (eldoc-idle-delay 0.1)
+  (eldoc-echo-area-prefer-doc-buffer nil)
+  (eldoc-echo-area-display-truncation-message nil)
   :diminish
   :config
   (eldoc-add-command-completions "paredit-")
@@ -30,6 +33,7 @@
   :hook (protobuf-mode . (lambda ()
                            (setq imenu-generic-expression
                                  '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
+
 
 (use-package terraform-mode)
 
@@ -168,6 +172,8 @@
 
 (use-package edit-indirect
   :defer t)
+
+(use-package zig-mode)
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

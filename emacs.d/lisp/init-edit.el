@@ -117,7 +117,7 @@
 
 (use-package vundo
   :bind ("C-x u" . vundo)
-  :config (setq vundo-glyph-alist vundo-unicode-symbols))
+  :custom (vundo-glyph-alist vundo-unicode-symbols))
 
 (use-package undo-tree
   :diminish
@@ -372,6 +372,15 @@
 
 ;; (use-package ws-butler
 ;;   :straight (:type git :host github :repo "lewang/ws-butler"))
+
+(use-package iso-transl
+  :straight (:type built-in)
+  :bind
+  (:map iso-transl-ctl-x-8-map
+        ("0" . [?​])
+        ("a" . [?α])
+        ("b" . [?β])
+        ("l" . [?λ])))
 
 (provide 'init-edit)
 ;; init-edit.el ends here

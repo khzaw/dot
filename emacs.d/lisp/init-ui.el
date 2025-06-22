@@ -190,16 +190,43 @@
   (tabspaces-session-auto-restore t))
 
 (use-package pulsar
-  :init (pulsar-global-mode)
+  :hook
+  (after-init . pulsar-global-mode)
+  (minibuffer-setup . pulsar-pulse-line)
+  (next-error . pulsar-pulse-line-red)
+  (next-error . pulsar-reveal-entry)
+  (next-error . pulsar-recenter-center)
+  :custom
+  (pulsar-delay 0.05)
+  (pulsar-iterations 13)
   :config
-  (setq pulsar-pulse-functions (append pulsar-pulse-functions
-                                 '(evil-scroll-down
-                                    evil-scroll-up
-                                    evil-window-down
-                                    evil-window-up
-                                    evil-window-left
-                                    evil-window-right
-                                    evil-window-next))))
+  (add-to-list 'pulsar-pulse-functions 'ace-window)
+  (add-to-list 'pulsar-pulse-functions 'avy-goto-line)
+  (add-to-list 'pulsar-pulse-functions 'beginning-of-buffer)
+  (add-to-list 'pulsar-pulse-functions 'beginning-of-defun)
+  (add-to-list 'pulsar-pulse-functions 'diff-hunk-next)
+  (add-to-list 'pulsar-pulse-functions 'diff-hunk-prev)
+  (add-to-list 'pulsar-pulse-functions 'end-of-buffer)
+  (add-to-list 'pulsar-pulse-functions 'end-of-defun)
+  (add-to-list 'pulsar-pulse-functions 'flymake-goto-next-error)
+  (add-to-list 'pulsar-pulse-functions 'flymake-goto-prev-error)
+  (add-to-list 'pulsar-pulse-functions 'magit-section-backward)
+  (add-to-list 'pulsar-pulse-functions 'magit-section-forward)
+  (add-to-list 'pulsar-pulse-functions 'isearch-repeat-backward)
+  (add-to-list 'pulsar-pulse-functions 'isearch-repeat-forward)
+  (add-to-list 'pulsar-pulse-functions 'other-frame)
+  (add-to-list 'pulsar-pulse-functions 'treesit-beginning-of-defun)
+  (add-to-list 'pulsar-pulse-functions 'treesit-end-of-defun)
+  (add-to-list 'pulsar-pulse-functions 'xref-find-definitions)
+  (add-to-list 'pulsar-pulse-functions 'xref-go-back)
+  (add-to-list 'pulsar-pulse-functions 'xref-go-forward)
+  (add-to-list 'pulsar-pulse-functions 'evil-scroll-down)
+  (add-to-list 'pulsar-pulse-functions 'evil-scroll-up)
+  (add-to-list 'pulsar-pulse-functions 'evil-window-down)
+  (add-to-list 'pulsar-pulse-functions 'evil-window-up)
+  (add-to-list 'pulsar-pulse-functions 'evil-window-left)
+  (add-to-list 'pulsar-pulse-functions 'evil-window-right)
+  (add-to-list 'pulsar-pulse-functions 'evil-window-next))
 
 (use-package sideline-blame)
 

@@ -92,6 +92,7 @@
   :straight (:type built-in)
   :after evil
   :hook (after-init . winner-mode)
+  :custom (winner-dont-bind-my-keys t)
   :bind
   (:map evil-window-map
    ("u" . winner-undo)

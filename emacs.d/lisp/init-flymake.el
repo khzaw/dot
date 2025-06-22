@@ -4,13 +4,19 @@
 (use-package flymake
   :after evil
   :straight (:type built-in)
-  :bind (("C-c f c" . flymake-start)
-         ("C-c f d" . flymake-show-buffer-diagnostics)
-         :map flymake-mode-map
-         ("C-c f n" . flymake-goto-next-error)
-         ("C-c f p" . flymake-goto-prev-error))
+  :bind
+  (:map flymake-mode-map
+        ("C-c f c" . flymake-start)
+        ("C-c f d" . flymake-show-buffer-diagnostics)
+        ("C-c f D" . flymake-show-project-diagnostics)
+        ("C-c f n" . flymake-goto-next-error)
+        ("C-c f p" . flymake-goto-prev-error))
+  :hook (prog-mode . flymake-mode)
   :custom
+  (flymake-start-on-save-buffer nil)
+  (flymake-no-changes-timeout 0.5)
   (flymake-indicator-type 'margins)
+  (flymake-wrap-around nil)
   (flymake-margin-indicator-position 'right-margin)
   (flymake-margin-indicators-string
      `((error "!" compilation-error)

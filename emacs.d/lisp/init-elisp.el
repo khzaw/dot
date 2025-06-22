@@ -119,18 +119,27 @@ Lisp function does not specify a special indentation."
   (global-set-key (kbd "s-;") 'symex-mode-interface))
 
 (use-package helpful
+  :preface
   :bind
+  ("C-h c" . helpful-callable)
   ([remap describe-key] . helpful-key)
   ([remap describe-function] . helpful-function)
   ([remap describe-variable] . helpful-variable)
   ([remap describe-command] . helpful-command)
   ([remap describe-symbol] . helpful-symbol)
+  :custom
+  (helpful-switch-buffer-function #'display-buffer)
   :config
   (add-to-list 'display-buffer-alist
                '("*helpful.*"
                  (display-buffer-reuse-window display-buffer-in-side-window)
                  (side . bottom)
                  (window-height . 0.33))))
+
+(use-package help-fns
+  :straight (:type built-in)
+  :bind
+  ("C-h F" . describe-face))
 
 (use-package paren-face
   :hook (emacs-lisp-mode . paren-face-mode))

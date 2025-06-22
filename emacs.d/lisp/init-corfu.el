@@ -148,6 +148,7 @@ https://github.com/minad/corfu."
   :custom
   (corfu-popupinfo-delay '(0.3 . 0.2))
   (corfu-popupinfo-direction 'vertical)
+  (corfu-popupinfo-max-height 16)
   :custom-face
   (corfu-popupinfo ((t (:height 1.0))))
   :init (corfu-popupinfo-mode)
@@ -160,7 +161,10 @@ https://github.com/minad/corfu."
 (use-package corfu-info
   :straight nil
   :after corfu
-  :commands (corfu-info-location corfu-info-documentation))
+  :commands (corfu-info-location corfu-info-documentation)
+  :init
+  (with-eval-after-load 'savehist
+    (add-to-list 'savehist-additional-variables 'corfu-history)))
 
 (use-package corfu-history
   :straight nil

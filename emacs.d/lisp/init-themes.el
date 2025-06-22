@@ -3,6 +3,13 @@
 ;; useful for debugging themes
 (use-package fontify-face)
 
+(use-package theme
+  :straight (:type built-in)
+  :preface
+  (defvar my/theme-headings
+    '((1 . (variable-pitch semibold 1.2))
+      (t . (variable-pitch semibold 1.1)))))
+
 (use-package kaolin-themes
   :after all-the-icons
   :config
@@ -21,13 +28,16 @@
 
 (use-package modus-themes
   :straight (:type git :host github :repo "protesilaos/modus-themes")
+  :custom
+  (modus-themes-bold-constructs t)
+  (modus-themes-custom-auto-reload t)
+  (modus-themes-mixed-fonts t)
+  (modus-themes-prompts '(bold intense))
+  (modus-themes-completions '((t . (extrabold))))
+  (modus-themes-headings my/theme-headings)
   :config
-  (setq modus-themes-bold-constructs t
-        modus-themes-mixed-fonts t
-        modus-themes-prompts '(bold intense)
-        modus-themes-completions '((t . (extrabold)))
-        ;; Keep the border of mode line but make it the same color as the background of the mode line
-        modus-themes-common-palette-overrides
+    ;; Keep the border of mode line but make it the same color as the background of the mode line
+  (setq modus-themes-common-palette-overrides
         '((border-mode-line-active bg-mode-line-active)
           (border-mode-line-inactive bg-mode-line-inactive)
           (fringe unspecified)))
@@ -44,9 +54,14 @@
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
 
-  (load-theme 'modus-vivendi t))
+  :hook
+  (after-init . (lambda () (load-theme 'modus-vivendi t))))
 
-(use-package ef-themes)
+(use-package ef-themes
+  :custom
+  (ef-themes-mixed-fonts t)
+  (ef-themes-variable-pitch-ui t)
+  (ef-themes-headings my/theme-headings))
 
 (use-package hima-theme
   :straight (:type git :host github :repo "meain/hima-theme"))
