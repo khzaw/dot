@@ -52,9 +52,10 @@
 ;; No popup windows
 (setq pop-up-windows nil)
 
-;; reuse existing frames whenever possiblekj:w
-
+;; reuse existing frames whenever possible
 (setq ns-pop-up-frames nil)
+
+(setq enable-recursive-minibuffers t)
 
 ;; User name
 (setq user-full-name "Kaung Htet")

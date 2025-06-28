@@ -175,5 +175,8 @@
 
 (use-package zig-mode)
 
+(use-package scala-ts-mode
+  :straight (scala-ts-mode :type git :host github :repo "KaranAhlawat/scala-ts-mode"))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
