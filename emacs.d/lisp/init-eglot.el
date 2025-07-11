@@ -2,11 +2,9 @@
 
 (use-package eglot
   :straight (:host github :repo "joaotavora/eglot" :tag "v1.18")
-  :commands (eglot
-             eglot-rename
-             eglot-format-buffer
-             eglot-ensure)
+  :commands (eglot eglot-rename eglot-format-buffer eglot-ensure)
   :hook
+  ((eglot-managed-mode . my/eglot-eldoc-settings))
   ((go-mode go-ts-mode) . eglot-ensure)
   ((css-mode css-ts-mode) . eglot-ensure)
   ((python-mode python-ts-mode) . eglot-ensure)
@@ -39,6 +37,11 @@
   ;; Performance optimizations
   (fset #'jsonrpc--log-event #'ignore)
   :config
+
+  (defun my/eglot-eldoc-settings()
+    (setq eldoc-documentation-strategy
+          'eldoc-documentation-compose-eagerly))
+
 
   (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
 

@@ -317,6 +317,14 @@
 (use-package vertico
   :straight (vertico :type git :host github :repo "minad/vertico" :files (:defaults "extensions/*"))
   :hook (on-first-input . vertico-mode)
+  :bind (:map vertico-map
+              ("C-M-n" . vertico-next-group)
+              ("C-M-p" . vertico-previous-group)
+              ("C->" . embark-become)
+              (">" . embark-become)
+              ("M-*" . embark-act-all)
+              ("M-s o" . embark-collect)
+              ("C-c C-o" . embark-collect))
   :custom
   (vertico-scroll-margin 0) ;; different scroll margin
   (vertico-count 20)        ;; maximum number of candidates to show
@@ -356,11 +364,22 @@
   ;; M-U -> vertico-multiform-unobtrusive
 
   (setq vertico-multiform-commands
-    '((projectile-switch-project grid indexed)))
+    '((projectile-switch-project grid indexed)
+      (consult-dir reverse)
+      (consult-flymake reverse)
+      (consult-history reverse)
+      (consult-completion-in-region reverse)
+      (dired-goto-file unobtrusive)
+      (jinx-correct reverse)
+      (org-roam-node-fined reverse)))
 
   (setq vertico-multiform-categories
     '((file grid)
-      (jinx grid (vertico-grid-annotate . 20))))
+      (jinx grid (vertico-grid-annotate . 20))
+      (embark-keybinding grid)
+      (history reverse)
+      (url reverse)
+      (consult-compile-error reverse)))
 
   (vertico-multiform-mode 1))
 

@@ -148,5 +148,20 @@
               ))
   (add-hook 'python-base-mode-hook 'pet-mode -10))
 
+(use-package tomlparse
+  :straight (:type git :host github :repo "johannes-mueller/tomlparse.el")
+  :init
+  (add-to-list 'treesit-language-source-alist
+               '(toml "https://github.com/tree-sitter-grammars/tree-sitter-toml"))
+  (unless (treesit-language-available-p 'toml)
+    (treesit-install-language-grammar 'toml)))
+
+(use-package uv
+  :straight (uv :type git :host github :repo "johannes-mueller/uv.el")
+  :init
+  (add-to-list 'treesit-language-source-alist '(toml "https://github.com/tree-sitter-grammars/tree-sitter-toml"))
+  (unless (treesit-language-available-p 'toml
+    (treesit-install-language-grammar 'toml))))
+
 (provide 'init-python)
 ;; init-python.el ends here

@@ -133,5 +133,8 @@
 (use-package doric-themes
   :straight (:type git :host github :repo "protesilaos/doric-themes"))
 
+(use-package south-theme
+  :straight (:type git :host github :repo "SophieBosio/south" :branch "main"))
+
 (provide 'init-themes)
 ;; init-themes.el ends here

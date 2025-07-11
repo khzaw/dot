@@ -66,7 +66,7 @@
   :init
   (setq gcmh-idle-delay 5)
   (setq gcmh-high-cons-threshold (* 16 1024 1024))
-  (gcmh-mode))
+  (gcmh-mode 1))
 
 (use-package epkg
   :hook (epkg-list-mode . (lambda () (setq truncate-lines t)))

@@ -46,5 +46,9 @@
   :custom (org-present-startup-folded nil)
   (org-present-hide-stars-in-headings nil))
 
+(use-package dslide
+    :straight (dslide :type git :host github
+                      :repo "positron-solutions/dslide"))
+
 (provide 'init-presentation)
 ;;; init-presentation.el ends here

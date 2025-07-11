@@ -4,11 +4,23 @@
   :straight (:type built-in)
   :defer t
   :config
-  (setopt
-   vc-git-diff-switches '("--patch-with-stat" "--histogram")
-   vc-git-log-switches '("--stat")
-   vc-make-backup-files nil
-   vc-git-print-log-follow t))
+  (setq vc-follow-symlinks t))
+
+(use-package vc-git
+  :after vc
+  :straight (:type built-in)
+  :config
+  (setq vc-git-diff-switches '("--patch-with-stat" "--histogram"))
+  (setq vc-git-log-switches '("--stat"))
+  (setq vc-git-print-log-follow t))
+
+(use-package vc-annotate
+  :after vc
+  :straight (:type built-in)
+  :config
+  (setq vc-annotate-display-mode 'scale)
+  :bind (:map vc-annotate-mode-map
+              ("<tab>" . vc-annotate-toggle-annotation-visibility)))
 
 (use-package magit
   :defer t
@@ -88,14 +100,43 @@
 
 (use-package diff-hl
   :custom (diff-refine 'navigation)
+  :defer
   :after evil-leader
+  :init
+  (setq diff-hl-draw-borders t)
+  (setq-default diff-hl-inline-popup--height 4)
+  (remove-hook 'text-mode-hook #'diff-hl-mode)
+  :bind (:map diff-hl-command-map
+              ("n" . diff-hl-next-hunk)
+              ("p" . diff-hl-previous-hunk)
+              ("[" . nil)
+              ("]" . nil)
+              ("DEL" . diff-hl-revert-hunk)
+              ("<delete>" . diff-hl-revert-hunk)
+              ("SPC" . diff-hl-mark-hunk)
+              :map vc-prefix-map
+              ("n" . diff-hl-next-hunk)
+              ("p" . diff-hl-previous-hunk)
+              ("s" . diff-hl-stage-dwim)
+              ("DEL" . diff-hl-revert-hunk)
+              ("<delete>" . diff-hl-revert-hunk)
+              ("SPC" . diff-hl-mark-hunk))
   :config
-  ;; (diff-hl-flydiff-mode)
-  (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)
-  (setq vc-git-diff-switches '("--histogram"))
+  (diff-hl-flydiff-mode)
+  (put 'diff-hl-inline-popup-hide 'repeat-map 'diff-hl-command-map)
+
+  ;; Recenter to location of diff
+  (advice-add 'diff-hl-next-hunk :after (defun my/diff-hl-recenter (&optional _) (recenter)))
+
+  ;; Set fringe style
+  (setq-default fringes-outside-margins t)
+
+  (with-eval-after-load 'magit
+    (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
+    (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
+
   (setq diff-hl-disable-on-remote t)
-  (global-diff-hl-mode)
+
   (evil-set-command-property 'diff-hl-revert-hunk :jump t)
   (evil-set-command-property 'diff-hl-next-hunk :jump t)
   (evil-set-command-property 'diff-hl-previous-hunk :jump t)
@@ -140,9 +181,9 @@
 (use-package forge
   :after magit
   :init
-  (setq forge-get-repository-verbose t)
   (setq forge-add-default-bindings nil) ;; will be take care of by evil-collection -> forge
   :config
+  (auth-source-pass-enable)
   ;; A topic is an issue or PR and the list of each can be configured
   ;; to display a number of open and closed items.
   ;; Show 100 open topics and never show any closed topics, for both
@@ -369,6 +410,7 @@ branch than the one you're currently working on."
 
 (require 'hydra)
 ;; Resolve diff3 conflicts
+
 (use-package smerge-mode
   :config
   (defhydra unpackaged/smerge-hydra

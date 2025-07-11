@@ -558,5 +558,26 @@
                                    :files ("consult-org-backlinks.el"))
   :bind ("C-c z c" . consult-org-backlinks))
 
+(use-package org-transclusion
+  :straight (:type git :host github :repo "nobiot/org-transclusion")
+  :after org
+  :custom
+  (org-transclusion-add-all-on-activate t)
+  :config
+  (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
+  (require 'org-transclusion-indent-mode)
+  (general-define-key
+   :keymaps '(org-transclusion-map)
+   :states 'normal
+   "RET" #'org-transclusion-open-source
+   "gr" #'org-transclusion-refresh)
+  (general-define-key
+   :keymaps '(org-mode-map)
+   :states 'normal
+   "C-c t a" #'org-transclusion-add
+   "C-c t A" #'org-transclusion-add-all
+   "C-c t t" #'org-transclusion-mode
+   "C-c t r" #'org-transclusion-remove))
+
 (provide 'init-org)
 ;;; init-org.el ends here

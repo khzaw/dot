@@ -76,11 +76,11 @@
   :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
   :bind (:map treesit-fold-mode-map
               ("C-<return>" . treesit-fold-toggle))
-  :hook ((after-init . global-treesit-fold-mode)
-         (after-init . global-treesit-fold-indicators-mode)
-         (after-init . treesit-fold-line-comment-mode))
+  :hook ((prog-mode . treesit-fold-mode)
+         ;; (prog-mode . treesit-fold-indicators-mode)
+         (prog-mode . treesit-fold-line-comment-mode))
   :config
-  (setq treesit-fold-indicators-fringe 'left-fringe)
+  ;; (setq treesit-fold-indicators-fringe 'left-fringe)
   (setq treesit-fold-line-count-show 1))
 
 (use-package symbols-outline
@@ -127,8 +127,8 @@
 ;; Show scope info of block
 (use-package scopeline
   :commands (scopeline-mode)
-  :hook (prog-mode . (lambda () (when (treesit-enabled-p)
-                                  (scopeline-mode))))
+  ;; :hook (prog-mode . (lambda () (when (treesit-enabled-p)
+  ;;                                 (scopeline-mode))))
   :config (setq scopeline-overlay-prefix " ~"
                 scopeline-min-lines 20))
 

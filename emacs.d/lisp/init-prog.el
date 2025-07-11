@@ -4,10 +4,10 @@
   :straight t
   :custom
   (eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-  (eldoc-idle-delay 0.1)
-  (eldoc-echo-area-prefer-doc-buffer nil)
+  (eldoc-echo-area-prefer-doc-buffer t)
   (eldoc-echo-area-display-truncation-message nil)
   :diminish
+  :hook (ielm-mode . eldoc-mode)
   :config
   (eldoc-add-command-completions "paredit-")
   (eldoc-add-command-completions "combobulate-"))
@@ -177,6 +177,21 @@
 
 (use-package scala-ts-mode
   :straight (scala-ts-mode :type git :host github :repo "KaranAhlawat/scala-ts-mode"))
+
+(use-package sbt-mode
+  :commands (sbt-start sbt-command)
+  :config
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+(use-package structurizr-mode
+  :straight (:type git :host github :repo "gilesp/structurizr-mode"))
+
+
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

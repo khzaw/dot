@@ -211,14 +211,21 @@
   :diminish
   :custom
   (echo-keystrokes 0.01)
-  (which-key-idle-delay 0.5)
+  (which-key-sort-order #'which-key-description-order)
+  (which-key-idle-delay 0.8)
   (which-key-idle-secondary-delay 0.1)
+  (which-key-sort-uppercase-first nil)
+  (which-key-add-column-padding 0)
+  (which-key-max-display-columns nil)
+  (which-key-min-display-lines 8)
   (which-key-allow-multiple-replacements t)
   (which-key-max-description-length nil)
+  (which-key-side-window-slot -10)
+  (which-key-show-transient-maps nil)
+  (which-key-dont-use-unicode nil)
   :config
   (push '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1")) which-key-replacement-alist)
   (push '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")) which-key-replacement-alist)
-  (setq which-key-unicode-correction 5)
   :hook (on-first-input . which-key-mode))
 
 (use-package which-key-posframe
