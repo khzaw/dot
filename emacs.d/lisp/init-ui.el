@@ -92,6 +92,7 @@
       scroll-preserve-screen-position t)
 
 (use-package good-scroll
+      :disabled t
       :diminish
       :hook (after-init . good-scroll-mode)
       :bind (([remap next] . good-scroll-up-full-screen)

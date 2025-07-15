@@ -4,7 +4,8 @@
   :custom
   (visual-fill-column-width 150)
   (visual-fill-column-center-text t)
-  (visual-fill-column-split-window-sensibly t)
+  (visual-fill-column-enable-sensible-window-split t)
+  (visual-fill-column-fringes-outside-margins t)
   :config (global-visual-fill-column-mode))
 
 (use-package org
