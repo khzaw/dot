@@ -190,6 +190,7 @@
   (tabspaces-session-auto-restore t))
 
 (use-package pulsar
+  :disabled t
   :hook
   (after-init . pulsar-global-mode)
   (minibuffer-setup . pulsar-pulse-line)

@@ -3,13 +3,6 @@
 ;; useful for debugging themes
 (use-package fontify-face)
 
-(use-package theme
-  :straight (:type built-in)
-  :preface
-  (defvar my/theme-headings
-    '((1 . (variable-pitch semibold 1.2))
-      (t . (variable-pitch semibold 1.1)))))
-
 (use-package kaolin-themes
   :after all-the-icons
   :config
@@ -34,7 +27,7 @@
   (modus-themes-mixed-fonts t)
   (modus-themes-prompts '(bold intense))
   (modus-themes-completions '((t . (extrabold))))
-  (modus-themes-headings my/theme-headings)
+  ;; (modus-themes-headings my/theme-headings)
   :config
     ;; Keep the border of mode line but make it the same color as the background of the mode line
   (setq modus-themes-common-palette-overrides
@@ -60,8 +53,8 @@
 (use-package ef-themes
   :custom
   (ef-themes-mixed-fonts t)
-  (ef-themes-variable-pitch-ui t)
-  (ef-themes-headings my/theme-headings))
+  ;; (ef-themes-headings my/theme-headings)
+  (ef-themes-variable-pitch-ui t))
 
 (use-package hima-theme
   :straight (:type git :host github :repo "meain/hima-theme"))
