@@ -129,5 +129,8 @@
 (use-package south-theme
   :straight (:type git :host github :repo "SophieBosio/south" :branch "main"))
 
+(use-package spacemacs-theme
+  :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
+
 (provide 'init-themes)
 ;; init-themes.el ends here
