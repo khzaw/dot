@@ -95,8 +95,8 @@
   :custom (winner-dont-bind-my-keys t)
   :bind
   (:map evil-window-map
-   ("u" . winner-undo)
-   ("U" . winner-redo)))
+        ("u" . winner-undo)
+        ("U" . winner-redo)))
 
 (use-package burly
   :straight (:type git :host github :repo "alphapapa/burly.el"))
@@ -182,6 +182,35 @@
                          (funcall pgm)))))
 
 
+
+(use-package beframe
+  :straight (:type git :host github :repo "protesilaos/beframe")
+  :config
+  (beframe-mode 1)
+  (defvar consult-buffer-sources)
+  (declare-function consult--buffer-state "consult")
+
+  (with-eval-after-load 'consult
+    (defface beframe-buffer
+      '((t :inherit font-lock-string-face))
+      "Face for `consult' framed buffers.")
+
+    (defun my-beframe-buffer-names-sorted (&optional frame)
+      "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
+With optional argumen FRAME, return the list of buffers of FRAME."
+      (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
+
+    (defvar beframe-consult-source
+      `(:name "Frame-specific buffers (current frame)"
+              :narrow ?F
+              :category buffer
+              :face beframe-buffer
+              :history beframe-history
+              :items ,#'my-beframe-buffer-names-sorted
+              :action ,#'switch-to-buffer
+              :state ,#'consult--buffer-state))
+
+    (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
 (provide 'init-window)
 ;; init-window.el ends here
