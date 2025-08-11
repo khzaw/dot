@@ -20,8 +20,6 @@
     :diminish
     :hook (restclient-mode . restclient-test-mode)))
 
-(use-package verb)
-
 (use-package grpclient
   :if (executable-find "grpcurl")
   :straight (:type git :host github :repo "Prikaz98/grpclient.el")

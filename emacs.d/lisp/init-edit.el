@@ -5,7 +5,8 @@
 (use-package autorevert
   :straight (:type built-in)
   :diminish
-  :hook (on-first-buffer . global-auto-revert-mode))
+  :hook (on-first-buffer . global-auto-revert-mode)
+  :config (setq auto-revert-interval 10))
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)
@@ -381,6 +382,22 @@
         ("a" . [?α])
         ("b" . [?β])
         ("l" . [?λ])))
+
+(use-package easy-kill
+  :straight (:type git :host github :repo "leoliu/easy-kill")
+  :config
+  (global-set-key [remap kill-ring-save] 'easy-kill))
+
+(use-package selected
+  :straight (:type git :host github :repo "Kungsgeten/selected.el")
+  :commands selected-minor-mode
+  :bind (:map selected-keymap
+              ("q" . selected-off)
+              ("u" . upcase-region)
+              ("d" . downcase-region)
+              ("w" . count-words-region)
+              ("m" . apply-macro-to-region-lines))
+  :config (selected-global-mode))
 
 (provide 'init-edit)
 ;; init-edit.el ends here

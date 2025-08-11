@@ -4,15 +4,33 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
+
   (setq treesit-font-lock-level 4)
+
+  ;; Astro recipe
   (let ((astro-recipe (make-treesit-auto-recipe
                        :lang 'astro
                        :ts-mode 'astro-ts-mode
                        :url "https://github.com/virchau13/tree-sitter-astro"
                        :revision "master"
                        :source-dir "src")))
-    (add-to-list 'treesit-auto-recipe-list astro-recipe))
+    (add-to-list 'treesit-auto-recipe-list astro-recipe)
+    (add-to-list 'treesit-auto-langs 'astro))
+
+  ;; D2 recipe
+  (let ((d2-recipe (make-treesit-auto-recipe
+                    :lang 'd2
+                    :ts-mode 'd2-ts-mode
+                    :remap 'd2-mode
+                    :url "https://github.com/ravsii/tree-sitter-d2"
+                    :revision "main"
+                    :source-dir "src"
+                    :ext "\\.d2\\'")))
+    (add-to-list 'treesit-auto-recipe-list d2-recipe)
+    (add-to-list 'treesit-auto-langs 'd2))
+
+    (treesit-auto-add-to-auto-mode-alist 'all)
+
   (global-treesit-auto-mode))
 
 (use-package combobulate
@@ -164,7 +182,5 @@
               ("RET" . fingertip-newline)
               ;; ("M-o" . fingertip-backward-delete)
               ("C-k" . fingertip-kill)))
-
-
 
 (provide 'init-treesitter)

@@ -39,7 +39,6 @@
   ;;   'display-buffer-alist
   ;;   '(("\\*magit: .*" display-buffer-same-window)))
   ;; Suppress the message
-  (setq magit-auto-revert-mode t)
 
   (setq magit-no-message '("Turning on magit-auto-revert-mode..."))
   ;; (setq magit-bury-buffer-function #'quit-window) ;; let shackle handle this

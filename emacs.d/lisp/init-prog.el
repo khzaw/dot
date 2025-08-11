@@ -78,10 +78,10 @@
 (use-package conf-mode
   :straight (:type built-in)
   :mode (rx (or ".list"
-              "CODEOWNERS"
-              (and ".env" (* (and "." (+ word))))
-              (and "." (+ word) "rc"))
-          eos))
+                "CODEOWNERS"
+                (and ".env" (* (and "." (+ word))))
+                (and "." (+ word) "rc"))
+            eos))
 
 (use-package mermaid-mode
   :if (executable-find "mmdc"))
@@ -185,13 +185,19 @@
    'minibuffer-complete-word
    'self-insert-command
    minibuffer-local-completion-map)
-   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-   (setq sbt:program-options '("-Dsbt.supershell=false")))
+  ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+  (setq sbt:program-options '("-Dsbt.supershell=false")))
 
 (use-package structurizr-mode
   :straight (:type git :host github :repo "gilesp/structurizr-mode"))
 
-
+(use-package d2-mode
+  :if (executable-find "d2")
+  :straight (:type git :host github :repo "andorsk/d2-mode")
+  :mode "\\.d2\\'"
+  :config
+  (setq d2-output-format ".png")
+  (setq d2-flags '("--sketch")))
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

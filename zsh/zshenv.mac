@@ -71,6 +71,7 @@ path+=$(brew --prefix)/opt/sqlite/bin
 # personal stuffs
 path+=$HOME/.bin
 # fnm
+export FNM_LOGLEVEL=quiet
 eval "$(fnm env --use-on-cd)"
 
 # path

@@ -162,8 +162,6 @@
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment   "UTF-8")
 
-;; Revert (updatet) buffers automatically when underlying files are changed externally.
-(global-auto-revert-mode t)
 
 ;; Unique buffer names
 (require 'uniquify)
@@ -309,6 +307,8 @@
 
 (use-package man
   :custom (Man-notify-method 'friendly))
+
+(setq eldoc-idle-delay 1.0)
 
 
 

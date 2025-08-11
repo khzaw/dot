@@ -64,7 +64,7 @@
 (use-package gcmh
   :diminish
   :init
-  (setq gcmh-idle-delay 5)
+  (setq gcmh-idle-delay 15)
   (setq gcmh-high-cons-threshold (* 16 1024 1024))
   (gcmh-mode 1))
 

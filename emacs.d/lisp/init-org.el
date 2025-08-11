@@ -4,7 +4,7 @@
   :custom
   (visual-fill-column-width 150)
   (visual-fill-column-center-text t)
-  (visual-fill-column-enable-sensible-window-split t)
+  (visual-fill-column-enable-sensible-window-split nil)
   (visual-fill-column-fringes-outside-margins t)
   :config (global-visual-fill-column-mode))
 
@@ -35,9 +35,8 @@
                  "(provide 'org-version)\n")))
               :pin nil)
   :bind (("C-c C-c" . org-edit-src-exit)
-         :map org-mode-map
-         ("C-c C-v" . verb-command-map)
-         ("M-g i" . consult-org-heading))
+         (:map org-mode-map
+               ("M-g i" . consult-org-heading)))
   :init
   (setq org-directory (file-truename "~/Dropbox/notes"))
   :custom-face
@@ -52,7 +51,6 @@
    (org-mode . word-wrap-whitespace-mode)
    (org-mode . org-latex-preview-auto-mode))
   :config
-
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
@@ -327,6 +325,7 @@
   (use-package org-roam-export :straight nil :after org-roam)
 
   (use-package org-roam-ui
+    :disabled t
     :after org-roam
     :custom
     (org-roam-ui-sync-theme t)
@@ -579,6 +578,11 @@
    "C-c t A" #'org-transclusion-add-all
    "C-c t t" #'org-transclusion-mode
    "C-c t r" #'org-transclusion-remove))
+
+(use-package verb :after org
+  :config
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "C-c C-v") verb-command-map)))
 
 (provide 'init-org)
 ;;; init-org.el ends here
