@@ -132,7 +132,7 @@
 (use-package spacemacs-theme
   :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
 
-(use-package monokai-emacs
+(use-package monokai
   :straight (:type git :host github :repo "oneKelvinSmith/monokai-emacs"))
 
 (provide 'init-themes)
