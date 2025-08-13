@@ -554,6 +554,11 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+(use-package embark-sidebar
+  :straight (:type git :host github :repo "kn66/embark-sidebar.el")
+  :config
+  (embark-sidebar-mode +1))
+
 (use-package consult-xref-stack
   :straight (:type git :host github :repo "brett-lempereur/consult-xref-stack" :branch "main")
   :bind (("C-," . consult-xref-stack-backward)))
