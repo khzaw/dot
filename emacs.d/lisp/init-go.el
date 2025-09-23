@@ -4,13 +4,12 @@
   :config (setq gofmt-command "gofumpt"))
 
 (use-package go-ts-mode
-  ;; :custom (go-ts-mode-indent-offset 8)
   :preface
   (declare-function treesit-node-text "treesit")
   (declare-function go-ts-mode--defun-name "go-ts-mode")
 
   (defun my/go-ts-mode-init ()
-    (setq-local go-test-args "-count 1") ; don't use cached results
+    (setq-local go-test-args "-count=1") ; don't use cached results
     (setq-local treesit-simple-imenu-settings
                 '(("Constant" "\\`const_spec\\'" nil nil)
                   ("Function" "\\`function_declaration\\'" nil nil)

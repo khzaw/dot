@@ -212,5 +212,8 @@ With optional argumen FRAME, return the list of buffers of FRAME."
 
     (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
+(use-package buffer-box
+  :straight (:type git :host github :repo "rougier/buffer-box"))
+
 (provide 'init-window)
 ;; init-window.el ends here
