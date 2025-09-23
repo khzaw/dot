@@ -110,6 +110,7 @@
 (require 'init-others)
 (require 'init-presentation)
 (require 'init-erc)
+(require 'init-ai)
 ;; (require 'init-jira)
 ;; (require 'init-slack)
 
