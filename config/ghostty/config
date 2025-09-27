@@ -14,3 +14,5 @@ mouse-hide-while-typing = true
 adjust-cursor-thickness = 300%
 
 unfocused-split-opacity = 0.9
+
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
