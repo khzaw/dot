@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (use-package solidity-mode
   :bind (:map solidity-mode-map
          ("C-c s g" . solidity-estimate-gas-at-point))

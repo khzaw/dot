@@ -1,4 +1,3 @@
-
 ;; -*- lexical-binding: t; -*-
 
 (defun my-yaml-ts-mode-setup ()

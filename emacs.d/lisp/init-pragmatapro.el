@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (defconst pragmatapro-prettify-symbols-alist
   (mapcar (lambda (s)
             `(,(car s)

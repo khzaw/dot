@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (use-package web-mode
   :config
   (setq web-mode-markup-indent-offset 2)

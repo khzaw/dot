@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; init.el --- Initialization file for Emacs
 ;;; Commentary:

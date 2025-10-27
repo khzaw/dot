@@ -23,7 +23,6 @@
   :straight (:type git :host github :repo "protesilaos/modus-themes")
   :custom
   (modus-themes-bold-constructs t)
-  (modus-themes-custom-auto-reload t)
   (modus-themes-mixed-fonts t)
   (modus-themes-prompts '(bold intense))
   (modus-themes-completions '((t . (extrabold))))
@@ -46,9 +45,9 @@
        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
-
-  :hook
-  (after-init . (lambda () (load-theme 'modus-vivendi t))))
+  ;; :hook
+  ;; (after-init . (lambda () (load-theme 'modus-vivendi t)))
+  )
 
 (use-package ef-themes
   :custom
@@ -67,8 +66,6 @@
 
 (use-package almost-mono-themes
     :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
-
-(use-package grandshell-theme)
 
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
@@ -109,11 +106,8 @@
   (catppuccin-set-color 'mantle "#000000" 'mocha)
   (catppuccin-set-color 'crust "#000000" 'mocha)
 
-  ;; (load-theme 'catppuccin t)
+  (load-theme 'catppuccin t)
   )
-
-(use-package nord-theme
-  :straight (:type git :host github :repo "nordtheme/emacs" :local-repo "nordtheme"))
 
 (use-package nothing-theme
   :straight (:type git :host github :repo "jaredgorski/nothing.el"))

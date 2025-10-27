@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;; Native compilation stuff
 (when (featurep 'native-compile)
   (defvar package-native-compile)
