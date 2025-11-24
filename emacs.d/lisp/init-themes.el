@@ -111,7 +111,7 @@
   (catppuccin-set-color 'mantle "#000000" 'mocha)
   (catppuccin-set-color 'crust "#000000" 'mocha)
 
-  (load-theme 'catppuccin t)
+  ;; (load-theme 'catppuccin t)
   )
 
 (use-package nothing-theme
@@ -120,7 +120,8 @@
 (use-package berrys-theme)
 
 (use-package sexy-monochrome-theme
-  :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
+  :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme")
+  :config (load-theme 'sexy-monochrome t))
 
 (use-package doric-themes
   :straight (:type git :host github :repo "protesilaos/doric-themes"))
