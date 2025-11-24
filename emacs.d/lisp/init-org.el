@@ -49,7 +49,7 @@
                  (visual-fill-column-mode)))
    (org-mode . turn-on-org-cdlatex)
    (org-mode . word-wrap-whitespace-mode)
-   (org-mode . org-latex-preview-auto-mode))
+   (org-mode . org-latex-preview-mode))
   :config
 
   (setq org-todo-keywords
@@ -536,7 +536,10 @@
          ("C-c l d" . org-remark-delete)))
 
 (use-package org-drill
-  :straight (:type git :host gitlab :repo "phillord/org-drill"))
+  :disabled t
+  :straight (:type git :host gitlab :repo "phillord/org-drill")
+  :after org)
+
 
 ;; (use-package org-fc
 ;;   :straight (:type git :repo "https://git.sr.ht/~l3kn/org-fc" :files (:defaults "awk" "demo.org"))

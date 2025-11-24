@@ -3,6 +3,7 @@
 (display-time-mode 1) ;; display time in modeline
 
 (use-package doom-modeline
+  :disabled t
   :hook (after-init . doom-modeline-mode)
   :config
   (setq doom-modeline-indent-info nil
@@ -46,12 +47,12 @@
   (setq telephone-line-height 24)
   (telephone-line-mode 1))
 
-;; (use-package mood-line
-;;   :straight (:type git :host gitlab :repo "jessieh/mood-line")
-;;   :config
-;;   (setq mood-line-format mood-line-format-default)
+(use-package mood-line
+  :straight (:type git :host gitlab :repo "jessieh/mood-line")
+  :config
+  (setq mood-line-format mood-line-format-default)
 ;;   ;; (setq mood-line-glyph-alist mood-line-glyphs-unicode)
-;;   (mood-line-mode 1))
+  (mood-line-mode 1))
 
 (use-package keycast
     ;; :hook (after-init . keycast-mode)

@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
+(use-package nerd-icons
+  :straight (:type git :host github :repo "rainstormstudio/nerd-icons.el"))
+
 (use-package dired
   :straight (:type built-in)
   :commands (dired)
@@ -70,7 +73,7 @@
    ("S-TAB" . dired-subtree-remove))
   :config (setq dired-subtree-use-backgrounds nil))
 
-(use-package dirvish)
+(use-package dirvish :after (nerd-icons))
 
 (use-package casual
   :straight (:type git :host github :repo "kickingvegas/casual" :files (:defaults "lisp/*.el"))

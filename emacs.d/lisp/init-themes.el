@@ -19,41 +19,46 @@
         (doom-themes-treemacs-config)))
   (doom-themes-org-config))
 
-(use-package modus-themes
-  :straight (:type git :host github :repo "protesilaos/modus-themes")
-  :custom
-  (modus-themes-bold-constructs t)
-  (modus-themes-mixed-fonts t)
-  (modus-themes-prompts '(bold intense))
-  (modus-themes-completions '((t . (extrabold))))
-  ;; (modus-themes-headings my/theme-headings)
-  :config
-    ;; Keep the border of mode line but make it the same color as the background of the mode line
-  (setq modus-themes-common-palette-overrides
-        '((border-mode-line-active bg-mode-line-active)
-          (border-mode-line-inactive bg-mode-line-inactive)
-          (fringe unspecified)))
+;; (use-package modus-themes
+;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
+;;   :custom
+;;   (modus-themes-bold-constructs t)
+;;   (modus-themes-mixed-fonts t)
+;;   (modus-themes-prompts '(bold intense))
+;;   (modus-themes-completions '((t . (extrabold))))
+;;   ;; (modus-themes-headings my/theme-headings)
+;;   :config
+;;     ;; Keep the border of mode line but make it the same color as the background of the mode line
+;;   (setq modus-themes-common-palette-overrides
+;;         '((border-mode-line-active bg-mode-line-active)
+;;           (border-mode-line-inactive bg-mode-line-inactive)
+;;           (fringe unspecified)))
 
-  (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
+;;   (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
 
-  (defun my-modus-themes-invisible-dividers (_theme)
-    "Make window dividers for THEME invisible."
-    (let ((bg (face-background 'default)))
-      (custom-set-faces
-       `(fringe ((t :background ,bg :foreground ,bg)))
-       `(window-divider ((t :background ,bg :foreground ,bg)))
-       `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
-       `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
-  (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
-  ;; :hook
-  ;; (after-init . (lambda () (load-theme 'modus-vivendi t)))
-  )
+;;   (defun my-modus-themes-invisible-dividers (_theme)
+;;     "Make window dividers for THEME invisible."
+;;     (let ((bg (face-background 'default)))
+;;       (custom-set-faces
+;;        `(fringe ((t :background ,bg :foreground ,bg)))
+;;        `(window-divider ((t :background ,bg :foreground ,bg)))
+;;        `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
+;;        `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
+;;   (add-hook 'enable-theme-functions #'my-modus-themes-invisible-dividers)
+;;   ;; :hook
+;;   ;; (after-init . (lambda () (load-theme 'modus-vivendi t)))
+;;   )
 
-(use-package ef-themes
-  :custom
-  (ef-themes-mixed-fonts t)
-  ;; (ef-themes-headings my/theme-headings)
-  (ef-themes-variable-pitch-ui t))
+;; (use-package modus-themes)
+;; (use-package ef-themes)
+
+;; (use-package ef-themes
+;;   :init
+;;   (ef-themes-take-over-modus-themes-mode 1)
+;;   :config
+;;   (setq modus-themes-mixed-fonts t)
+;;   (setq modus-themes-bold-constructs t)
+;;   (setq modus-themes-prompts '(bold intense)))
 
 (use-package hima-theme
   :straight (:type git :host github :repo "meain/hima-theme"))
@@ -125,6 +130,16 @@
 
 (use-package spacemacs-theme
   :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
+
+(use-package modus-themes
+  :config
+  (setq modus-themes-common-palette-overrides (
+                                               ;; Make the mode line border-less
+                                               (border-mode-line-active unspecified)
+                                               (border-mode-line-inactive unspecified)
+
+        ;; Make the theme look less colorful/intense
+        ,@modus-themes-preset-overrides-faint)))
 
 (provide 'init-themes)
 ;; init-themes.el ends here

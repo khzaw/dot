@@ -86,7 +86,8 @@
      py-shell-mode
      "^\\*eshell.*\\*$" eshell-mode
      "^\\*term.*\\*$" term-mode
-     "^\\*shell.*\\*$" shell-mode)))
+     "^\\*shell.*\\*$" shell-mode))
+  (popper-group-function #'popper-group-by-projectile))
 
 (use-package winner-mode
   :straight (:type built-in)

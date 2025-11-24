@@ -333,4 +333,8 @@ of `flymake-eslint-executable-name.'"
              :host github)
   :commands (eglot-menu-reconnect))
 
+(use-package eglot-header-line
+    :after eglot
+    :straight (:repo "soerlemans/eglot-header-line" :type git :host github))
+
 (provide 'init-eglot)
