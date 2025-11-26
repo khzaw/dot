@@ -132,15 +132,7 @@
 (use-package spacemacs-theme
   :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
 
-(use-package modus-themes
-  :config
-  (setq modus-themes-common-palette-overrides (
-                                               ;; Make the mode line border-less
-                                               (border-mode-line-active unspecified)
-                                               (border-mode-line-inactive unspecified)
-
-        ;; Make the theme look less colorful/intense
-        ,@modus-themes-preset-overrides-faint)))
+(use-package modus-themes)
 
 (provide 'init-themes)
 ;; init-themes.el ends here

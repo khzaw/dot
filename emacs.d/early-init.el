@@ -7,7 +7,7 @@
 
   (setq native-comp-speed 2
         ;; Enable ahead-of-time compilation when installing a package
-        package-native-compile t
+        ;; package-native-compile t
         ;; Silence compiler warnings
         native-comp-async-report-warnings-errors nil
         ;; Compile loaded packages asynchronously
@@ -18,8 +18,7 @@
 
         warning-suppress-log-types '((comp))))
 
-(setq native-comp-enable-subr-trampolines nil
-      native-comp-jit-compilation nil)
+(setq native-comp-enable-subr-trampolines nil)
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum
