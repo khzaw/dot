@@ -399,5 +399,40 @@
               ("m" . apply-macro-to-region-lines))
   :config (selected-global-mode))
 
+;; Hide indicators for visual-line-mode (word processor style wrapping)
+(setq-default visual-line-fringe-indicators '(nil nil))
+
+;; Hide indicators for standard line wrapping (truncation off)
+(setq-default fringe-indicator-alist
+              (delq (assq 'continuation fringe-indicator-alist)
+                    fringe-indicator-alist))
+
+(defun toggle-continuation-indicators ()
+  "Toggle the visibility of continuation arrows in the fringe."
+  (interactive)
+  ;; Define what the arrows look like (standard curly arrows)
+  (let ((indicators '(left-curly-arrow right-curly-arrow)))
+
+    ;; Check if they are currently hidden
+    (if (or (equal visual-line-fringe-indicators '(nil nil))
+            (not (assq 'continuation fringe-indicator-alist)))
+
+        ;; If hidden, SHOW them
+        (progn
+          (setq visual-line-fringe-indicators indicators)
+          (add-to-list 'fringe-indicator-alist (cons 'continuation indicators))
+          (message "Continuation indicators enabled"))
+
+      ;; If visible, HIDE them
+      (progn
+        (setq visual-line-fringe-indicators '(nil nil))
+        (setq fringe-indicator-alist
+              (delq (assq 'continuation fringe-indicator-alist)
+                    fringe-indicator-alist))
+        (message "Continuation indicators disabled")))
+
+    ;; Update the screen immediately
+    (force-window-update t)))
+
 (provide 'init-edit)
 ;; init-edit.el ends here
