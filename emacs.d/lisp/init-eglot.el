@@ -1,7 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package eglot
-  :straight (:host github :repo "joaotavora/eglot" :tag "v1.18")
   :commands (eglot eglot-rename eglot-format-buffer eglot-ensure)
   :hook
   ((eglot-managed-mode . my/eglot-eldoc-settings))
