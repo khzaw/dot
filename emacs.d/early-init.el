@@ -1,4 +1,5 @@
 ;;; -*- lexical-binding: t -*-
+(setq package-enable-at-startup nil)
 ;; Native compilation stuff
 (when (featurep 'native-compile)
   (defvar package-native-compile)
