@@ -111,5 +111,8 @@ are defining or executing a macro."
 
 ;; (define-key global-map (kbd "C-g") #'khz/keyboard-quit-dwim)
 
+(when (eq system-type 'gnu/linux)
+  (setq select-enable-clipboard t))
+
 (provide 'init-bindings)
 ;;; init-bindings.el ends here

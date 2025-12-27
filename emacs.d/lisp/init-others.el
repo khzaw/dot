@@ -184,14 +184,22 @@
     (require 'edraw-org)
     (edraw-org-setup-default)))
 
-  (use-package reader
-    :straight '(reader
-                :type git
-                :host codeberg
-                :repo "divyaranjan/emacs-reader"
-                :files ("*.el" "render-core.so")
-                :pre-build ("make" "all")))
+  ;(use-package reader
+   ; :straight '(reader
+    ;            :type git
+     ;           :host codeberg
+      ;          :repo "divyaranjan/emacs-reader"
+       ;         :files ("*.el" "render-core.so")
+        ;        :pre-build ("make" "all")))
 
+
+
+(pixel-scroll-precision-mode 1)
+(setq pixel-scroll-precision-interpolation-total-time 0.1 ; faster response
+      pixel-scroll-precision-use-momentum t)
+(setq mwheel-coalesce-scroll-events nil)
+
+(use-package sudo-edit)
 
 
 (provide 'init-others)

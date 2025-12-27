@@ -91,6 +91,9 @@
 ;; No toolbar
 (tool-bar-mode 0)
 
+(if (eq window-system 'pgtk)
+    (add-to-list 'default-frame-alist '(undecorated . t)))
+
 ;; No menu bar
 (if (display-graphic-p)
     (menu-bar-mode t) ;; When nil, focus problem on OSX
@@ -118,7 +121,10 @@
 
 ;; Linux specific
 (when (eq system-type 'gnu/linux)
-  (setq x-super-keysym 'meta))
+  (setq x-super-keysym 'super)
+  (setq pgtk-super-keysym 'super)
+  (setq x-meta-keysym 'meta)
+  (setq pgtk-meta-keysym 'meta))
 
 ;; Mac specific
 (when (eq system-type 'darwin)
@@ -310,8 +316,6 @@
   :custom (Man-notify-method 'friendly))
 
 (setq eldoc-idle-delay 1.0)
-
-
 
 
 (provide 'init-basics)

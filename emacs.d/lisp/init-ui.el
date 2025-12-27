@@ -14,7 +14,7 @@
 ;; UI
 (when (eq system-type 'gnu/linux)
   (setq-default line-spacing 0.05)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'medium :height 90)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'medium :height 100)
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
@@ -51,10 +51,10 @@
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
-  (use-package display-line-numbers
-    :straight (:type built-in)
-    ;; :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
-    :init (setq display-line-numbers-width-start t))
+    (use-package display-line-numbers
+      :straight (:type built-in)
+      ;; :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
+      :init (setq display-line-numbers-width-start t))
   (use-package linum-off
     :demand t
     :defines linum-format
@@ -92,11 +92,11 @@
       scroll-preserve-screen-position t)
 
 (use-package good-scroll
-      :disabled t
-      :diminish
-      :hook (after-init . good-scroll-mode)
-      :bind (([remap next] . good-scroll-up-full-screen)
-             ([remap prior] . good-scroll-down-full-screen)))
+  :disabled t
+  :diminish
+  :hook (after-init . good-scroll-mode)
+  :bind (([remap next] . good-scroll-up-full-screen)
+         ([remap prior] . good-scroll-down-full-screen)))
 
 ;; Smooth scrolling over images
 (use-package iscroll
@@ -180,7 +180,7 @@
   :straight (:type git :host github :repo "mclear-tools/tabspaces")
   ;; :hook (after-init . tabspaces-mode)
   :commands (tabspaces-switch-or-create-workspace
-              tabspaces-open-or-create-project-and-workspace)
+             tabspaces-open-or-create-project-and-workspace)
   :custom
   (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
@@ -248,10 +248,9 @@
 
 (use-package spacious-padding
   :config
-  (setq spacious-padding-widths
-        (list :mode-line-width 4
-              :tab-width 0
-              :right-divider-width 0))
+  (setq spacious-padding-widths (list :mode-line-width 4
+                                      :tab-width 0
+                                      :right-divider-width 0))
   (setq spacious-padding-subtle-mode-line
         '(:mode-line-active shadow :mode-line-inactive line-number))
   (spacious-padding-mode t))
