@@ -199,5 +199,10 @@
   (setq d2-output-format ".png")
   (setq d2-flags '("--sketch")))
 
+(use-package kdl-mode
+  :hook (kdl-mode . (lambda ()
+                      (setq tab-width 4)
+                      (setq indent-tabs-mode nil))))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
