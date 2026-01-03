@@ -17,7 +17,8 @@
       (progn
         (setq doom-themes-treemacs-theme "doom-atom")
         (doom-themes-treemacs-config)))
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (load-theme 'doom-meltbus t))
 
 ;; (use-package modus-themes
 ;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
@@ -120,8 +121,7 @@
 (use-package berrys-theme)
 
 (use-package sexy-monochrome-theme
-  :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme")
-  :config (load-theme 'sexy-monochrome t))
+  :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
 
 (use-package doric-themes
   :straight (:type git :host github :repo "protesilaos/doric-themes"))
@@ -133,6 +133,12 @@
   :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
 
 (use-package modus-themes)
+
+(use-package mindre-theme
+  :custom
+  (mindre-use-more-bold t)
+  (mindre-use-more-fading t)
+  (mindre-use-faded-lisp-parents t))
 
 (provide 'init-themes)
 ;; init-themes.el ends here

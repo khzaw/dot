@@ -243,10 +243,8 @@
 (use-package rg)
 
 (use-package editorconfig
-  :defer 1
   :diminish
-  :custom
-  (editorconfig-lisp-use-default-indent t)
+  :custom (editorconfig-lisp-use-default-indent t)
   :hook (after-init . editorconfig-mode))
 
 ;; History
