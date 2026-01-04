@@ -2,6 +2,7 @@
 
 (use-package treesit-auto
   :custom
+  :hook (after-init . global-transit-auto-mode)
   (treesit-auto-install 'prompt)
   :config
 
@@ -29,9 +30,7 @@
     (add-to-list 'treesit-auto-recipe-list d2-recipe)
     (add-to-list 'treesit-auto-langs 'd2))
 
-    (treesit-auto-add-to-auto-mode-alist 'all)
-
-  (global-treesit-auto-mode))
+    (treesit-auto-add-to-auto-mode-alist 'all))
 
 (use-package combobulate
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")

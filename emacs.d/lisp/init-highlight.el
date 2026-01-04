@@ -31,12 +31,13 @@
               show-paren-when-point-in-periphery t)
   :config (setq show-paren-delay 0))
 
+;; highlight colors on hex, rgba ., etc
 (use-package colorful-mode
   :straight (:type git :host github :repo "DevelopmentCool2449/colorful-mode")
+  :hook (on-first-input . global-colorful-mode)
   :config
   (add-to-list 'global-colorful-modes 'help-mode)
-  (add-to-list 'global-colorful-modes 'helpful-mode)
-  (global-colorful-mode))
+  (add-to-list 'global-colorful-modes 'helpful-mode))
 
 (use-package prism
   :diminish
@@ -53,8 +54,8 @@
   (highlight-indent-guides-method 'character)
   :config
   (setq highlight-indent-guides-character ?\┆) ; Example: light vertical bar unicode
-  (set-face-attribute 'highlight-indent-guides-odd-face nil :foreground "gray40")
-  (set-face-attribute 'highlight-indent-guides-even-face nil :foreground "gray30"))
+  (set-face-attribute 'highlight-indent-guides-odd-face nil :foreground "gray60")
+  (set-face-attribute 'highlight-indent-guides-even-face nil :foreground "gray70"))
 
 (provide 'init-highlight)
 ;;; init-highlight.el ends here

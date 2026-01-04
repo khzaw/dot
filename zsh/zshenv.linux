@@ -3,6 +3,6 @@ export LC_ALL=en_US.UTF-8
 
 path+=($HOME/.local/bin)
 
-path+=($HOME/.cargon/bin)
+path+=($HOME/.cargo/bin)
 
 export GITHUB_TOKEN=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

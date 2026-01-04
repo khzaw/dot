@@ -67,6 +67,9 @@
               "Cache git executable path for current session."
               (when-let (path (executable-find magit-git-executable t))
                 (setq-local magit-git-executable path))))
+  
+  
+  (add-hook 'magit-status-sections-hook #'magit-insert-worktrees t)
 
   ;; Just type C-c C-d to show the diff at committing
   (remove-hook 'server-switch-hook 'magit-commit-diff)

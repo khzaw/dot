@@ -13,8 +13,8 @@
          ("C--" . er/contract-region)
          ("C-(" . er/mark-outside-pairs)
          (:map evil-visual-state-map
-          ("v" . er/expand-region)
-          ("V" . er/contract-region)))
+               ("v" . er/expand-region)
+               ("V" . er/contract-region)))
   :config
   (defun treesit-mark-bigger-node ()
     "Use tree-sitter to mark regions"
@@ -151,11 +151,11 @@
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)
   :bind (:map hl-todo-mode-map
-         ("C-! h p" . hl-todo-previous)
-         ("C-! h n" . hl-todo-next)
-         ("C-! h o" . hl-todo-occur)
-         ("C-! h r" . hl-todo-rg-project)
-         ("C-! h R" . hl-todo-rg))
+              ("C-! h p" . hl-todo-previous)
+              ("C-! h n" . hl-todo-next)
+              ("C-! h o" . hl-todo-occur)
+              ("C-! h r" . hl-todo-rg-project)
+              ("C-! h R" . hl-todo-rg))
   :config
 
   (defun hl-todo-rg (regexp &optional files dir)
@@ -170,7 +170,7 @@
                (read-directory-name "Base directory: " nil default-directory t)))))
     (rg regexp files dir))
 
-   (defun hl-todo-rg-project ()
+  (defun hl-todo-rg-project ()
     "Use `rg' to find all TODO or similar keywords in current project."
     (interactive)
     (unless (require 'rg nil t)
@@ -178,12 +178,11 @@
     (rg-project (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp)) "everything")))
 
 (use-package writeroom-mode
-  :bind
-  (("C-c w r" . writeroom-mode)
-   (:map writeroom-mode-map
-         ("C-M-<" . writeroom-decrease-width)
-         ("C-M->" . writeroom-increase-width)
-         ("C-M-=" . writeroom-adjust-width)))
+  :bind (("C-c w r" . writeroom-mode)
+         (:map writeroom-mode-map
+               ("C-M-<" . writeroom-decrease-width)
+               ("C-M->" . writeroom-increase-width)
+               ("C-M-=" . writeroom-adjust-width)))
 
   :config
   (setq writeroom-width 140
@@ -315,8 +314,7 @@
              dtrt-indent-undo
              dtrt-indent-diagnosis
              dtrt-indent-highlight)
-  :config
-  (dtrt-indent-global-mode))
+  :hook (after-init . dtrt-indent-global-mode))
 
 (use-package transform-symbol-at-point
   :straight (:type git :host github :repo "waymondo/transform-symbol-at-point")

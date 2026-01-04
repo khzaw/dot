@@ -582,6 +582,9 @@
    "C-c t t" #'org-transclusion-mode
    "C-c t r" #'org-transclusion-remove))
 
+(use-package org-transclusion-blocks
+  :straight (:type git :host github :repo "gggion/org-transclusion-blocks"))
+
 (use-package verb :after org
   :config
   (with-eval-after-load 'org
