@@ -145,17 +145,8 @@
   :config (setq leetcode-prefer-language "python3"
                 leetcode-prefer-sql "mysql"
                 leetcode-save-solutions t
-                leetcode-directory "~/Code/algorithms/leetcode"))
-
-(define-advice zone (:around (orig-fn &rest _) "zone-all-buffer")
-  (save-window-excursion
-    (let ((op-win (car (window-list))))
-      (mapc (lambda (w)
-              (with-selected-window w
-                (switch-to-buffer "*zone*")))
-            (cdr (window-list)))
-      (with-selected-window op-win
-        (funcall orig-fn)))))
+                leetcode-directory "~/Code/algorithms/leetcode")
+  :commands (leetcode))
 
 (use-package leetcode-emacs
   :disabled t
@@ -168,6 +159,7 @@
 
 (use-package monkeytype
   :straight (:type git :host github :repo "jpablobr/emacs-monkeytype"))
+
 
 (use-package fretboard
   :straight (:host github :repo "skyefreeman/fretboard.el"))
@@ -195,11 +187,11 @@
 
 
 (pixel-scroll-precision-mode 1)
+
 (setq pixel-scroll-precision-interpolation-total-time 0.1 ; faster response
       pixel-scroll-precision-use-momentum t)
 (setq mwheel-coalesce-scroll-events nil)
 
 (use-package sudo-edit)
-
 
 (provide 'init-others)
