@@ -1,20 +1,38 @@
 ;; -*- lexical-binding: t; -*-
 
-(use-package treesit-auto
-  :custom
-  :hook (after-init . global-transit-auto-mode)
-  (treesit-auto-install 'prompt)
+(use-package treesit
+  :straight (:type built-in)
+  :init (setq treesit-font-lock-level 4)
   :config
+    ;; --- PERFORMANCE FIX ---
+  ;; This cache ensures that checking if a grammar is available is near-instant.
+  ;; This neutralizes the lag caused by treesit-auto checking 80+ languages repeatedly.
+  (defvar khz/treesit-lang-cache
+    (make-hash-table :test 'equal)
+    "Cache the expensive computation of treesit language availability.")
 
-  (setq treesit-font-lock-level 4)
+  (defun khz/treesit-language-available-p (fn lang &rest rest)
+    "Caching around the CPU expensive `treesit-language-available-p'."
+    (let ((cached-value (gethash lang khz/treesit-lang-cache 'miss)))
+      (if (eq 'miss cached-value)
+          (let ((value (apply fn lang rest)))
+            (puthash lang value khz/treesit-lang-cache)
+            value)
+        cached-value)))
 
+  (advice-add #'treesit-language-available-p :around #'khz/treesit-language-available-p))
+
+(use-package treesit-auto
+  :custom (treesit-auto-install 'prompt)
+  :config
   ;; Astro recipe
   (let ((astro-recipe (make-treesit-auto-recipe
                        :lang 'astro
                        :ts-mode 'astro-ts-mode
                        :url "https://github.com/virchau13/tree-sitter-astro"
                        :revision "master"
-                       :source-dir "src")))
+                       :source-dir "src"
+                       :ext "\\.astro\\'")))
     (add-to-list 'treesit-auto-recipe-list astro-recipe)
     (add-to-list 'treesit-auto-langs 'astro))
 
@@ -30,7 +48,8 @@
     (add-to-list 'treesit-auto-recipe-list d2-recipe)
     (add-to-list 'treesit-auto-langs 'd2))
 
-    (treesit-auto-add-to-auto-mode-alist 'all))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 (use-package combobulate
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
