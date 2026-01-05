@@ -14,6 +14,7 @@
   :straight (:type git :host github :repo "xenodium/agent-shell"))
 
 (use-package eca
+  :disabled t
   :straight (:type git :host github :repo "editor-code-assistant/eca-emacs" :files ("*.el")))
 
 (use-package gptel-commit
@@ -46,6 +47,12 @@ Follow good Git style:
   (with-eval-after-load 'magit
     (define-key git-commit-mode-map (kbd "C-c g") #'gptel-commit)
     (define-key git-commit-mode-map (kbd "C-c G") #'gptel-commit-rationale)))
+
+(use-package gptel-forge
+  :disabled t
+  :straight (:type git :host github :repo "ArthurHeymans/gptel-forge")
+  :after (gptel forge)
+  :config (gptel-forge-install))
 
 (provide 'init-ai)
 ;;; init-ai.el ends here

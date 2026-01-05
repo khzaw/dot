@@ -67,8 +67,8 @@
               "Cache git executable path for current session."
               (when-let (path (executable-find magit-git-executable t))
                 (setq-local magit-git-executable path))))
-  
-  
+
+
   (add-hook 'magit-status-sections-hook #'magit-insert-worktrees t)
 
   ;; Just type C-c C-d to show the diff at committing
@@ -499,9 +499,5 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :if (executable-find "jj")
   :straight (:host github :repo "bolivier/jj-mode.el"))
 
-(use-package gptel-forge
-  :straight (:type git :host github :repo "ArthurHeymans/gptel-forge")
-  :after forge
-  :config (gptel-forge-install))
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
