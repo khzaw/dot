@@ -9,16 +9,27 @@
   (setq kaolin-themes-modeline-border nil)
   (kaolin-treemacs-theme))
 
+
 (use-package doom-themes
-  :config (setq doom-themes-enable-italic nil
-                doom-themes-enable-bold t)
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic nil)
+  (load-theme 'doom-meltbus t)
+  (custom-set-faces
+   `(evil-ex-search ((t (:inherit isearch))))
+   `(lazy-highlight ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'grey)))))
+
+   `(orderless-match-face-0 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base8) :weight bold))))
+   `(orderless-match-face-1 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base6) :weight bold))))
+   `(orderless-match-face-2 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base8) :weight bold))))
+   `(orderless-match-face-3 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base6) :weight bold)))))
+
   (doom-themes-visual-bell-config)
-  (if (display-graphic-p)
-      (progn
-        (setq doom-themes-treemacs-theme "doom-atom")
-        (doom-themes-treemacs-config)))
   (doom-themes-org-config)
-  (load-theme 'doom-meltbus t))
+
+  (when (display-graphic-p)
+    (setq doom-themes-treemacs-theme "doom-atom")
+    (doom-themes-treemacs-config)))
 
 ;; (use-package modus-themes
 ;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
