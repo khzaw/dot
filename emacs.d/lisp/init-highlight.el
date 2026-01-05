@@ -57,5 +57,13 @@
   (set-face-attribute 'highlight-indent-guides-odd-face nil :foreground "gray60")
   (set-face-attribute 'highlight-indent-guides-even-face nil :foreground "gray70"))
 
+(use-package visual-shorthands
+  :straight (:type git :host github :repo "gggion/visual-shorthands.el")
+  :hook (on-first-buffer . global-visual-shorthands-mode)
+  :config
+  (add-hook 'visual-shorthands-mode-hook (lambda ()
+                                           (when visual-shorthands-mode
+                                             (add-hook 'after-save-hook #'visual-shorthands-refresh nil t)))))
+
 (provide 'init-highlight)
 ;;; init-highlight.el ends here
