@@ -21,7 +21,7 @@
 
   (when (eq system-type 'darwin)
     (setq-default line-spacing -0.1)
-    (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'light :height 140)
+    (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'light :height 120)
     (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
     (set-face-attribute 'variable-pitch :font "Berkeley Mono" :weight 'normal :height 1.0)))
 
@@ -300,14 +300,6 @@
 
 (set-frame-parameter nil 'alpha '(100 100))
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
-
-(use-package holo-layer
-  :disabled t
-  :straight (holo-layer :type git :host github :repo "manateelazycat/holo-layer" :files ("*" (:exclude (".git" "test"))))
-  :commands holo-layer-enable
-  :hook (after-init . holo-layer-enable)
-  :init
-  (setq holo-layer-enable-cursor-animation t))
 
 (use-package show-font)
 

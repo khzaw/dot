@@ -499,5 +499,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :if (executable-find "jj")
   :straight (:host github :repo "bolivier/jj-mode.el"))
 
+(use-package gptel-forge
+  :straight (:type git :host github :repo "ArthurHeymans/gptel-forge")
+  :after forge
+  :config (gptel-forge-install))
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
