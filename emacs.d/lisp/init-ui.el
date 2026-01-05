@@ -15,7 +15,7 @@
 (defun khz/setup-font-faces ()
   (when (eq system-type 'gnu/linux)
     (setq-default line-spacing 0.01)
-    (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 100)
+    (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 110)
     (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
     (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
@@ -26,18 +26,19 @@
     (set-face-attribute 'variable-pitch :font "Berkeley Mono" :weight 'normal :height 1.0)))
 
 (add-hook 'server-after-make-frame-hook (lambda () (khz/setup-font-faces)))
-;; UI
-;; (when (eq system-type 'gnu/linux)
-;;   (setq-default line-spacing 0.05)
-;;   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 100)
-;;   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-;;   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
 
-;; (when (eq system-type 'darwin)
-;;   (setq-default line-spacing -0.1)
-;;   (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'light :height 140)
-;;   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-;;   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
+;; UI
+(when (eq system-type 'gnu/linux)
+  (setq-default line-spacing 0.05)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 110)
+  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
+
+(when (eq system-type 'darwin)
+  (setq-default line-spacing -0.1)
+  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'light :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0))
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
