@@ -15,14 +15,20 @@
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic nil)
   (load-theme 'doom-meltbus t)
-  (custom-set-faces
-   `(evil-ex-search ((t (:inherit isearch))))
-   `(lazy-highlight ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'grey)))))
 
-   `(orderless-match-face-0 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base8) :weight bold))))
-   `(orderless-match-face-1 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base6) :weight bold))))
-   `(orderless-match-face-2 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base8) :weight bold))))
-   `(orderless-match-face-3 ((t (:foreground ,(doom-color 'base0) :background ,(doom-color 'base6) :weight bold)))))
+  ;; Fix Gnus cycle for meltbus
+  (custom-theme-set-faces
+   'doom-meltbus
+   '(gnus-group-news-low ((t (:inherit gnus-group-mail-1))))
+   '(gnus-group-news-low-empty ((t (:inherit gnus-group-news-low :weight normal))))
+   ;; Monochrome orderless faces - these are PART of the theme
+   '(orderless-match-face-0 ((t (:foreground "black" :background "#efefef" :weight bold))))
+   '(orderless-match-face-1 ((t (:foreground "black" :background "#acacac" :weight bold))))
+   '(orderless-match-face-2 ((t (:foreground "black" :background "#cecece" :weight bold))))
+   '(orderless-match-face-3 ((t (:foreground "black" :background "#8a8a8a" :weight bold))))
+   ;; Monochrome search highlights
+   '(lazy-highlight ((t (:foreground "black" :background "#686868" :weight bold))))
+   '(evil-ex-search ((t (:inherit isearch)))))
 
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
@@ -30,6 +36,9 @@
   (when (display-graphic-p)
     (setq doom-themes-treemacs-theme "doom-atom")
     (doom-themes-treemacs-config)))
+
+
+
 
 ;; (use-package modus-themes
 ;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
@@ -144,12 +153,6 @@
   :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
 
 (use-package modus-themes)
-
-(use-package mindre-theme
-  :custom
-  (mindre-use-more-bold t)
-  (mindre-use-more-fading t)
-  (mindre-use-faded-lisp-parents t))
 
 (provide 'init-themes)
 ;; init-themes.el ends here
