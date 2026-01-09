@@ -52,6 +52,7 @@
    (org-mode . org-latex-preview-mode))
   :config
 
+  (setq org-startup-with-latex-preview t)
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
   (setq org-tags-alist '(("inbox" . ?i)))
