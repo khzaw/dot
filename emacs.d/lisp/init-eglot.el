@@ -115,8 +115,8 @@ and CONFIG is the configuration plist for that server.")
                                :initializationOptions
                                (:typescript (:tsdk "./node_modules/typescript/lib"))))
              (yaml-mode . ("yaml-language-server" "--stdio"))
-             ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))
-             ;; ((python-mode python-ts-mode) . ("ty server"))
+             ;; ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))
+             ((python-mode python-ts-mode) . ("ty" "server"))
              ))
     (add-to-list 'eglot-server-programs server-programs))
 
