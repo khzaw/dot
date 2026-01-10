@@ -41,29 +41,48 @@
     (setq eldoc-documentation-strategy
           'eldoc-documentation-compose-eagerly))
 
-
   (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
+
+  (defvar khz/python-lsp-sever 'ty)
+
+  (defun khz/get-python-lsp-command ()
+    (pcase khz/python-lsp-server
+      ('ty '("ty" "server"))
+      ('basedpyright '("basedpyright-langserver" "--stdio"))))
+
+  (defun khz/switch-python-lsp ()
+    "Toggle between ty and basedpyright and restart eglot."
+    (interactive)
+    (setq khz/python-lsp-server
+          (if (eq khz/python-lsp-server 'ty) 'basedpyright 'ty))
+    (message "Switch Python LSP to: %s" khz/python-lsp-server)
+    (when (eglot-managed-p)
+      ;; use ignore-errors because 'ty sometimes throws json errors on shutdown
+      (ignore-errors (eglot-shutdown (eglot-current-server)))
+      ;; brief pause to let the process die cleanly
+      (sleep-for 0.5)
+      (eglot-ensure)))
 
   (defvar khz/eglot-server-configs
     ;; Define a mapping of major modes to language server configurations
     '((go-mode go-ts-mode
                :gopls
                (:hints (:parameterNames t
-                                        :rangeVariableTypes t
-                                        :functionTypeParameters t
-                                        :assignVariableTypes t
-                                        :compositeLiteralFields t
-                                        :compositeLiteralTypes t
-                                        :constantValues t)
-                       :semanticTokens t
-                       :staticcheck "unset"
-                       :usePlaceholders t
-                       :completeUnimported t
-                       :matcher "Fuzzy"
-                       :deepCompletion t
-                       :completionBudget "100ms"
-                       :maxCompletionItems 50
-                       :gofumpt t))
+                        :rangeVariableTypes t
+                        :functionTypeParameters t
+                        :assignVariableTypes t
+                        :compositeLiteralFields t
+                        :compositeLiteralTypes t
+                        :constantValues t)
+              :semanticTokens t
+              :staticcheck "unset"
+              :usePlaceholders t
+              :completeUnimported t
+              :matcher "Fuzzy"
+              :deepCompletion t
+              :completionBudget "100ms"
+              :maxCompletionItems 50
+              :gofumpt t))
       (tsx-ts-mode typescript-ts-mode
                    :typescript-language-server (:inlayHints (:parameterNames "all")))
 
@@ -115,9 +134,7 @@ and CONFIG is the configuration plist for that server.")
                                :initializationOptions
                                (:typescript (:tsdk "./node_modules/typescript/lib"))))
              (yaml-mode . ("yaml-language-server" "--stdio"))
-             ;; ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))
-             ((python-mode python-ts-mode) . ("ty" "server"))
-             ))
+             ((python-mode python-ts-mode) . (lambda (&rest _) (khz/get-python-lsp-command)))))
     (add-to-list 'eglot-server-programs server-programs))
 
   ;; enable cache busting

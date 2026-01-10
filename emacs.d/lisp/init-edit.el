@@ -86,6 +86,8 @@
 (use-package elec-pair
   :straight (:type built-in)
   ;; :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+  :init
+  (setq electric-pair-delete-adjacent-pairs t)
   :hook ((after-init . electric-pair-mode)
          (org-mode . (lambda ()
                        (setq-local electric-pair-inhibit-predicate
@@ -100,7 +102,7 @@
     (or
      ;; I find it more often preferable not to pair when the
      ;; same char is next.
-     (eq char (char-after))
+     ;; (eq char (char-after))
      ;; Don't pair up when we insert the second of "" or of ((.
      (and (eq char (char-before))
           (eq char (char-before (1- (point)))))
@@ -110,7 +112,8 @@
      (and
       (eq (char-syntax (char-before (1- (point)))) ?w)
       (eq (preceding-char) char)
-      (not (eq (char-syntax (preceding-char)) ?\()))))
+      (not (eq (char-syntax (preceding-char)) ?\()))
+     (eq (char-before (1- (point))) ?\\)))
   (setq electric-pair-inhibit-predicate 'khz/electric-pair-conservative-inhibit))
 
 ;; Visual `align-regexp'
@@ -322,6 +325,7 @@
   :bind ("s-;" . transform-symbol-at-point))
 
 (use-package smartparens
+  :disabled t
   :diminish
   :straight (smartparens :type git
                          :host github

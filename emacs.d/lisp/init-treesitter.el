@@ -20,7 +20,31 @@
             value)
         cached-value)))
 
-  (advice-add #'treesit-language-available-p :around #'khz/treesit-language-available-p))
+  (advice-add #'treesit-language-available-p :around #'khz/treesit-language-available-p)
+
+  (defun khz/treesit-goto-function-name ()
+    "Move point to the function name of the current function definition."
+    (interactive)
+    (when-let* ((node (treesit-node-at (point)))
+                ;; Define what nodes look like a "function" in various languages
+                (func-node-types '("function_definition" ; Go, JS/TS
+                                   "method_declaration"  ; Go, Java
+                                   "func_literal"        ; Go (anonymous)
+                                   "function_definition" ; Python
+                                   "method_definition"   ; JS/TS classes
+                                   "function_item"))
+                ;; Walk up the tree until we find one of those nodes
+                (parent (treesit-parent-until
+                         node
+                         (lambda (n)
+                           (member (treesit-node-type n) func-node-types)))))
+      (if-let ((name-node (treesit-node-child-by-field-name parent "name")))
+          (goto-char (treesit-node-start name-node))
+        ;; Fallback
+        (goto-char (treesit-node-start parent)))))
+
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map (kbd "g F") #'khz/treesit-goto-function-name)))
 
 (use-package treesit-auto
   :custom (treesit-auto-install 'prompt)
@@ -170,6 +194,7 @@
 
 ;; provides grammatical edit based on treesit
 (use-package fingertip
+  :disabled t
   :straight (:type git :host github :repo "manateelazycat/fingertip")
   :hook ((go-ts-mode            . fingertip-mode)
          (python-ts-mode        . fingertip-mode)
@@ -194,11 +219,12 @@
               ("]"   . fingertip-close-bracket)
               ("}"   . fingertip-close-curly)
               ("="   . fingertip-equal)
-              ("\""  . fingertip-double-quote)
-              ("'"   . fingertip-single-quote)
+              ;; ("\""  . fingertip-double-quote)
+              ;; ("'"   . fingertip-single-quote)
               ("SPC" . fingertip-space)
               ("RET" . fingertip-newline)
               ;; ("M-o" . fingertip-backward-delete)
               ("C-k" . fingertip-kill)))
+
 
 (provide 'init-treesitter)

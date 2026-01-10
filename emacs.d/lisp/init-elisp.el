@@ -2,6 +2,27 @@
 
 (use-package paredit)
 
+(use-package lispy
+  :straight (:type git :host github :repo "abo-abo/lispy")
+  :init (setq lispy-close-quotes-at-end-p t)
+  :config
+  ;; prevents lispy from hijacking standard evil keys (hjkl) in normal mode
+  (lispy-set-key-theme '(special parinfer c-digits)))
+
+(use-package lispyville
+  :straight (:type git :host github :repo "noctuid/lispyville")
+  :hook (lispy-mode . lispyville-mode)
+  :config
+  (lispyville-set-key-theme
+   '(operators       ; maps d, c, y to work on S-expressiosn
+     c-w             ; C-w delets backward word
+     prettify        ; maps " == " to " ≡ " etc
+     text-objects    ; adds "a r" (atom), "i l" (list) text objects
+     atom-movement   ; e, w, b, move by symbols/atoms
+     slurp/barf-cp   ; > and < slurp/barf
+     additional-insert)) ; M-i, M-a, etc.
+  )
+
 (use-package elisp-mode
   :straight (:type built-in)
   :bind (:map emacs-lisp-mode-map
@@ -109,8 +130,6 @@ Lisp function does not specify a special indentation."
    (">" . help-go-forward)))
 ;; -*- lexical-binding: t; -*-
 
-(use-package lispy
-  :straight (:type git :host github :repo "abo-abo/lispy"))
 
 ;; (use-package symex
 ;;   :straight (:type git :host github :repo "drym-org/symex.el")
