@@ -148,4 +148,4 @@
 [column]
   ui = auto
 [tag]
-  sort = versin:refname
+  sort = version:refname
