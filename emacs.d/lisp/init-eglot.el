@@ -33,17 +33,7 @@
               ("C-c e h t" . #'eglot-hierarchy-type-hierarchy)
               ("C-c e C-i" . #'eglot-inlay-hints-mode))
   :init
-  ;; Performance optimizations
-  (fset #'jsonrpc--log-event #'ignore)
-  :config
-
-  (defun my/eglot-eldoc-settings()
-    (setq eldoc-documentation-strategy
-          'eldoc-documentation-compose-eagerly))
-
-  (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
-
-  (defvar khz/python-lsp-sever 'ty)
+  (defvar khz/python-lsp-server 'ty "which python language server to use: 'ty or 'basedpyright.")
 
   (defun khz/get-python-lsp-command ()
     (pcase khz/python-lsp-server
@@ -63,26 +53,36 @@
       (sleep-for 0.5)
       (eglot-ensure)))
 
+  ;; Performance optimizations
+  (fset #'jsonrpc--log-event #'ignore)
+  :config
+
+  (defun my/eglot-eldoc-settings()
+    (setq eldoc-documentation-strategy
+          'eldoc-documentation-compose-eagerly))
+
+  (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
+
   (defvar khz/eglot-server-configs
     ;; Define a mapping of major modes to language server configurations
     '((go-mode go-ts-mode
                :gopls
                (:hints (:parameterNames t
-                        :rangeVariableTypes t
-                        :functionTypeParameters t
-                        :assignVariableTypes t
-                        :compositeLiteralFields t
-                        :compositeLiteralTypes t
-                        :constantValues t)
-              :semanticTokens t
-              :staticcheck "unset"
-              :usePlaceholders t
-              :completeUnimported t
-              :matcher "Fuzzy"
-              :deepCompletion t
-              :completionBudget "100ms"
-              :maxCompletionItems 50
-              :gofumpt t))
+                                        :rangeVariableTypes t
+                                        :functionTypeParameters t
+                                        :assignVariableTypes t
+                                        :compositeLiteralFields t
+                                        :compositeLiteralTypes t
+                                        :constantValues t)
+                       :semanticTokens t
+                       :staticcheck "unset"
+                       :usePlaceholders t
+                       :completeUnimported t
+                       :matcher "Fuzzy"
+                       :deepCompletion t
+                       :completionBudget "100ms"
+                       :maxCompletionItems 50
+                       :gofumpt t))
       (tsx-ts-mode typescript-ts-mode
                    :typescript-language-server (:inlayHints (:parameterNames "all")))
 

@@ -88,7 +88,7 @@
   ;; To preview only environments, set it to '(block edit-special) instead
   (setq org-latex-preview-live t)
   (setq org-latex-preview-live-debounce 0.25) ;; More immediate live-previews
-  (plist-put org-format-latex-options :scale 2.0)
+  (plist-put org-format-latex-options :scale 4.0)
 
 
   ;; Better org LaTeX preview
@@ -473,6 +473,10 @@
 (use-package orgit)
 
 (use-package orgit-forge)
+
+(use-package orgit-file
+  :straight (:type git :host github :repo "gggion/orgit-file")
+  :after (orgit))
 
 (use-package org-visual-indent
     :after org
