@@ -53,11 +53,14 @@
 
 (use-package python-pytest)
 
-;; (use-package python-black)
+(use-package python-black
+  :if (executable-find "black"))
 
-(use-package python-isort)
+(use-package python-isort
+  :if (executable-find "isort"))
 
-(use-package ruff-format)
+(use-package ruff-format
+  :if (executable-find "ruff"))
 
 (use-package python-mode
   :straight (python-mode :type git
