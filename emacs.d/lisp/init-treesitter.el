@@ -76,6 +76,7 @@
   (global-treesit-auto-mode))
 
 (use-package combobulate
+  :disabled t
   :straight (combobulate :type git :host github :repo "mickeynp/combobulate" :branch "development")
   :custom
   (combobulate-key-prefix "C-c o")
@@ -226,5 +227,9 @@
               ;; ("M-o" . fingertip-backward-delete)
               ("C-k" . fingertip-kill)))
 
+
+(use-package treesit-sexp
+  :straight (:type git :host github :repo "alexispurslane/treesit-sexp")
+  :config (global-treesit-sexp-mode 1))
 
 (provide 'init-treesitter)
