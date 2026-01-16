@@ -3,7 +3,6 @@
 (use-package eglot
   :commands (eglot eglot-rename eglot-format-buffer eglot-ensure)
   :hook
-  ((eglot-managed-mode . my/eglot-eldoc-settings))
   ((go-mode go-ts-mode) . eglot-ensure)
   ((css-mode css-ts-mode) . eglot-ensure)
   ((python-mode python-ts-mode) . eglot-ensure)
@@ -38,7 +37,8 @@
   (defun khz/get-python-lsp-command ()
     (pcase khz/python-lsp-server
       ('ty '("ty" "server"))
-      ('basedpyright '("basedpyright-langserver" "--stdio"))))
+      ('basedpyright '("basedpyright-langserver" "--stdio"))
+      (_ '("basedpyright-langserver" "--stdio"))))
 
   (defun khz/switch-python-lsp ()
     "Toggle between ty and basedpyright and restart eglot."
@@ -57,9 +57,12 @@
   (fset #'jsonrpc--log-event #'ignore)
   :config
 
-  (defun my/eglot-eldoc-settings()
-    (setq eldoc-documentation-strategy
-          'eldoc-documentation-compose-eagerly))
+  (defun khz/eglot-eldoc-settings ()
+    (setq-local eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+    ;; make sure flymake-eldoc-function is prsent and first in the list
+    (setq-local eldoc-documentation-functions
+                (cons #'flymake-eldoc-function
+                      (remove #'flymake-eldoc-function eldoc-documentation-functions))))
 
   (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
 
@@ -104,7 +107,6 @@ and CONFIG is the configuration plist for that server.")
              (setq-local eglot-workspace-configuration config)
              (cl-return))))))) ;; Exit early once matched
 
-  (add-hook 'eglot-managed-mode-hook #'khz/update-eglot-workspace-config)
 
   (defvar khz/current-eldoc-symbol nil
     "Stores the symbol for which the Eldoc doc buffer was last toggled in the current buffer.")
@@ -171,18 +173,13 @@ and CONFIG is the configuration plist for that server.")
           (error
            (message "Eglot pre-save actions failed: %s" err))))))
 
+  (add-hook 'eglot-managed-mode-hook #'khz/update-eglot-workspace-config)
+  (add-hook 'eglot-managed-mode-hook #'khz/eglot-eldoc-settings)
+
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
               (add-hook 'before-save-hook #'khz/eglot-actions-before-save nil t)))
   (add-hook 'eglot-managed-mode-hook #'eglot-capf)
-  (add-hook 'eglot-managed-mode-hook
-            (lambda ()
-              ;; Show flymake diagnostics first.
-              (setq eldoc-documentation-functions
-                    (cons #'flymake-eldoc-function
-                          (remove #'flymake-eldoc-function eldoc-documentation-functions)))
-              ;; Show all eldoc feedback.
-              (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)))
 
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
 
