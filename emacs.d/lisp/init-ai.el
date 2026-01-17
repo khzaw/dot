@@ -54,5 +54,7 @@ Follow good Git style:
   :after (gptel forge)
   :config (gptel-forge-install))
 
+(use-package amp :straight (:type git :host github :repo "shaneikennedy/amp.el"))
+
 (provide 'init-ai)
 ;;; init-ai.el ends here

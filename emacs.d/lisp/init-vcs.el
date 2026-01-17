@@ -473,8 +473,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package magit-gitflow
   :hook (magit-mode . turn-on-magit-gitflow))
 
-(use-package magit-tbdiff
-  :after magit)
+(use-package magit-tbdiff :after magit)
+
+(use-package magit-pre-commit
+  :straight (:host github :repo "DamianB-BitFlipper/magit-pre-commit.el") :after magit)
 
 (use-package consult-vc-modified-files
   :straight (:type git :host github :repo "chmouel/consult-vc-modified-files")
