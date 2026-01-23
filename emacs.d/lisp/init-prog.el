@@ -136,7 +136,9 @@
   (sqlformat-args '("-s2" "-g" "-u1")))
 
 (use-package graphql-mode
-  :straight (:type git :host github :repo "davazp/graphql-mode"))
+  :straight (:type git :host github :repo "davazp/graphql-mode")
+  :mode (("\\.graphqls\\'" . graphql-mode)
+         ("\\.graphql\\'" . graphql-mode)))
 
 (use-package graphviz-dot-mode
   :straight (:type git :host github :repo "ppareit/graphviz-dot-mode")
@@ -203,6 +205,11 @@
   :hook (kdl-mode . (lambda ()
                       (setq tab-width 4)
                       (setq indent-tabs-mode nil))))
+
+(use-package hcl-mode
+  :mode (("\\.hcl\\'" . hcl-mode)
+         ("\\.tf\\'" . hcl-mode)
+         ("\\.bru\\'" . hcl-mode)))
 
 (provide 'init-prog)
 ;;; init-prog.el ends here
