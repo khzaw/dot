@@ -81,9 +81,6 @@
 ;;   (setq modus-themes-bold-constructs t)
 ;;   (setq modus-themes-prompts '(bold intense)))
 
-(use-package hima-theme
-  :straight (:type git :host github :repo "meain/hima-theme"))
-
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
@@ -153,6 +150,19 @@
   :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
 
 (use-package modus-themes)
+
+(use-package acme-theme
+  :straight (:type git :host github :repo "ianyepan/acme-emacs-theme")
+  :config (setq acme-theme-black-fg t))
+
+(use-package myron-themes
+  :straight (:type git :host github :repo "neeasade/myron-themes" :files ("*.el" "themes/*.el")))
+
+(use-package tron-legacy-theme
+  :config
+  (setq tron-legacy-theme-vivid-cursors t))
+
+(use-package ef-themes)
 
 (provide 'init-themes)
 ;; init-themes.el ends here
