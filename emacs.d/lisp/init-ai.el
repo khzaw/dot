@@ -56,5 +56,10 @@ Follow good Git style:
 
 (use-package amp :straight (:type git :host github :repo "shaneikennedy/amp.el"))
 
+
+(use-package opencode
+  :disabled t
+  :straight (:type git :host codeberg :repo "sczi/opencode.el"))
+
 (provide 'init-ai)
 ;;; init-ai.el ends here

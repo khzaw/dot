@@ -22,7 +22,8 @@
 
 (use-package prog-mode
   :straight (:type built-in)
-  :custom (prettify-symbols-unprettify-at-point 'right-edge)
+  :custom
+  (prettify-symbols-unprettify-at-point t)
   :config
   (prettify-symbols-mode 1))
 

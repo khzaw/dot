@@ -436,5 +436,18 @@
     ;; Update the screen immediately
     (force-window-update t)))
 
+;; Handling capitalized subwords
+(use-package subword
+  :hook ((prog-mode minibuffer-setup) . subword-mode))
+
+;; Remove trailing whitespace with iens touched
+(use-package ws-butler
+  :hook ((prog-mode markdown-mode) . ws-butler-mode))
+
+
+;; Add/change/delete paris of symbols
+;; (use-package embrace
+;;   :bind ("C-."))
+
 (provide 'init-edit)
 ;; init-edit.el ends here

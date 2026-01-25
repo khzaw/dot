@@ -14,7 +14,7 @@
 
 (defun khz/setup-font-faces ()
   (when (eq system-type 'gnu/linux)
-    (setq-default line-spacing -1.0)
+    (setq-default line-spacing 0)
     (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 105)
     (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
     (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))

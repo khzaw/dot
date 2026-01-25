@@ -1,18 +1,14 @@
+theme = Black Metal (Marduk)
 font-family = "Berkeley Mono"
-font-size = 15
-theme = dark:Havn Skumring ,light:Flexoki Light
+font-size = 10.5
 
 window-padding-x = 40
 window-padding-y = 20
-
-# window-decoration = false
+window-decoration = false
 window-colorspace = display-p3
-macos-titlebar-style = tabs
-confirm-close-surface = false
 
+confirm-close-surface = false
+macos-titlebar-style = tabs
 mouse-hide-while-typing = true
 adjust-cursor-thickness = 300%
-
-unfocused-split-opacity = 0.9
-
 keybind = global:ctrl+grave_accent=toggle_quick_terminal

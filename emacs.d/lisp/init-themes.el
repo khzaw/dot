@@ -162,6 +162,9 @@
   :config
   (setq tron-legacy-theme-vivid-cursors t))
 
+(use-package alabaster-themes
+  :straight (:type git :host github :repo "vedang/alabaster-themes"))
+
 (use-package ef-themes)
 
 (provide 'init-themes)
