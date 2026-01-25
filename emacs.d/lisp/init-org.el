@@ -34,11 +34,9 @@
                  (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
                  "(provide 'org-version)\n")))
               :pin nil)
-  :bind (("C-c C-c" . org-edit-src-exit)
-         (:map org-mode-map
+  :bind ((:map org-mode-map
                ("M-g i" . consult-org-heading)))
-  :init
-  (setq org-directory (file-truename "~/Dropbox/notes"))
+  :init (setq org-directory (file-truename "~/Dropbox/notes"))
   :custom-face
   (org-list-dt ((t (:inherit default))))
   :hook
@@ -51,16 +49,12 @@
    (org-mode . word-wrap-whitespace-mode)
    (org-mode . org-latex-preview-mode))
   :config
-
   (setq org-startup-with-latex-preview t)
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
   (setq org-tags-alist '(("inbox" . ?i)))
   ;; (org-agenda-start-with-log-mode t)
   ;; (org-log-into-drawer t)
-  (setq org-auto-align-tags nil)
-  (setq org-tags-column 0)
-
   (setq org-log-done 'time) ; Record the task completion date.
   (setq org-pretty-entities t)
   (setq org-src-fontify-natively t)
@@ -69,7 +63,7 @@
   (setq org-src-window-setup 'split-window-below)
   (setq org-fontify-quote-and-verse-blocks t) ; highlight quote and verse blocks
   (setq org-fontify-whole-heading-line t)     ; highlight the whole line for headings
-  (setq org-hide-emphasis-markers t)          ; org styling, hide markup etc
+  ;; (setq org-hide-emphasis-markers t) ; org styling, hide markup etc
   (setq org-startup-truncated nil)
   (setq org-imenu-depth 6)
   (setq org-startup-indented t)
@@ -318,8 +312,7 @@
                   ("C-c n a" . org-roam-alias-add)
                   ("C-c n l" . org-roam-buffer-toggle))))
     :config
-    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
-    (setq org-roam-dailies-directory "daily"))
+    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag))))
 
   (use-package org-roam-protocol :straight nil :after org-roam)
 
@@ -360,6 +353,18 @@
         deft-auto-save-interval 0)
   :bind
   ("C-c n d" . deft))
+
+(use-package org-appear
+  :straight (org-appear :type git :host github :repo "awth13/org-appear")
+  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autoemphasis t)
+  (setq org-appear-autolinks t)
+  (setq org-appear-autosubmarkers t)
+  (setq org-appear-autoentities t)
+  (setq org-appear-autokeywords t)
+  (setq org-appear-inside-latex t)
+  (setq org-appear-trigger 'always))
 
 (use-package org-journal
   :bind ("C-c n J" . org-journal-new-entry)
