@@ -14,21 +14,21 @@
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic nil)
-  (load-theme 'doom-meltbus t)
+  ;; (load-theme 'doom-meltbus t)
 
   ;; Fix Gnus cycle for meltbus
-  (custom-theme-set-faces
-   'doom-meltbus
-   '(gnus-group-news-low ((t (:inherit gnus-group-mail-1))))
-   '(gnus-group-news-low-empty ((t (:inherit gnus-group-news-low :weight normal))))
-   ;; Monochrome orderless faces - these are PART of the theme
-   '(orderless-match-face-0 ((t (:foreground "black" :background "#efefef" :weight bold))))
-   '(orderless-match-face-1 ((t (:foreground "black" :background "#acacac" :weight bold))))
-   '(orderless-match-face-2 ((t (:foreground "black" :background "#cecece" :weight bold))))
-   '(orderless-match-face-3 ((t (:foreground "black" :background "#8a8a8a" :weight bold))))
-   ;; Monochrome search highlights
-   '(lazy-highlight ((t (:foreground "black" :background "#686868" :weight bold))))
-   '(evil-ex-search ((t (:inherit isearch)))))
+  ;; (custom-theme-set-faces
+  ;;  'doom-meltbus
+  ;;  '(gnus-group-news-low ((t (:inherit gnus-group-mail-1))))
+  ;;  '(gnus-group-news-low-empty ((t (:inherit gnus-group-news-low :weight normal))))
+  ;;  ;; Monochrome orderless faces - these are PART of the theme
+  ;;  '(orderless-match-face-0 ((t (:foreground "black" :background "#efefef" :weight bold))))
+  ;;  '(orderless-match-face-1 ((t (:foreground "black" :background "#acacac" :weight bold))))
+  ;;  '(orderless-match-face-2 ((t (:foreground "black" :background "#cecece" :weight bold))))
+  ;;  '(orderless-match-face-3 ((t (:foreground "black" :background "#8a8a8a" :weight bold))))
+  ;;  ;; Monochrome search highlights
+  ;;  '(lazy-highlight ((t (:foreground "black" :background "#686868" :weight bold))))
+  ;;  '(evil-ex-search ((t (:inherit isearch)))))
 
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
@@ -163,7 +163,8 @@
   (setq tron-legacy-theme-vivid-cursors t))
 
 (use-package alabaster-themes
-  :straight (:type git :host github :repo "vedang/alabaster-themes"))
+  :straight (:type git :host github :repo "vedang/alabaster-themes")
+  :config (load-theme 'alabaster-themes-dark-mono t))
 
 (use-package ef-themes)
 

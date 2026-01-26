@@ -79,7 +79,7 @@
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
+        register-preview-function #'register-preview-default)
 
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
@@ -99,11 +99,7 @@
   (setq consult-find-args "find . -not ( -wholename */.* -prune -o -name -node_modules -prune )")
 
   (setq consult-narrow-key "<"
-        consult-line-numbers-widen t
-        consult-async-min-input 2
-        consult-async-refresh-delay 0
-        consult-async-input-throttle 0
-        consult-async-input-debounce 0)
+        consult-line-numbers-widen t)
 
   ;; Load the latest search again in `consult-line' when pressing C-s C-s
   (defvar my-consult-line-map
@@ -120,14 +116,24 @@
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
-   consult-recent-file consult-theme :preview-key '(:debounce 0.5 any)
+   consult-recent-file
+   consult-theme
+   :preview-key '(:debounce 0.5 any)
+
    consult-goto-line :preview-key '(:debounce 0.5 any)
-   consult-ripgrep consult-grep consult-git-grep xref-find-references :preview-key "M-."
-   consult-buffer consult--source-buffer
-   consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-file-register
-   consult--source-recent-file consult--source-project-recent-file
-   :preview-key '(:debounce 0.5 any))
+
+   consult-ripgrep
+   consult-grep
+   consult-git-grep
+   xref-find-references
+   :preview-key "M-."
+
+   consult-buffer consult-project-buffer consult-bookmark consult-recent-file consult-xref
+   :preview-key '(:debounce 0.5 any)
+
+   consult-ripgrep consult-git-grep consult-grep consult-find
+   :preview-key "M-."
+   :initial (consult--async-split-initial ""))
 
   (consult-customize
    consult-line
