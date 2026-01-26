@@ -445,6 +445,39 @@
   :hook ((prog-mode markdown-mode) . ws-butler-mode))
 
 
+;; dogears
+(use-package dogears
+  :straight (:type git :host github :repo "alphapapa/dogears.el"
+                   :files (:defaults (:exclude "helm-dogears.el")))
+  :bind (:map global-map
+              ("M-g d" . dogears-go)
+              ([remap xref-go-back] . dogears-back)
+              ([remap xref-pop-marker-stack] . dogears-back)
+              ("M-g M-b" . dogears-back)
+              ("M-g M-f" . dogears-forward)
+              ("M-g M-d" . dogears-list)
+              ("M-g M-D" . dogears-sidebar))
+  :hook (after-init . dogears-mode)
+  :custom
+  (dogears-idle 1)
+  (dogears-position-delta 20)
+  (dogears-functions '(find-file
+                       avy-goto-char-timer
+                       avy-goto-line
+                       recenter-top-bottom
+                       other-window switch-to-buffer
+                       aw-select toggle-window-split
+                       windmove-do-window-select
+                       pager-page-down pager-page-up
+                       tab-bar-select-tab
+                       pop-to-mark-command
+                       pop-global-mark
+                       goto-last-change
+                       xref-go-back
+                       xref-find-definitions
+                       xref-find-references)))
+
+
 ;; Add/change/delete paris of symbols
 ;; (use-package embrace
 ;;   :bind ("C-."))

@@ -95,6 +95,24 @@
 
   :config
 
+  ;; After pressing `consult-narrow-key', the which-key menu should appear immediately.
+  (defun immediate-which-key-for-narrow (fun &rest args)
+    (let* ((refresh t)
+           (timer (and consult-narrow-key
+                       (memq :narrow args)
+                       (run-at-time 0.05 0.05
+                                    (lambda ()
+                                      (if (eq last-input-event (elt consult-narrow-key 0))
+                                          (when refresh
+                                            (setq refresh nil)
+                                            (which-key--update))
+                                        (setq refresh t)))))))
+      (unwind-protect
+          (apply fun args)
+        (when timer
+          (cancel-timer timer)))))
+(advice-add #'consult--read :around #'immediate-which-key-for-narrow)
+
   ;; exclude these directories from `consult-find'
   (setq consult-find-args "find . -not ( -wholename */.* -prune -o -name -node_modules -prune )")
 
@@ -132,8 +150,7 @@
    :preview-key '(:debounce 0.5 any)
 
    consult-ripgrep consult-git-grep consult-grep consult-find
-   :preview-key "M-."
-   :initial (consult--async-split-initial ""))
+   :preview-key "M-.")
 
   (consult-customize
    consult-line
@@ -152,7 +169,35 @@
   (autoload 'projectfile-project-root "projectile")
   (setq consult-project-function (lambda (_) (projectile-project-root)))
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
-  )
+
+
+  (defvar consult--source-dogears
+    (list :name     "Dogears"
+          :narrow   ?d
+          :category 'dogears
+          :items    (lambda ()
+                      (mapcar
+                       (lambda (place)
+                         (propertize (dogears--format-record place)
+                                     'consult--candidate place))
+                       dogears-list))
+          :action   (lambda (cand)
+                      (dogears-go (get-text-property 0 'consult--candidate cand)))))
+
+  (defun consult-dogears ()
+    (interactive)
+    (consult--multi '(consult--source-dogears)))
+
+  (defun consult-clock-in ()
+    "Clock into an Org agenda heading."
+    (interactive)
+    (save-window-excursion
+      (consult-org-agenda)
+      (org-clock-in)))
+
+  (consult-customize consult-clock-in
+                     :prompt "Clock in: "
+                     :preview-key "M-."))
 
 (use-package consult-projectile
   :straight (consult-projectile :type git
@@ -240,55 +285,6 @@
       (when timer
         (cancel-timer timer)))))
 (advice-add #'consult--read :around #'immediate-which-key-for-narrow)
-
-;; dogears
-(use-package dogears
-  :straight (:type git :host github :repo "alphapapa/dogears.el"
-                   :files (:defaults (:exclude "helm-dogears.el")))
-  :bind (:map global-map
-              ("M-g d" . dogears-go)
-              ([remap xref-go-back] . dogears-back)
-              ([remap xref-pop-marker-stack] . dogears-back)
-              ("M-g M-b" . dogears-back)
-              ("M-g M-f" . dogears-forward)
-              ("M-g M-d" . dogears-list)
-              ("M-g M-D" . dogears-sidebar))
-  :hook (after-init . dogears-mode)
-  :custom
-  (dogears-idle 1)
-  (dogears-position-delta 20)
-  (dogears-functions '(find-file
-                       avy-goto-char-timer
-                       avy-goto-line
-                       recenter-top-bottom
-                       other-window switch-to-buffer
-                       aw-select toggle-window-split
-                       windmove-do-window-select
-                       pager-page-down pager-page-up
-                       tab-bar-select-tab
-                       pop-to-mark-command
-                       pop-global-mark
-                       goto-last-change
-                       xref-go-back
-                       xref-find-definitions
-                       xref-find-references)))
-
-(defvar consult--source-dogears
-  (list :name     "Dogears"
-        :narrow   ?d
-        :category 'dogears
-        :items    (lambda ()
-                    (mapcar
-                     (lambda (place)
-                       (propertize (dogears--format-record place)
-                                   'consult--candidate place))
-                     dogears-list))
-        :action   (lambda (cand)
-                    (dogears-go (get-text-property 0 'consult--candidate cand)))))
-
-(defun consult-dogears ()
-  (interactive)
-  (consult--multi '(consult--source-dogears)))
 
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
