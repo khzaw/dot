@@ -194,4 +194,8 @@
 
 (use-package sudo-edit)
 
+(use-package lichess
+  :straight (:type git :host github :repo "tmythicator/lichess.el")
+  :commands (lichess lichess-tv lichess-game-watch))
+
 (provide 'init-others)

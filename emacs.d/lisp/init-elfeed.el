@@ -3,6 +3,7 @@
 (setq shr-use-fonts nil)
 
 (use-package elfeed
+  :commands elfeed
   :bind
   ("C-c z w" . elfeed)
   (:map elfeed-search-mode-map

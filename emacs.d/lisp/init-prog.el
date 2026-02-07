@@ -212,5 +212,7 @@
          ("\\.tf\\'" . hcl-mode)
          ("\\.bru\\'" . hcl-mode)))
 
+(use-package applescript-mode :mode "\\.applescript$")
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
