@@ -7,6 +7,8 @@
   :straight (:type git :host github :repo "manzaltu/claude-code-ide.el")
   :bind ("C-c C-'" . claude-code-ide-menu)
   :config
+  (exec-path-from-shell-copy-env "ANTHROPIC_BASE_URL")
+  (exec-path-from-shell-copy-env "ANTHROPIC_AUTH_TOKEN")
   (claude-code-ide-emacs-tools-setup)
   (setq claude-code-ide-window-side 'right))
 
@@ -37,6 +39,8 @@ Don't repeat information from the subject line in the message body.
 Only return the commit message in your response. Do not include any additional meta-commentary about the task. Do not include the raw diff output in the commit message.
 
 You can take inspiration from how linux kernel project does git commits
+
+You should not list down the changed files individually. That's what we use git for.
 
 Follow good Git style:
 

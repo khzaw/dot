@@ -5,6 +5,21 @@
   :init
   (setq evil-undo-system 'undo-fu)
   :config
+
+  (defun khz/evil-jump-item-with-classic-sexp (orig-fn &rest args)
+    "Call ORIG-FN after temporarily disabling tree-sitter sexp overrides."
+    (let ((forward-sexp-function nil)
+          (forward-list-function nil)
+          (backward-list-function nil)
+          (up-list-function nil)
+          (down-list-function nil)
+          (mark-sexp-function nil)
+          (beginning-of-defun-function nil)
+          (end-of-defun-function nil))
+        (apply orig-fn args)))
+
+(advice-add 'evil-jump-item :around #'khz/evil-jump-item-with-classic-sexp)
+
   (setq evil-want-integration t
         evil-want-minibuffer nil
         evil-mode-line-format nil

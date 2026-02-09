@@ -85,6 +85,8 @@
   (plist-put org-format-latex-options :scale 4.0)
 
 
+  (add-hook 'org-mode-hook (lambda () (ws-butler-mode -1)))
+
   ;; Better org LaTeX preview
   ;; (setq org-startup-with-latex-preview t
   ;;       org-highlight-latex-and-related '(native latex))
