@@ -127,5 +127,14 @@
          (racket-mode . evil-paredit-mode)
          (lisp-mode . evil-paredit-mode)))
 
+(use-package evil-lion
+  :bind (:map evil-normal-state-map
+              ("g l" . evil-lion-left)
+              ("g L" . evil-lion-right)
+              :map evil-visual-state-map
+              ("g l" . evil-lion-left)
+              ("g L" . evil-lion-right))
+  :config (evil-lion-mode))
+
 (provide 'init-evil)
 ;;; init-evil.el ends here
