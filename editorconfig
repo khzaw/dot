@@ -36,3 +36,8 @@ indent_size = 2
 
 [{kubeconfig}]
 indent_size = 2
+
+[{.gitconfig,gitconfig,.gitmodules}]
+tab_width = 4
+indent_size = tab
+indent_style = tab
