@@ -94,6 +94,9 @@ Follow good Git style:
   (setq agent-shell-openai-codex-environment
         (agent-shell-make-environment-variables :inherit-env t)))
 
+(use-package agent-review
+  :straight (:type git :host github :repo "nineluj/agent-review" :files ("*.el")))
+
 (use-package agent-shell-manager
   :straight (:type git :host github :repo "jethrokuan/agent-shell-manager")
   :commands (agent-shell-manager-toggle))

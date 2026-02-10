@@ -166,6 +166,9 @@
   :straight (:type git :host github :repo "vedang/alabaster-themes")
   :config (load-theme 'alabaster-themes-dark-mono t))
 
+(use-package nibelung-theme
+  :straight (:type git :host github :repo "veschin/nibelung-theme"))
+
 (use-package ef-themes)
 
 (provide 'init-themes)
