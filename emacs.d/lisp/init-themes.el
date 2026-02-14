@@ -9,35 +9,20 @@
   (setq kaolin-themes-modeline-border nil)
   (kaolin-treemacs-theme))
 
-
 (use-package doom-themes
   :config
+  ;; https://github.com/doomemacs/themes/issues/875#issuecomment-3557150380
+  (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
+          '(:inherit 'gnus-group-mail-1-empty :weight 'normal))
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic nil)
   ;; (load-theme 'doom-meltbus t)
-
-  ;; Fix Gnus cycle for meltbus
-  ;; (custom-theme-set-faces
-  ;;  'doom-meltbus
-  ;;  '(gnus-group-news-low ((t (:inherit gnus-group-mail-1))))
-  ;;  '(gnus-group-news-low-empty ((t (:inherit gnus-group-news-low :weight normal))))
-  ;;  ;; Monochrome orderless faces - these are PART of the theme
-  ;;  '(orderless-match-face-0 ((t (:foreground "black" :background "#efefef" :weight bold))))
-  ;;  '(orderless-match-face-1 ((t (:foreground "black" :background "#acacac" :weight bold))))
-  ;;  '(orderless-match-face-2 ((t (:foreground "black" :background "#cecece" :weight bold))))
-  ;;  '(orderless-match-face-3 ((t (:foreground "black" :background "#8a8a8a" :weight bold))))
-  ;;  ;; Monochrome search highlights
-  ;;  '(lazy-highlight ((t (:foreground "black" :background "#686868" :weight bold))))
-  ;;  '(evil-ex-search ((t (:inherit isearch)))))
-
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
 
   (when (display-graphic-p)
     (setq doom-themes-treemacs-theme "doom-atom")
     (doom-themes-treemacs-config)))
-
-
 
 
 ;; (use-package modus-themes
@@ -71,15 +56,6 @@
 ;;   )
 
 ;; (use-package modus-themes)
-;; (use-package ef-themes)
-
-;; (use-package ef-themes
-;;   :init
-;;   (ef-themes-take-over-modus-themes-mode 1)
-;;   :config
-;;   (setq modus-themes-mixed-fonts t)
-;;   (setq modus-themes-bold-constructs t)
-;;   (setq modus-themes-prompts '(bold intense)))
 
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
@@ -129,8 +105,7 @@
   (catppuccin-set-color 'mantle "#000000" 'mocha)
   (catppuccin-set-color 'crust "#000000" 'mocha)
 
-  ;; (load-theme 'catppuccin t)
-  )
+  (load-theme 'catppuccin t))
 
 (use-package nothing-theme
   :straight (:type git :host github :repo "jaredgorski/nothing.el"))
@@ -163,8 +138,7 @@
   (setq tron-legacy-theme-vivid-cursors t))
 
 (use-package alabaster-themes
-  :straight (:type git :host github :repo "vedang/alabaster-themes")
-  :config (load-theme 'alabaster-themes-dark-mono t))
+  :straight (:type git :host github :repo "vedang/alabaster-themes"))
 
 (use-package nibelung-theme
   :straight (:type git :host github :repo "veschin/nibelung-theme"))
