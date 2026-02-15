@@ -12,7 +12,6 @@
   (claude-code-ide-emacs-tools-setup)
   (setq claude-code-ide-window-side 'right))
 
-
 (use-package eca
   :disabled t
   :straight (:type git :host github :repo "editor-code-assistant/eca-emacs" :files ("*.el")))
@@ -78,10 +77,10 @@ Follow good Git style:
   (setq agent-shell-file-completion-enabled t)
   (setq agent-shell-show-welcome-message nil)
   :config
-
   (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
   (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'comint-send-input)
 
+  ;; Start *agent-shell-diff* buffers to start in Emacs state
   (add-hook 'diff-mode-hook
             (lambda ()
               (when (string-match-p "\\*agent-shell-diff\\*" (buffer-name))
@@ -109,6 +108,26 @@ Follow good Git style:
 
 (with-eval-after-load 'embark
   (define-key embark-file-map (kbd "a") #'my/agent-shell-project-root))
+
+(use-package ai-code
+  :straight (:host github :repo "tninja/ai-code-interface.el") ;; if you want to use straight to install, no need to have MELPA setting above
+  :config
+  ;; use codex as backend, other options are 'claude-code, 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'cursor, 'kiro, 'codebuddy, 'aider, 'claude-code-ide, 'claude-code-el
+  (ai-code-set-backend 'codex)
+  ;; Enable global keybinding for the main menu
+  (global-set-key (kbd "C-c a") #'ai-code-menu)
+  ;; Optional: Enable @ file completion in comments and AI sessions
+  (ai-code-prompt-filepath-completion-mode 1)
+  ;; Optional: Ask AI to run test after code changes, for a tighter build-test loop
+  (setq ai-code-auto-test-type 'test-after-change)
+  ;; Optional: In AI session buffers, SPC in Evil normal state triggers the prompt-enter UI
+  (with-eval-after-load 'evil (ai-code-backends-infra-evil-setup))
+  ;; Optional: Turn on auto-revert buffer, so that the AI code change automatically appears in the buffer
+  (global-auto-revert-mode 1)
+  (setq auto-revert-interval 1) ;; set to 1 second for faster update
+  ;; Optional: Set up Magit integration for AI commands in Magit popups
+  (with-eval-after-load 'magit
+    (ai-code-magit-setup-transients)))
 
 (provide 'init-ai)
 ;;; init-ai.el ends here

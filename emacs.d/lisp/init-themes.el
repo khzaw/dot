@@ -24,7 +24,6 @@
     (setq doom-themes-treemacs-theme "doom-atom")
     (doom-themes-treemacs-config)))
 
-
 ;; (use-package modus-themes
 ;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
 ;;   :custom
@@ -105,7 +104,8 @@
   (catppuccin-set-color 'mantle "#000000" 'mocha)
   (catppuccin-set-color 'crust "#000000" 'mocha)
 
-  (load-theme 'catppuccin t))
+  ;; (load-theme 'catppuccin t)
+  )
 
 (use-package nothing-theme
   :straight (:type git :host github :repo "jaredgorski/nothing.el"))
@@ -115,23 +115,17 @@
 (use-package sexy-monochrome-theme
   :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
 
+(use-package modus-themes
+  :config (load-theme 'modus-operandi t))
+
 (use-package doric-themes
   :straight (:type git :host github :repo "protesilaos/doric-themes"))
 
-(use-package south-theme
-  :straight (:type git :host github :repo "SophieBosio/south" :branch "main"))
-
-(use-package spacemacs-theme
-  :straight (:type git :host github :repo "nashamri/spacemacs-theme"))
-
-(use-package modus-themes)
+(use-package ef-themes)
 
 (use-package acme-theme
   :straight (:type git :host github :repo "ianyepan/acme-emacs-theme")
   :config (setq acme-theme-black-fg t))
-
-(use-package myron-themes
-  :straight (:type git :host github :repo "neeasade/myron-themes" :files ("*.el" "themes/*.el")))
 
 (use-package tron-legacy-theme
   :config
@@ -142,8 +136,6 @@
 
 (use-package nibelung-theme
   :straight (:type git :host github :repo "veschin/nibelung-theme"))
-
-(use-package ef-themes)
 
 (provide 'init-themes)
 ;; init-themes.el ends here

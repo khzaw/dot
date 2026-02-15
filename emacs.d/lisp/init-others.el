@@ -160,7 +160,6 @@
 (use-package monkeytype
   :straight (:type git :host github :repo "jpablobr/emacs-monkeytype"))
 
-
 (use-package fretboard
   :straight (:host github :repo "skyefreeman/fretboard.el"))
 
