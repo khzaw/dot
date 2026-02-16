@@ -501,5 +501,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :if (executable-find "jj")
   :straight (:host github :repo "bolivier/jj-mode.el"))
 
+(use-package magit-gh
+  :straight (:type git :host github :repo "jonathanchu/magit-gh")
+  :after magit
+  :init (setq magit-gh-key ";"))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
