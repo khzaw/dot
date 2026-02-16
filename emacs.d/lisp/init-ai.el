@@ -117,7 +117,7 @@ Follow good Git style:
   ;; Enable global keybinding for the main menu
   (global-set-key (kbd "C-c a") #'ai-code-menu)
   ;; Optional: Enable @ file completion in comments and AI sessions
-  (ai-code-prompt-filepath-completion-mode 1)
+  ;; (ai-code-prompt-filepath-completion-mode 1) ;; this is interferring corfu minibuffer
   ;; Optional: Ask AI to run test after code changes, for a tighter build-test loop
   (setq ai-code-auto-test-type 'test-after-change)
   ;; Optional: In AI session buffers, SPC in Evil normal state triggers the prompt-enter UI
