@@ -47,8 +47,7 @@
 
 (use-package highlight-indent-guides
   :diminish
-  :hook
-  ((yaml-mode yaml-ts-mode) . highlight-indent-guides-mode)
+  ;; :hook ((yaml-mode yaml-ts-mode) . highlight-indent-guides-mode)
   :custom
   (highlight-indent-guides-responsive 'top)
   (highlight-indent-guides-method 'character)
