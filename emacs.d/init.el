@@ -9,29 +9,11 @@
   (interactive)
   (load-file (expand-file-name "init.el" user-emacs-directory)))
 
-;; Always load newest byte code
-(setq load-prefer-newer t)
-
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            "Recover GC values after startup."
-            (setq gc-cons-threshold 16777216 ; 16 mb
-                  gc-cons-percentage 0.1)))
-
-(defun doom-defer-garbage-collection-h ()
-  "Disable garbage collection."
-  (setq gs-cons-threshold most-positive-fixnum))
-
-(defun doom-restore-garbage-collection-h ()
-  "Restore garbage collection."
-  (run-at-time
-    1 nil (lambda () (setq gs-cons-threshold 16777216))))
-
-(add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
-
-(add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
+;; GC is managed by gcmh (loaded in init-package.el).
+;; early-init.el sets gc-cons-threshold to most-positive-fixnum for fast startup,
+;; and gcmh restores sensible values once idle.
 
 ;; custom-file
 (setq custom-file (locate-user-emacs-file "custom.el"))
