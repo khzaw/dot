@@ -67,10 +67,42 @@
 
 (global-set-key (kbd "C-h M-f") #'all-faces-at-point)
 
-(use-package fontaine)
-
-
-
-
+(use-package fontaine
+  :config
+  (setq fontaine-presets
+        '((regular
+           :default-height 140
+           :default-family "Berkeley Mono"
+           :fixed-pitch-family "Berkeley Mono"
+           :variable-pitch-family "Iosevka Etoile"
+           :variable-pitch-height 1.0)
+          (writing
+           :default-height 160
+           :default-family "Berkeley Mono"
+           :fixed-pitch-family "Berkeley Mono"
+           ;; Charter: Matthew Carter's serif, optimized for screen reading.
+           ;; Pairs well with monospace at a slight size bump.
+           :variable-pitch-family "Charter"
+           :variable-pitch-weight normal
+           :variable-pitch-height 1.2)
+          (reading
+           :default-height 150
+           :default-family "Berkeley Mono"
+           :fixed-pitch-family "Berkeley Mono"
+           ;; Iosevka Etoile: quasi-proportional serif from the Iosevka family.
+           ;; Same vertical metrics as Iosevka so code and prose align cleanly.
+           :variable-pitch-family "Iosevka Etoile"
+           :variable-pitch-height 1.0)
+          (presentation
+           :default-height 200
+           :default-family "Berkeley Mono"
+           :fixed-pitch-family "Berkeley Mono"
+           ;; Avenir Next: clean geometric sans, excellent at large sizes.
+           :variable-pitch-family "Avenir Next"
+           :variable-pitch-weight medium
+           :variable-pitch-height 1.0)))
+  (fontaine-set-preset 'regular)
+  ;; Persist last-used preset across sessions
+  (fontaine-mode 1))
 
 (provide 'init-font)

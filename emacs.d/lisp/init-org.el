@@ -39,10 +39,15 @@
   :init (setq org-directory (file-truename "~/Dropbox/notes"))
   :custom-face
   (org-list-dt ((t (:inherit default))))
+  (org-level-1 ((t (:inherit outline-1 :height 1.4))))
+  (org-level-2 ((t (:inherit outline-2 :height 1.25))))
+  (org-level-3 ((t (:inherit outline-3 :height 1.15))))
+  (org-level-4 ((t (:inherit outline-4 :height 1.05))))
+  (org-document-title ((t (:height 1.6 :weight bold))))
   :hook
   ((org-babel-after-execute . org-redisplay-inline-images)
    (org-mode . (lambda ()
-                 (variable-pitch-mode)
+                 (mixed-pitch-mode)
                  (setq visual-fill-column-center-text nil)
                  (visual-fill-column-mode)))
    (org-mode . turn-on-org-cdlatex)
@@ -57,13 +62,14 @@
   ;; (org-log-into-drawer t)
   (setq org-log-done 'time) ; Record the task completion date.
   (setq org-pretty-entities t)
+  (setq org-use-sub-superscripts '{})  ; only _{sub} triggers subscript, not every _
   (setq org-src-fontify-natively t)
   (setq org-src-preserve-indentation nil)        ; this to be nil to work well with org-modern-indent
   (setq org-src-tab-acts-natively t)
   (setq org-src-window-setup 'split-window-below)
   (setq org-fontify-quote-and-verse-blocks t) ; highlight quote and verse blocks
   (setq org-fontify-whole-heading-line t)     ; highlight the whole line for headings
-  ;; (setq org-hide-emphasis-markers t) ; org styling, hide markup etc
+  (setq org-hide-emphasis-markers t)          ; org styling, hide markup etc
   (setq org-startup-truncated nil)
   (setq org-imenu-depth 6)
   (setq org-startup-indented t)
@@ -174,7 +180,7 @@
 
   (require 'org-indent)
 
-  (setq sentence-end-double-space nil)
+
 
   (use-package org-contrib)
 

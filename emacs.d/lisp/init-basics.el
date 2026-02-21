@@ -6,6 +6,9 @@
 ;; Stop creating backup~ files
 (setq make-backup-files nil)
 
+;; A single space ends a sentence
+(setq sentence-end-double-space nil)
+
 ;; No tab bar
 (setq tab-bar-mode nil)
 (tab-bar-mode 0)
