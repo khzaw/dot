@@ -483,5 +483,18 @@
 ;; (use-package embrace
 ;;   :bind ("C-."))
 
+
+(use-package flash
+  :straight (:type git :host github :repo "Prgebish/flash")
+  :commands (flash-jump flash-treesitter)
+  :bind ("s-j" . flash-jump)
+  :init
+  (with-eval-after-load 'evil
+    (require 'flash-evil)
+    (flash-evil-setup t))
+  :config
+  (require 'flash-isearch)
+  (flash-isearch-mode 1))
+
 (provide 'init-edit)
 ;; init-edit.el ends here
