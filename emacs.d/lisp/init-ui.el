@@ -11,22 +11,6 @@
 
 ;; (toggle-frame-maximized)
 
-
-(defun khz/setup-font-faces ()
-  (when (eq system-type 'gnu/linux)
-    (setq-default line-spacing 0)
-    (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 105)
-    (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-    (set-face-attribute 'variable-pitch nil :font "Berkeley Mono" :weight 'normal))
-
-  (when (eq system-type 'darwin)
-    (setq-default line-spacing -0.1)
-    (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'light :height 120)
-    (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-    (set-face-attribute 'variable-pitch :font "Berkeley Mono" :weight 'normal :height 1.0)))
-
-(add-hook 'server-after-make-frame-hook (lambda () (khz/setup-font-faces)))
-
 ;; UI
 (when (eq system-type 'gnu/linux)
   (setq-default line-spacing 0.05)
@@ -261,7 +245,25 @@
 (keymap-global-set "C-M-9" (lambda () (interactive) (sanityinc/adjust-opacity nil 2)))
 (keymap-global-set "C-M-0" (lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
 
-(set-frame-parameter nil 'alpha '(100 100))
+(defun khz/theme-dark-p ()
+  "Return non-nil if the current theme has a dark background."
+  (let ((bg (color-name-to-rgb (face-background 'default nil t))))
+    (when bg
+      (< (+ (* 0.299 (nth 0 bg))
+            (* 0.587 (nth 1 bg))
+            (* 0.114 (nth 2 bg)))
+         0.5))))
+
+(defun khz/adjust-alpha-for-theme (_theme)
+  "Set 96%% alpha for dark themes, 100%% for light."
+  (let ((alpha (if (khz/theme-dark-p) 96 100)))
+    (set-frame-parameter nil 'alpha `(,alpha ,alpha))
+    (let ((elt (assoc 'alpha default-frame-alist)))
+      (if elt (setcdr elt `(,alpha ,alpha))
+        (push `(alpha ,alpha ,alpha) default-frame-alist)))))
+
+(add-hook 'enable-theme-functions #'khz/adjust-alpha-for-theme)
+
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
 
 (use-package show-font)

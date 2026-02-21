@@ -54,8 +54,6 @@
 ;;   ;; (after-init . (lambda () (load-theme 'modus-vivendi t)))
 ;;   )
 
-;; (use-package modus-themes)
-
 (use-package color-theme-sanityinc-tomorrow
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
@@ -68,9 +66,6 @@
 (use-package green-phosphor-theme
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
 
-(use-package fleetish-theme)
-
-(use-package tok-theme)
 
 (use-package faff-theme
   :straight (:type git :host github :repo "WJCFerguson/emacs-faff-theme"))
@@ -116,12 +111,12 @@
   :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
 
 (use-package modus-themes
-  :config (load-theme 'modus-operandi t))
+  :config (load-theme 'modus-vivendi t))
+
+(use-package ef-themes)
 
 (use-package doric-themes
   :straight (:type git :host github :repo "protesilaos/doric-themes"))
-
-(use-package ef-themes)
 
 (use-package acme-theme
   :straight (:type git :host github :repo "ianyepan/acme-emacs-theme")
