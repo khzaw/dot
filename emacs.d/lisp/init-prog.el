@@ -214,5 +214,7 @@
 
 (use-package applescript-mode :mode "\\.applescript$")
 
+(use-package adoc-mode :straight (:type git :host github :repo "bbatsov/adoc-mode"))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
