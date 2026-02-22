@@ -24,30 +24,28 @@
   :hook (yaml-ts-mode . yaml-pro-mode)
   :hook (yaml-ts-mode . yaml-pro-ts-mode)
   :config
+  ;; Evil bindings mirroring org-mode's M-{h,j,k,l} subtree paradigm
+  (evil-define-key 'normal yaml-pro-ts-mode-map
+    ;; Subtree motion: M-j/M-k to reorder, M-h/M-l to indent/dedent
+    (kbd "M-k") 'yaml-pro-ts-move-subtree-up
+    (kbd "M-j") 'yaml-pro-ts-move-subtree-down
+    (kbd "M-h") 'yaml-pro-ts-unindent-subtree
+    (kbd "M-l") 'yaml-pro-ts-indent-subtree
+    ;; Navigation
+    (kbd "C-c C-u") 'yaml-pro-ts-up-level
+    (kbd "C-c C-n") 'yaml-pro-ts-next-subtree
+    (kbd "C-c C-p") 'yaml-pro-ts-prev-subtree
+    ;; Structural editing
+    (kbd "C-c C-@") 'yaml-pro-ts-mark-subtree
+    (kbd "C-c C-x C-w") 'yaml-pro-ts-kill-subtree
+    (kbd "C-c C-x C-y") 'yaml-pro-ts-paste-subtree
+    (kbd "C-c '") 'yaml-pro-edit-ts-scalar)
+  (evil-define-key 'visual yaml-pro-ts-mode-map
+    (kbd "M-k") 'yaml-pro-ts-move-subtree-up
+    (kbd "M-j") 'yaml-pro-ts-move-subtree-down
+    (kbd "M-h") 'yaml-pro-ts-unindent-subtree
+    (kbd "M-l") 'yaml-pro-ts-indent-subtree)
   (evil-define-key 'insert yaml-pro-ts-mode-map
     (kbd "C-<return>") 'yaml-pro-ts-meta-return))
-
-(use-package major-mode-hydra
-  :disabled t
-  :after yaml-pro
-  :config
-  (major-mode-hydra-define yaml-ts-mode (:foreign-keys run)
-    ("Navigation"
-     (("u" yaml-pro-ts-up-level "Up level" :color pink) ; C-c C-u
-      ("J" yaml-pro-ts-next-subtree "Next subtree" :color pink) ; C-c C-n
-      ("K" yaml-pro-ts-prev-subtree "Previous" :color pink)) ; C-c C-p
-     "Editing"
-     (("m" yaml-pro-ts-mark-subtree "Mark subtree")  ; C-c C-@
-      ("x" yaml-pro-ts-kill-subtree "Kill subtree")  ; C-c C-x C-w
-      ("p" yaml-pro-ts-paste-subtree "Paste subtree")) ; C-c C-x C-y
-     "Insert"
-     (("e" yaml-pro-edit-ts-scalar "Edit item") ; C-c '
-      ("o" yaml-pro-ts-meta-return "New list item"))
-     "Refactor"
-     (("r" yaml-pro-ts-move-subtree-up "Raise subtree")
-      ("t" yaml-pro-ts-move-subtree-down "Lower subtree")
-      ("," combobulate-hydra/body ">>>"))
-     "Documentation"
-     (("d" hydra-devdocs/body "Devdocs")))))
 
 (provide 'init-yaml)
