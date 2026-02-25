@@ -129,5 +129,12 @@ Follow good Git style:
   (with-eval-after-load 'magit
     (ai-code-magit-setup-transients)))
 
+(use-package pi-coding-agent
+  :straight (:type git :host github :repo "dnouri/pi-coding-agent")
+  :if (or (executable-find "pi-coding-agent")
+          (executable-find "pi"))
+  :init (defalias 'pi 'pi-coding-agent))
+
+
 (provide 'init-ai)
 ;;; init-ai.el ends here
