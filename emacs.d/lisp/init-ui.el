@@ -38,19 +38,48 @@
 (menu-bar-mode 0)
 (setq x-underline-at-descent-line t)
 
+(defun khz/run-with-idle-timer-after-startup (fn delay &rest args)
+  "Run FN with ARGS once Emacs has been idle for DELAY seconds."
+  (apply #'run-with-idle-timer delay nil fn args))
+
+(defun khz/enable-solaire-after-startup ()
+  "Enable `solaire-global-mode' after startup has settled."
+  (khz/run-with-idle-timer-after-startup #'solaire-global-mode 1.0 +1))
+
+(defun khz/enable-default-text-scale-after-startup ()
+  "Enable `default-text-scale-mode' after startup has settled."
+  (khz/run-with-idle-timer-after-startup #'default-text-scale-mode 1.0 +1))
+
+(defun khz/enable-page-break-lines-after-startup ()
+  "Enable `global-page-break-lines-mode' after startup has settled."
+  (khz/run-with-idle-timer-after-startup #'global-page-break-lines-mode 1.0 +1))
+
+(defun khz/enable-spacious-padding-after-startup ()
+  "Enable `spacious-padding-mode' after startup has settled."
+  (khz/run-with-idle-timer-after-startup #'spacious-padding-mode 1.0 +1))
+
+(defun khz/enable-elcord-after-startup ()
+  "Enable `elcord-mode' after startup has settled."
+  (khz/run-with-idle-timer-after-startup #'elcord-mode 3.0 +1))
+
 (use-package solaire-mode
+  :commands (solaire-global-mode turn-on-solaire-mode solaire-mode)
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
+  (emacs-startup . khz/enable-solaire-after-startup)
   (after-load-theme . solaire-global-mode)
   (change-major-mode . turn-on-solaire-mode)
   (after-revert . turn-on-solaire-mode)
   (ediff-prepare-buffer . solaire-mode)
-  :config
-  (solaire-global-mode +1))
+  :defer t)
 
-(use-package all-the-icons :if (display-graphic-p))
+(use-package all-the-icons
+  :if (display-graphic-p)
+  :defer t)
 
-(use-package minions)
+(use-package minions
+  :commands minions-mode
+  :defer t)
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
@@ -80,7 +109,8 @@
 
 ;; Easily adjust the font size in all frames
 (use-package default-text-scale
-  :hook (after-init . default-text-scale-mode))
+  :commands default-text-scale-mode
+  :hook (emacs-startup . khz/enable-default-text-scale-after-startup))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
@@ -112,7 +142,8 @@
 ;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
   :diminish
-  :hook (after-init . global-page-break-lines-mode))
+  :commands global-page-break-lines-mode
+  :hook (emacs-startup . khz/enable-page-break-lines-after-startup))
 
 (use-package posframe
   :disabled t
@@ -120,13 +151,16 @@
 
 (use-package posframe-plus
   :straight (:type git :host github :repo "zbelial/posframe-plus")
-  :hook ((after-load-theme . posframe-delete-all)))
+  :commands posframe-delete-all
+  :hook ((after-load-theme . posframe-delete-all))
+  :defer t)
 
 ;; Don't use GTK+ tooltip
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
-(use-package chronos)
+(use-package chronos
+  :commands (chronos-add-timer))
 
 (use-package ansi-color
   ;; ANSI coloring in compilation buffer
@@ -136,25 +170,29 @@
 
 (use-package focus :defer t)
 
-(use-package autothemer)
+(use-package autothemer
+  :defer t)
 
 ;; Makes manual pages nicer to look at
 (use-package info-colors :commands (info-colors-fontify-node)
   :hook (Info-selection-hook . info-colors-fontify-node))
 
-(use-package theme-magic)
+(use-package theme-magic
+  :commands (theme-magic-from-emacs))
 
 (if (file-directory-p "~/Code/elcord")
     (use-package elcord
       :load-path "~/Code/elcord"
       :commands elcord-mode
-      :config (setq elcord-use-major-mode-as-main-icon t)
-      (elcord-mode t))
+      :hook (emacs-startup . khz/enable-elcord-after-startup)
+      :custom
+      (elcord-use-major-mode-as-main-icon t))
   (use-package elcord
     ;; set discord status
     :commands elcord-mode
-    :config (setq elcord-use-major-mode-as-main-icon t)
-    (elcord-mode t)))
+    :hook (emacs-startup . khz/enable-elcord-after-startup)
+    :custom
+    (elcord-use-major-mode-as-main-icon t)))
 
 
 ;; Make a clean & minimalist frame
@@ -193,29 +231,38 @@
   (tabspaces-session t)
   (tabspaces-session-auto-restore t))
 
-(use-package sideline-blame)
+(use-package sideline-blame
+  :after sideline
+  :defer t)
 
-(use-package sideline-flymake)
+(use-package sideline-flymake
+  :after sideline
+  :defer t)
 
-(use-package sideline-lsp :after lsp-mode)
+(use-package sideline-lsp
+  :after sideline
+  :defer t)
 
 (use-package sideline-flycheck
-  :hook (flycheck-mode . sideline-flycheck-setup))
+  :after sideline
+  :defer t)
 
 (use-package sideline
-  :after (evil evil-leader)
-  :config
-  (setq sideline-display-backend-name t)
-  (progn
+  :commands sideline-mode
+  :custom
+  (sideline-display-backend-name t)
+  :init
+  (with-eval-after-load 'evil-leader
     (evil-leader/set-key "s" 'sideline-mode)))
 
 (use-package spacious-padding
-  :config
-  (setq spacious-padding-widths
-        (list :mode-line-width 2
-              :tab-width 0
-              :right-divider-width 0))
-  (spacious-padding-mode t))
+  :commands spacious-padding-mode
+  :hook (emacs-startup . khz/enable-spacious-padding-after-startup)
+  :custom
+  (spacious-padding-widths
+   '(:mode-line-width 2
+     :tab-width 0
+     :right-divider-width 0)))
 
 (use-package quick-peek
   :straight (:type git :host github :repo "cpitclaudel/quick-peek")
@@ -223,6 +270,7 @@
 
 (use-package peek
   :straight (:host sourcehut :repo "meow_king/peek")
+  :defer t
   :custom
   (peek-enable-eldoc-display-integration t))
 
@@ -241,9 +289,25 @@
          (newalpha (+ incr oldalpha)))
     (when (and (<= frame-alpha-lower-limit newalpha) (>= 100 newalpha))
       (modify-frame-parameters frame (list (cons 'alpha newalpha))))))
-(keymap-global-set "C-M-8" (lambda () (interactive) (sanityinc/adjust-opacity nil -2)))
-(keymap-global-set "C-M-9" (lambda () (interactive) (sanityinc/adjust-opacity nil 2)))
-(keymap-global-set "C-M-0" (lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
+
+(defun khz/decrease-frame-alpha ()
+  "Decrease the selected frame alpha."
+  (interactive)
+  (sanityinc/adjust-opacity nil -2))
+
+(defun khz/increase-frame-alpha ()
+  "Increase the selected frame alpha."
+  (interactive)
+  (sanityinc/adjust-opacity nil 2))
+
+(defun khz/reset-frame-alpha ()
+  "Reset the selected frame alpha to fully opaque."
+  (interactive)
+  (modify-frame-parameters nil '((alpha . 100))))
+
+(keymap-global-set "C-M-8" #'khz/decrease-frame-alpha)
+(keymap-global-set "C-M-9" #'khz/increase-frame-alpha)
+(keymap-global-set "C-M-0" #'khz/reset-frame-alpha)
 
 (defun khz/theme-dark-p ()
   "Return non-nil if the current theme has a dark background."
@@ -266,9 +330,11 @@
 
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
 
-(use-package show-font)
+(use-package show-font
+  :commands show-font-tabulated)
 
 (use-package logos
+  :commands (logos-focus-mode logos-narrow-dwim logos-forward-page-dwim logos-backward-page-dwim)
   :config
   ;; (setq logos-outlines-are-pages t) ;; use outlines instead of page breaks (^L)
 
@@ -292,7 +358,8 @@
 
   (add-hook 'logos-page-motion-hook #'my-logos-recenter-top))
 
-(use-package lin)
+(use-package lin
+  :commands lin-mode)
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
