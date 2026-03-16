@@ -73,7 +73,14 @@
 
   ;; Just type C-c C-d to show the diff at committing
   (remove-hook 'server-switch-hook 'magit-commit-diff)
-  (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff))
+  (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff)
+
+  (with-eval-after-load 'magit-diff
+    (setq transient-detect-key-conflicts t)
+    (transient-append-suffix 'magit-diff "r"
+      '("U" "Diff upstream..HEAD" (lambda ()
+                                    (interactive)
+                                    (magit-diff-range (contact (magit-get-upstream-branch) "..HEAD")))))))
 
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode)

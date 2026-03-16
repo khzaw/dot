@@ -30,6 +30,9 @@
 (use-package hideshow
   :straight (:type built-in))
 
+(use-package kirigami
+  :straight (:type git :host github :repo "jamescherti/kirigami.el"))
+
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda ()
                            (setq imenu-generic-expression
@@ -197,10 +200,14 @@
 (use-package d2-mode
   :if (executable-find "d2")
   :straight (:type git :host github :repo "andorsk/d2-mode")
-  :mode "\\.d2\\'"
+  ;; :mode "\\.d2\\'"
   :config
   (setq d2-output-format ".png")
   (setq d2-flags '("--sketch")))
+
+(use-package d2-ts-mode
+  :straight (:host github :repo "chaploud/d2-ts-mode")
+  :mode "\\.d2\\'")
 
 (use-package kdl-mode
   :hook (kdl-mode . (lambda ()

@@ -11,12 +11,13 @@
   (interactive)
   (set-kubeconfig "~/Code/rangoonpulse/kubeconfig"))
 
-(use-package kubernetes
-  :commands (kubernetes-overview)
-  :config
-  (setq kubernetes-poll-frequency 3600
-        kubernetes-redraw-frequency 3600)
-  (fset 'k8s 'kubernetes-overview))
+;; (use-package kubernetes
+;;   :disabled t
+;;   :commands (kubernetes-overview)
+;;   :config
+;;   (setq kubernetes-poll-frequency 3600
+;;         kubernetes-redraw-frequency 3600)
+;;   (fset 'k8s 'kubernetes-overview))
 
 (use-package kubernetes-evil
   :after kubernetes)

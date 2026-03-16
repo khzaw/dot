@@ -127,10 +127,16 @@
   (setq tron-legacy-theme-vivid-cursors t))
 
 (use-package alabaster-themes
-  :straight (:type git :host github :repo "vedang/alabaster-themes"))
+  :straight (:type git :host github :repo "vedang/alabaster-themes")
+  :init
+  (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
+          '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))
 
 (use-package nibelung-theme
   :straight (:type git :host github :repo "veschin/nibelung-theme"))
+
+(use-package min-oblong
+  :straight (:type git :host github :repo "fake-frog/min-oblong-theme"))
 
 (provide 'init-themes)
 ;; init-themes.el ends here
