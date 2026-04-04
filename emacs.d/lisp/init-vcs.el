@@ -69,7 +69,7 @@
                 (setq-local magit-git-executable path))))
 
 
-  (add-hook 'magit-status-sections-hook #'magit-insert-worktrees t)
+  (magit-add-section-hook 'magit-status-sections-hook 'magit-insert-worktrees 'magit-insert-status-headers t)
 
   ;; Just type C-c C-d to show the diff at committing
   (remove-hook 'server-switch-hook 'magit-commit-diff)
