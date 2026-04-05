@@ -94,6 +94,7 @@
 (require 'init-presentation)
 (require 'init-erc)
 (require 'init-ai)
+(require 'init-tramp)
 ;; (require 'init-jira)
 ;; (require 'init-slack)
 
