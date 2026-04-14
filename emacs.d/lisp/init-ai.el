@@ -110,7 +110,7 @@ Follow good Git style:
   (define-key embark-file-map (kbd "a") #'my/agent-shell-project-root))
 
 (use-package ai-code
-  :straight (:host github :repo "tninja/ai-code-interface.el") ;; if you want to use straight to install, no need to have MELPA setting above
+  :straight (:host github :repo "tninja/ai-code-interface.el")
   :config
   ;; use codex as backend, other options are 'claude-code, 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'cursor, 'kiro, 'codebuddy, 'aider, 'claude-code-ide, 'claude-code-el
   (ai-code-set-backend 'codex)
@@ -134,6 +134,7 @@ Follow good Git style:
   :if (or (executable-find "pi-coding-agent")
           (executable-find "pi"))
   :init (defalias 'pi 'pi-coding-agent))
+
 
 
 (provide 'init-ai)
