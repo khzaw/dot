@@ -132,5 +132,10 @@
   (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
           '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))
 
+(use-package ember-theme
+  :straight (:type git :host github :repo "ember-theme/emacs" :local-repo "ember-theme")
+  :config (add-to-list 'custom-theme-load-path
+                       (file-name-directory (locate-library "ember-theme"))))
+
 (provide 'init-themes)
 ;; init-themes.el ends here
