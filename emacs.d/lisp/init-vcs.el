@@ -513,5 +513,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :after magit
   :init (setq magit-gh-key ";"))
 
+(use-package shipit
+  :disabled t
+  :straight (:host github :repo "Daskeladden/shipit" :files ("lisp/*.el"))
+  :after magit
+  :config
+  (shipit-init))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

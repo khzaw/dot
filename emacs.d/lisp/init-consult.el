@@ -333,7 +333,7 @@
          (savehist-save . (lambda ()
                             (setq kill-ring
                                   (mapcar #'substring-no-properties
-                                          (cl-remove-if-not #stringp kill-ring))))))
+                                          (cl-remove-if-not #'stringp kill-ring))))))
   :custom
   (history-length 1000)
   (history-delete-duplicates t)
