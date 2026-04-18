@@ -107,5 +107,16 @@
 ;; `inhibit-startup-screen', it would still initialize anyway.
 (advice-add #'display-startup-screen :override #'ignore)
 
+;; Start benchmarking as early as possible so we capture the full init cost
+;; (package bootstrap, exec-path-from-shell, theme loads, etc.). The package
+;; itself is installed via straight in init-basics.el; here we just load it
+;; directly from its straight build directory and activate.
+(let ((benchmark-init-dir
+       (expand-file-name "straight/build/benchmark-init" user-emacs-directory)))
+  (when (file-directory-p benchmark-init-dir)
+    (add-to-list 'load-path benchmark-init-dir)
+    (require 'benchmark-init)
+    (benchmark-init/activate)))
+
 
 ;;; early-init.el ends here

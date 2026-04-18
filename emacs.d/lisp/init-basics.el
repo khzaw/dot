@@ -214,8 +214,8 @@
   :straight (:type git :host gitlab :repo "ajgrf/on.el"))
 
 (use-package benchmark-init
-  :config
-  ;; To disable collection of benchmark data after init is done.
+  ;; Activation happens in early-init.el so we capture the full init cost.
+  ;; Here we only stop collection once init is finished.
   :hook (after-init . benchmark-init/deactivate))
 
 (use-package restart-emacs)
