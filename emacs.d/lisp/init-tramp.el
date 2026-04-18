@@ -28,4 +28,4 @@
   ;; don't expire cache aggressively
   (setq remote-file-name-inhibit-cache nil))
 
-(provide 'init-tramp.el)
+(provide 'init-tramp)

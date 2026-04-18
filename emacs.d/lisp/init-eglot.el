@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+(setq read-process-output-max (* 4 1024 1024))
+
 (use-package eglot
   :commands (eglot eglot-rename eglot-format-buffer eglot-ensure)
   :hook

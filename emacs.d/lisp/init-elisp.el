@@ -137,6 +137,8 @@ Lisp function does not specify a special indentation."
 ;;   (symex-initialize)
 ;;   (global-set-key (kbd "s-;") 'symex-mode-interface))
 
+(setq help-window-select t)
+
 (use-package helpful
   :preface
   :bind

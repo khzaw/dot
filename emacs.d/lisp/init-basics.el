@@ -61,6 +61,8 @@
 
 (setq enable-recursive-minibuffers t)
 
+(setq ffap-machine-p-known 'reject)
+
 ;; User name
 (setq user-full-name "Kaung Htet")
 
@@ -71,7 +73,8 @@
 (setq indicate-empty-lines nil)
 
 ;; No cursor in inactive windows
-(setq cursor-in-non-selected-windows nil)
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
 
 ;; No line break space points
 (setq auto-fill-mode nil)
@@ -81,6 +84,8 @@
 
 ;; No confirmation for visiting non-existent files
 (setq confirm-nonexistent-file-or-buffer nil)
+
+(setq save-interprogram-paste-before-kill t)
 
 ;; Mouse active in terminal
 (unless (display-graphic-p)

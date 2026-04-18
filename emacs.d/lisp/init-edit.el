@@ -2,6 +2,13 @@
 
 (delete-selection-mode 1) ; replace selected text with typed text
 
+;; dedupe in kill-ring
+(setq kill-do-not-save-duplicates t)
+
+(add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
+
+(setq reb-re-syntax 'string)
+
 (use-package autorevert
   :straight (:type built-in)
   :diminish

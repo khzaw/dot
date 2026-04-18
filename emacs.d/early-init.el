@@ -56,6 +56,7 @@
 ;; Disable bidirectional text scanning for a modest performance boost.
 (setq-default bidi-display-reordering  'left-to-right
               bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
 
 ;;;; Clean View
 ;; UI - Disable visual cruft

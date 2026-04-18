@@ -1,12 +1,9 @@
 ;; -*- lexical-binding: t; -*-
 (setq which-func-update-delay 1.0)
 
-(setq-default cursor-in-non-selected-windows nil)
-
-(setq highlight-nonselected-windows nil)
-
 (setq fast-but-imprecise-scrolling t)
 
+;; prevents fontification text while typing
 (setq redisplay-skip-fontification-on-input t)
 
 ;; (toggle-frame-maximized)
