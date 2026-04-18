@@ -96,6 +96,16 @@
   (imp-set-user-filter 'markdown-filter)
   (imp-visit-buffer))
 
+(use-package markdown-xwidget
+  :after markdown-mode
+  :if (featurep 'xwidget-internal)
+  :straight (markdown-xwidget
+             :type git
+             :host github
+             :repo "cfclrk/markdown-xwidget"
+             :files (:defaults "resources"))
+  :bind (:map markdown-mode-command-map
+              ("x" . markdown-xwidget-preview-mode)))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here
