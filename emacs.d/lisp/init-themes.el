@@ -4,12 +4,14 @@
 (use-package fontify-face)
 
 (use-package kaolin-themes
+  :defer t
   :after all-the-icons
   :config
   (setq kaolin-themes-modeline-border nil)
   (kaolin-treemacs-theme))
 
 (use-package doom-themes
+  :defer t
   :config
   ;; https://github.com/doomemacs/themes/issues/875#issuecomment-3557150380
   (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
@@ -55,23 +57,24 @@
 ;;   )
 
 (use-package color-theme-sanityinc-tomorrow
+  :defer t
   :straight (:type git :host github :repo "purcell/color-theme-sanityinc-tomorrow"))
 
 (use-package tomorrow-night-deepblue-theme
+  :defer t
   :straight (:type git :host github :repo "jamescherti/emacs-tomorrow-night-deepblue-theme"))
 
 (use-package almost-mono-themes
-    :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
+  :defer t
+  :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
 
 (use-package green-phosphor-theme
+  :defer t
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
-
-
-(use-package faff-theme
-  :straight (:type git :host github :repo "WJCFerguson/emacs-faff-theme"))
 
 (use-package catppuccin-theme
   :straight (:type git :host github :repo "catppuccin/emacs")
+  :defer t
   :config
   (defun my-apply-catppuccin-vertico-face (theme)
     "Apply custom vertico-current background if THEME is 'catppuccin."
@@ -103,42 +106,43 @@
   )
 
 (use-package nothing-theme
-  :straight (:type git :host github :repo "jaredgorski/nothing.el"))
-
-(use-package berrys-theme)
+  :straight (:type git :host github :repo "jaredgorski/nothing.el")
+  :defer t)
 
 (use-package sexy-monochrome-theme
+  :defer t
   :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
 
-(use-package modus-themes)
+(use-package modus-themes :defer t)
 
-(use-package ef-themes)
+(use-package ef-themes :defer t)
 
 (use-package doric-themes
+  :defer t
   :straight (:type git :host github :repo "protesilaos/doric-themes"))
 
 (use-package acme-theme
+  :defer t
   :straight (:type git :host github :repo "ianyepan/acme-emacs-theme")
   :config (setq acme-theme-black-fg t))
 
-(use-package tron-legacy-theme
-  :config
-  (setq tron-legacy-theme-vivid-cursors t))
-
 (use-package alabaster-themes
+  :defer t
   :straight (:type git :host github :repo "vedang/alabaster-themes")
   :init
   (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
           '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))
 
 (use-package ember-theme
+  :defer t
   :straight (:type git :host github :repo "ember-theme/emacs" :local-repo "ember-theme")
   :config (add-to-list 'custom-theme-load-path
                        (file-name-directory (locate-library "ember-theme"))))
 
 (use-package nordic-night-theme
-    :straight (:type git :host codeberg :repo "ashton314/nordic-night" :branch "main")
-    :init (load-theme 'nordic-midnight t))
+  :defer t
+  :straight (:type git :host codeberg :repo "ashton314/nordic-night" :branch "main")
+  :init (load-theme 'nordic-midnight t))
 
 (provide 'init-themes)
 ;; init-themes.el ends here

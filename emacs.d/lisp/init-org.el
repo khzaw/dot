@@ -277,7 +277,6 @@
     :init
     (setq org-roam-directory (file-truename org-directory))
     (setq org-roam-dailies-directory "daily/")
-    (org-roam-db-autosync-mode)
     :custom
     (org-roam-completion-everywhere t)
     (org-roam-capture-templates
@@ -320,7 +319,8 @@
                   ("C-c n a" . org-roam-alias-add)
                   ("C-c n l" . org-roam-buffer-toggle))))
     :config
-    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag))))
+    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
+    (org-roam-db-autosync-mode))
 
   (use-package org-roam-protocol :straight nil :after org-roam)
 
