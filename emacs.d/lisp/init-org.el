@@ -200,7 +200,10 @@
   (add-to-list 'org-structure-template-alist
                '("m" . "src mermaid :file %^{filename}.png :exports results"))
 
-  (use-package ox-gfm :after org)
+  (use-package ox-gfm
+    :commands (org-gfm-export-as-markdown
+               org-gfm-export-to-markdown
+               org-gfm-convert-region-to-md))
   (add-to-list 'org-export-backends 'md)
 
   (use-package ob-emacs-lisp :straight nil)

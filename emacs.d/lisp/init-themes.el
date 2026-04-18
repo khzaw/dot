@@ -127,6 +127,7 @@
   :config (setq acme-theme-black-fg t))
 
 (use-package alabaster-themes
+  :disabled t
   :defer t
   :straight (:type git :host github :repo "vedang/alabaster-themes")
   :init

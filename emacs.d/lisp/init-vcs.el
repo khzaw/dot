@@ -99,10 +99,15 @@
                     "~/.authinfo.gpg"))
 
 (use-package magit-blame-color-by-age
-  :straight (:repo "jdtsmith/magit-blame-color-by-age" :host github))
+  :straight (:repo "jdtsmith/magit-blame-color-by-age" :host github)
+  :after magit-blame)
 
 (use-package git-commit
   :straight nil
+  ;; Load only when a COMMIT_EDITMSG (or similar) buffer is opened, either by
+  ;; magit or by `git commit' via $EDITOR. `global-git-commit-mode' installs a
+  ;; `find-file-hook' — we reproduce that trigger via :mode.
+  :mode ("/\\(?:COMMIT\\|NOTES\\|PULLREQ\\|MERGEREQ\\|TAG\\)_EDITMSG\\'" . git-commit-setup)
   :config
   (setq git-commit-style-convention-checks '(overlong-summary-line non-empty-second-line))
   (global-git-commit-mode))
@@ -159,6 +164,7 @@
 (use-package difftastic
   :if (executable-find "difft")
   :straight (:type git :host github :repo "pkryger/difftastic.el")
+  :after magit
   :init
   (use-package transient
     :autoload (transient-get-suffix
@@ -279,6 +285,7 @@
          ("n" . git-gutter:next-hunk)))
 
 (use-package git-gutter-fringe
+  :after git-gutter
   :config
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
@@ -297,6 +304,15 @@
 (use-package consult-gh
   :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :files (:defaults "*.el"))
   :after consult
+  :commands (consult-gh-search-repos
+             consult-gh-search-issues
+             consult-gh-search-prs
+             consult-gh-find-file
+             consult-gh-repo-list
+             consult-gh-issue-list
+             consult-gh-pr-list
+             consult-gh-orgs
+             consult-gh-dashboard)
   :config
   (require 'consult-gh-transient)
   (require 'consult-gh-embark)
@@ -492,6 +508,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (use-package eldoc-diffstat
   :straight (:type git :host github :repo "kljohann/eldoc-diffstat")
+  ;; Only relevant once magit / vc-mode are in use.
+  :after magit
   :config (global-eldoc-diffstat-mode))
 
 (use-package igist

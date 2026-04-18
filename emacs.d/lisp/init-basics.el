@@ -289,6 +289,7 @@
     ("Europe/Berlin" "Berlin"))))
 
 (use-package tzc
+  :commands (tzc-convert-time tzc-convert-current-time tzc-world-clock)
   :custom (tzc-favorite-time-zones-alist world-clock-list))
 
 (use-package so-long

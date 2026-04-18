@@ -1,14 +1,13 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package shell-maker
-  :straight (:type git :host github :repo "xenodium/shell-maker"))
+  :straight (:type git :host github :repo "xenodium/shell-maker")
+  :defer t)
 
 (use-package claude-code-ide
   :straight (:type git :host github :repo "manzaltu/claude-code-ide.el")
   :bind ("C-c C-'" . claude-code-ide-menu)
   :config
-  (exec-path-from-shell-copy-env "ANTHROPIC_BASE_URL")
-  (exec-path-from-shell-copy-env "ANTHROPIC_AUTH_TOKEN")
   (claude-code-ide-emacs-tools-setup)
   (setq claude-code-ide-window-side 'right))
 
@@ -18,6 +17,7 @@
 
 (use-package gptel
   :straight (:host github :repo "karthink/gptel")
+  :commands (gptel gptel-send gptel-menu gptel-mode gptel-rewrite)
   :config
   (require 'gptel-integrations)
   (require 'gptel-transient))
@@ -66,9 +66,12 @@ Follow good Git style:
   :straight (:type git :host codeberg :repo "sczi/opencode.el"))
 
 (use-package amp
-  :straight (:type git :host github :repo "shaneikennedy/amp.el"))
+  :straight (:type git :host github :repo "shaneikennedy/amp.el")
+  :defer t)
 
-(use-package acp :straight (:type git :host github :repo "xenodium/acp.el"))
+(use-package acp
+  :straight (:type git :host github :repo "xenodium/acp.el")
+  :defer t)
 
 (use-package agent-shell
   :straight (:type git :host github :repo "xenodium/agent-shell" :files ("*.el"))
@@ -94,7 +97,8 @@ Follow good Git style:
         (agent-shell-make-environment-variables :inherit-env t)))
 
 (use-package agent-review
-  :straight (:type git :host github :repo "nineluj/agent-review" :files ("*.el")))
+  :straight (:type git :host github :repo "nineluj/agent-review" :files ("*.el"))
+  :commands (agent-review agent-review-start))
 
 (use-package agent-shell-manager
   :straight (:type git :host github :repo "jethrokuan/agent-shell-manager")
@@ -111,11 +115,10 @@ Follow good Git style:
 
 (use-package ai-code
   :straight (:host github :repo "tninja/ai-code-interface.el")
+  :bind ("C-c a" . ai-code-menu)
   :config
   ;; use codex as backend, other options are 'claude-code, 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'cursor, 'kiro, 'codebuddy, 'aider, 'claude-code-ide, 'claude-code-el
   (ai-code-set-backend 'codex)
-  ;; Enable global keybinding for the main menu
-  (global-set-key (kbd "C-c a") #'ai-code-menu)
   ;; Optional: Enable @ file completion in comments and AI sessions
   ;; (ai-code-prompt-filepath-completion-mode 1) ;; this is interferring corfu minibuffer
   ;; Optional: Ask AI to run test after code changes, for a tighter build-test loop

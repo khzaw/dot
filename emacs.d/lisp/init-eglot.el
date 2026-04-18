@@ -325,6 +325,7 @@ of `flymake-eslint-executable-name.'"
 
 (use-package sideline-eglot
   :straight (:type git :host github :repo "emacs-sideline/sideline-eglot")
+  :after eglot
   :init
   (setq sideline-backends-right '(sideline-eglot)))
 

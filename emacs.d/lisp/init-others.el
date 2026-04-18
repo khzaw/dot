@@ -12,9 +12,11 @@
   :config
   (define-key nov-mode-map (kbd "o") 'nov-xwidget-view))
 
-(use-package emojify)
+(use-package emojify
+  :commands (emojify-mode global-emojify-mode emojify-insert-emoji))
 
-(use-package calibredb)
+(use-package calibredb
+  :commands (calibredb calibredb-find-file))
 
 (use-package bookmark-plus
   :straight (bookmark-plus :type git :host github :repo "emacsmirror/bookmark-plus")
@@ -153,9 +155,6 @@
   :straight (:host github :repo "ginqi7/leetcode-emacs")
   :config
   (setq leetcode-language "python3"))
-
-(use-package copilot
-  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 
 (use-package monkeytype
   :straight (:type git :host github :repo "jpablobr/emacs-monkeytype"))
