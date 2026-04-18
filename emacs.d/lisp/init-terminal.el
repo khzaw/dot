@@ -46,5 +46,8 @@
   (setq toggle-term-size 25)
   (setq toggle-term-switch-upon-toggle t))
 
+(use-package ghostel
+  :straight (:type git :host github :repo "dakra/ghostel"))
+
 (provide 'init-terminal)
 ;;; init-terminal.el ends here
