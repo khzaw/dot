@@ -110,8 +110,7 @@
 (use-package sexy-monochrome-theme
   :straight (:type git :host github :repo "voloyev/sexy-monochrome-theme"))
 
-(use-package modus-themes
-  :config (load-theme 'modus-vivendi t))
+(use-package modus-themes)
 
 (use-package ef-themes)
 
@@ -136,6 +135,10 @@
   :straight (:type git :host github :repo "ember-theme/emacs" :local-repo "ember-theme")
   :config (add-to-list 'custom-theme-load-path
                        (file-name-directory (locate-library "ember-theme"))))
+
+(use-package nordic-night-theme
+    :straight (:type git :host codeberg :repo "ashton314/nordic-night" :branch "main")
+    :init (load-theme 'nordic-midnight t))
 
 (provide 'init-themes)
 ;; init-themes.el ends here
