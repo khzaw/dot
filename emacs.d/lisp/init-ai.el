@@ -134,6 +134,7 @@ Follow good Git style:
 
 (use-package pi-coding-agent
   :straight (:type git :host github :repo "dnouri/pi-coding-agent")
+  :after markdown-table-wrap
   :if (or (executable-find "pi-coding-agent")
           (executable-find "pi"))
   :init (defalias 'pi 'pi-coding-agent))

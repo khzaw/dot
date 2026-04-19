@@ -77,6 +77,10 @@
 
 (use-package markdown-toc)
 
+(use-package markdown-table-wrap
+  :straight (:type git :host github :repo "dnouri/markdown-table-wrap")
+  :defer t)
+
 (use-package impatient-mode)
 
 (defun markdown-filter (buffer)
