@@ -11,7 +11,8 @@
         doom-modeline-buffer-file-name-style 'truncate-upto-project)
   (setq mode-line-right-align-edge 'right-fringe))
 
-(use-package hide-mode-line)
+(use-package hide-mode-line
+  :commands (hide-mode-line-mode global-hide-mode-line-mode))
 
 (use-package moody
   :disabled t
@@ -56,6 +57,7 @@
 
 (use-package keycast
     ;; :hook (after-init . keycast-mode)
+    :commands (keycast-mode keycast-header-line-mode keycast-tab-bar-mode)
     :config
     (define-minor-mode keycast-mode
       "Show current command and its key binding in the mode line."

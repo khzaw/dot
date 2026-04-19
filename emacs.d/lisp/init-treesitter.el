@@ -47,6 +47,7 @@
     (define-key evil-normal-state-map (kbd "g F") #'khz/treesit-goto-function-name)))
 
 (use-package treesit-auto
+  :hook (on-first-file . global-treesit-auto-mode)
   :custom (treesit-auto-install 'prompt)
   :config
   ;; Astro recipe
@@ -72,8 +73,7 @@
     (add-to-list 'treesit-auto-recipe-list d2-recipe)
     (add-to-list 'treesit-auto-langs 'd2))
 
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
+  (treesit-auto-add-to-auto-mode-alist 'all))
 
 (use-package combobulate
   :disabled t

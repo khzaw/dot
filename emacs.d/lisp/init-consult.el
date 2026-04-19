@@ -228,9 +228,11 @@
 				 (abbreviate-file-name f)))))
   :bind ("C-x p p" . consult-jump-project))
 
-(use-package consult-flyspell)
+(use-package consult-flyspell
+  :commands (consult-flyspell))
 
-(use-package consult-yasnippet)
+(use-package consult-yasnippet
+  :commands (consult-yasnippet consult-yasnippet-visit-snippet-file))
 
 (defun down-from-outside ()
   "Move to next candidate in minibuffer, even when minibuffer isn't selected."

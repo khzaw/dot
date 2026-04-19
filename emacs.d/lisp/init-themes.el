@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
 ;; useful for debugging themes
-(use-package fontify-face)
+(use-package fontify-face
+  :commands (fontify-face-mode))
 
 (use-package kaolin-themes
   :defer t
