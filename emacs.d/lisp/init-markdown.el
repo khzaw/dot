@@ -5,10 +5,10 @@
 
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . gfm-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :bind ((:map markdown-mode-map
+  ;; :mode (("README\\.md\\'" . gfm-mode)
+  ;;        ("\\.md\\'" . gfm-mode)
+  ;;        ("\\.markdown\\'" . markdown-mode))
+     :bind ((:map markdown-mode-map
           ("C-c v"   . markdown-view-mode)
           ("M-p"     . markdown-outline-previous)
           ("M-n"     . markdown-outline-next)
@@ -106,6 +106,10 @@
              :files (:defaults "resources"))
   :bind (:map markdown-mode-command-map
               ("x" . markdown-xwidget-preview-mode)))
+
+(use-package md-ts-mode
+  :straight (:type git :host github :repo "dnouri/md-ts-mode")
+  :config (md-ts-mode-enable-global))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here
