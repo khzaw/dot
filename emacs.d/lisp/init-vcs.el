@@ -1,5 +1,12 @@
 ;; -*- lexical-binding: t; -*-
 
+;; Forge's default bindings conflict with the layout we get via
+;; evil-collection, and its top-level `transient-insert-suffix' can fail
+;; against newer magit-dispatch layouts ("Cannot insert ... o not found").
+;; Disable the defaults before magit/forge/evil-collection load — setting
+;; it from `:init' is too late because forge's autoloaded defvar runs first.
+(setq forge-add-default-bindings nil)
+
 (use-package vc
   :straight (:type built-in)
   :defer t
@@ -191,8 +198,6 @@
 
 (use-package forge
   :after magit
-  :init
-  (setq forge-add-default-bindings nil) ;; will be take care of by evil-collection -> forge
   :config
   (auth-source-pass-enable)
   ;; A topic is an issue or PR and the list of each can be configured
