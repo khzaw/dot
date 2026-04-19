@@ -104,10 +104,6 @@
 
 (use-package git-commit
   :straight nil
-  ;; Load only when a COMMIT_EDITMSG (or similar) buffer is opened, either by
-  ;; magit or by `git commit' via $EDITOR. `global-git-commit-mode' installs a
-  ;; `find-file-hook' — we reproduce that trigger via :mode.
-  :mode ("/\\(?:COMMIT\\|NOTES\\|PULLREQ\\|MERGEREQ\\|TAG\\)_EDITMSG\\'" . git-commit-setup)
   :config
   (setq git-commit-style-convention-checks '(overlong-summary-line non-empty-second-line))
   (global-git-commit-mode))
