@@ -31,7 +31,8 @@
   :straight (:type built-in))
 
 (use-package kirigami
-  :straight (:type git :host github :repo "jamescherti/kirigami.el"))
+  :straight (:type git :host github :repo "jamescherti/kirigami.el")
+  :hook (on-first-buffer . (lambda () (require 'kirigami))))
 
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda ()
@@ -39,17 +40,23 @@
                                  '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
 
-(use-package terraform-mode)
+(use-package terraform-mode
+  :mode "\\.tf\\(vars\\)?\\'")
 
-(use-package csv-mode)
+(use-package csv-mode
+  :mode "\\.[Cc][Ss][Vv]\\'")
 
-(use-package cask-mode)
+(use-package cask-mode
+  :mode "Cask\\'")
 
-(use-package lua-mode)
+(use-package lua-mode
+  :mode "\\.lua\\'")
 
-(use-package vimrc-mode)
+(use-package vimrc-mode
+  :mode ("\\.vim\\(rc\\)?\\'" "\\.?vimrc\\'"))
 
-(use-package sed-mode)
+(use-package sed-mode
+  :mode "\\.sed\\'")
 
 (use-package plantuml-mode
   :mode "\\.puml\\'"
@@ -75,9 +82,11 @@
          ("zshrc\\'" . sh-mode)
          ("zshenv.mac\\'" . sh-mode)))
 
-(use-package swift-mode)
+(use-package swift-mode
+  :mode "\\.swift\\'")
 
-(use-package vyper-mode)
+(use-package vyper-mode
+  :mode "\\.vy\\'")
 
 (use-package conf-mode
   :straight (:type built-in)
@@ -152,9 +161,11 @@
 (use-package promql-mode
   :straight (:type git :host github :repo "Andor/promql-mode"))
 
-(use-package dotenv-mode)
+(use-package dotenv-mode
+  :mode "\\.env\\(\\..*\\)?\\'")
 
-(use-package sicp)
+(use-package sicp
+  :defer t)
 
 (use-package anki-editor
   :straight (:type git :host github :repo "anki-editor/anki-editor"))
@@ -168,7 +179,7 @@
   (setq coverlay:mark-tested-lines nil))
 
 (use-package envrc
-  :hook (after-init . envrc-global-mode))
+  :hook (on-first-file . envrc-global-mode))
 
 (use-package jq-mode
   :straight (:type git :host github :repo "ljos/jq-mode")
@@ -179,7 +190,8 @@
 (use-package edit-indirect
   :defer t)
 
-(use-package zig-mode)
+(use-package zig-mode
+  :mode "\\.zig\\'")
 
 (use-package scala-ts-mode
   :straight (scala-ts-mode :type git :host github :repo "KaranAhlawat/scala-ts-mode"))

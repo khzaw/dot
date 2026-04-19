@@ -54,7 +54,8 @@
   (go-playground-init-command "go mod init playground")
   :commands (go-playground-mode))
 
-(use-package go-dlv)
+(use-package go-dlv
+  :commands (dlv dlv-current-func))
 
 (use-package gotest
   :after go-ts-mode
@@ -83,7 +84,11 @@
          ("C-c t r" . go-tag-remove))
   :init (setq go-tag-args (list "-transform" "snakecase")))
 
-(use-package godoctor)
+(use-package godoctor
+  :commands (godoctor-rename
+             godoctor-extract
+             godoctor-toggle
+             godoctor-godoc))
 
 (use-package go-fill-struct
   :if (executable-find "fillstruct"))

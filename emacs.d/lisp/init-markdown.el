@@ -75,13 +75,18 @@
               (setq-local outline-regexp markdown-regex-header)
               (setq-local outline-level #'markdown-outline-level))))
 
-(use-package markdown-toc)
+(use-package markdown-toc
+  :commands (markdown-toc-generate-toc
+             markdown-toc-refresh-toc
+             markdown-toc-generate-or-refresh-toc
+             markdown-toc-delete-toc))
 
 (use-package markdown-table-wrap
   :straight (:type git :host github :repo "dnouri/markdown-table-wrap")
   :defer t)
 
-(use-package impatient-mode)
+(use-package impatient-mode
+  :commands (impatient-mode))
 
 (defun markdown-filter (buffer)
   (princ

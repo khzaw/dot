@@ -26,7 +26,7 @@
 ;; Highlight matching parens
 (use-package paren
   :straight (:type built-in)
-  :hook (after-init . show-paren-mode)
+  :hook (on-first-buffer . show-paren-mode)
   :init (setq show-paren-when-point-inside-paren t
               show-paren-when-point-in-periphery t)
   :config (setq show-paren-delay 0))

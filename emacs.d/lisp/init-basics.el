@@ -216,7 +216,7 @@
 (use-package benchmark-init
   ;; Activation happens in early-init.el so we capture the full init cost.
   ;; Here we only stop collection once init is finished.
-  :hook (after-init . benchmark-init/deactivate))
+  :hook (emacs-startup . benchmark-init/deactivate))
 
 (use-package restart-emacs)
 
@@ -253,7 +253,7 @@
 (use-package editorconfig
   :diminish
   :custom (editorconfig-lisp-use-default-indent t)
-  :hook (after-init . editorconfig-mode))
+  :hook (on-first-file . editorconfig-mode))
 
 ;; History
 (use-package saveplace
@@ -262,7 +262,7 @@
 
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
-  :hook (after-init . recentf-mode)
+  :hook (on-first-file . recentf-mode)
   :init (setq recentf-max-saved-items 300
               recentf-exclude
               '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
@@ -276,7 +276,7 @@
 
 (use-package time
   :straight (:type built-in)
-  :hook (after-init . display-time-mode)
+  :hook (on-init-ui . display-time-mode)
   :custom
   (display-time-24hr-format t)
   (display-time-default-load-average nil)
@@ -293,7 +293,7 @@
   :custom (tzc-favorite-time-zones-alist world-clock-list))
 
 (use-package so-long
-  :hook (after-init . global-so-long-mode))
+  :hook (on-first-file . global-so-long-mode))
 
 (use-package prescient
   ;; Persist results for better sorting

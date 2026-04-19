@@ -47,7 +47,8 @@
   :disabled t
   :mode ("\\.jsx?\\'"))
 
-(use-package php-mode)
+(use-package php-mode
+  :mode "\\.php\\'")
 
 (defun setup-tide-mode()
   (interactive)

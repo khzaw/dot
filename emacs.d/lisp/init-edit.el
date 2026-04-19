@@ -50,7 +50,7 @@
          ("M-g g" . avy-goto-line)
          ("M-g w" . avy-goto-word-0)
          ("M-g s" . avy-goto-subword-1))
-  :hook (after-init . avy-setup-default)
+  :hook (on-first-input . avy-setup-default)
   :config (setq avy-background t
                 avy-all-windows nil
                 avy-all-windows-alt t
@@ -124,7 +124,8 @@
   (setq electric-pair-inhibit-predicate 'khz/electric-pair-conservative-inhibit))
 
 ;; Visual `align-regexp'
-(use-package ialign)
+(use-package ialign
+  :commands (ialign))
 
 (use-package vundo
   :bind ("C-x u" . vundo)
@@ -132,7 +133,7 @@
 
 (use-package undo-tree
   :diminish
-  :hook (after-init . global-undo-tree-mode)
+  :hook (on-first-buffer . global-undo-tree-mode)
   :custom
   (undo-tree-visualizer-timestamps t)
   (undo-tree-auto-save-history nil))
@@ -140,7 +141,7 @@
 ;; Narrow/Widen
 (use-package fancy-narrow
   :diminish
-  :hook (after-init . fancy-narrow-mode))
+  :hook (on-first-buffer . fancy-narrow-mode))
 
 (use-package undo-fu
   :commands (undo-fu-only-undo
@@ -227,7 +228,7 @@
 (use-package repeat-mode
   :straight (:type built-in)
   :diminish
-  :hook (after-init . repeat-mode)
+  :hook (on-first-input . repeat-mode)
   :config (setq repeat-message-function #'ignore))
 
 (use-package repeat-help
@@ -310,7 +311,15 @@
   (require 'ipe-texinfo-mode)
   (require 'ipe-html-mode))
 
-(use-package string-inflection)
+(use-package string-inflection
+  :commands (string-inflection-all-cycle
+             string-inflection-toggle
+             string-inflection-camelcase
+             string-inflection-lower-camelcase
+             string-inflection-kebab-case
+             string-inflection-underscore
+             string-inflection-capital-underscore
+             string-inflection-upcase))
 
 (use-package vlf
   ;; very large files
@@ -324,7 +333,7 @@
              dtrt-indent-undo
              dtrt-indent-diagnosis
              dtrt-indent-highlight)
-  :hook (after-init . dtrt-indent-global-mode))
+  :hook (on-first-file . dtrt-indent-global-mode))
 
 (use-package transform-symbol-at-point
   :straight (:type git :host github :repo "waymondo/transform-symbol-at-point")
@@ -341,7 +350,8 @@
   :config (require 'smartparens-config)
   :commands (smartparens-mode sp-forward-slurp-sexp))
 
-(use-package goto-chg)
+(use-package goto-chg
+  :commands (goto-last-change goto-last-change-reverse))
 
 (use-package outline-indent
   :ensure t
@@ -465,7 +475,7 @@
               ("M-g M-f" . dogears-forward)
               ("M-g M-d" . dogears-list)
               ("M-g M-D" . dogears-sidebar))
-  :hook (after-init . dogears-mode)
+  :hook (on-first-file . dogears-mode)
   :custom
   (dogears-idle 1)
   (dogears-position-delta 20)

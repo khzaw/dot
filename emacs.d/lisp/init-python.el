@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
 ;; Run Jupyter notebooks in emacs
-(use-package ein)
+(use-package ein
+  :commands (ein:run ein:login ein:notebooklist-open))
 
 ;; (use-package poetry
 ;;   :if (executable-find "poetry")
@@ -51,7 +52,8 @@
 ;;   "Find a poetry venv."
 ;;   (run-command-in-directory nil "poetry" "env" "info" "-p"))
 
-(use-package python-pytest)
+(use-package python-pytest
+  :commands (python-pytest-dispatch python-pytest-file python-pytest-function))
 
 (use-package python-black
   :if (executable-find "black"))

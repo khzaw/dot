@@ -45,7 +45,7 @@
 
 (use-package flymake-collection
   :straight (:type git :host github :repo "mohkale/flymake-collection")
-  :hook (after-init . flymake-collection-hook-setup))
+  :hook (on-first-file . flymake-collection-hook-setup))
 
 (use-package flymake-quickdef
   :after flymake

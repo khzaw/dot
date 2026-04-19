@@ -1,6 +1,12 @@
 ;; -*- lexical-binding: t; -*-
 
-(use-package paredit)
+(use-package paredit
+  :hook ((emacs-lisp-mode
+          lisp-mode
+          lisp-interaction-mode
+          scheme-mode
+          ielm-mode
+          eval-expression-minibuffer-setup) . enable-paredit-mode))
 
 (use-package lispy
   :straight (:type git :host github :repo "abo-abo/lispy")
@@ -181,7 +187,8 @@ Lisp function does not specify a special indentation."
 (use-package mode-minder
   :straight (:type git :host github :repo "jdtsmith/mode-minder"))
 
-(use-package geiser)
+(use-package geiser
+  :commands (geiser run-geiser geiser-mode))
 
 (use-package geiser-racket :after geiser)
 

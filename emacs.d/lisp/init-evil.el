@@ -86,14 +86,14 @@
 
      (?< . ("<" . ">"))
      (?> . ("<" . ">"))))
-  :hook (after-init . global-evil-surround-mode))
+  :hook (on-first-buffer . global-evil-surround-mode))
 
 (use-package evil-goggles :config (evil-goggles-mode))
 
 ;; provides 2-character motions for quickly jumping around text compared to Evil's built-in f/F/t/T motions, incrementally highlighting candidate targets as you type. By default, snipe only binds s (forward) and S (backward) to evil-snipe-s and evil-snipe-S, respectively. In operator mode, snipe is bound to z/Z and x/X (exclusive):
 (use-package evil-snipe
   :commands evil-snipe-mode
-  :hook (after-init . evil-snipe-mode))
+  :hook (on-first-buffer . evil-snipe-mode))
 
 ;; enable commenting and uncommenting by pressing gcc in normal mode and gc in visual mode
 (with-eval-after-load "evil"

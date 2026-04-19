@@ -5,6 +5,7 @@
 ;;; https://github.com/mickeynp/ligature.el/wiki
 (use-package ligature
   :straight (:type git :host github :repo "mickeynp/ligature.el")
+  :hook ((prog-mode text-mode) . ligature-mode)
   :config
   (ligature-set-ligatures 't '("www"))
   (ligature-set-ligatures
@@ -30,10 +31,7 @@
      "www" "@_" "&&" "&&&" "&=" "~@" "++" "+++" "/\\" "\\/" "_|_" "||"
      ; Group G
      "=:" "=:=" "=!=" "==" "===" "=/=" "=~" "~-" "^=" "__" "!=" "!==" "-~"
-     "--" "---"))
-  ;; Enables ligature checks globally in all buffers. You can also do it
-  ;; per mode with `ligature-mode'.
-  (global-ligature-mode t))
+     "--" "---")))
 
 (defun what-face (pos)
   (interactive "d")
