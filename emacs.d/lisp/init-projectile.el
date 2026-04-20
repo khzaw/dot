@@ -4,7 +4,7 @@
   :delight '(:eval (concat " " (projectile-project-name)))
   :bind (:map projectile-mode-map
          ("C-c p" . projectile-command-map))
-  :hook (on-first-file . projectile-mode)
+  :hook (on-first-input . projectile-mode)
   :custom
   (projectile-sort-order 'recentf)
   (projectile-use-git-grep t)
