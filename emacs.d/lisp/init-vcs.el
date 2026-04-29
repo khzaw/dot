@@ -519,13 +519,17 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
              :type git
              :host github))
 
+(use-package majutsu
+  :if (executable-find "jj")
+  :straight (:host github :repo "0WD0/majutsu"))
+
 (use-package vc-jj
   :if (executable-find "jj")
   :straight (vc-jj :repo "emacs-jj-vc/vc-jj.el" :host codeberg :type git))
 
-(use-package jj-mode
-  :if (executable-find "jj")
-  :straight (:host github :repo "bolivier/jj-mode.el"))
+;; (use-package jj-mode
+;;   :if (executable-find "jj")
+;;   :straight (:host github :repo "bolivier/jj-mode.el"))
 
 (use-package magit-gh
   :straight (:type git :host github :repo "jonathanchu/magit-gh")
