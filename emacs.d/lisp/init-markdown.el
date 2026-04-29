@@ -3,6 +3,35 @@
 ;; Curly quotes when writing in markup languages
 (use-package typo :defer t)
 
+(defun khz/markdown-visual-setup ()
+  "Apply the shared visual setup for Markdown buffers."
+  (word-wrap-whitespace-mode 1)
+  (visual-line-mode 1)
+  (mixed-pitch-mode 1)
+  (outline-minor-mode 1))
+
+(defun khz/markdown-outline-setup ()
+  "Make `outline-minor-mode' follow Markdown headings."
+  (setq-local outline-regexp markdown-regex-header)
+  (setq-local outline-level #'markdown-outline-level))
+
+(defun khz/md-ts-sync-faces ()
+  "Make `md-ts-mode' reuse the configured Markdown faces."
+  (set-face-attribute 'md-ts-delimiter nil :inherit 'markdown-markup-face)
+  (set-face-attribute 'md-ts-heading-1 nil :inherit 'markdown-header-face-1)
+  (set-face-attribute 'md-ts-heading-2 nil :inherit 'markdown-header-face-2)
+  (set-face-attribute 'md-ts-heading-3 nil :inherit 'markdown-header-face-3)
+  (set-face-attribute 'md-ts-heading-4 nil :inherit 'markdown-header-face-4)
+  (set-face-attribute 'md-ts-heading-5 nil :inherit 'markdown-header-face-5)
+  (set-face-attribute 'md-ts-heading-6 nil :inherit 'markdown-header-face-6)
+  (set-face-attribute 'md-ts-list-marker nil :inherit 'markdown-list-face)
+  (set-face-attribute 'md-ts-block-quote nil :inherit 'markdown-blockquote-face)
+  (set-face-attribute 'md-ts-strikethrough nil :inherit 'markdown-strike-through-face)
+  (set-face-attribute 'md-ts-language-keyword nil :inherit 'markdown-language-keyword-face)
+  (set-face-attribute 'md-ts-task-list-marker nil :inherit 'markdown-gfm-checkbox-face)
+  (set-face-attribute 'md-ts-code nil
+                      :inherit '(markdown-inline-code-face markdown-code-face)))
+
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   ;; :mode (("README\\.md\\'" . gfm-mode)
@@ -58,22 +87,12 @@
   (markdown-header-face-2 ((t (:inherit markdown-header-face :weight bold))))
   (markdown-code-face ((t (:inherit fixed-pitch :extend t))))
   (markdown-inline-code-face ((t (:inherit (fixed-pitch font-lock-constant-face)))))
-  :hook ((markdown-mode . word-wrap-whitespace-mode)
-         (markdown-mode . visual-line-mode)
-         (markdown-mode . mixed-pitch-mode)
-         (markdown-mode . outline-minor-mode)
-         (gfm-mode . word-wrap-whitespace-mode)
-         (gfm-mode . visual-line-mode)
-         (gfm-mode . mixed-pitch-mode)
-         (gfm-mode . outline-minor-mode))
+  :hook ((markdown-mode . khz/markdown-visual-setup)
+         (markdown-mode . khz/markdown-outline-setup)
+         (gfm-mode . khz/markdown-visual-setup)
+         (gfm-mode . khz/markdown-outline-setup))
   :config
-  (setq markdown-split-window-direction 'right)
-
-  ;; Make outline-minor-mode follow markdown heading structure
-  (add-hook 'markdown-mode-hook
-            (lambda ()
-              (setq-local outline-regexp markdown-regex-header)
-              (setq-local outline-level #'markdown-outline-level))))
+  (setq markdown-split-window-direction 'right))
 
 (use-package markdown-toc
   :commands (markdown-toc-generate-toc
@@ -118,7 +137,13 @@
 
 (use-package md-ts-mode
   :straight (:type git :host github :repo "dnouri/md-ts-mode")
-  :config (md-ts-mode-enable-global))
+  :hook (md-ts-mode . khz/markdown-visual-setup)
+  :config
+  (setq md-ts-hide-markup markdown-hide-markup
+        md-ts-heading-scaling markdown-header-scaling
+        md-ts-heading-scaling-values markdown-header-scaling-values)
+  (khz/md-ts-sync-faces)
+  (md-ts-mode-enable-global))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here
