@@ -9,20 +9,24 @@
 ;; (toggle-frame-maximized)
 
 ;; UI
-(when (eq system-type 'gnu/linux)
-  (setq-default line-spacing 0.05)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 110)
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Etoile" :weight 'normal))
+(defun khz/apply-ui-fonts (&rest _)
+  "Apply the default font setup after startup or theme changes."
+  (pcase system-type
+    ('gnu/linux
+     (setq-default line-spacing 0.05)
+     (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 110)
+     (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
+     (set-face-attribute 'variable-pitch nil :font "Iosevka Etoile" :weight 'normal :height 1.0))
+    ('darwin
+     (setq-default line-spacing 3)
+     (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
+     (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
+     ;; Iosevka Etoile: quasi-proportional serif, harmonizes with monospace metrics.
+     ;; Charter is a good fallback (macOS built-in, excellent screen serif).
+     (set-face-attribute 'variable-pitch nil :font "Iosevka Etoile" :weight 'normal :height 1.0))))
 
-
-(when (eq system-type 'darwin)
-  (setq-default line-spacing 3)
-  (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
-  ;; Iosevka Etoile: quasi-proportional serif, harmonizes with monospace metrics.
-  ;; Charter is a good fallback (macOS built-in, excellent screen serif).
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Etoile" :weight 'normal :height 1.0))
+(khz/apply-ui-fonts)
+(add-hook 'after-load-theme-hook #'khz/apply-ui-fonts)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
