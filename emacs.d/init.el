@@ -25,7 +25,7 @@
 ;;   (setq insert-directory-program "/usr/local/bin/gls"))
 ;; (setq dired-listing-switches "-aBhl --group-directories-first")
 
-(require 'secrets)
+(load (expand-file-name "local/secrets.el" user-emacs-directory) t)
 (require 'init-package)
 (require 'init-exec-path)
 (require 'init-maintenance)

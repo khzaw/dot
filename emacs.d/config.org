@@ -1155,8 +1155,8 @@ To preview hex colors
 (use-package counsel-spotify
   :after counsel
   :init
-  (setq counsel-spotify-client-id "531328dc75c640eca9dca6b397021b2b"
-        counsel-spotify-client-secret "6256c0ba609a42a1881f69f4893454e1"))
+  (setq counsel-spotify-client-id (bound-and-true-p spotify-client-id)
+        counsel-spotify-client-secret (bound-and-true-p spotify-secret)))
 #+end_src
 ** writeroom-mode
 #+begin_src emacs-lisp

@@ -72,6 +72,14 @@ emacs.d/emojis
 nov-places
 
 zshenv.local
+zsh/*.local
+zsh/zshrc.local
+zsh/zshenv.local
+.config/dot/
+config/dot/
+
+emacs.d/local/
+emacs.d/lisp/secrets.el
 
 emacs.d/elfeed/index
 emacs.d/forge-database*

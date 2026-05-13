@@ -1,93 +1,86 @@
-if [[ `uname` == "Darwin" ]]; then
-    source $(brew --prefix)/share/antigen/antigen.zsh
-else
-    source /usr/share/zsh/share/antigen.zsh
+setopt prompt_subst
+setopt no_beep
+setopt interactive_comments
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt inc_append_history
+setopt share_history
+
+export HISTFILE="${HISTFILE:-${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history}"
+export HISTSIZE="${HISTSIZE:-32768}"
+export SAVEHIST="${SAVEHIST:-32768}"
+mkdir -p "${HISTFILE:h}" "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+
+zsh_add_file() {
+  [[ -r "$1" ]] && source "$1"
+}
+
+zsh_load_antidote() {
+  local antidote_file
+  for antidote_file in \
+    "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh" \
+    "/opt/homebrew/opt/antidote/share/antidote/antidote.zsh" \
+    "/usr/local/opt/antidote/share/antidote/antidote.zsh" \
+    "/usr/share/zsh-antidote/antidote.zsh"
+  do
+    if [[ -r "$antidote_file" ]]; then
+      source "$antidote_file"
+      return 0
+    fi
+  done
+  return 1
+}
+
+fpath=("$HOME/.zfunc" $fpath)
+
+if zsh_load_antidote; then
+  zsh_plugins="${DOTFILES_DIR:-$HOME/Code/dot}/zsh/plugins.txt"
+  zsh_plugins_static="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/plugins.zsh"
+  if [[ -r "$zsh_plugins" && ( ! -s "$zsh_plugins_static" || "$zsh_plugins" -nt "$zsh_plugins_static" ) ]]; then
+    antidote bundle < "$zsh_plugins" >| "$zsh_plugins_static"
+  fi
+  zsh_add_file "$zsh_plugins_static"
 fi
 
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' special-dirs true
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
 
-antigen use oh-my-zsh
-antigen bundle git
-antigen bundle git-extras
-antigen bundle github
-antigen bundle gitfast
-antigen bundle history
-antigen bundle z
-antigen bundle kubectl
-antigen bundle eza
-antigen bundle command-not-found
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-history-substring-search
-antigen theme lambda
-antigen apply
-
-zmodload zsh/zprof
-
-
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
-# eval "$(register-python-argcomplete pipx)"
-
-# tabtab source for packages
-# uninstall by removing these lines
-[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
-
-# poetry completions zsh > ~/.zfunc/_poetry
-# fpath+=~/.zfunc
-
-
-export AWS_SDK_LOAD_CONFIG=1
-
-
-for file in ~/Code/dot/zsh/{aliases.zsh,functions};
-do
-  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+for file in "${DOTFILES_DIR:-$HOME/Code/dot}"/zsh/lib/*.zsh; do
+  zsh_add_file "$file"
 done
 unset file
 
+case "$(uname -s)" in
+  Darwin) zsh_add_file "${DOTFILES_DIR:-$HOME/Code/dot}/zsh/os/darwin.zsh" ;;
+  Linux) zsh_add_file "${DOTFILES_DIR:-$HOME/Code/dot}/zsh/os/linux.zsh" ;;
+esac
 
-if [[ `uname` == "Linux" ]] then
-   source "$HOME/Code/dot/zsh/zshrc.linux"
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+elif [[ -d "$VOLTA_HOME" ]]; then
+  path=("$VOLTA_HOME/bin" $path)
 fi
 
-if [[ `uname` == "Darwin" ]]; then
-   source "$HOME/Code/dot/zsh/zshrc.mac"
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh)"
+
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+else
+  PROMPT='%F{green}%n@%m%f %F{blue}%~%f %# '
 fi
 
-
-
-LAST_REPO="" # start with an empty name
-
-cd() {
-	builtin cd "$@" # run the actual cd
-
-	git rev-parse 2>/dev/null # check if you are in a git repository without dumping the output to the screen [1]
-	if [ $? -eq 0 ]; then # if return value of previous command is 0 then you are
-  CURRENT_REPO=$(basename $(git rev-parse --show-toplevel)) # get name of current repository [2]
-		if [ "$LAST_REPO" != "$CURRENT_REPO" ]; then
-			onefetch
-			LAST_REPO=$CURRENT_REPO
-		fi
-	fi
-}
-
-# local config
-[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
-
-
-
-# BEGIN opam configuration
-# This is useful if you're using opam as it adds:
-#   - the correct directories to the PATH
-#   - auto-completion for the opam binary
-# This section can be safely removed at any time if needed.
-[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
-# END opam configuration
-
-eval "$(uv generate-shell-completion zsh)"
-eval "$(uvx --generate-shell-completion zsh)"
-eval "$(zoxide init zsh)"
+for file in \
+  "$XDG_CONFIG_HOME/dot/zshrc.zsh" \
+  "$XDG_CONFIG_HOME/dot/work.zsh" \
+  "$XDG_CONFIG_HOME/dot/hosts/${HOST%%.*}.zsh" \
+  "${DOTFILES_DIR:-$HOME/Code/dot}/zsh/zshrc.local"
+do
+  zsh_add_file "$file"
+done
+unset file zsh_plugins zsh_plugins_static
+unfunction zsh_add_file zsh_load_antidote

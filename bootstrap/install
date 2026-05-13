@@ -1,0 +1,79 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+repo="${0:A:h:h}"
+backup_dir="${XDG_STATE_HOME:-$HOME/.local/state}/dot/backup/$(date +%Y%m%d%H%M%S)"
+force=0
+dry_run=0
+
+for arg in "$@"; do
+  case "$arg" in
+    --force) force=1 ;;
+    --dry-run) dry_run=1 ;;
+    *) echo "unknown argument: $arg" >&2; exit 2 ;;
+  esac
+done
+
+link_one() {
+  local src="$1"
+  local dst="$2"
+
+  [[ -e "$src" ]] || return 0
+
+  if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
+    echo "ok      $dst"
+    return 0
+  fi
+
+  if [[ -e "$dst" || -L "$dst" ]]; then
+    if (( ! force )); then
+      echo "skip    $dst exists"
+      return 0
+    fi
+    echo "backup  $dst"
+    (( dry_run )) || {
+      mkdir -p "$backup_dir" "${dst:h}"
+      mv "$dst" "$backup_dir/${dst:t}"
+    }
+  else
+    (( dry_run )) || mkdir -p "${dst:h}"
+  fi
+
+  echo "link    $dst -> $src"
+  (( dry_run )) || ln -s "$src" "$dst"
+}
+
+link_one "$repo/zsh/zshenv" "$HOME/.zshenv"
+link_one "$repo/zsh/zshrc" "$HOME/.zshrc"
+link_one "$repo/git/gitconfig" "$HOME/.gitconfig"
+link_one "$repo/git/gitignore_global" "$HOME/.gitignore"
+link_one "$repo/git/gitattributes" "$HOME/.gitattributes"
+link_one "$repo/emacs.d" "$HOME/.emacs.d"
+
+for dir in ghostty kitty wezterm tridactyl; do
+  link_one "$repo/config/$dir" "$HOME/.config/$dir"
+done
+
+link_one "$repo/config/mise" "$HOME/.config/mise"
+link_one "$repo/ai/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
+link_one "$repo/ai/opencode/dcp.jsonc" "$HOME/.config/opencode/dcp.jsonc"
+link_one "$repo/ai/eca/config.json" "$HOME/.config/eca/config.json"
+link_one "$repo/ai/zed/settings.json" "$HOME/.config/zed/settings.json"
+link_one "$repo/ai/codex/config.toml" "$HOME/.codex/config.toml"
+link_one "$repo/ai/codex/rules/default.rules" "$HOME/.codex/rules/default.rules"
+
+case "$(uname -s)" in
+  Darwin)
+    for dir in sketchybar; do
+      link_one "$repo/config/$dir" "$HOME/.config/$dir"
+    done
+    link_one "$repo/yabai/yabairc" "$HOME/.config/yabai/yabairc"
+    link_one "$repo/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
+    ;;
+  Linux)
+    for dir in dunst picom rofi zathura; do
+      link_one "$repo/config/$dir" "$HOME/.config/$dir"
+    done
+    link_one "$repo/xmonad" "$HOME/.xmonad"
+    ;;
+esac

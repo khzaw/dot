@@ -1,0 +1,2 @@
+# Keep only reusable permission rules here.
+# Machine-specific rules belong in ~/.config/dot/ai/codex.rules.

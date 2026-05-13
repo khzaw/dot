@@ -1,0 +1,12 @@
+[settings]
+idiomatic_version_file_enable_tools = ["node", "python", "ruby"]
+experimental = true
+
+[tools]
+node = "lts"
+
+[env]
+_.path = [
+  "{{env.HOME}}/.local/bin",
+  "{{env.HOME}}/.bin",
+]

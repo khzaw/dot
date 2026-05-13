@@ -1,5 +1,2 @@
-alias diff="$(brew --prefix)/bin/diff"
-
-source <(git-town completions zsh)
-
-source "$(brew --prefix)/opt/git-extras/share/git-extras/git-extras-completion.zsh"
+# Backward-compatible shim. zsh/zshrc loads this through zsh/os/darwin.zsh.
+source "${DOTFILES_DIR:-$HOME/Code/dot}/zsh/os/darwin.zsh"

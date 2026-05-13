@@ -1,4 +1,2 @@
-source /usr/share/doc/git-extras/git-extras-completion.zsh
-source /usr/share/nvm/init-nvm.sh
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
+# Backward-compatible shim. zsh/zshrc loads this through zsh/os/linux.zsh.
+source "${DOTFILES_DIR:-$HOME/Code/dot}/zsh/os/linux.zsh"

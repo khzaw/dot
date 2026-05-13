@@ -1,36 +1,31 @@
-setopt no_global_rcs
+typeset -U path PATH
 
-####################################
-# Home
-####################################
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export HOME="/Users/$(whoami)"
-fi
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export ANDROID_HOME=$HOME/Library/Android/sdk
+export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Code/dot}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
-####################################
-# Shell
-####################################
-export ESHELL=$SHELL
+export EDITOR="${EDITOR:-nvim}"
+export VISUAL="${VISUAL:-$EDITOR}"
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+export ESHELL="${ESHELL:-$SHELL}"
+export LSP_USE_PLISTS="${LSP_USE_PLISTS:-true}"
+export AWS_SDK_LOAD_CONFIG="${AWS_SDK_LOAD_CONFIG:-1}"
 
-####################################
-# AWS
-####################################
-export AWS_SDK_LOAD_CONFIG=1
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.bin"
+  $path
+)
 
-####################################
-# LSP
-####################################
-export LSP_USE_PLISTS=true
-
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  source "$HOME/Code/dot/zsh/zshenv.mac"
-else
-  source "$HOME/Code/dot/zsh/zshenv.linux"
-fi
-
-# local config
-[[ -f "$HOME/Code/dot/zsh/zshenv.local" ]] && source "$HOME/Code/dot/zsh/zshenv.local"
+for file in \
+  "$XDG_CONFIG_HOME/dot/env.zsh" \
+  "$XDG_CONFIG_HOME/dot/secrets.zsh" \
+  "$XDG_CONFIG_HOME/dot/hosts/${HOST%%.*}.zsh" \
+  "$DOTFILES_DIR/zsh/zshenv.local"
+do
+  [[ -r "$file" ]] && source "$file"
+done
+unset file
