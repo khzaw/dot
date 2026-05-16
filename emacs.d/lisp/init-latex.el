@@ -1,5 +1,9 @@
 ;; -*- lexical-binding: t; -*-
 
+(use-package texmathp
+  :straight auctex
+  :demand t)
+
 (use-package latex
   :straight auctex
   :bind
