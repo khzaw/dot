@@ -3,7 +3,7 @@
 
 (use-package flymake
   :after evil
-  :straight (:type built-in)
+  :straight (flymake :type git :host github :repo "emacs-straight/flymake")
   :bind
   (:map flymake-mode-map
         ("C-c f c" . flymake-start)
@@ -29,17 +29,7 @@
   (evil-set-command-property 'flymake-goto-next-error :jump t)
   (evil-set-command-property 'flymake-goto-prev-error :jump t))
 
-(use-package flymake-diagnostic-at-point
-  :after (flymake evil-leader)
-  :preface
-  (defun flymake-diagnostic-at-point-quick-peek (text)
-    "Display the flymake diagnostic TEXT with `quick-peek'`."
-    (quick-peek-show (concat flymake-diagnostic-at-point-error-prefix text)))
-  :hook (flymake-mode . flymake-diagnostic-at-point-mode)
-  :config
-  (setq flymake-diagnostic-at-point-error-prefix "! ")
-  ;; (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer)
-  (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-popup)
+(with-eval-after-load 'evil-leader
   (evil-leader/set-key "j" 'flymake-goto-next-error)
   (evil-leader/set-key "k" 'flymake-goto-prev-error))
 
@@ -91,11 +81,6 @@
             (lambda ()
               (add-hook 'flymake-diagnostic-functions 'flymake-hadolint nil t))))
 
-
-(use-package help-at-pt
-  :init
-  (setq help-at-pt-timer-delay 0.1)
-  (setq help-at-pt-display-when-idle '(flymake-diagnostic)))
 
 (use-package flymake-ruff
   :config

@@ -3,6 +3,8 @@
 (setq read-process-output-max (* 4 1024 1024))
 
 (use-package eglot
+  :straight (eglot :type git :host github :repo "emacs-straight/eglot"
+                   :build (:not compile native-compile))
   :commands (eglot eglot-rename eglot-format-buffer eglot-ensure)
   :hook
   ((go-mode go-ts-mode) . eglot-ensure)
@@ -66,7 +68,8 @@
                 (cons #'flymake-eldoc-function
                       (remove #'flymake-eldoc-function eldoc-documentation-functions))))
 
-  (set-face-attribute 'eglot-code-action-indicator-face nil :height 90)
+  (when (facep 'eglot-code-action-indicator-face)
+    (set-face-attribute 'eglot-code-action-indicator-face nil :height 90))
 
   (defvar khz/eglot-server-configs
     ;; Define a mapping of major modes to language server configurations
