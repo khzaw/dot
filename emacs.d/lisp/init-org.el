@@ -427,12 +427,15 @@
 
 (use-package consult-notes
   :straight (:type git :host github :repo "mclear-tools/consult-notes")
-  :after org-roam
   :commands (consult-notes
              consult-notes-search-in-all-notes
              ;; if using org-roam
              consult-notes-org-roam-find-node
              consult-notes-org-roam-find-node-relation)
+  :init
+  (with-eval-after-load 'org-roam
+    (with-eval-after-load 'consult-notes
+      (consult-notes-org-roam-mode)))
   :config
   (consult-customize
    consult-notes
@@ -449,7 +452,8 @@
   ;; (setq consult-notes-org-headings-files '("~/path/to/file1.org"
   ;;                                           "~/path/to/file2.org"))
   (consult-notes-org-headings-mode)
-  (consult-notes-org-roam-mode)
+  (when (featurep 'org-roam)
+    (consult-notes-org-roam-mode))
   (when (locate-library "denote")
     (consult-notes-denote-mode))
   :bind

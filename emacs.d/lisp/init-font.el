@@ -66,6 +66,7 @@
 (global-set-key (kbd "C-h M-f") #'all-faces-at-point)
 
 (use-package fontaine
+  :if (display-graphic-p)
   :config
   (setq fontaine-presets
         '((regular

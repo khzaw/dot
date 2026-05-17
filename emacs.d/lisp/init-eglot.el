@@ -61,7 +61,7 @@
 
   (defun khz/eglot-eldoc-settings ()
     (setq-local eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-    ;; make sure flymake-eldoc-function is prsent and first in the list
+    ;; make sure flymake-eldoc-function is present and first in the list
     (setq-local eldoc-documentation-functions
                 (cons #'flymake-eldoc-function
                       (remove #'flymake-eldoc-function eldoc-documentation-functions))))
