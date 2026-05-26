@@ -56,11 +56,21 @@
   :config
   (setq org-startup-with-latex-preview t)
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "DOING(n)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c@/!)")))
+        '((sequence "TODO(t)" "DOING(n)" "WAITING(w@/!)" "BLOCKED(b@/!)" "|" "DONE(d)" "CANCELLED(c@/!)")))
+  (setq org-todo-keyword-faces
+        '(("TODO" . (:inherit error :weight bold))
+          ("DOING" . (:inherit warning :weight bold))
+          ("WAITING" . (:inherit font-lock-keyword-face :weight bold))
+          ("BLOCKED" . (:inherit shadow :weight bold :slant italic))
+          ("DONE" . (:inherit success :weight bold))
+          ("CANCELLED" . (:inherit shadow :weight bold))))
   (setq org-tags-alist '(("inbox" . ?i)))
   ;; (org-agenda-start-with-log-mode t)
-  ;; (org-log-into-drawer t)
+  (setq org-log-into-drawer t)
   (setq org-log-done 'time) ; Record the task completion date.
+  (setq org-deadline-warning-days 3)
+  (setq org-agenda-skip-deadline-prewarning-if-scheduled t)
+  (setq org-agenda-skip-scheduled-if-deadline-is-shown t)
   (setq org-pretty-entities t)
   (setq org-use-sub-superscripts '{})  ; only _{sub} triggers subscript, not every _
   (setq org-src-fontify-natively t)
@@ -138,23 +148,32 @@
   (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
   (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
 
-  ;; The GTD view
+  ;; A simple dashboard view for day-to-day work.
   (setq-default org-agenda-custom-commands
                 '(("g" "Get Things Done (GTD)"
                    ((agenda ""
-                            ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                            ((org-agenda-span 1)
+                             (org-agenda-overriding-header "\nToday\n")
                              (org-deadline-warning-days 0)))
-                    (todo "DOING"  ; Changed from NEXT to DOING to match your keywords
-                          ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                    (todo "DOING"
+                          ((org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                            (org-agenda-prefix-format "  %i %-12:c [%e] ")
-                           (org-agenda-overriding-header "\nOngoing Tasks\n")))
-                    (todo "TODO"
-                          ((org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline))
+                           (org-agenda-overriding-header "\nIn Progress\n")))
+                    (todo "WAITING"
+                          ((org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                            (org-agenda-prefix-format "  %i %-12:c [%e] ")
-                           (org-agenda-overriding-header "\nTasks\n")))
+                           (org-agenda-overriding-header "\nWaiting On\n")))
+                    (todo "BLOCKED"
+                          ((org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                           (org-agenda-prefix-format "  %i %-12:c [%e] ")
+                           (org-agenda-overriding-header "\nBlocked\n")))
                     (tags-todo "inbox"
                                ((org-agenda-prefix-format "  %?-12t% s")
                                 (org-agenda-overriding-header "\nInbox\n")))
+                    (tags-todo "-inbox/TODO"
+                               ((org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                                (org-agenda-prefix-format "  %i %-12:c [%e] ")
+                                (org-agenda-overriding-header "\nBacklog\n")))
                     (tags "CLOSED>=\"<today>\""
                           ((org-agenda-overriding-header "\nCompleted today\n")))))))
 
@@ -394,6 +413,15 @@
   :custom
   (org-modern-hide-stars nil)
   (org-modern-table nil)
+  ;; Keep all state pills theme-consistent by deriving them from existing
+  ;; semantic faces instead of org-modern's fixed gray completed-state face.
+  (org-modern-todo-faces
+   '(("TODO" :inherit (error org-modern-todo) :weight bold)
+     ("DOING" :inherit (warning org-modern-todo) :weight bold)
+     ("WAITING" :inherit (font-lock-keyword-face org-modern-todo) :weight bold)
+     ("BLOCKED" :inherit (shadow org-modern-todo) :weight bold :slant italic)
+     ("DONE" :inherit (success org-modern-todo) :weight bold)
+     ("CANCELLED" :inherit (shadow org-modern-todo) :weight bold)))
   :hook
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
