@@ -612,5 +612,20 @@
    ("C-c h" . consult-history)
    ("C-c s" . embark-export)))
 
+(use-package fzf-native
+  :straight (:type git :host github :repo "dangduc/fzf-native")
+  :config (fzf-native-load-dyn))
+
+(use-package fussy
+  :straight (:type git :host github :repo "jojojames/fussy")
+  :config
+  (fussy-setup-fzf)
+  (fussy-eglot-setup)
+  (fussy-company-setup))
+
+(use-package fzf-async
+  :straight (:type git :host github :repo "jojojames/fzf-async")
+  :config (fzf-async-setup))
+
 (provide 'init-consult)
 ;;init-consult.el ends here
