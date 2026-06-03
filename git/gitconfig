@@ -12,19 +12,19 @@
 [color]
 	ui = true
 [color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
+	current = yellow reverse
+	local = yellow
+	remote = green
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red
-  new = green
-  colorMoved = default
+	meta = yellow bold
+	frag = magenta bold
+	old = red
+	new = green
+	colorMoved = default
 [color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 [alias]
 	co = checkout
 	ci = commit
@@ -48,7 +48,7 @@
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Remove branches that have already been merged with master
-	# a.k.a. ‘delete merged’
+	# a.k.a. 'delete merged'
 	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
 	# Find branches containing commit
@@ -63,7 +63,7 @@
 	# Find commits by commit message
 	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 	standup = log --author=\"Kaung Htet Zaw\" --oneline --no-merges --since=1.day
-  dif = diff -w --word-diff-regex=[^[:space:]]
+	dif = diff -w --word-diff-regex=[^[:space:]]
 [web]
 	browser = open
 [apply]
@@ -76,9 +76,9 @@
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 	trustctime = false
 	commitGraph = true
-  pager = delta
-  fsmonitor = true
-  untrackedCache = true
+	pager = delta
+	fsmonitor = true
+	untrackedCache = true
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
@@ -86,9 +86,10 @@
 [push]
 	default = matching
 	followTags = true
-  autoSetupRemote = true
+	autoSetupRemote = true
 [grep]
 	lineNumber = true
+	patternType = perl
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
@@ -100,35 +101,35 @@
 	process = git-lfs filter-process
 [diff]
 	renames = copies
-  algorithm = histogram
-  colorMoved = plain
-  mnemonicPrefix = true
-  renames = true
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 [help]
 	autocorrect = 1
 [merge]
-  conflictstyle = zdiff3
+	conflictstyle = zdiff3
 	log = 1000
 [branch]
 	sort = -committerdate
 [rebase]
-  autoSquash = true
-  autoStash = true
+	autoSquash = true
+	autoStash = true
 	updateRefs = true
 [fetch]
-  prune = true
-  pruneTags = true
-  all = true
+	prune = true
+	pruneTags = true
+	all = true
 [pull]
 	rebase = true
 [gpg]
-  program = /usr/local/MacGPG2/bin/gpg2
+	program = /usr/local/MacGPG2/bin/gpg2
 [commit]
 	template = ~/.stCommitMsg
-  verbose = true
+	verbose = true
 [rerere]
 	enabled = true
-  autoupdate = true
+	autoupdate = true
 [http]
 	sslVerify = false
 [init]
@@ -136,16 +137,16 @@
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 [interactive]
-  diffFilter = delta --show-syntax-themes --dark
+	diffFilter = delta --show-syntax-themes --dark
 [delta]
-  hyperlinks = true
-  side-by-side = true
-  navigate = true # use n and N to move between diff sections
-  light = false # set to true if you're in a terminal w/ a light background color.
-  line-numbers = true
+	hyperlinks = true
+	side-by-side = true
+	navigate = true # use n and N to move between diff sections
+	light = false # set to true if you're in a terminal w/ a light background color.
+	line-numbers = true
 [delta "magit-delta"]
-  line-numbers = false
+	line-numbers = false
 [column]
-  ui = auto
+	ui = auto
 [tag]
-  sort = version:refname
+	sort = version:refname

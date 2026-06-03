@@ -1,12 +1,25 @@
 ;; -*- lexical-binding: t; -*-
 
+(defun khz/enable-paredit-mode-maybe ()
+  "Enable Paredit, but don't error in transient non-file buffers.
+
+`paredit-mode' runs `check-parens' on activation, which is useful for real
+Lisp files but noisy for transient buffers such as `*scratch*', IELM, or other
+helper buffers that may temporarily hold incomplete forms.  Keep the hard error
+for file-backed buffers, and silently skip Paredit elsewhere."
+  (condition-case err
+      (enable-paredit-mode)
+    (error
+     (when buffer-file-name
+       (signal (car err) (cdr err))))))
+
 (use-package paredit
   :hook ((emacs-lisp-mode
           lisp-mode
           lisp-interaction-mode
           scheme-mode
           ielm-mode
-          eval-expression-minibuffer-setup) . enable-paredit-mode))
+          eval-expression-minibuffer-setup) . khz/enable-paredit-mode-maybe))
 
 (use-package lispy
   :straight (:type git :host github :repo "abo-abo/lispy")
