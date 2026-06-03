@@ -60,13 +60,20 @@
 
 (use-package plantuml-mode
   :mode "\\.puml\\'"
-  :config
-  (setq homebrew-plantuml-jar-path
-        (expand-file-name
-         (string-trim (shell-command-to-string "brew list plantuml | grep jar"))))
   :custom
-  (plantuml-jar-path homebrew-plantuml-jar-path)
-  (plantuml-default-exec-mode 'executable))
+  (plantuml-default-exec-mode 'executable)
+  (plantuml-executable-path
+   (or (executable-find "plantuml")
+       (and (file-executable-p "/opt/homebrew/bin/plantuml")
+            "/opt/homebrew/bin/plantuml")
+       (and (file-executable-p "/usr/local/bin/plantuml")
+            "/usr/local/bin/plantuml")
+       "plantuml"))
+  (plantuml-jar-path
+   (or (and (file-exists-p "/opt/homebrew/opt/plantuml/libexec/plantuml.jar")
+            "/opt/homebrew/opt/plantuml/libexec/plantuml.jar")
+       (and (file-exists-p "/usr/local/opt/plantuml/libexec/plantuml.jar")
+            "/usr/local/opt/plantuml/libexec/plantuml.jar"))))
 
 (use-package ssh-config-mode
   :straight (:type built-in)

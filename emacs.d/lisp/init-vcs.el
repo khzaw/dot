@@ -543,5 +543,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :config
   (shipit-init))
 
+(use-package inline-review
+  :straight (:type git :host github :repo "phye/inline-review"))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
