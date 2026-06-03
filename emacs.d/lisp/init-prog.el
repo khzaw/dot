@@ -32,7 +32,38 @@
 
 (use-package kirigami
   :straight (:type git :host github :repo "jamescherti/kirigami.el")
-  :hook (on-first-buffer . (lambda () (require 'kirigami))))
+  :after evil
+  :demand t
+  :commands (kirigami-open-fold
+             kirigami-open-fold-rec
+             kirigami-open-folds
+             kirigami-close-fold
+             kirigami-close-folds
+             kirigami-toggle-fold)
+  :bind (("C-<return>" . kirigami-toggle-fold)
+         ("C-c z o" . kirigami-open-fold)
+         ("C-c z O" . kirigami-open-fold-rec)
+         ("C-c z r" . kirigami-open-folds)
+         ("C-c z R" . kirigami-open-folds)
+         ("C-c z c" . kirigami-close-fold)
+         ("C-c z m" . kirigami-close-folds)
+         ("C-c z M" . kirigami-close-folds)
+         ("C-c z a" . kirigami-toggle-fold)
+         (:map evil-normal-state-map
+          ("zo" . kirigami-open-fold)
+          ("zO" . kirigami-open-fold-rec)
+          ("zc" . kirigami-close-fold)
+          ("za" . kirigami-toggle-fold)
+          ("zr" . kirigami-open-folds)
+          ("zR" . kirigami-open-folds)
+          ("zm" . kirigami-close-folds)
+          ("zM" . kirigami-close-folds)))
+  :custom
+  (kirigami-show-menu-bar t)
+  (kirigami-show-context-menu t)
+  (kirigami-preserve-visual-position t)
+  :config
+  (kirigami-global-mode 1))
 
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda ()

@@ -135,8 +135,6 @@
 
 (use-package treesit-fold
   :straight (treesit-fold :type git :host github :repo "emacs-tree-sitter/treesit-fold")
-  :bind (:map treesit-fold-mode-map
-              ("C-<return>" . treesit-fold-toggle))
   :hook ((prog-mode . treesit-fold-mode)
          ;; (prog-mode . treesit-fold-indicators-mode)
          (prog-mode . treesit-fold-line-comment-mode))

@@ -46,10 +46,10 @@
   (org-document-title ((t (:height 1.6 :weight bold))))
   :hook
   ((org-babel-after-execute . org-redisplay-inline-images)
-   (org-mode . (lambda ()
-                 (mixed-pitch-mode)
-                 (setq visual-fill-column-center-text nil)
-                 (visual-fill-column-mode)))
+   (org-mode . lambda ()
+             (mixed-pitch-mode)
+             (setq visual-fill-column-center-text nil)
+             (visual-fill-column-mode))
    (org-mode . turn-on-org-cdlatex)
    (org-mode . word-wrap-whitespace-mode)
    (org-mode . org-latex-preview-mode))
@@ -607,7 +607,8 @@
 (use-package org-backlinks
   :straight (org-backlinks :host github :repo "bcardoso/org-backlinks"
                            :files ("org-backlinks.el"))
-  :bind ("C-c z o" . org-backlinks))
+  ;; :bind ("C-c z o" . org-backlinks)
+  )
 
 (use-package consult-org-backlinks
   :straight (consult-org-backlinks :host github :repo "bcardoso/org-backlinks"
