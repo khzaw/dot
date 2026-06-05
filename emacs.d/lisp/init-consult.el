@@ -504,6 +504,10 @@
   :straight (vertico-truncate :type git :host github :repo "jdtsmith/vertico-truncate")
   :config (vertico-truncate-mode 1))
 
+(use-package vertico-carousel
+  :straight (:type git :host github :repo "kn66/vertico-carousel")
+  :config (vertico-carousel-mode 1))
+
 (use-package embark
   :bind (("C-." . embark-act)
          ("C-;" . embark-dwim)
@@ -538,19 +542,19 @@
         (if (null keymap)
             (which-key--hide-popup-ignore-command)
           (which-key--show-keymap
-          (if (eq (plist-get (car targets) :type) 'embark-become)
-              "Become"
-            (format "Act on %s '%s'%s"
-                    (plist-get (car targets) :type)
-                    (embark--truncate-target (plist-get (car targets) :target))
-                    (if (cdr targets) "…" "")))
-          (if prefix
-              (pcase (lookup-key keymap prefix 'accept-default)
-                ((and (pred keymapp) km) km)
-                (_ (key-binding prefix 'accept-default)))
-            keymap)
-          nil nil t (lambda (binding)
-                      (not (string-suffix-p "-argument" (cdr binding)))))))))
+           (if (eq (plist-get (car targets) :type) 'embark-become)
+               "Become"
+             (format "Act on %s '%s'%s"
+                     (plist-get (car targets) :type)
+                     (embark--truncate-target (plist-get (car targets) :target))
+                     (if (cdr targets) "…" "")))
+           (if prefix
+               (pcase (lookup-key keymap prefix 'accept-default)
+                 ((and (pred keymapp) km) km)
+                 (_ (key-binding prefix 'accept-default)))
+             keymap)
+           nil nil t (lambda (binding)
+                       (not (string-suffix-p "-argument" (cdr binding)))))))))
 
   (setq embark-indicators
         '(embark-which-key-indicator
@@ -614,7 +618,18 @@
 
 (use-package fzf-native
   :straight (:type git :host github :repo "dangduc/fzf-native")
-  :config (fzf-native-load-dyn))
+  :config
+  ;; straight's build dir does not include fzf-native's bundled bin/ directory.
+  ;; Fall back to the repo copy so startup doesn't fail when the module exists
+  ;; there but not under straight/build/.
+  (let ((repo-bin-dir (expand-file-name "straight/repos/fzf-native/bin/" user-emacs-directory)))
+    (when (and (not (file-directory-p fzf-native--bin-dir))
+               (file-directory-p repo-bin-dir))
+      (setq fzf-native--bin-dir repo-bin-dir)))
+  (condition-case err
+      (fzf-native-load-dyn)
+    (error
+     (message "fzf-native disabled: %s" (error-message-string err)))))
 
 (use-package fussy
   :straight (:type git :host github :repo "jojojames/fussy")
