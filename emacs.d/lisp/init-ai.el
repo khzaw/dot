@@ -137,7 +137,9 @@ Follow good Git style:
   :after markdown-table-wrap
   :if (or (executable-find "pi-coding-agent")
           (executable-find "pi"))
-  :init (defalias 'pi 'pi-coding-agent))
+  :init (defalias 'pi 'pi-coding-agent)
+  :config
+  (setq package-install-upgrade-built-in t))
 
 
 
