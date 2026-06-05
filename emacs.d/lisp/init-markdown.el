@@ -3,6 +3,29 @@
 ;; Curly quotes when writing in markup languages
 (use-package typo :defer t)
 
+;; Some packages load `markdown-mode' indirectly (e.g. Forge) before we ever
+;; visit a Markdown buffer.  Keep this bound so those early loads never trip
+;; over an unbound variable during Custom initialization.
+(defvar markdown-code-lang-modes nil)
+
+(defconst khz/markdown-code-lang-modes-extra
+  '(("json" . json-ts-mode)
+    ("tsx" . tsx-ts-mode)
+    ("typescript" . typescript-ts-mode)
+    ("ts" . typescript-ts-mode)
+    ("javascript" . js-ts-mode)
+    ("js" . js-ts-mode)
+    ("python" . python-ts-mode)
+    ("py" . python-ts-mode)
+    ("go" . go-ts-mode)
+    ("golang" . go-ts-mode)
+    ("rust" . rust-ts-mode)
+    ("dockerfile" . dockerfile-ts-mode)
+    ("diff" . diff-mode)
+    ("shell" . sh-mode)
+    ("zsh" . sh-mode))
+  "Extra fenced-code language mappings for `markdown-mode'.")
+
 (defun khz/markdown-visual-setup ()
   "Apply the shared visual setup for Markdown buffers."
   (word-wrap-whitespace-mode 1)
@@ -56,24 +79,6 @@
   (markdown-enable-math t)
   (markdown-fontify-code-blocks-natively t)
   (markdown-hide-markup nil)
-  ;; Extend defaults with tree-sitter modes and common aliases
-  (markdown-code-lang-modes
-   (append '(("json" . json-ts-mode)
-             ("tsx" . tsx-ts-mode)
-             ("typescript" . typescript-ts-mode)
-             ("ts" . typescript-ts-mode)
-             ("javascript" . js-ts-mode)
-             ("js" . js-ts-mode)
-             ("python" . python-ts-mode)
-             ("py" . python-ts-mode)
-             ("go" . go-ts-mode)
-             ("golang" . go-ts-mode)
-             ("rust" . rust-ts-mode)
-             ("dockerfile" . dockerfile-ts-mode)
-             ("diff" . diff-mode)
-             ("shell" . sh-mode)
-             ("zsh" . sh-mode))
-           markdown-code-lang-modes))
   ;; Images
   (markdown-max-image-size '(800 . 600))
   ;; List behavior
@@ -92,6 +97,8 @@
          (gfm-mode . khz/markdown-visual-setup)
          (gfm-mode . khz/markdown-outline-setup))
   :config
+  (dolist (entry (reverse khz/markdown-code-lang-modes-extra))
+    (add-to-list 'markdown-code-lang-modes entry))
   (setq markdown-split-window-direction 'right))
 
 (use-package markdown-toc
@@ -137,13 +144,15 @@
 
 (use-package md-ts-mode
   :straight (:type git :host github :repo "dnouri/md-ts-mode")
-  :hook (md-ts-mode . khz/markdown-visual-setup)
+  :after markdown-mode
+  :commands (md-ts-mode)
+  :hook ((md-ts-mode . khz/markdown-visual-setup)
+         (md-ts-mode . khz/markdown-outline-setup))
   :config
   (setq md-ts-hide-markup markdown-hide-markup
         md-ts-heading-scaling markdown-header-scaling
         md-ts-heading-scaling-values markdown-header-scaling-values)
-  (khz/md-ts-sync-faces)
-  (md-ts-mode-enable-global))
+  (khz/md-ts-sync-faces))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here
