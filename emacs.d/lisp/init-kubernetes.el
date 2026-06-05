@@ -29,4 +29,8 @@
 (use-package kubernetes-helm
   :straight (:type git :host github :repo "abrochard/kubernetes-helm"))
 
+(use-package kubed
+  :straight (:type git :host github :repo "eshelyaron/kubed")
+  :bind ("C-c k" . kubed-prefix-map))
+
 (provide 'init-kubernetes)
