@@ -69,11 +69,17 @@
   ;; Turn ref links into clickable buttons.
   (add-hook 'magit-process-mode-hook #'goto-address-mode)
 
-  (add-hook 'magit-status-mode
+  (add-hook 'magit-status-mode-hook
             (defun +magit-optimize-process-calls-h ()
               "Cache git executable path for current session."
               (when-let (path (executable-find magit-git-executable t))
                 (setq-local magit-git-executable path))))
+
+  (add-hook 'magit-status-mode-hook
+            (lambda ()
+              (setq-local truncate-lines nil)
+              (setq-local word-wrap t)
+              (visual-line-mode 1)))
 
 
   (magit-add-section-hook 'magit-status-sections-hook 'magit-insert-worktrees 'magit-insert-status-headers t)
@@ -87,7 +93,9 @@
     (transient-append-suffix 'magit-diff "r"
       '("U" "Diff upstream..HEAD" (lambda ()
                                     (interactive)
-                                    (magit-diff-range (contact (magit-get-upstream-branch) "..HEAD")))))))
+                                    (if-let ((upstream (magit-get-upstream-branch)))
+                                        (magit-diff-range (concat (magit-get-upstream-branch) "..HEAD"))
+                                      (user-error "No upstream branch")))))))
 
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode)
@@ -199,6 +207,9 @@
 (use-package forge
   :after magit
   :config
+  ;; Forge keeps topic helpers in a separate file; load them eagerly so
+  ;; commands and org integrations don't hit void-function errors.
+  (require 'forge-topic)
   (auth-source-pass-enable)
   ;; A topic is an issue or PR and the list of each can be configured
   ;; to display a number of open and closed items.
@@ -326,8 +337,8 @@
   (setq consult-gh-issue-action #'consult-gh--issue-view-action ;; view issues inside emacs
         consult-gh-repo-action #'consult-gh--repo-browse-files-action ;; browse files inside emacs
         consult-gh-file-action #'consult-gh--files-view-action) ;; open files in an emacs buffer
-  (add-to-history 'savehist-additional-variables 'consult-gh--known-orgs-list) ;; keep record of searched orgs
-  (add-to-history 'savehist-additional-variables 'consult-gh--known-repos-list)) ;; keep record of searched repos
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-orgs-list) ;; keep record of searched orgs
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list)) ;; keep record of searched repos
 
 (use-package consult-git-log-grep
   :custom
@@ -360,38 +371,9 @@ branch than the one you're currently working on."
   (global-set-key (kbd "C-c g l") 'git-link))
 
 (use-package magit-town
-  :straight (:type git :host github :repo "khzaw/magit-town"))
-
-(use-package magit-pretty-graph
-  :straight (:type git :host github :repo "georgek/magit-pretty-graph"))
-
-(defun unpackaged/magit-log--add-date-headers (&rest _ignore)
-  "Add date headers to Magit log buffers."
-  (when (derived-mode-p 'magit-log-mode)
-    (save-excursion
-      (ov-clear 'date-header t)
-      (goto-char (point-min))
-      (cl-loop with last-age
-               for this-age = (-some--> (ov-in 'before-string 'any (line-beginning-position) (line-end-position))
-                                car
-                                (overlay-get it 'before-string)
-                                (get-text-property 0 'display it)
-                                cadr
-                                (s-match (rx (group (1+ digit) ; number
-                                                    " "
-                                                    (1+ (not blank))) ; unit
-                                             (1+ blank) eos)
-                                         it)
-                                cadr)
-               do (when (and this-age
-                             (not (equal this-age last-age)))
-                    (ov (line-beginning-position) (line-beginning-position)
-                        'after-string (propertize (concat " " this-age "\n")
-                                                  'face 'magit-section-heading)
-                        'date-header t)
-                    (setq last-age this-age))
-               do (forward-line 1)
-               until (eobp)))))
+  :straight (:type git :host github :repo "khzaw/magit-town")
+  :defer t
+  :commands (magit-town-dispatch))
 
 (defun unpackaged/magit-log--add-date-headers (&rest _ignore)
   ;; https://github.com/alphapapa/unpackaged.el?tab=readme-ov-file#magit-log-date-headers
