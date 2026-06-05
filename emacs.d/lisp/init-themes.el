@@ -23,6 +23,32 @@
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
 
+  (defun khz/doom-meltbus-minibuffer-match-faces (theme)
+    "Improve minibuffer match contrast for doom-meltbus."
+    (when (eq theme 'doom-meltbus)
+      (dolist (face '(orderless-match-face-0
+                      orderless-match-face-1
+                      orderless-match-face-2
+                      orderless-match-face-3
+                      consult-highlight-match
+                      consult-preview-match
+                      completions-common-part))
+        (when (facep face)
+          (set-face-attribute face nil
+                              :foreground "#ffffff"
+                              :background "#27515c"
+                              :weight 'bold)))))
+
+  (add-hook 'enable-theme-functions #'khz/doom-meltbus-minibuffer-match-faces)
+
+  (with-eval-after-load 'orderless
+    (when (memq 'doom-meltbus custom-enabled-themes)
+      (khz/doom-meltbus-minibuffer-match-faces 'doom-meltbus)))
+
+  (with-eval-after-load 'consult
+    (when (memq 'doom-meltbus custom-enabled-themes)
+      (khz/doom-meltbus-minibuffer-match-faces 'doom-meltbus)))
+
   (when (display-graphic-p)
     (setq doom-themes-treemacs-theme "doom-atom")
     (doom-themes-treemacs-config)))

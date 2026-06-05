@@ -19,7 +19,7 @@
      (set-face-attribute 'variable-pitch nil :font "Iosevka Etoile" :weight 'normal :height 1.0))
     ('darwin
      (setq-default line-spacing 3)
-     (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 140)
+     (set-face-attribute 'default nil :font "Berkeley Mono" :weight 'normal :height 130)
      (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono" :weight 'normal :height 1.0)
      ;; Iosevka Etoile: quasi-proportional serif, harmonizes with monospace metrics.
      ;; Charter is a good fallback (macOS built-in, excellent screen serif).
