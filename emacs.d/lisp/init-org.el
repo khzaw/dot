@@ -8,6 +8,38 @@
   (visual-fill-column-fringes-outside-margins t)
   :config (global-visual-fill-column-mode))
 
+(defface khz/org-terminal-task
+  '((t (:inherit shadow :strike-through t)))
+  "Face for terminal Org tasks."
+  :group 'org-faces)
+
+(defun khz/org-fontify-terminal-headlines ()
+  "Strike through and fade DONE/CANCELLED Org headlines."
+  (font-lock-add-keywords
+   nil
+   `((,(rx line-start
+           (one-or-more "*")
+           (one-or-more space)
+           (or "DONE" "CANCELLED")
+           word-end
+           (zero-or-more not-newline)
+           line-end)
+      0 'khz/org-terminal-task t))
+   'append))
+
+(defun khz/org-agenda-fontify-terminal-tasks ()
+  "Strike through and fade terminal Org agenda rows."
+  (let ((inhibit-read-only t)
+        (terminal-keywords (regexp-opt org-done-keywords 'words)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward terminal-keywords nil t)
+        (add-face-text-property
+         (line-beginning-position)
+         (line-end-position)
+         'khz/org-terminal-task
+         t)))))
+
 (use-package org
   :defer
   :straight (org
@@ -44,12 +76,14 @@
   (org-level-3 ((t (:inherit outline-3 :height 1.15))))
   (org-level-4 ((t (:inherit outline-4 :height 1.05))))
   (org-document-title ((t (:height 1.6 :weight bold))))
+  (org-headline-done ((t (:inherit shadow :strike-through t))))
+  (org-agenda-done ((t (:inherit shadow :strike-through t))))
   :hook
   ((org-babel-after-execute . org-redisplay-inline-images)
-   (org-mode . lambda ()
-             (mixed-pitch-mode)
-             (setq visual-fill-column-center-text nil)
-             (visual-fill-column-mode))
+   (org-mode . (lambda ()
+                 (mixed-pitch-mode)
+                 (setq visual-fill-column-center-text nil)
+                 (visual-fill-column-mode)))
    (org-mode . turn-on-org-cdlatex)
    (org-mode . word-wrap-whitespace-mode)
    (org-mode . org-latex-preview-mode))
@@ -57,13 +91,14 @@
   (setq org-startup-with-latex-preview t)
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(n)" "WAITING(w@/!)" "BLOCKED(b@/!)" "|" "DONE(d)" "CANCELLED(c@/!)")))
+  (setq org-fontify-done-headline t)
   (setq org-todo-keyword-faces
         '(("TODO" . (:inherit error :weight bold))
           ("DOING" . (:inherit warning :weight bold))
           ("WAITING" . (:inherit font-lock-keyword-face :weight bold))
           ("BLOCKED" . (:inherit shadow :weight bold :slant italic))
-          ("DONE" . (:inherit success :weight bold))
-          ("CANCELLED" . (:inherit shadow :weight bold))))
+          ("DONE" . (:inherit shadow :weight normal :strike-through t))
+          ("CANCELLED" . (:inherit shadow :weight normal :strike-through t))))
   (setq org-tags-alist '(("inbox" . ?i)))
   ;; (org-agenda-start-with-log-mode t)
   (setq org-log-into-drawer t)
@@ -92,6 +127,8 @@
   (setq org-catch-invisible-edits 'show-and-error)
   (setq org-insert-heading-respect-content t) ; insert new headings after current subtree rather than inside it
   (setq org-agenda-tags-column 0)
+  (add-hook 'org-mode-hook #'khz/org-fontify-terminal-headlines 90)
+  (add-hook 'org-agenda-finalize-hook #'khz/org-agenda-fontify-terminal-tasks 90)
 
   ;; Turn on live previews.  This shows you a live preview of a LaTeX
   ;; fragment and updates the preview in real-time as you edit it.
@@ -338,7 +375,7 @@
                  (("C-c n i" . org-roam-node-insert)
                   ("C-c n o" . org-id-get-create)
                   ("C-c n t" . org-roam-tag-add)
-                  ("C-c n a" . org-roam-alias-add)
+                  ("C-c n A" . org-roam-alias-add)
                   ("C-c n l" . org-roam-buffer-toggle))))
     :config
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
@@ -420,8 +457,8 @@
      ("DOING" :inherit (warning org-modern-todo) :weight bold)
      ("WAITING" :inherit (font-lock-keyword-face org-modern-todo) :weight bold)
      ("BLOCKED" :inherit (shadow org-modern-todo) :weight bold :slant italic)
-     ("DONE" :inherit (success org-modern-todo) :weight bold)
-     ("CANCELLED" :inherit (shadow org-modern-todo) :weight bold)))
+     ("DONE" :inherit (shadow org-modern-todo) :weight normal :strike-through t)
+     ("CANCELLED" :inherit (shadow org-modern-todo) :weight normal :strike-through t)))
   :hook
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
@@ -518,13 +555,18 @@
   :config
   (require 'org-ref))
 
-(use-package orgit)
+(use-package orgit
+  :defer t)
 
-(use-package orgit-forge)
+(use-package orgit-forge
+  :after (orgit forge)
+  :config
+  (require 'forge-topic))
 
 (use-package orgit-file
   :straight (:type git :host github :repo "gggion/orgit-file")
-  :after (orgit))
+  :after (orgit)
+  :defer t)
 
 (use-package org-visual-indent
     :after org
@@ -604,15 +646,21 @@
   :after org
   :straight (:type git :host github :repo "Clement-Jean/codetabs.el" :files ("codetabs.el" "codetabs.js")))
 
+(use-package org-ql
+  :defer t)
+
 (use-package org-backlinks
   :straight (org-backlinks :host github :repo "bcardoso/org-backlinks"
                            :files ("org-backlinks.el"))
-  ;; :bind ("C-c z o" . org-backlinks)
-  )
+  :after org-ql
+  :defer t
+  :commands (org-backlinks))
 
 (use-package consult-org-backlinks
   :straight (consult-org-backlinks :host github :repo "bcardoso/org-backlinks"
                                    :files ("consult-org-backlinks.el"))
+  :after (consult org-backlinks)
+  :defer t
   :bind ("C-c z c" . consult-org-backlinks))
 
 (use-package org-transclusion
@@ -639,7 +687,8 @@
 
 (use-package org-transclusion-orgit
   :straight (org-transclusion-orgit :type git :host github :repo "gggion/org-transclusion-orgit")
-  :after (org-transclusion))
+  :after (org-transclusion orgit-file)
+  :defer t)
 
 (use-package org-transclusion-blocks
   :straight (:type git :host github :repo "gggion/org-transclusion-blocks"))
