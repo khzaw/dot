@@ -53,6 +53,32 @@
     (setq doom-themes-treemacs-theme "doom-atom")
     (doom-themes-treemacs-config)))
 
+(defvar khz/ivory-themes-directories
+  (mapcar #'expand-file-name
+          '("~/Code/ivory-themes"
+            "~/Code/personal/ivory-themes"))
+  "Candidate local Ivory theme checkouts across machines.")
+
+(defvar khz/ivory-themes-directory
+  (catch 'directory
+    (dolist (directory khz/ivory-themes-directories)
+      (when (file-exists-p (expand-file-name "ivory-themes.el" directory))
+        (throw 'directory directory))))
+  "Local Ivory theme checkout, when present on this machine.")
+
+(when khz/ivory-themes-directory
+  (add-to-list 'load-path khz/ivory-themes-directory)
+  (add-to-list 'custom-theme-load-path khz/ivory-themes-directory))
+
+(use-package ivory-themes
+  :straight nil
+  :if khz/ivory-themes-directory
+  :commands (ivory-themes-load ivory-themes-toggle)
+  :custom
+  (ivory-themes-bold-constructs t)
+  (ivory-themes-italic-constructs nil)
+  :bind ("<f6>" . ivory-themes-toggle))
+
 ;; (use-package modus-themes
 ;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
 ;;   :custom
