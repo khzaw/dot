@@ -13,10 +13,11 @@
 
   (defun khz/treesit-language-available-p (fn lang &rest rest)
     "Caching around the CPU expensive `treesit-language-available-p'."
-    (let ((cached-value (gethash lang khz/treesit-lang-cache 'miss)))
+    (let* ((key (cons lang rest))
+           (cached-value (gethash key khz/treesit-lang-cache 'miss)))
       (if (eq 'miss cached-value)
           (let ((value (apply fn lang rest)))
-            (puthash lang value khz/treesit-lang-cache)
+            (puthash key value khz/treesit-lang-cache)
             value)
         cached-value)))
 

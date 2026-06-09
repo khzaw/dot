@@ -11,7 +11,7 @@
         ("C-c f D" . flymake-show-project-diagnostics)
         ("C-c f n" . flymake-goto-next-error)
         ("C-c f p" . flymake-goto-prev-error))
-  :hook (prog-mode . flymake-mode)
+  :hook (prog-mode . khz/flymake-mode-unless-python)
   :custom
   (flymake-start-on-save-buffer nil)
   (flymake-no-changes-timeout 0.5)
@@ -23,6 +23,11 @@
        (warning "»" compilation-warning)
        (note "»" compilation-info)))
   :config
+  (defun khz/flymake-mode-unless-python ()
+    "Enable Flymake except in Python buffers, where Eglot owns diagnostics."
+    (unless (derived-mode-p 'python-base-mode 'python-mode 'python-ts-mode)
+      (flymake-mode)))
+
   (setq flymake-proc-allowed-file-name-masks t)
   (setq flymake-show-diagnostics-at-end-of-line nil)
   (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
