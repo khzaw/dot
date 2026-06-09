@@ -26,6 +26,25 @@
     ("zsh" . sh-mode))
   "Extra fenced-code language mappings for `markdown-mode'.")
 
+(defun khz/markdown-ts-ready-p ()
+  "Return non-nil when the built-in Markdown tree-sitter mode is usable."
+  (and (fboundp 'treesit-ready-p)
+       (treesit-ready-p '(markdown markdown-inline) t)))
+
+(defun khz/markdown-fallback-mode ()
+  "Use the best non-tree-sitter Markdown mode for the current buffer."
+  (if (and buffer-file-name
+           (string-match-p "\\(?:README\\.md\\|\\.mdx?\\)\\'" buffer-file-name))
+      (gfm-mode)
+    (markdown-mode)))
+
+(defun khz/markdown-mode ()
+  "Use `markdown-ts-mode' when ready, otherwise avoid its text-mode fallback."
+  (interactive)
+  (if (khz/markdown-ts-ready-p)
+      (markdown-ts-mode)
+    (khz/markdown-fallback-mode)))
+
 (defun khz/markdown-visual-setup ()
   "Apply the shared visual setup for Markdown buffers."
   (word-wrap-whitespace-mode 1)
@@ -38,28 +57,36 @@
   (setq-local outline-regexp markdown-regex-header)
   (setq-local outline-level #'markdown-outline-level))
 
-(defun khz/md-ts-sync-faces ()
-  "Make `md-ts-mode' reuse the configured Markdown faces."
-  (set-face-attribute 'md-ts-delimiter nil :inherit 'markdown-markup-face)
-  (set-face-attribute 'md-ts-heading-1 nil :inherit 'markdown-header-face-1)
-  (set-face-attribute 'md-ts-heading-2 nil :inherit 'markdown-header-face-2)
-  (set-face-attribute 'md-ts-heading-3 nil :inherit 'markdown-header-face-3)
-  (set-face-attribute 'md-ts-heading-4 nil :inherit 'markdown-header-face-4)
-  (set-face-attribute 'md-ts-heading-5 nil :inherit 'markdown-header-face-5)
-  (set-face-attribute 'md-ts-heading-6 nil :inherit 'markdown-header-face-6)
-  (set-face-attribute 'md-ts-list-marker nil :inherit 'markdown-list-face)
-  (set-face-attribute 'md-ts-block-quote nil :inherit 'markdown-blockquote-face)
-  (set-face-attribute 'md-ts-strikethrough nil :inherit 'markdown-strike-through-face)
-  (set-face-attribute 'md-ts-language-keyword nil :inherit 'markdown-language-keyword-face)
-  (set-face-attribute 'md-ts-task-list-marker nil :inherit 'markdown-gfm-checkbox-face)
-  (set-face-attribute 'md-ts-code nil
-                      :inherit '(markdown-inline-code-face markdown-code-face)))
+(defun khz/markdown-ts-sync-faces ()
+  "Make `markdown-ts-mode' reuse the configured Markdown faces."
+  (set-face-attribute 'markdown-ts-delimiter nil :inherit 'markdown-markup-face)
+  (set-face-attribute 'markdown-ts-heading-1 nil :inherit 'markdown-header-face-1)
+  (set-face-attribute 'markdown-ts-heading-2 nil :inherit 'markdown-header-face-2)
+  (set-face-attribute 'markdown-ts-heading-3 nil :inherit 'markdown-header-face-3)
+  (set-face-attribute 'markdown-ts-heading-4 nil :inherit 'markdown-header-face-4)
+  (set-face-attribute 'markdown-ts-heading-5 nil :inherit 'markdown-header-face-5)
+  (set-face-attribute 'markdown-ts-heading-6 nil :inherit 'markdown-header-face-6)
+  (set-face-attribute 'markdown-ts-list-marker nil :inherit 'markdown-list-face)
+  (set-face-attribute 'markdown-ts-block-quote nil :inherit 'markdown-blockquote-face)
+  (set-face-attribute 'markdown-ts-strikethrough nil :inherit 'markdown-strike-through-face)
+  (set-face-attribute 'markdown-ts-language-keyword nil :inherit 'markdown-language-keyword-face)
+  (set-face-attribute 'markdown-ts-task-unchecked nil :inherit 'markdown-gfm-checkbox-face)
+  (set-face-attribute 'markdown-ts-task-checked nil :inherit 'markdown-gfm-checkbox-face)
+  (set-face-attribute 'markdown-ts-code-span nil :inherit 'markdown-inline-code-face)
+  (set-face-attribute 'markdown-ts-code-block nil :inherit 'markdown-code-face))
+
+(defun khz/markdown-ts-setup ()
+  "Apply Markdown package visuals to `markdown-ts-mode'."
+  (khz/markdown-visual-setup)
+  (require 'markdown-mode nil t)
+  (khz/markdown-ts-sync-faces))
 
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
-  ;; :mode (("README\\.md\\'" . gfm-mode)
-  ;;        ("\\.md\\'" . gfm-mode)
-  ;;        ("\\.markdown\\'" . markdown-mode))
+  :mode (("README\\.md\\'" . khz/markdown-mode)
+         ("\\.md\\'" . khz/markdown-mode)
+         ("\\.markdown\\'" . khz/markdown-mode)
+         ("\\.mdx\\'" . khz/markdown-mode))
      :bind ((:map markdown-mode-map
           ("C-c v"   . markdown-view-mode)
           ("M-p"     . markdown-outline-previous)
@@ -142,17 +169,26 @@
   :bind (:map markdown-mode-command-map
               ("x" . markdown-xwidget-preview-mode)))
 
-(use-package md-ts-mode
-  :straight (:type git :host github :repo "dnouri/md-ts-mode")
-  :after markdown-mode
-  :commands (md-ts-mode)
-  :hook ((md-ts-mode . khz/markdown-visual-setup)
-         (md-ts-mode . khz/markdown-outline-setup))
+(use-package markdown-ts-mode
+  :straight nil
+  :commands (markdown-ts-mode markdown-ts-view-mode)
+  :hook (markdown-ts-mode . khz/markdown-ts-setup)
+  :bind ((:map markdown-ts-mode-map
+          ("C-c v"   . markdown-ts-view-mode)
+          ("M-p"     . outline-previous-heading)
+          ("M-n"     . outline-next-heading)
+          ("C-c C-n" . outline-next-heading)
+          ("C-c C-p" . outline-previous-heading)
+          ("C-c C-u" . outline-up-heading))
+         (:map markdown-ts-view-mode-map
+          ("C-c v" . markdown-ts-mode)))
   :config
-  (setq md-ts-hide-markup markdown-hide-markup
-        md-ts-heading-scaling markdown-header-scaling
-        md-ts-heading-scaling-values markdown-header-scaling-values)
-  (khz/md-ts-sync-faces))
+  (require 'markdown-mode nil t)
+  (setq markdown-ts-hide-markup markdown-hide-markup
+        markdown-ts-fontify-code-blocks-natively markdown-fontify-code-blocks-natively)
+  (dolist (entry (reverse khz/markdown-code-lang-modes-extra))
+    (add-to-list 'markdown-ts-code-block-modes
+                 (list (intern (car entry)) (cdr entry)))))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here
