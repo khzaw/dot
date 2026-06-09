@@ -8,7 +8,16 @@
   (setq exec-path-from-shell-arguments '("-l"))
   ;; Only pull the variables we actually need. The default list is large and
   ;; each extra var costs a little extraction work.
-  (setq exec-path-from-shell-variables '("PATH" "MANPATH" "GOPATH"))
+  (setq exec-path-from-shell-variables
+        '("PATH"
+          "MANPATH"
+          "GOPATH"
+          ;; Make Emacs-launched agents and subprocesses use the same GitHub
+          ;; credentials as login shells.
+          "GITHUB_TOKEN"
+          "GH_TOKEN"
+          "GITHUB_ENTERPRISE_TOKEN"
+          "GHE_TOKEN"))
   :config
   (exec-path-from-shell-initialize)
   (if (and (fboundp 'native-comp-available-p)
