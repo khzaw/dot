@@ -138,6 +138,16 @@ Follow good Git style:
   :if (or (executable-find "pi-coding-agent")
           (executable-find "pi"))
   :init (defalias 'pi 'pi-coding-agent)
+  :hook
+  (pi-coding-agent-chat-mode
+   . (lambda ()
+       (when (or (memq 'ivory-light custom-enabled-themes)
+                 (memq 'ivory-dark custom-enabled-themes))
+         (face-remap-add-relative
+          'md-ts-block-quote
+          `(:foreground ,(face-attribute 'font-lock-comment-face
+                                          :foreground nil t)
+            :slant normal)))))
   :config
   (setq package-install-upgrade-built-in t))
 
