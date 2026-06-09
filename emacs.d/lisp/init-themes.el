@@ -70,14 +70,38 @@
   (add-to-list 'load-path khz/ivory-themes-directory)
   (add-to-list 'custom-theme-load-path khz/ivory-themes-directory))
 
+(defun khz/reload-ivory-theme (&optional theme)
+  "Reload the local Ivory theme files and enable THEME."
+  (interactive)
+  (unless khz/ivory-themes-directory
+    (user-error "No local Ivory theme checkout found"))
+  (let* ((theme (or theme
+                    (cond
+                     ((memq 'ivory-dark custom-enabled-themes) 'ivory-dark)
+                     ((memq 'ivory-light custom-enabled-themes) 'ivory-light))
+                    'ivory-light))
+         (theme-file (format "%s-theme.el" theme)))
+    (unless (memq theme '(ivory-light ivory-dark))
+      (user-error "Unknown Ivory theme: %s" theme))
+    (dolist (enabled '(ivory-light ivory-dark))
+      (when (memq enabled custom-enabled-themes)
+        (disable-theme enabled)))
+    (load-file (expand-file-name "ivory-themes.el" khz/ivory-themes-directory))
+    (load-file (expand-file-name theme-file khz/ivory-themes-directory))
+    (enable-theme theme)))
+
 (use-package ivory-themes
   :straight nil
   :if khz/ivory-themes-directory
+  :demand t
   :commands (ivory-themes-load ivory-themes-toggle)
   :custom
   (ivory-themes-bold-constructs t)
   (ivory-themes-italic-constructs nil)
-  :bind ("<f6>" . ivory-themes-toggle))
+  :bind (("<f6>" . ivory-themes-toggle)
+         ("S-<f6>" . khz/reload-ivory-theme))
+  :config
+  (ivory-themes-load 'ivory-light))
 
 ;; (use-package modus-themes
 ;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
@@ -195,8 +219,7 @@
 
 (use-package nordic-night-theme
   :defer t
-  :straight (:type git :host codeberg :repo "ashton314/nordic-night" :branch "main")
-  :init (load-theme 'nordic-midnight t))
+  :straight (:type git :host codeberg :repo "ashton314/nordic-night" :branch "main"))
 
 (provide 'init-themes)
 ;; init-themes.el ends here

@@ -73,7 +73,7 @@
            :default-height 140
            :default-family "Berkeley Mono"
            :fixed-pitch-family "Berkeley Mono"
-           :variable-pitch-family "Iosevka Etoile"
+           :variable-pitch-family "IBM Plex Sans"
            :variable-pitch-height 1.0)
           (writing
            :default-height 160
@@ -88,9 +88,7 @@
            :default-height 150
            :default-family "Berkeley Mono"
            :fixed-pitch-family "Berkeley Mono"
-           ;; Iosevka Etoile: quasi-proportional serif from the Iosevka family.
-           ;; Same vertical metrics as Iosevka so code and prose align cleanly.
-           :variable-pitch-family "Iosevka Etoile"
+           :variable-pitch-family "IBM Plex Sans"
            :variable-pitch-height 1.0)
           (presentation
            :default-height 200
