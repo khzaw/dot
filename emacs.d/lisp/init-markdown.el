@@ -190,5 +190,9 @@
     (add-to-list 'markdown-ts-code-block-modes
                  (list (intern (car entry)) (cdr entry)))))
 
+(use-package md-ts-mode
+  :straight (:type git :host github :repo "dnouri/md-ts-mode")
+  :defer t)
+
 (provide 'init-markdown)
 ;;; init-markdown.el ends here

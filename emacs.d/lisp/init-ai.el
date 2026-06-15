@@ -151,7 +151,5 @@ Follow good Git style:
   :config
   (setq package-install-upgrade-built-in t))
 
-
-
 (provide 'init-ai)
 ;;; init-ai.el ends here

@@ -63,7 +63,8 @@
   (kirigami-show-context-menu t)
   (kirigami-preserve-visual-position t)
   :config
-  (kirigami-global-mode 1))
+  (when (fboundp 'kirigami-global-mode)
+    (kirigami-global-mode 1)))
 
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda ()

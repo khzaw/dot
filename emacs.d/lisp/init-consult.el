@@ -631,6 +631,20 @@
     (error
      (message "fzf-native disabled: %s" (error-message-string err)))))
 
+(use-package fzf-async
+  :straight (:type git :host github :repo "jojojames/fzf-async")
+  :after fzf-native
+  :no-require t
+  :config
+  (cond
+   ((require 'fzfa nil t)
+    (cond
+     ((fboundp 'fzfa-setup) (fzfa-setup))
+     ((fboundp 'fzfa--ensure-setup) (fzfa--ensure-setup))))
+   ((require 'fzf-async nil t)
+    (when (fboundp 'fzf-async-setup)
+      (fzf-async-setup)))))
+
 (use-package fussy
   :straight (:type git :host github :repo "jojojames/fussy")
   :config
@@ -638,9 +652,6 @@
   (fussy-eglot-setup)
   (fussy-company-setup))
 
-(use-package fzf-async
-  :straight (:type git :host github :repo "jojojames/fzf-async")
-  :config (fzf-async-setup))
 
 (provide 'init-consult)
 ;;init-consult.el ends here
