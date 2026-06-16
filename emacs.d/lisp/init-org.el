@@ -494,10 +494,12 @@
   :straight (:type git :host github :repo "mclear-tools/consult-notes")
   :commands (consult-notes
              consult-notes-search-in-all-notes
-             ;; if using org-roam
-             consult-notes-org-roam-find-node
              consult-notes-org-roam-find-node-relation)
   :init
+  ;; `consult-notes-org-roam-find-node' is a defalias in the optional
+  ;; org-roam integration file, so give it the exact autoload target.
+  (autoload 'consult-notes-org-roam-find-node "consult-notes-org-roam" nil t)
+  (keymap-global-set "C-c n f" #'consult-notes-org-roam-find-node)
   (with-eval-after-load 'org-roam
     (with-eval-after-load 'consult-notes
       (consult-notes-org-roam-mode)))
@@ -520,9 +522,7 @@
   (when (featurep 'org-roam)
     (consult-notes-org-roam-mode))
   (when (locate-library "denote")
-    (consult-notes-denote-mode))
-  :bind
-  ("C-c n f" . consult-notes-org-roam-find-node))
+    (consult-notes-denote-mode)))
 
 (use-package org-autolist
   :hook (org-mode . org-autolist-mode))

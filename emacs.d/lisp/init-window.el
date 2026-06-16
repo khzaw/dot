@@ -4,6 +4,22 @@
             (lambda (&rest _)
               (when buffer-file-name (ignore-errors (recenter)))))
 
+(defun khz/display-buffer-in-selected-window-when-single (buffer _alist)
+  "Display BUFFER in the selected window when the frame has no split."
+  (when (and (one-window-p t)
+             (not (window-dedicated-p (selected-window))))
+    (set-window-buffer (selected-window) buffer)
+    (selected-window)))
+
+(setq display-buffer-fallback-action
+      '((khz/display-buffer-in-selected-window-when-single
+         display-buffer--maybe-same-window
+         display-buffer-reuse-window
+         display-buffer--maybe-pop-up-frame-or-window
+         display-buffer-in-previous-window
+         display-buffer-use-some-window
+         display-buffer-pop-up-window)))
+
 (use-package ace-window
   :init (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
               aw-char-position 'left
