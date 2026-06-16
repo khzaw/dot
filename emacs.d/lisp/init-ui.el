@@ -70,6 +70,14 @@
   (change-major-mode . turn-on-solaire-mode)
   (after-revert . turn-on-solaire-mode)
   (ediff-prepare-buffer . solaire-mode)
+  :config
+  (defun khz/turn-off-solaire-in-primary-input-buffers ()
+    "Keep primary input buffers on the base theme background."
+    (when (or (minibufferp)
+              (string= (buffer-name) "*scratch*"))
+      (turn-off-solaire-mode)))
+  (add-hook 'minibuffer-setup-hook #'khz/turn-off-solaire-in-primary-input-buffers)
+  (add-hook 'solaire-mode-hook #'khz/turn-off-solaire-in-primary-input-buffers)
   :defer t)
 
 (use-package all-the-icons
