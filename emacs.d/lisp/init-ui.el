@@ -326,8 +326,8 @@
          0.5))))
 
 (defun khz/adjust-alpha-for-theme (_theme)
-  "Set 96%% alpha for dark themes, 100%% for light."
-  (let ((alpha (if (khz/theme-dark-p) 96 100)))
+  "Keep frames fully opaque after theme changes."
+  (let ((alpha 96))
     (set-frame-parameter nil 'alpha `(,alpha ,alpha))
     (let ((elt (assoc 'alpha default-frame-alist)))
       (if elt (setcdr elt `(,alpha ,alpha))

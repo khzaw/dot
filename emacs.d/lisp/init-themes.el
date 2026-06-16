@@ -101,6 +101,7 @@
   :bind (("<f6>" . ivory-themes-toggle)
          ("S-<f6>" . khz/reload-ivory-theme))
   :config
+  (setq ivory-themes-soft-backgrounds t)
   (ivory-themes-load 'ivory-light))
 
 ;; (use-package modus-themes

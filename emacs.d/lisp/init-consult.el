@@ -652,6 +652,8 @@
   (fussy-eglot-setup)
   (fussy-company-setup))
 
+(use-package fzfa
+  :straight (:type git :host github :repo "jojojames/fzfa"))
 
 (provide 'init-consult)
 ;;init-consult.el ends here
