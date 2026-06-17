@@ -378,7 +378,7 @@
                   ("C-c n A" . org-roam-alias-add)
                   ("C-c n l" . org-roam-buffer-toggle))))
     :config
-    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
+    (setq org-roam-node-display-template (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
     (org-roam-db-autosync-mode))
 
   (use-package org-roam-protocol :straight nil :after org-roam)
