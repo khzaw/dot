@@ -117,8 +117,6 @@
   (markdown-bold-face ((t (:weight bold))))
   (markdown-header-face-1 ((t (:inherit markdown-header-face :weight bold))))
   (markdown-header-face-2 ((t (:inherit markdown-header-face :weight bold))))
-  (markdown-code-face ((t (:inherit fixed-pitch :extend t))))
-  (markdown-inline-code-face ((t (:inherit (fixed-pitch font-lock-constant-face)))))
   :hook ((markdown-mode . khz/markdown-visual-setup)
          (markdown-mode . khz/markdown-outline-setup)
          (gfm-mode . khz/markdown-visual-setup)

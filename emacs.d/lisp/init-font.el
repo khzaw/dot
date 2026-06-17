@@ -65,41 +65,80 @@
 
 (global-set-key (kbd "C-h M-f") #'all-faces-at-point)
 
+(defun khz/graphic-frame-live-p ()
+  "Return non-nil when Emacs has at least one graphical frame."
+  (catch 'graphic
+    (dolist (frame (frame-list))
+      (when (display-graphic-p frame)
+        (throw 'graphic t)))))
+
+(defun khz/fontaine-current-preset ()
+  "Return the current Fontaine preset, falling back to `regular'."
+  (or (and (boundp 'fontaine-current-preset)
+           fontaine-current-preset)
+      (and (fboundp 'fontaine-restore-latest-preset)
+           (fontaine-restore-latest-preset))
+      'regular))
+
+(defun khz/fontaine-apply-current-preset (&rest _)
+  "Reapply the active Fontaine preset after face-resetting events."
+  (when (and (khz/graphic-frame-live-p)
+             (fboundp 'fontaine-set-preset))
+    (fontaine-set-preset (khz/fontaine-current-preset))))
+
+(defun khz/reload-font-config (&optional preset)
+  "Reload `init-font.el' and apply PRESET, or the current preset when nil."
+  (interactive)
+  (unless (khz/graphic-frame-live-p)
+    (user-error "Font reloading is only useful in a graphical frame"))
+  (let ((preset (or preset (khz/fontaine-current-preset))))
+    (load-file (locate-user-emacs-file "lisp/init-font.el"))
+    (require 'fontaine)
+    (fontaine-set-preset preset)
+    (message "Reloaded Fontaine preset: %s" preset)))
+
 (use-package fontaine
-  :if (display-graphic-p)
   :config
-  (setq fontaine-presets
-        '((regular
-           :default-height 140
-           :default-family "Berkeley Mono"
-           :fixed-pitch-family "Berkeley Mono"
-           :variable-pitch-family "IBM Plex Sans"
-           :variable-pitch-height 1.0)
-          (writing
-           :default-height 160
-           :default-family "Berkeley Mono"
-           :fixed-pitch-family "Berkeley Mono"
-           ;; Charter: Matthew Carter's serif, optimized for screen reading.
-           ;; Pairs well with monospace at a slight size bump.
-           :variable-pitch-family "Charter"
-           :variable-pitch-weight normal
-           :variable-pitch-height 1.2)
-          (reading
-           :default-height 150
-           :default-family "Berkeley Mono"
-           :fixed-pitch-family "Berkeley Mono"
-           :variable-pitch-family "IBM Plex Sans"
-           :variable-pitch-height 1.0)
-          (presentation
-           :default-height 200
-           :default-family "Berkeley Mono"
-           :fixed-pitch-family "Berkeley Mono"
-           ;; Avenir Next: clean geometric sans, excellent at large sizes.
-           :variable-pitch-family "Avenir Next"
-           :variable-pitch-weight medium
-           :variable-pitch-height 1.0)))
-  (fontaine-set-preset 'regular)
-  ;; Persist last-used preset across sessions
+  (let ((line-spacing (pcase system-type
+                        ('gnu/linux 0.05)
+                        ('darwin 3)
+                        (_ nil))))
+    (setq fontaine-presets
+          `((regular
+             :default-height 130
+             :default-family "Berkeley Mono"
+             :fixed-pitch-family "Berkeley Mono"
+             :variable-pitch-family "IBM Plex Sans"
+             :variable-pitch-height 1.0)
+            (writing
+             :default-height 160
+             :default-family "Berkeley Mono"
+             :fixed-pitch-family "Berkeley Mono"
+             ;; Charter: Matthew Carter's serif, optimized for screen reading.
+             ;; Pairs well with monospace at a slight size bump.
+             :variable-pitch-family "Charter"
+             :variable-pitch-weight normal
+             :variable-pitch-height 1.2)
+            (reading
+             :default-height 150
+             :default-family "Berkeley Mono"
+             :fixed-pitch-family "Berkeley Mono"
+             :variable-pitch-family "IBM Plex Sans"
+             :variable-pitch-height 1.0)
+            (presentation
+             :default-height 200
+             :default-family "Berkeley Mono"
+             :fixed-pitch-family "Berkeley Mono"
+             ;; Avenir Next: clean geometric sans, excellent at large sizes.
+             :variable-pitch-family "Avenir Next"
+             :variable-pitch-weight medium
+             :variable-pitch-height 1.0)
+            (t
+             :line-spacing ,line-spacing))))
+  (khz/fontaine-apply-current-preset)
+  (add-hook 'after-make-frame-functions #'khz/fontaine-apply-current-preset)
+  (add-hook 'enable-theme-functions #'khz/fontaine-apply-current-preset)
+  (add-hook 'after-load-theme-hook #'khz/fontaine-apply-current-preset)
   (fontaine-mode 1))
 
 (provide 'init-font)

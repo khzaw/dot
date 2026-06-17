@@ -7,7 +7,10 @@
 
 (defun config-reload ()
   (interactive)
-  (load-file (expand-file-name "init.el" user-emacs-directory)))
+  (load-file (expand-file-name "init.el" user-emacs-directory))
+  (when (fboundp 'khz/fontaine-apply-current-preset)
+    (ignore-errors
+      (khz/fontaine-apply-current-preset))))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
