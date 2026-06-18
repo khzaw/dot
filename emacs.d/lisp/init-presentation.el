@@ -48,7 +48,10 @@
                       :repo "positron-solutions/dslide"))
 
 (use-package epresent
-  :straight (:type git :host github :repo "eschulte/epresent"))
+  :commands epresent-run
+  :after evil
+  :straight (:type git :host github :repo "eschulte/epresent"
+             :build (:not compile)))
 
 (provide 'init-presentation)
 ;;; init-presentation.el ends here

@@ -1,8 +1,10 @@
 ;; -*- lexical-binding: t; -*-
 
-(advice-add 'save-place-find-file-hook :after
-            (lambda (&rest _)
-              (when buffer-file-name (ignore-errors (recenter)))))
+(with-eval-after-load 'saveplace
+  (when (fboundp 'save-place-find-file-hook)
+    (advice-add 'save-place-find-file-hook :after
+                (lambda (&rest _)
+                  (when buffer-file-name (ignore-errors (recenter)))))))
 
 (defun khz/display-buffer-in-selected-window-when-single (buffer _alist)
   "Display BUFFER in the selected window when the frame has no split."

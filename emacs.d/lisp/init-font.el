@@ -105,12 +105,12 @@
              :variable-pitch-family "IBM Plex Sans"
              :variable-pitch-height 1.0)
             (writing
-             :default-height 160
+             :default-height 180
              :default-family "Berkeley Mono"
              :fixed-pitch-family "Berkeley Mono"
              ;; Charter: Matthew Carter's serif, optimized for screen reading.
              ;; Pairs well with monospace at a slight size bump.
-             :variable-pitch-family "Charter"
+             :variable-pitch-family "iA Writer Quattro V"
              :variable-pitch-weight normal
              :variable-pitch-height 1.2)
             (reading

@@ -599,15 +599,32 @@
 
 (use-package denote
   :custom
-  (denote-directory (file-truename "~/Dropbox/notes/denote")))
+  (denote-directory (file-name-as-directory (file-truename "~/Dropbox/notes/denote")))
+  :config
+  (defun khz/denote-normalize-existing-file (file)
+    "Return FILE using its true path when it already exists."
+    (if (and (stringp file) (file-exists-p file))
+        (file-truename file)
+      file))
+
+  (advice-add 'denote-file-prompt :filter-return #'khz/denote-normalize-existing-file))
 
 (use-package ox
   :straight (:type built-in)
   :config
+  (add-to-list 'org-latex-packages-alist '("" "listings"))
   (setq org-export-with-smart-quotes t
         org-html-validation-link nil
         org-latex-prefer-user-labels t
-        org-export-with-latex t))
+        org-export-with-latex t
+        org-latex-src-block-backend 'listings
+        org-latex-listings-options
+        '(("breaklines" "true")
+          ("breakatwhitespace" "false")
+          ("columns" "fullflexible")
+          ("keepspaces" "true")
+          ("showstringspaces" "false")
+          ("basicstyle" "\\ttfamily\\scriptsize"))))
 
 (use-package ox-beamer
   :straight nil
