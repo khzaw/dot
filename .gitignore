@@ -112,3 +112,5 @@ Temporary Items
 .apdisk
 
 easysession
+emacs.d/*.eld
+emacs.d/shipit-etag-cache.el
