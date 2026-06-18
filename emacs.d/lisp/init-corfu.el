@@ -46,6 +46,12 @@
                    :host github
                    :repo "minad/corfu"
                    :files (:defaults "extensions/*"))
+  :preface
+  (defun khz/corfu-move-to-minibuffer ()
+    (interactive)
+    (let ((completion-extra-properties corfu--extra)
+          completion-cycle-threshold completion-cycling)
+      (apply #'consult-completion-in-region completion-in-region--data)))
   :custom
   (corfu-cycle t)
   (corfu-quit-at-boundry nil)      ;; never quit a completion boundary
@@ -112,7 +118,7 @@ https://github.com/minad/corfu."
               ("C-p" . corfu-previous)
               ("C-n" . corfu-next)
               ("C-f" . corfu-insert)
-              ("M-m" . corfu-move-to-minibuffer)
+              ("M-m" . khz/corfu-move-to-minibuffer)
               ("M-SPC" . corfu-insert-separator)
               ("C-g" . corfu-quit)
               ("M-g" . corfu-info-location)
@@ -180,22 +186,6 @@ https://github.com/minad/corfu."
   :after corfu
   :bind (:map corfu-map
               ("C-q" . corfu-quick-insert)))
-
-(defun corfu-move-to-minibuffer ()
-  (interactive)
-  (let ((completion-extra-properties corfu--extra)
-        completion-cycle-threshold completion-cycling)
-    (apply #'consult-completion-in-region completion-in-region--data)))
-
-(defun corfu-enable-always-in-minibuffer ()
-  "Enable Corfu in the minibuffer if Vertico/Mct are not active."
-  (unless (or (bound-and-true-p mct--active)
-              (bound-and-true-p vertico--input))
-    ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
-    (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-                corfu-popupinfo-delay nil)
-    (corfu-mode 1)))
-;; (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
 (use-package corfu-pixel-perfect
   :disabled t

@@ -33,12 +33,6 @@
      "=:" "=:=" "=!=" "==" "===" "=/=" "=~" "~-" "^=" "__" "!=" "!==" "-~"
      "--" "---")))
 
-(defun what-face (pos)
-  (interactive "d")
-  (let ((face (or (get-char-property (point) 'read-face-name)
-                  (get-char-property (point) 'face))))
-    (if face (message "Face: %s" face) (message "No face at %d" pos))))
-
 (defun all-faces-at-point (pos)
   "Show all faces at POS (or point if called interactively)."
   (interactive "d")
@@ -65,39 +59,39 @@
 
 (global-set-key (kbd "C-h M-f") #'all-faces-at-point)
 
-(defun khz/graphic-frame-live-p ()
-  "Return non-nil when Emacs has at least one graphical frame."
-  (catch 'graphic
-    (dolist (frame (frame-list))
-      (when (display-graphic-p frame)
-        (throw 'graphic t)))))
-
-(defun khz/fontaine-current-preset ()
-  "Return the current Fontaine preset, falling back to `regular'."
-  (or (and (boundp 'fontaine-current-preset)
-           fontaine-current-preset)
-      (and (fboundp 'fontaine-restore-latest-preset)
-           (fontaine-restore-latest-preset))
-      'regular))
-
-(defun khz/fontaine-apply-current-preset (&rest _)
-  "Reapply the active Fontaine preset after face-resetting events."
-  (when (and (khz/graphic-frame-live-p)
-             (fboundp 'fontaine-set-preset))
-    (fontaine-set-preset (khz/fontaine-current-preset))))
-
-(defun khz/reload-font-config (&optional preset)
-  "Reload `init-font.el' and apply PRESET, or the current preset when nil."
-  (interactive)
-  (unless (khz/graphic-frame-live-p)
-    (user-error "Font reloading is only useful in a graphical frame"))
-  (let ((preset (or preset (khz/fontaine-current-preset))))
-    (load-file (locate-user-emacs-file "lisp/init-font.el"))
-    (require 'fontaine)
-    (fontaine-set-preset preset)
-    (message "Reloaded Fontaine preset: %s" preset)))
-
 (use-package fontaine
+  :preface
+  (defun khz/graphic-frame-live-p ()
+    "Return non-nil when Emacs has at least one graphical frame."
+    (catch 'graphic
+      (dolist (frame (frame-list))
+        (when (display-graphic-p frame)
+          (throw 'graphic t)))))
+
+  (defun khz/fontaine-current-preset ()
+    "Return the current Fontaine preset, falling back to `regular'."
+    (or (and (boundp 'fontaine-current-preset)
+             fontaine-current-preset)
+        (and (fboundp 'fontaine-restore-latest-preset)
+             (fontaine-restore-latest-preset))
+        'regular))
+
+  (defun khz/fontaine-apply-current-preset (&rest _)
+    "Reapply the active Fontaine preset after face-resetting events."
+    (when (and (khz/graphic-frame-live-p)
+               (fboundp 'fontaine-set-preset))
+      (fontaine-set-preset (khz/fontaine-current-preset))))
+
+  (defun khz/reload-font-config (&optional preset)
+    "Reload `init-font.el' and apply PRESET, or the current preset when nil."
+    (interactive)
+    (unless (khz/graphic-frame-live-p)
+      (user-error "Font reloading is only useful in a graphical frame"))
+    (let ((preset (or preset (khz/fontaine-current-preset))))
+      (load-file (locate-user-emacs-file "lisp/init-font.el"))
+      (require 'fontaine)
+      (fontaine-set-preset preset)
+      (message "Reloaded Fontaine preset: %s" preset)))
   :config
   (let ((line-spacing (pcase system-type
                         ('gnu/linux 0.05)

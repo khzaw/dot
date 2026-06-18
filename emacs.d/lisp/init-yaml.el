@@ -1,24 +1,15 @@
 ;; -*- lexical-binding: t; -*-
 
-(defun my-yaml-ts-mode-setup ()
-  "Custom setup applied when `yaml-ts-mode` starts."
-  ;; Let yaml-ts-mode (Tree-sitter) handle its own indentation logic.
-  ;; indent-for-tab-command should delegate to the mode's indent-line-function.
-  ;; Ensure no global setting is overriding yaml-ts-mode's indent-line-function.
-
-  ;; treesit-indent has a bug a doesn't work well in yaml-ts-mode
-  (setq-local indent-line-function #'yaml-indent-line)
-
-  ;; Other mode-specific settings
-  ;; (define-key evil-insert-state-local-map (kbd "<tab>") #'indent-for-tab-command)
-  ;; e.g., (setq-local comment-line-break-function #'adaptive-fill-comment-line)
-  )
-
 (use-package yaml-ts-mode
   :straight (:type built-in)
+  :preface
+  (defun khz/yaml-ts-mode-setup ()
+    "Custom setup applied when `yaml-ts-mode' starts."
+    ;; `treesit-indent' does not behave well in yaml-ts-mode.
+    (setq-local indent-line-function #'yaml-indent-line))
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-ts-mode)
          ("kubeconfig\\'" . yaml-ts-mode))
-  :hook (yaml-ts-mode . my-yaml-ts-mode-setup))
+  :hook (yaml-ts-mode . khz/yaml-ts-mode-setup))
 
 (use-package yaml-pro
   :hook (yaml-ts-mode . yaml-pro-mode)

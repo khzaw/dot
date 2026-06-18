@@ -50,16 +50,6 @@
 (use-package php-mode
   :mode "\\.php\\'")
 
-(defun setup-tide-mode()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (prettier-mode)
-  (company-mode +1))
-
 (use-package tsx-ts-mode
   :straight (:type built-in)
   :mode "\\.tsx\\'")
@@ -98,11 +88,6 @@
 ;;   (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
 ;;   (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
 ;;   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1))))
-
-;; (use-package tide
-;;   :after (typescript-mode company flycheck)
-;;   :hook (((typescript-mode js-mode js2-mode rjsx-mode) . setup-tide-mode)
-;;           (before-save . tide-format-before-save)))
 
 (use-package emmet-mode
   :hook ((web-mode . emmet-mode)

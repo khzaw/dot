@@ -76,6 +76,12 @@ Follow good Git style:
 (use-package agent-shell
   :straight (:type git :host github :repo "xenodium/agent-shell" :files ("*.el"))
   :commands (agent-shell)
+  :preface
+  (defun khz/agent-shell-project-root (dir)
+    "Run agent-shell in DIR."
+    (interactive "D")
+    (let ((default-directory dir))
+      (call-interactively #'agent-shell)))
   :init
   (setq agent-shell-file-completion-enabled t)
   (setq agent-shell-show-welcome-message nil)
@@ -94,7 +100,10 @@ Follow good Git style:
 
   ;; env vars for codex/openai subprocesses
   (setq agent-shell-openai-codex-environment
-        (agent-shell-make-environment-variables :inherit-env t)))
+        (agent-shell-make-environment-variables :inherit-env t))
+
+  (with-eval-after-load 'embark
+    (define-key embark-file-map (kbd "a") #'khz/agent-shell-project-root)))
 
 (use-package agent-review
   :straight (:type git :host github :repo "nineluj/agent-review" :files ("*.el"))
@@ -103,15 +112,6 @@ Follow good Git style:
 (use-package agent-shell-manager
   :straight (:type git :host github :repo "jethrokuan/agent-shell-manager")
   :commands (agent-shell-manager-toggle))
-
-(defun khz/agent-shell-project-root (dir)
-  "Run agent-shell in DIR (project root directory)."
-  (interactive "D")
-  (let ((default-directory dir))
-    (call-interactively #'agent-shell)))
-
-(with-eval-after-load 'embark
-  (define-key embark-file-map (kbd "a") #'my/agent-shell-project-root))
 
 (use-package ai-code
   :straight (:host github :repo "tninja/ai-code-interface.el")

@@ -3,6 +3,25 @@
 (use-package consult
   :straight (:type git :host github :repo "minad/consult")
   :after projectile
+  :preface
+  (defun khz/consult-down-from-outside ()
+    "Move to next candidate in minibuffer, even when minibuffer is not selected."
+    (interactive)
+    (with-selected-window (active-minibuffer-window)
+      (execute-kbd-macro [down])))
+
+  (defun khz/consult-up-from-outside ()
+    "Move to previous candidate in minibuffer, even when minibuffer is not selected."
+    (interactive)
+    (with-selected-window (active-minibuffer-window)
+      (execute-kbd-macro [up])))
+
+  (defun khz/consult-toggle-minibuffer ()
+    "Go back and forth between minibuffer and other window."
+    (interactive)
+    (if (window-minibuffer-p (selected-window))
+        (select-window (minibuffer-selected-window))
+      (select-window (active-minibuffer-window))))
   :bind (("C-c h"             . consult-history)
          ("C-c r"             . consult-recent-file)
          ("C-c M-x"           . consult-mode-command)
@@ -11,6 +30,9 @@
          ("C-c k"             . consult-kmacro)
          ("C-c l t"           . consult-theme)
          ("C-c n a"           . consult-org-agenda)
+         ("s-i"               . khz/consult-toggle-minibuffer)
+         ("s-n"               . khz/consult-down-from-outside)
+         ("s-p"               . khz/consult-up-from-outside)
          ;; C-x bindings (ctl-x-map)
          ;; b Buffers
          ;; SPC Hidden buffers
@@ -234,60 +256,6 @@
 (use-package consult-yasnippet
   :commands (consult-yasnippet consult-yasnippet-visit-snippet-file))
 
-(defun down-from-outside ()
-  "Move to next candidate in minibuffer, even when minibuffer isn't selected."
-  (interactive)
-  (with-selected-window (active-minibuffer-window)
-    (execute-kbd-macro [down])))
-
-(defun up-from-outside ()
-  "Move to previous candidate in minibuffer, even when minibuffer isn't selected."
-  (interactive)
-  (with-selected-window (active-minibuffer-window)
-    (execute-kbd-macro [up])))
-
-(defun to-and-fro-minibuffer ()
-  "Go back and forth between minibuffer and other window."
-  (interactive)
-  (if (window-minibuffer-p (selected-window))
-    (select-window (minibuffer-selected-window))
-    (select-window (active-minibuffer-window))))
-
-(global-set-key (kbd "s-i") #'to-and-fro-minibuffer)
-(global-set-key (kbd "s-n") #'down-from-outside)
-(global-set-key (kbd "s-p") #'up-from-outside)
-
-(defun vertico-directory-delete-entry ()
-  "Delete directory or entire entry before point."
-  (interactive)
-  (when (and (> (point) (minibuffer-prompt-end))
-             ;; Check vertico--base for stepwise file path completion
-             (not (equal vertico--base ""))
-             (eq 'file (vertico--metadata-get 'category)))
-    (save-excursion
-      (goto-char (1- (point)))
-      (when (search-backward "/" (minibuffer-prompt-end) t)
-        (delete-region (1+ (point)) (point-max))
-        t))))
-
-;; Narrowing which-key help without delay
-(defun immediate-which-key-for-narrow (fun &rest args)
-  (let* ((refresh t)
-         (timer (and consult-narrow-key
-                     (memq :narrow args)
-                     (run-at-time 0.05 0.05
-                                  (lambda ()
-                                    (if (eq last-input-event (elt consult-narrow-key 0))
-                                        (when refresh
-                                          (setq refresh nil)
-                                          (which-key--update))
-                                      (setq refresh t)))))))
-    (unwind-protect
-        (apply fun args)
-      (when timer
-        (cancel-timer timer)))))
-(advice-add #'consult--read :around #'immediate-which-key-for-narrow)
-
 (use-package consult-dir
   :bind (("C-x C-d" . consult-dir)
          :map vertico-map
@@ -469,16 +437,6 @@
   :bind (:map minibuffer-local-map ("M-a" . marginalia-cycle))
   :init (marginalia-mode))
 
-;; Manual preview for non-Consult commands using Embark
-(define-key minibuffer-local-map (kbd "M-.") #'my-embark-preview)
-(defun my-embark-preview ()
-  "Previews candidate in vertico buffer, unless it's a consult command"
-  (interactive)
-  (unless (bound-and-true-p consult--preview-function)
-    (save-selected-window
-      (let ((embark-quit-after-action nil))
-        (embark-dwim)))))
-
 (use-package consult-ls-git
   :straight (consult-ls-git :type git :host github :repo "rcj/consult-ls-git")
   :bind
@@ -509,9 +467,19 @@
   :config (vertico-carousel-mode 1))
 
 (use-package embark
+  :preface
+  (defun khz/embark-preview ()
+    "Preview candidate in Vertico buffer, unless it is a Consult command."
+    (interactive)
+    (unless (bound-and-true-p consult--preview-function)
+      (save-selected-window
+        (let ((embark-quit-after-action nil))
+          (embark-dwim)))))
   :bind (("C-." . embark-act)
          ("C-;" . embark-dwim)
-         ("C-h B" . embark-bindings))
+         ("C-h B" . embark-bindings)
+         :map minibuffer-local-map
+         ("M-." . khz/embark-preview))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :config

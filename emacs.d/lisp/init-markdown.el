@@ -3,86 +3,86 @@
 ;; Curly quotes when writing in markup languages
 (use-package typo :defer t)
 
-;; Some packages load `markdown-mode' indirectly (e.g. Forge) before we ever
-;; visit a Markdown buffer.  Keep this bound so those early loads never trip
-;; over an unbound variable during Custom initialization.
-(defvar markdown-code-lang-modes nil)
-
-(defconst khz/markdown-code-lang-modes-extra
-  '(("json" . json-ts-mode)
-    ("tsx" . tsx-ts-mode)
-    ("typescript" . typescript-ts-mode)
-    ("ts" . typescript-ts-mode)
-    ("javascript" . js-ts-mode)
-    ("js" . js-ts-mode)
-    ("python" . python-ts-mode)
-    ("py" . python-ts-mode)
-    ("go" . go-ts-mode)
-    ("golang" . go-ts-mode)
-    ("rust" . rust-ts-mode)
-    ("dockerfile" . dockerfile-ts-mode)
-    ("diff" . diff-mode)
-    ("shell" . sh-mode)
-    ("zsh" . sh-mode))
-  "Extra fenced-code language mappings for `markdown-mode'.")
-
-(defun khz/markdown-ts-ready-p ()
-  "Return non-nil when the built-in Markdown tree-sitter mode is usable."
-  (and (fboundp 'treesit-ready-p)
-       (treesit-ready-p '(markdown markdown-inline) t)))
-
-(defun khz/markdown-fallback-mode ()
-  "Use the best non-tree-sitter Markdown mode for the current buffer."
-  (if (and buffer-file-name
-           (string-match-p "\\(?:README\\.md\\|\\.mdx?\\)\\'" buffer-file-name))
-      (gfm-mode)
-    (markdown-mode)))
-
-(defun khz/markdown-mode ()
-  "Use `markdown-ts-mode' when ready, otherwise avoid its text-mode fallback."
-  (interactive)
-  (if (khz/markdown-ts-ready-p)
-      (markdown-ts-mode)
-    (khz/markdown-fallback-mode)))
-
-(defun khz/markdown-visual-setup ()
-  "Apply the shared visual setup for Markdown buffers."
-  (word-wrap-whitespace-mode 1)
-  (visual-line-mode 1)
-  (mixed-pitch-mode 1)
-  (outline-minor-mode 1))
-
-(defun khz/markdown-outline-setup ()
-  "Make `outline-minor-mode' follow Markdown headings."
-  (setq-local outline-regexp markdown-regex-header)
-  (setq-local outline-level #'markdown-outline-level))
-
-(defun khz/markdown-ts-sync-faces ()
-  "Make `markdown-ts-mode' reuse the configured Markdown faces."
-  (set-face-attribute 'markdown-ts-delimiter nil :inherit 'markdown-markup-face)
-  (set-face-attribute 'markdown-ts-heading-1 nil :inherit 'markdown-header-face-1)
-  (set-face-attribute 'markdown-ts-heading-2 nil :inherit 'markdown-header-face-2)
-  (set-face-attribute 'markdown-ts-heading-3 nil :inherit 'markdown-header-face-3)
-  (set-face-attribute 'markdown-ts-heading-4 nil :inherit 'markdown-header-face-4)
-  (set-face-attribute 'markdown-ts-heading-5 nil :inherit 'markdown-header-face-5)
-  (set-face-attribute 'markdown-ts-heading-6 nil :inherit 'markdown-header-face-6)
-  (set-face-attribute 'markdown-ts-list-marker nil :inherit 'markdown-list-face)
-  (set-face-attribute 'markdown-ts-block-quote nil :inherit 'markdown-blockquote-face)
-  (set-face-attribute 'markdown-ts-strikethrough nil :inherit 'markdown-strike-through-face)
-  (set-face-attribute 'markdown-ts-language-keyword nil :inherit 'markdown-language-keyword-face)
-  (set-face-attribute 'markdown-ts-task-unchecked nil :inherit 'markdown-gfm-checkbox-face)
-  (set-face-attribute 'markdown-ts-task-checked nil :inherit 'markdown-gfm-checkbox-face)
-  (set-face-attribute 'markdown-ts-code-span nil :inherit 'markdown-inline-code-face)
-  (set-face-attribute 'markdown-ts-code-block nil :inherit 'markdown-code-face))
-
-(defun khz/markdown-ts-setup ()
-  "Apply Markdown package visuals to `markdown-ts-mode'."
-  (khz/markdown-visual-setup)
-  (require 'markdown-mode nil t)
-  (khz/markdown-ts-sync-faces))
-
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
+  :preface
+  ;; Some packages load `markdown-mode' indirectly (e.g. Forge) before we ever
+  ;; visit a Markdown buffer.  Keep this bound so those early loads never trip
+  ;; over an unbound variable during Custom initialization.
+  (defvar markdown-code-lang-modes nil)
+
+  (defconst khz/markdown-code-lang-modes-extra
+    '(("json" . json-ts-mode)
+      ("tsx" . tsx-ts-mode)
+      ("typescript" . typescript-ts-mode)
+      ("ts" . typescript-ts-mode)
+      ("javascript" . js-ts-mode)
+      ("js" . js-ts-mode)
+      ("python" . python-ts-mode)
+      ("py" . python-ts-mode)
+      ("go" . go-ts-mode)
+      ("golang" . go-ts-mode)
+      ("rust" . rust-ts-mode)
+      ("dockerfile" . dockerfile-ts-mode)
+      ("diff" . diff-mode)
+      ("shell" . sh-mode)
+      ("zsh" . sh-mode))
+    "Extra fenced-code language mappings for `markdown-mode'.")
+
+  (defun khz/markdown-ts-ready-p ()
+    "Return non-nil when the built-in Markdown tree-sitter mode is usable."
+    (and (fboundp 'treesit-ready-p)
+         (treesit-ready-p '(markdown markdown-inline) t)))
+
+  (defun khz/markdown-fallback-mode ()
+    "Use the best non-tree-sitter Markdown mode for the current buffer."
+    (if (and buffer-file-name
+             (string-match-p "\\(?:README\\.md\\|\\.mdx?\\)\\'" buffer-file-name))
+        (gfm-mode)
+      (markdown-mode)))
+
+  (defun khz/markdown-mode ()
+    "Use `markdown-ts-mode' when ready, otherwise avoid its text-mode fallback."
+    (interactive)
+    (if (khz/markdown-ts-ready-p)
+        (markdown-ts-mode)
+      (khz/markdown-fallback-mode)))
+
+  (defun khz/markdown-visual-setup ()
+    "Apply the shared visual setup for Markdown buffers."
+    (word-wrap-whitespace-mode 1)
+    (visual-line-mode 1)
+    (mixed-pitch-mode 1)
+    (outline-minor-mode 1))
+
+  (defun khz/markdown-outline-setup ()
+    "Make `outline-minor-mode' follow Markdown headings."
+    (setq-local outline-regexp markdown-regex-header)
+    (setq-local outline-level #'markdown-outline-level))
+
+  (defun khz/markdown-ts-sync-faces ()
+    "Make `markdown-ts-mode' reuse the configured Markdown faces."
+    (set-face-attribute 'markdown-ts-delimiter nil :inherit 'markdown-markup-face)
+    (set-face-attribute 'markdown-ts-heading-1 nil :inherit 'markdown-header-face-1)
+    (set-face-attribute 'markdown-ts-heading-2 nil :inherit 'markdown-header-face-2)
+    (set-face-attribute 'markdown-ts-heading-3 nil :inherit 'markdown-header-face-3)
+    (set-face-attribute 'markdown-ts-heading-4 nil :inherit 'markdown-header-face-4)
+    (set-face-attribute 'markdown-ts-heading-5 nil :inherit 'markdown-header-face-5)
+    (set-face-attribute 'markdown-ts-heading-6 nil :inherit 'markdown-header-face-6)
+    (set-face-attribute 'markdown-ts-list-marker nil :inherit 'markdown-list-face)
+    (set-face-attribute 'markdown-ts-block-quote nil :inherit 'markdown-blockquote-face)
+    (set-face-attribute 'markdown-ts-strikethrough nil :inherit 'markdown-strike-through-face)
+    (set-face-attribute 'markdown-ts-language-keyword nil :inherit 'markdown-language-keyword-face)
+    (set-face-attribute 'markdown-ts-task-unchecked nil :inherit 'markdown-gfm-checkbox-face)
+    (set-face-attribute 'markdown-ts-task-checked nil :inherit 'markdown-gfm-checkbox-face)
+    (set-face-attribute 'markdown-ts-code-span nil :inherit 'markdown-inline-code-face)
+    (set-face-attribute 'markdown-ts-code-block nil :inherit 'markdown-code-face))
+
+  (defun khz/markdown-ts-setup ()
+    "Apply Markdown package visuals to `markdown-ts-mode'."
+    (khz/markdown-visual-setup)
+    (require 'markdown-mode nil t)
+    (khz/markdown-ts-sync-faces))
   :mode (("README\\.md\\'" . khz/markdown-mode)
          ("\\.md\\'" . khz/markdown-mode)
          ("\\.markdown\\'" . khz/markdown-mode)
@@ -137,24 +137,24 @@
   :defer t)
 
 (use-package impatient-mode
-  :commands (impatient-mode))
+  :commands (impatient-mode khz/markdown-realtime-preview)
+  :preface
+  (defun khz/markdown-filter (buffer)
+    (princ
+     (with-temp-buffer
+       (let ((tmp (buffer-name)))
+         (set-buffer buffer)
+         (set-buffer (markdown tmp))
+         (format "<!DOCTYPE html><html><title>Markdown Preview</title><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css\"/><body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width:200px; max-width:980px;margin: 0 auto; padding: 45px;\">%s</article></body></html>" (buffer-string))))))
 
-(defun markdown-filter (buffer)
-  (princ
-    (with-temp-buffer
-      (let ((tmp (buffer-name)))
-        (set-buffer buffer)
-        (set-buffer (markdown tmp))
-        (format "<!DOCTYPE html><html><title>Markdown Preview</title><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css\"/><body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width:200px; max-width:980px;margin: 0 auto; padding: 45px;\">%s</article></body></html>" (buffer-string))))))
-
-(defun markdown-realtime-preview ()
-  "Preview markdown."
-  (interactive)
-  (unless (process-status "httpd")
-    (httpd-start))
-  (impatient-mode)
-  (imp-set-user-filter 'markdown-filter)
-  (imp-visit-buffer))
+  (defun khz/markdown-realtime-preview ()
+    "Preview markdown."
+    (interactive)
+    (unless (process-status "httpd")
+      (httpd-start))
+    (impatient-mode)
+    (imp-set-user-filter 'khz/markdown-filter)
+    (imp-visit-buffer)))
 
 (use-package markdown-xwidget
   :after markdown-mode

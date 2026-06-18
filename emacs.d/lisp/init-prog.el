@@ -24,8 +24,7 @@
   :straight (:type built-in)
   :custom
   (prettify-symbols-unprettify-at-point t)
-  :hook (prog-mode . prettify-symbols-mode)
-  :config (add-hook 'prog-mode-hook #'prettify-hook))
+  :hook (prog-mode . prettify-symbols-mode))
 
 (use-package hideshow
   :straight (:type built-in))

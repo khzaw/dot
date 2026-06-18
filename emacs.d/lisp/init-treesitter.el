@@ -178,17 +178,9 @@
   ;; (treesitter-context-focus-mode 1)
 )
 
-(defun treesit-enabled-p ()
-  "Checks if the current buffer has treesit parser."
-  (and (fboundp 'treesit-available-p)
-       (treesit-available-p)
-       (treesit-language-at (point))))
-
 ;; Show scope info of block
 (use-package scopeline
   :commands (scopeline-mode)
-  ;; :hook (prog-mode . (lambda () (when (treesit-enabled-p)
-  ;;                                 (scopeline-mode))))
   :config (setq scopeline-overlay-prefix " ~"
                 scopeline-min-lines 20))
 

@@ -8,38 +8,6 @@
   (visual-fill-column-fringes-outside-margins t)
   :config (global-visual-fill-column-mode))
 
-(defface khz/org-terminal-task
-  '((t (:inherit shadow :strike-through t)))
-  "Face for terminal Org tasks."
-  :group 'org-faces)
-
-(defun khz/org-fontify-terminal-headlines ()
-  "Strike through and fade DONE/CANCELLED Org headlines."
-  (font-lock-add-keywords
-   nil
-   `((,(rx line-start
-           (one-or-more "*")
-           (one-or-more space)
-           (or "DONE" "CANCELLED")
-           word-end
-           (zero-or-more not-newline)
-           line-end)
-      0 'khz/org-terminal-task t))
-   'append))
-
-(defun khz/org-agenda-fontify-terminal-tasks ()
-  "Strike through and fade terminal Org agenda rows."
-  (let ((inhibit-read-only t)
-        (terminal-keywords (regexp-opt org-done-keywords 'words)))
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward terminal-keywords nil t)
-        (add-face-text-property
-         (line-beginning-position)
-         (line-end-position)
-         'khz/org-terminal-task
-         t)))))
-
 (use-package org
   :defer
   :straight (org
@@ -64,8 +32,40 @@
                 (insert
                  (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
                  (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
-                 "(provide 'org-version)\n")))
+                "(provide 'org-version)\n")))
               :pin nil)
+  :preface
+  (defface khz/org-terminal-task
+    '((t (:inherit shadow :strike-through t)))
+    "Face for terminal Org tasks."
+    :group 'org-faces)
+
+  (defun khz/org-fontify-terminal-headlines ()
+    "Strike through and fade DONE/CANCELLED Org headlines."
+    (font-lock-add-keywords
+     nil
+     `((,(rx line-start
+             (one-or-more "*")
+             (one-or-more space)
+             (or "DONE" "CANCELLED")
+             word-end
+             (zero-or-more not-newline)
+             line-end)
+        0 'khz/org-terminal-task t))
+     'append))
+
+  (defun khz/org-agenda-fontify-terminal-tasks ()
+    "Strike through and fade terminal Org agenda rows."
+    (let ((inhibit-read-only t)
+          (terminal-keywords (regexp-opt org-done-keywords 'words)))
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward terminal-keywords nil t)
+          (add-face-text-property
+           (line-beginning-position)
+           (line-end-position)
+           'khz/org-terminal-task
+           t)))))
   :bind ((:map org-mode-map
                ("M-g i" . consult-org-heading)))
   :init (setq org-directory (file-truename "~/Dropbox/notes"))
@@ -157,6 +157,7 @@
   ;;      (?C . success)))
   (setq org-link-elisp-confirm-function nil)
   (setq org-startup-with-inline-images t) ; always display images
+  ; (setq org-image-actual-width '(900)) ; respect image attrs, fall back to slide-friendly width
   (setq org-confirm-babel-evaluate nil)   ; just evaluate
 
   (define-key global-map (kbd "C-c a") 'org-agenda)
@@ -439,12 +440,82 @@
   (org-journal-date-prefix "#+title: "))
 
 (use-package org-download
-  :defer t
   :after org
+  :preface
+  (defun khz/org-download-file-relative-to-buffer (filename)
+    "Return FILENAME relative to the current Org file."
+    (file-relative-name
+     filename
+     (if buffer-file-name
+         (file-name-directory buffer-file-name)
+       default-directory)))
+
+  (defun khz/org-download-denote-asset-id ()
+    "Return a stable asset directory name for the current Org file."
+    (let ((base (file-name-base (or buffer-file-name ""))))
+      (if (string-match "\\`[0-9]\\{8\\}T[0-9]\\{6\\}" base)
+          (match-string 0 base)
+        base)))
+
+  (defun khz/org-download-set-denote-image-dir ()
+    "Store Denote images next to notes in a synced relative asset tree."
+    (let ((denote-root (file-truename
+                        (if (boundp 'denote-directory)
+                            denote-directory
+                          "~/Dropbox/notes/denote"))))
+      (when (and buffer-file-name
+                 (file-in-directory-p (expand-file-name buffer-file-name)
+                                      denote-root))
+        (setq-local org-download-image-dir
+                    (expand-file-name
+                     (concat "assets/" (khz/org-download-denote-asset-id))
+                     (file-name-directory buffer-file-name)))
+        (setq-local org-download-heading-lvl nil))))
+
+  (defun khz/org-download-file (file)
+    "Copy FILE into the current Org note with `org-download'."
+    (interactive "fImage file: ")
+    (require 'org-download)
+    (org-download-image (concat "file://" (expand-file-name file))))
+
+  (defun khz/org-download-annotate (link)
+    "Return a portable `org-download' annotation for LINK."
+    (format "#+DOWNLOADED: %s @ %s\n"
+            (cond
+             ((and (boundp 'org-download-screenshot-file)
+                   (equal link org-download-screenshot-file))
+              "screenshot")
+             ((string-prefix-p "file:" link)
+              (file-name-nondirectory
+               (url-unhex-string
+                (url-filename (url-generic-parse-url link)))))
+             ((file-name-absolute-p link)
+              (file-name-nondirectory link))
+             (t link))
+            (format-time-string "%Y-%m-%d %H:%M:%S")))
+  :hook ((org-mode . org-download-enable)
+         (org-mode . khz/org-download-set-denote-image-dir))
   :bind
   (:map org-mode-map
    (("s-Y" . org-download-screenshot)
-    ("s-y" . org-download-yank))))
+    ("s-y" . org-download-yank)
+    ("C-c n p" . org-download-clipboard)
+    ("C-c n F" . khz/org-download-file)))
+  :init
+  (setq org-download-heading-lvl nil
+        org-download-image-org-width 900
+        org-download-image-html-width 900
+        org-download-abbreviate-filename-function
+        #'khz/org-download-file-relative-to-buffer
+        org-download-annotate-function
+        #'khz/org-download-annotate)
+  (when (eq system-type 'darwin)
+    (setq org-download-screenshot-method "screencapture -i %s"))
+  :config
+  (khz/org-download-set-denote-image-dir)
+  (setq org-download-abbreviate-filename-function
+        #'khz/org-download-file-relative-to-buffer)
+  (org-download-enable))
 
 (use-package org-modern
   :custom
@@ -467,7 +538,6 @@
   :straight (:type git :host github :repo "jdtsmith/org-modern-indent")
   :config (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
-(use-package org-download)
 
 (use-package consult-org-roam
   :diminish

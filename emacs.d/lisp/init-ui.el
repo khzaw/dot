@@ -19,35 +19,11 @@
 (menu-bar-mode 0)
 (setq x-underline-at-descent-line t)
 
-(defun khz/run-with-idle-timer-after-startup (fn delay &rest args)
-  "Run FN with ARGS once Emacs has been idle for DELAY seconds."
-  (apply #'run-with-idle-timer delay nil fn args))
-
-(defun khz/enable-solaire-after-startup ()
-  "Enable `solaire-global-mode' after startup has settled."
-  (khz/run-with-idle-timer-after-startup #'solaire-global-mode 1.0 +1))
-
-(defun khz/enable-default-text-scale-after-startup ()
-  "Enable `default-text-scale-mode' after startup has settled."
-  (khz/run-with-idle-timer-after-startup #'default-text-scale-mode 1.0 +1))
-
-(defun khz/enable-page-break-lines-after-startup ()
-  "Enable `global-page-break-lines-mode' after startup has settled."
-  (khz/run-with-idle-timer-after-startup #'global-page-break-lines-mode 1.0 +1))
-
-(defun khz/enable-spacious-padding-after-startup ()
-  "Enable `spacious-padding-mode' after startup has settled."
-  (khz/run-with-idle-timer-after-startup #'spacious-padding-mode 1.0 +1))
-
-(defun khz/enable-elcord-after-startup ()
-  "Enable `elcord-mode' after startup has settled."
-  (khz/run-with-idle-timer-after-startup #'elcord-mode 3.0 +1))
-
 (use-package solaire-mode
   :commands (solaire-global-mode turn-on-solaire-mode solaire-mode)
   :hook
   ;; Ensure solaire-mode is running in all solaire-mode buffers
-  (emacs-startup . khz/enable-solaire-after-startup)
+  (emacs-startup . (lambda () (run-with-idle-timer 1.0 nil #'solaire-global-mode +1)))
   (after-load-theme . solaire-global-mode)
   (change-major-mode . turn-on-solaire-mode)
   (after-revert . turn-on-solaire-mode)
@@ -99,7 +75,7 @@
 ;; Easily adjust the font size in all frames
 (use-package default-text-scale
   :commands default-text-scale-mode
-  :hook (emacs-startup . khz/enable-default-text-scale-after-startup))
+  :hook (emacs-startup . (lambda () (run-with-idle-timer 1.0 nil #'default-text-scale-mode +1))))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
@@ -132,7 +108,7 @@
 (use-package page-break-lines
   :diminish
   :commands global-page-break-lines-mode
-  :hook (emacs-startup . khz/enable-page-break-lines-after-startup))
+  :hook (emacs-startup . (lambda () (run-with-idle-timer 1.0 nil #'global-page-break-lines-mode +1))))
 
 (use-package posframe
   :disabled t
@@ -173,13 +149,13 @@
     (use-package elcord
       :load-path "~/Code/elcord"
       :commands elcord-mode
-      :hook (emacs-startup . khz/enable-elcord-after-startup)
+      :hook (emacs-startup . (lambda () (run-with-idle-timer 3.0 nil #'elcord-mode +1)))
       :custom
       (elcord-use-major-mode-as-main-icon t))
   (use-package elcord
     ;; set discord status
     :commands elcord-mode
-    :hook (emacs-startup . khz/enable-elcord-after-startup)
+    :hook (emacs-startup . (lambda () (run-with-idle-timer 3.0 nil #'elcord-mode +1)))
     :custom
     (elcord-use-major-mode-as-main-icon t)))
 
@@ -187,6 +163,14 @@
 ;; Make a clean & minimalist frame
 (use-package frame
   :straight (:type built-in)
+  :preface
+  (defun khz/adjust-alpha-for-theme (_theme)
+    "Keep frames fully opaque after theme changes."
+    (let ((alpha 96))
+      (set-frame-parameter nil 'alpha `(,alpha ,alpha))
+      (let ((elt (assoc 'alpha default-frame-alist)))
+        (if elt (setcdr elt `(,alpha ,alpha))
+          (push `(alpha ,alpha ,alpha) default-frame-alist)))))
   :custom
   (window-divider-default-right-width 0)
   (window-divider-default-bottom-width 0)
@@ -199,6 +183,7 @@
                          '(tool-bar-lines . 0)
                          '(menu-bar-lines . 0)
                          '(vertical-scroll-bars . nil))))
+  (add-hook 'enable-theme-functions #'khz/adjust-alpha-for-theme)
   (setq-default window-resize-pixelwise t)
   (setq-default frame-resize-pixelwise t))
 
@@ -246,7 +231,6 @@
 
 (use-package spacious-padding
   :commands spacious-padding-mode
-  ;; :hook (emacs-startup . khz/enable-spacious-padding-after-startup)
   :custom
   (spacious-padding-widths
    '(:mode-line-width 2
@@ -297,25 +281,6 @@
 (keymap-global-set "C-M-8" #'khz/decrease-frame-alpha)
 (keymap-global-set "C-M-9" #'khz/increase-frame-alpha)
 (keymap-global-set "C-M-0" #'khz/reset-frame-alpha)
-
-(defun khz/theme-dark-p ()
-  "Return non-nil if the current theme has a dark background."
-  (let ((bg (color-name-to-rgb (face-background 'default nil t))))
-    (when bg
-      (< (+ (* 0.299 (nth 0 bg))
-            (* 0.587 (nth 1 bg))
-            (* 0.114 (nth 2 bg)))
-         0.5))))
-
-(defun khz/adjust-alpha-for-theme (_theme)
-  "Keep frames fully opaque after theme changes."
-  (let ((alpha 96))
-    (set-frame-parameter nil 'alpha `(,alpha ,alpha))
-    (let ((elt (assoc 'alpha default-frame-alist)))
-      (if elt (setcdr elt `(,alpha ,alpha))
-        (push `(alpha ,alpha ,alpha) default-frame-alist)))))
-
-(add-hook 'enable-theme-functions #'khz/adjust-alpha-for-theme)
 
 (global-set-key (kbd "C-c M-t C-t") 'set-frame-alpha)
 

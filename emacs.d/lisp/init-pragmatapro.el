@@ -267,13 +267,13 @@
        ("≡/≡"        #XEAB7)
        )))
 
-(defun add-pragmatapro-prettify-symbols-alist ()
+(defun khz/pragmatapro-prettify-symbols-setup ()
   (setq prettify-symbols-alist pragmatapro-prettify-symbols-alist)
   (push '("nil" .  #X0444) prettify-symbols-alist)
   (push '("lambda" . #X03BB) prettify-symbols-alist))
 
 ;; enable prettified symbols on comments
-(defun setup-compose-predicate ()
+(defun khz/pragmatapro-compose-predicate-setup ()
   (setq prettify-symbols-compose-predicate
     (defun my-prettify-symbols-default-compose-p (start end _match)
       "Same as `prettify-symbols-default-compose-p', except compose symbols in comments as well."
@@ -285,9 +285,11 @@
                (memq (char-syntax (or (char-after end) ?\s)) syntaxes-end)
                (nth 3 (syntax-ppss))))))))
 
-;; main hook fn, just add to text-mode/prog-mode
-(defun prettify-hook ()
-  (add-pragmatapro-prettify-symbols-alist)
-  (setup-compose-predicate))
+(defun khz/pragmatapro-prettify-setup ()
+  "Apply PragmataPro prettified-symbol settings in the current buffer."
+  (khz/pragmatapro-prettify-symbols-setup)
+  (khz/pragmatapro-compose-predicate-setup))
+
+(add-hook 'prog-mode-hook #'khz/pragmatapro-prettify-setup)
 
 (provide 'init-pragmatapro)

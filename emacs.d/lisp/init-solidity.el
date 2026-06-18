@@ -8,10 +8,6 @@
   (with-eval-after-load 'eglot
     (add-hook 'solidity-mode-hook 'eglot-ensure)))
 
-(defun my-customer-solidity-eglot-setup ()
-  (setq-local eglot-server-programs
-              '((solidity-mode . ("solc --")))))
-
 (use-package solidity-flycheck
   :after (solidity-mode flycheck))
 

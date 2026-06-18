@@ -1,10 +1,9 @@
 theme = Black Metal (Marduk)
 font-family = "Berkeley Mono"
-font-size = 10.5
+font-size = 14
 
 window-padding-x = 40
 window-padding-y = 20
-window-decoration = false
 window-colorspace = display-p3
 
 confirm-close-surface = false

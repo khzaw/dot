@@ -66,23 +66,6 @@
   :hook (emacs-lisp-mode . aggressive-indent-mode)
   :config (setq aggressive-indent-region-function #'aggressive-indent-indent-defun))
 
-;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=55340
-(defun fix-electric-indent ()
-  "Honour `electric-pair-open-newline-between-pairs'.
-  Member of `post-self-insert-hook' if `electric-pair-mode' is on."
-  (when (and (if (functionp electric-pair-open-newline-between-pairs)
-                 (funcall electric-pair-open-newline-between-pairs)
-               electric-pair-open-newline-between-pairs)
-             (eq last-command-event ?\n)
-             (< (1+ (point-min)) (point) (point-max))
-             (eq (save-excursion
-                   (skip-chars-backward "\t\s")
-                   (char-before (1- (point))))
-                 (matching-paren (char-after))))
-    (save-excursion (newline-and-indent))))
-
-(advice-add 'electric-pair-open-newline-between-pairs-psif :override #'fix-electric-indent)
-
 ;; (advice-add 'indent-region :around
 ;;             (lambda (orig-fun &rest args)
 ;;               (let ((inhibit-message t)) ; Suppress echo area messages
@@ -92,19 +75,40 @@
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :straight (:type built-in)
+  :preface
+  ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=55340
+  (defun khz/fix-electric-indent ()
+    "Honour `electric-pair-open-newline-between-pairs'.
+Member of `post-self-insert-hook' if `electric-pair-mode' is on."
+    (when (and (if (functionp electric-pair-open-newline-between-pairs)
+                   (funcall electric-pair-open-newline-between-pairs)
+                 electric-pair-open-newline-between-pairs)
+               (eq last-command-event ?\n)
+               (< (1+ (point-min)) (point) (point-max))
+               (eq (save-excursion
+                     (skip-chars-backward "\t\s")
+                     (char-before (1- (point))))
+                   (matching-paren (char-after))))
+      (save-excursion (newline-and-indent))))
   ;; :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
   :init
   (setq electric-pair-delete-adjacent-pairs t)
   :hook ((after-init . electric-pair-mode)
          (org-mode . (lambda ()
-                       (setq-local electric-pair-inhibit-predicate
-                                   `(lambda (c)
-                                      (if (char-equal c ?<) t
-                                        (,electric-pair-inhibit-predicate c)))))))
+                       (let ((inhibit-predicate
+                              (if (boundp 'electric-pair-inhibit-predicate)
+                                  electric-pair-inhibit-predicate
+                                #'ignore)))
+                         (setq-local electric-pair-inhibit-predicate
+                                     (lambda (c)
+                                       (if (char-equal c ?<)
+                                           t
+                                         (funcall inhibit-predicate c))))))))
   :config
   ;; https://www.reddit.com/r/emacs/comments/1hwf46n/comment/m63mddk
   ;; This ensures multiple quotes are not added at the beginning or end of a word
   ;; https://github.com/meain/dotfiles/blob/81ecc82265d4b4c59bc742015c6ba7502b30299a/emacs/.config/emacs/init.el#L366C3-L383C83
+  (advice-add 'electric-pair-open-newline-between-pairs-psif :override #'khz/fix-electric-indent)
   (defun khz/electric-pair-conservative-inhibit (char)
     (or
      ;; I find it more often preferable not to pair when the
