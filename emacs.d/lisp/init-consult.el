@@ -594,24 +594,13 @@
     (when (and (not (file-directory-p fzf-native--bin-dir))
                (file-directory-p repo-bin-dir))
       (setq fzf-native--bin-dir repo-bin-dir)))
-  (condition-case err
-      (fzf-native-load-dyn)
-    (error
-     (message "fzf-native disabled: %s" (error-message-string err)))))
+  (fzf-native-load-dyn))
 
-(use-package fzf-async
-  :straight (:type git :host github :repo "jojojames/fzf-async")
+(use-package fzfa
+  :straight (:type git :host github :repo "jojojames/fzfa")
   :after fzf-native
-  :no-require t
   :config
-  (cond
-   ((require 'fzfa nil t)
-    (cond
-     ((fboundp 'fzfa-setup) (fzfa-setup))
-     ((fboundp 'fzfa--ensure-setup) (fzfa--ensure-setup))))
-   ((require 'fzf-async nil t)
-    (when (fboundp 'fzf-async-setup)
-      (fzf-async-setup)))))
+  (fzfa--ensure-setup))
 
 (use-package fussy
   :straight (:type git :host github :repo "jojojames/fussy")
@@ -619,9 +608,6 @@
   (fussy-setup-fzf)
   (fussy-eglot-setup)
   (fussy-company-setup))
-
-(use-package fzfa
-  :straight (:type git :host github :repo "jojojames/fzfa"))
 
 (provide 'init-consult)
 ;;init-consult.el ends here

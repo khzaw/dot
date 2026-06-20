@@ -79,12 +79,12 @@
   (shell-pop-term-shell shell-file-name)
   (shell-pop-window-size 25)
   (shell-pop-autocd-to-working-dir nil)
-  :config (with-eval-after-load 'shell-pop
-            (setopt shell-pop-shell-type '("vterm" "*vterm*"
-                                           (lambda ()
-                                             (when (fboundp 'vterm)
-                                               (let ((vterm-shell shell-pop-term-shell))
-                                                 (vterm))))))))
+  :config
+  (setopt shell-pop-shell-type '("vterm" "*vterm*"
+                                 (lambda ()
+                                   (when (fboundp 'vterm)
+                                     (let ((vterm-shell shell-pop-term-shell))
+                                       (vterm)))))))
 
 (provide 'init-terminal)
 ;;; init-terminal.el ends here
