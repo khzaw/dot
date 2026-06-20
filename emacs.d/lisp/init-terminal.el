@@ -47,7 +47,29 @@
   (setq toggle-term-switch-upon-toggle t))
 
 (use-package ghostel
-  :straight (:type git :host github :repo "dakra/ghostel"))
+  :straight (:type git :host github :repo "dakra/ghostel")
+  :bind (("C-x m" . ghostel)
+         :map ghostel-mode-map
+         ("C-s" . consult-line)
+         ("C-k" . khz/ghostel-send-C-k-and-kill)
+         ("M-p" . (lambda () (interactive) (ghostel-send-key "p" "ctrl")))
+         ("M-n" . (lambda () (interactive) (ghostel-send-key "n" "ctrl"))))
+  :init
+  (with-eval-after-load 'projectile
+    (define-key projectile-command-map (kbd "m") #'ghostel-project)
+    (define-key projectile-command-map (kbd "M") #'ghostel-project-list-buffers))
+  :config
+  (defun khz/ghostel-send-C-k-and-kill ()
+    "Send `C-k' to ghostel. Like normal Emacs `C-k'. Kill to end of line and put content in kill-ring."
+    (interactive)
+    (kill-ring-save (point) (line-end-position))
+    (ghostel-send-key "k" "ctrl"))
+  (add-to-list 'ghostel-eval-cmds '("magit-status-setup-buffer" magit-status-setup-buffer)))
+
+(use-package evil-ghostel
+  :straight nil
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode))
 
 (use-package shell-pop
   :bind ("C-c t s" . shell-pop)
