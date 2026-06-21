@@ -3,7 +3,7 @@
 
 (use-package flymake
   :after evil
-  :straight (flymake :type git :host github :repo "emacs-straight/flymake")
+  :straight (:type built-in)
   :bind
   (:map flymake-mode-map
         ("C-c f c" . flymake-start)

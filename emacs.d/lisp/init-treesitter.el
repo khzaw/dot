@@ -4,7 +4,7 @@
   :straight (:type built-in)
   :init (setq treesit-font-lock-level 4)
   :config
-    ;; --- PERFORMANCE FIX ---
+  ;; --- PERFORMANCE FIX ---
   ;; This cache ensures that checking if a grammar is available is near-instant.
   ;; This neutralizes the lag caused by treesit-auto checking 80+ languages repeatedly.
   (defvar khz/treesit-lang-cache
@@ -51,6 +51,15 @@
   :hook (on-first-file . global-treesit-auto-mode)
   :custom (treesit-auto-install 'prompt)
   :config
+  ;; Emacs' built-in `markdown-ts-mode' requires both grammars.
+  (let ((markdown-inline-recipe (make-treesit-auto-recipe
+                                 :lang 'markdown-inline
+                                 :ts-mode 'markdown-ts-mode
+                                 :url "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                                 :source-dir "tree-sitter-markdown-inline/src")))
+    (add-to-list 'treesit-auto-recipe-list markdown-inline-recipe)
+    (add-to-list 'treesit-auto-langs 'markdown-inline))
+
   ;; Astro recipe
   (let ((astro-recipe (make-treesit-auto-recipe
                        :lang 'astro

@@ -5,17 +5,22 @@
 (use-package eglot
   :straight (eglot :type git :host github :repo "emacs-straight/eglot"
                    :build (:not compile native-compile))
+  :preface
+  (defun khz/eglot-ensure-file-buffer ()
+    "Start Eglot only for buffers backed by real files."
+    (when buffer-file-name
+      (eglot-ensure)))
   :commands (eglot eglot-rename eglot-format-buffer eglot-ensure)
   :hook
-  ((go-mode go-ts-mode) . eglot-ensure)
-  ((css-mode css-ts-mode) . eglot-ensure)
-  ((python-mode python-ts-mode) . eglot-ensure)
-  (markdown-mode . eglot-ensure)
-  ((java-mode java-ts-mode) . eglot-ensure)
-  ((tsx-ts-mode typescript-ts-mode) . eglot-ensure)
-  (tuareg-mode . eglot-ensure)
-  (terraform-mode . eglot-ensure)
-  ((yaml-mode yaml-ts-mode) . eglot-ensure)
+  ((go-mode go-ts-mode) . khz/eglot-ensure-file-buffer)
+  ((css-mode css-ts-mode) . khz/eglot-ensure-file-buffer)
+  ((python-mode python-ts-mode) . khz/eglot-ensure-file-buffer)
+  (markdown-mode . khz/eglot-ensure-file-buffer)
+  ((java-mode java-ts-mode) . khz/eglot-ensure-file-buffer)
+  ((tsx-ts-mode typescript-ts-mode) . khz/eglot-ensure-file-buffer)
+  (tuareg-mode . khz/eglot-ensure-file-buffer)
+  (terraform-mode . khz/eglot-ensure-file-buffer)
+  ((yaml-mode yaml-ts-mode) . khz/eglot-ensure-file-buffer)
   :custom
   (eglot-autoshutdown t)
   (eglot-report-progress nil) ; Prevent minibuffer spams

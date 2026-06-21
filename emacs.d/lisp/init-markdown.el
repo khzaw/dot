@@ -83,7 +83,9 @@
     (khz/markdown-visual-setup)
     (require 'markdown-mode nil t)
     (khz/markdown-ts-sync-faces))
-  :mode (("\\.markdown\\'" . khz/markdown-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . khz/markdown-mode)
          ("\\.mdx\\'" . khz/markdown-mode))
      :bind ((:map markdown-mode-map
           ("C-c v"   . markdown-view-mode)
@@ -168,8 +170,6 @@
 (use-package markdown-ts-mode
   :straight nil
   :commands (markdown-ts-mode markdown-ts-view-mode)
-  :mode (("README\\.md\\'" . markdown-ts-mode)
-         ("\\.md\\'" . markdown-ts-mode))
   :hook (markdown-ts-mode . khz/markdown-ts-setup)
   :bind ((:map markdown-ts-mode-map
           ("C-c v"   . markdown-ts-view-mode)
