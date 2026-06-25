@@ -41,36 +41,28 @@
 
   (add-hook 'enable-theme-functions #'khz/doom-meltbus-minibuffer-match-faces)
 
-  (with-eval-after-load 'orderless
-    (when (memq 'doom-meltbus custom-enabled-themes)
-      (khz/doom-meltbus-minibuffer-match-faces 'doom-meltbus)))
-
-  (with-eval-after-load 'consult
-    (when (memq 'doom-meltbus custom-enabled-themes)
-      (khz/doom-meltbus-minibuffer-match-faces 'doom-meltbus)))
-
   (when (display-graphic-p)
     (setq doom-themes-treemacs-theme "doom-atom")
     (doom-themes-treemacs-config)))
 
-(defvar khz/ivory-themes-directories
-  (mapcar #'expand-file-name
-          '("~/Code/ivory-themes"
-            "~/Code/personal/ivory-themes"))
-  "Candidate local Ivory theme checkouts across machines.")
-
-(defvar khz/ivory-themes-directory
-  (catch 'directory
-    (dolist (directory khz/ivory-themes-directories)
-      (when (file-exists-p (expand-file-name "ivory-themes.el" directory))
-        (throw 'directory directory))))
-  "Local Ivory theme checkout, when present on this machine.")
-
-(when khz/ivory-themes-directory
-  (add-to-list 'load-path khz/ivory-themes-directory)
-  (add-to-list 'custom-theme-load-path khz/ivory-themes-directory))
-
 (use-package ivory-themes
+  :preface
+  (defvar khz/ivory-themes-directories
+    (mapcar #'expand-file-name
+            '("~/Code/ivory-themes"
+              "~/Code/personal/ivory-themes"))
+    "Candidate local Ivory theme checkouts across machines.")
+  (defvar khz/ivory-themes-directory
+    (catch 'directory
+      (dolist (directory khz/ivory-themes-directories)
+        (when (file-exists-p (expand-file-name "ivory-themes.el" directory))
+          (throw 'directory directory))))
+    "Local Ivory theme checkout, when present on this machine.")
+
+  (when khz/ivory-themes-directory
+    (add-to-list 'load-path khz/ivory-themes-directory)
+    (add-to-list 'custom-theme-load-path khz/ivory-themes-directory))
+
   :straight nil
   :if khz/ivory-themes-directory
   :demand t
@@ -150,38 +142,11 @@
   :defer t
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
 
-(use-package catppuccin-theme
-  :straight (:type git :host github :repo "catppuccin/emacs")
-  :defer t
-  :config
-  (defun my-apply-catppuccin-vertico-face (theme)
-    "Apply custom vertico-current background if THEME is 'catppuccin."
-    (when (and (eq theme 'catppuccin) (facep 'vertico-current))
-      (let ((vertico-bg (catppuccin-color 'surface1)))
-        (when vertico-bg ; Ensure the color name exists and returned a value
-          (set-face-attribute 'vertico-current nil :background vertico-bg)))))
+(use-package batppuccin
+  :straight (:type git :host github :repo "bbatsov/batppuccin-emacs")
+  :defer t)
 
-  (defun my-reset-catppuccin-vertico-face (theme)
-    "Reset vertico-current background if THEME being disabled is 'catppuccin."
-    (when (and (eq theme 'catppuccin) (facep 'vertico-current))
-      (set-face-attribute 'vertico-current nil :background nil)))
-
-  (add-hook 'enable-theme-functions #'my-apply-catppuccin-vertico-face)
-  (add-hook 'disable-theme-functions #'my-reset-catppuccin-vertico-face)
-
-  (setq catppuccin-flavor 'mocha)
-  ;; `Overlay0` is too dim AA (3.35:1). `Overlay2` on base is (5.81:1).
-  ;; but `Overlay2` is too bright for a comment.
-  ;; Using `Subtext0` will get AAA, but it too similar to `Text`.
-  (catppuccin-set-color 'overlay0 "#7f849c" 'mocha)
-
-  ;; Catppuccin black.
-  (catppuccin-set-color 'base "#000000" 'mocha)
-  (catppuccin-set-color 'mantle "#000000" 'mocha)
-  (catppuccin-set-color 'crust "#000000" 'mocha)
-
-  ;; (load-theme 'catppuccin t)
-  )
+(use-package tokyo-night :straight (:type git :host github :repo "bbatsov/tokyo-night-emacs") :defer t)
 
 (use-package nothing-theme
   :straight (:type git :host github :repo "jaredgorski/nothing.el")
@@ -203,20 +168,6 @@
   :defer t
   :straight (:type git :host github :repo "ianyepan/acme-emacs-theme")
   :config (setq acme-theme-black-fg t))
-
-(use-package alabaster-themes
-  :disabled t
-  :defer t
-  :straight (:type git :host github :repo "vedang/alabaster-themes")
-  :init
-  (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
-          '(:inherit 'gnus-group-mail-1-empty :weight 'normal)))
-
-(use-package ember-theme
-  :defer t
-  :straight (:type git :host github :repo "ember-theme/emacs" :local-repo "ember-theme")
-  :config (add-to-list 'custom-theme-load-path
-                       (file-name-directory (locate-library "ember-theme"))))
 
 (use-package nordic-night-theme
   :defer t
