@@ -10,8 +10,37 @@
 (use-package vc
   :straight (:type built-in)
   :defer t
+  :custom
+  (vc-follow-symlinks t)
   :config
-  (setq vc-follow-symlinks t))
+  (defun khz/vc-git-reflog ()
+    "Show git reflog in a new buffer with ANSI colors and custom keybindings."
+    (interactive)
+    (let* ((root (vc-root-dir))
+           (buffer (get-buffer-create "*vc-git-reflog*")))
+      (with-current-buffer buffer
+        (setq-local vc-git-reflog-root root)
+        (let ((inhibit-read-only t))
+          (erase-buffer)
+          (vc-git-command buffer nil nil
+                          "reflog"
+                          "--color=always"
+                          "--pretty=format:%C(yellow)%h%Creset %C(auto)%d%Creset %Cgreen%gd%Creset %s %Cblue(%cr)%Creset")
+          (goto-char (point-min))
+          (ansi-color-apply-on-region (point-min) (point-max)))
+
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "/") #'isearch-forward)
+          (define-key map (kbd "p") #'previous-line)
+          (define-key map (kbd "n") #'next-line)
+          (define-key map (kbd "q") #'kill-buffer-and-window)
+          (use-local-map map))
+
+        (setq buffer-read-only t)
+        (setq mode-name "Git-Reflog")
+        (setq major-mode 'special-mode))
+      (pop-to-buffer buffer)))
+  (global-set-key (kbd "C-x v R") 'khz/vc-git-reflog))
 
 (use-package vc-git
   :after vc
@@ -221,7 +250,7 @@
     (interactive)
     (browse-url
      (let
-         ((rev (magit-rev-abbrev "HEAD"))
+         ((rev (magit-rev-hash "HEAD"))
           (repo (forge-get-repository 'stub))
           (file (magit-file-relative-name buffer-file-name))
           (highlight
