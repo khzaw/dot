@@ -84,7 +84,7 @@
     (require 'markdown-mode nil t)
     (khz/markdown-ts-sync-faces))
   :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . khz/markdown-mode)
          ("\\.markdown\\'" . khz/markdown-mode)
          ("\\.mdx\\'" . khz/markdown-mode))
      :bind ((:map markdown-mode-map

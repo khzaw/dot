@@ -102,8 +102,8 @@
              :default-height 130
              :default-family "Berkeley Mono"
              :fixed-pitch-family "Berkeley Mono"
-             :variable-pitch-family "IBM Plex Sans"
-             :variable-pitch-height 1.0)
+             :variable-pitch-family "Inter"
+             :variable-pitch-height 1.2)
             (writing
              :default-height 180
              :default-family "Berkeley Mono"
@@ -117,7 +117,7 @@
              :default-height 150
              :default-family "Berkeley Mono"
              :fixed-pitch-family "Berkeley Mono"
-             :variable-pitch-family "IBM Plex Sans"
+             :variable-pitch-family "Inter"
              :variable-pitch-height 1.0)
             (presentation
              :default-height 200
