@@ -185,6 +185,7 @@ and CONFIG is the configuration plist for that server.")
 
   (add-hook 'eglot-managed-mode-hook #'khz/update-eglot-workspace-config)
   (add-hook 'eglot-managed-mode-hook #'khz/eglot-eldoc-settings)
+  (add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
 
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
