@@ -53,7 +53,7 @@
   (evil-escape-mode))
 
 (use-package evil-collection
-  :after (evil magit)
+  :after evil
   :config
   (evil-collection-define-key 'normal 'emacs-lisp-mode-map "K" 'helpful-at-point)
   ;; (setq evil-collection-outline-bind-tab-p t) ;; enable <tab>-based bindings in Outline mode.

@@ -68,6 +68,9 @@
   :straight (python-mode :type git
                          :host gitlab
                          :repo "python-mode-devs/python-mode")
+  :demand t
+  :hook
+  ((python-mode python-ts-mode) . py-electric-backspace-mode)
   :config
   (setq py-indent-offset 4)
   (setq python-indent-offset 4)
