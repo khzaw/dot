@@ -11,3 +11,7 @@ macos-titlebar-style = tabs
 mouse-hide-while-typing = true
 adjust-cursor-thickness = 300%
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
+
+# Per-machine settings (ignored by Git). Loaded last so they can override
+# shared values such as font-size without making the dotfiles diverge.
+config-file = ?config.local
