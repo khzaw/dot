@@ -71,7 +71,8 @@ emacs.d/emojis
 
 nov-places
 
-zshenv.local
+# Local zsh configuration and secrets (including backup copies)
+zshenv.local*
 
 emacs.d/elfeed/index
 emacs.d/forge-database*
