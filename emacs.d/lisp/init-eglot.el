@@ -210,7 +210,17 @@ and CONFIG is the configuration plist for that server.")
   :straight (:type git :host github :repo "jdtsmith/eglot-booster")
   :if (executable-find "emacs-lsp-booster")
   :after eglot
-  :config (eglot-booster-mode))
+  :preface
+  (defun khz/eglot-booster-runnable-p ()
+    "Return non-nil when the installed Eglot booster can run."
+    (let ((booster (executable-find "emacs-lsp-booster")))
+      (and booster
+           (condition-case nil
+               (zerop (call-process booster nil nil nil "--help"))
+             (file-error nil)))))
+  :config
+  (when (khz/eglot-booster-runnable-p)
+    (eglot-booster-mode)))
 
 ;; Get hierarchy
 (use-package eglot-hierarchy
