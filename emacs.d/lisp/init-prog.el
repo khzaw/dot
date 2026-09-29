@@ -66,6 +66,7 @@
     (kirigami-global-mode 1)))
 
 (use-package protobuf-mode
+  :defer t
   :hook (protobuf-mode . (lambda ()
                            (setq imenu-generic-expression
                                  '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
@@ -135,7 +136,8 @@
             eos))
 
 (use-package mermaid-mode
-  :if (executable-find "mmdc"))
+  :if (executable-find "mmdc")
+  :defer t)
 
 (use-package makefile-executor
   :disabled t
@@ -193,11 +195,13 @@
 
 (use-package graphviz-dot-mode
   :straight (:type git :host github :repo "ppareit/graphviz-dot-mode")
+  :defer t
   :config
   (setq graphviz-dot-indent-width 2))
 
 (use-package promql-mode
-  :straight (:type git :host github :repo "Andor/promql-mode"))
+  :straight (:type git :host github :repo "Andor/promql-mode")
+  :defer t)
 
 (use-package dotenv-mode
   :mode "\\.env\\(\\..*\\)?\\'")
@@ -255,7 +259,8 @@
   :mode "\\.zig\\'")
 
 (use-package scala-ts-mode
-  :straight (scala-ts-mode :type git :host github :repo "KaranAhlawat/scala-ts-mode"))
+  :straight (scala-ts-mode :type git :host github :repo "KaranAhlawat/scala-ts-mode")
+  :defer t)
 
 (use-package sbt-mode
   :commands (sbt-start sbt-command)
@@ -268,11 +273,13 @@
   (setq sbt:program-options '("-Dsbt.supershell=false")))
 
 (use-package structurizr-mode
-  :straight (:type git :host github :repo "gilesp/structurizr-mode"))
+  :straight (:type git :host github :repo "gilesp/structurizr-mode")
+  :mode "\\.dsl\\'")
 
 (use-package d2-mode
   :if (executable-find "d2")
   :straight (:type git :host github :repo "andorsk/d2-mode")
+  :defer t
   ;; :mode "\\.d2\\'"
   :config
   (setq d2-output-format ".png")
@@ -283,6 +290,7 @@
   :mode "\\.d2\\'")
 
 (use-package kdl-mode
+  :defer t
   :hook (kdl-mode . (lambda ()
                       (setq tab-width 4)
                       (setq indent-tabs-mode nil))))
@@ -294,7 +302,9 @@
 
 (use-package applescript-mode :mode "\\.applescript$")
 
-(use-package adoc-mode :straight (:type git :host github :repo "bbatsov/adoc-mode"))
+(use-package adoc-mode
+  :straight (:type git :host github :repo "bbatsov/adoc-mode")
+  :defer t)
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

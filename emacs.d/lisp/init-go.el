@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package go-mode
+  :defer t
   :config (setq gofmt-command "gofumpt"))
 
 (use-package go-ts-mode

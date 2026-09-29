@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 (use-package web-mode
+  :defer t
   :config
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
@@ -21,6 +22,7 @@
   (add-to-list 'eglot-server-programs '(astro-ts-mode . (eglot-astro "astro-ls" "--stdio"))))
 
 (use-package css-mode
+  :defer t
   :init (setq css-indent-offset 2))
 
 (use-package json-ts-mode
@@ -40,6 +42,7 @@
   :hook ((js-mode js2-mode rjsx-mode tsx-ts-mode typescript-ts-mode web-mode) . prettier-js-mode))
 
 (use-package js2-mode
+  :defer t
   :init (setq js-indent-level 2))
 (add-to-list 'auto-mode-alist '("\\.[cm]js\\'" . js2-mode))
 
