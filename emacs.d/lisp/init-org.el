@@ -597,6 +597,25 @@
 (use-package org-autolist
   :hook (org-mode . org-autolist-mode))
 
+(use-package org-mindmap
+  :straight (:type git :host github :repo "krvkir/org-mindmap")
+  :after org
+  :hook (org-mode . org-mindmap-mode)
+  :bind
+  (:map org-mindmap-mode-map
+        ("C-c m c" . org-mindmap-insert-child)
+        ("C-c m s" . org-mindmap-insert-sibling)
+        ("C-c m d" . org-mindmap-delete-node)
+        ("C-c m v" . org-mindmap-switch-layout)
+        ("C-c m p" . org-mindmap-switch-compaction)
+        ("C-c m m" . org-mindmap-list-to-mindmap)
+        ("C-c m l" . org-mindmap-to-list))
+  :config
+  ;; Keep `m' available for Mermaid source blocks.
+  (setq org-structure-template-alist
+        (delete '("m" . "mindmap") org-structure-template-alist))
+  (add-to-list 'org-structure-template-alist '("M" . "mindmap")))
+
 (use-package denote
   :custom
   (denote-directory (file-name-as-directory (file-truename "~/Dropbox/notes/denote")))
