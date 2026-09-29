@@ -72,10 +72,9 @@
   :hook
   ((python-mode python-ts-mode) . py-electric-backspace-mode)
   :config
-  (setq py-indent-offset 4)
-  (setq python-indent-offset 4)
-  ;; Remove guess indent python message
-  ;; (setq python-indent-guess-indent-offset-verbose nil)
+  (setq py-indent-offset 4
+        python-indent-offset 4
+        python-indent-guess-indent-offset nil)
   (when (executable-find "ipython")
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--simple-prompt -i"))

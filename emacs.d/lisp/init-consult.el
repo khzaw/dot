@@ -3,6 +3,11 @@
 (use-package consult
   :straight (:type git :host github :repo "minad/consult")
   :after projectile
+  :custom
+  ;; Faster async search feedback, at the cost of more frequent process/UI work.
+  (consult-async-input-debounce 0.05)
+  (consult-async-input-throttle 0.1)
+  (consult-async-refresh-delay 0.05)
   :preface
   (defun khz/consult-down-from-outside ()
     "Move to next candidate in minibuffer, even when minibuffer is not selected."

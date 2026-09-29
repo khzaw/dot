@@ -15,9 +15,6 @@
 (use-package emojify
   :commands (emojify-mode global-emojify-mode emojify-insert-emoji))
 
-(use-package calibredb
-  :commands (calibredb calibredb-find-file))
-
 (use-package bookmark-plus
   :straight (bookmark-plus :type git :host github :repo "emacsmirror/bookmark-plus")
   :defer 3
