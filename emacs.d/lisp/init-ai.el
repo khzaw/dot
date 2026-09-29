@@ -76,31 +76,60 @@ Follow good Git style:
 (use-package agent-shell
   :straight (:type git :host github :repo "xenodium/agent-shell" :files ("*.el"))
   :commands (agent-shell)
+  :custom
+  (agent-shell-file-completion-enabled t)
+  (agent-shell-show-welcome-message nil)
+  ;; Offer every configured agent, with Codex preselected rather than forced.
+  (agent-shell-preferred-agent-config '(preselect . codex))
+  (agent-shell-session-strategy 'prompt)
+  ;; ~/.bin/codex-acp is older than the Codex CLI/config.  Resolve the
+  ;; mise-managed adapter explicitly rather than whichever PATH finds first.
+  (agent-shell-openai-codex-acp-command
+   '("mise" "exec" "npm:@agentclientprotocol/codex-acp" "--" "codex-acp"))
   :preface
   (defun khz/agent-shell-project-root (dir)
     "Run agent-shell in DIR."
     (interactive "D")
     (let ((default-directory dir))
       (call-interactively #'agent-shell)))
-  :init
-  (setq agent-shell-file-completion-enabled t)
-  (setq agent-shell-show-welcome-message nil)
   :config
-  (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
-  (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'comint-send-input)
+  ;; Native ACP backends: keep the picker focused on the agents we use.
+  ;; Requires agent-shell with its built-in agent-shell-xai backend.
+  (setq agent-shell-agent-configs
+        (list (agent-shell-openai-make-codex-config)
+              (agent-shell-pi-make-agent-config)
+              (agent-shell-opencode-make-agent-config)
+              (agent-shell-anthropic-make-claude-code-config)
+              (agent-shell-xai-make-grok-config)))
 
-  ;; Start *agent-shell-diff* buffers to start in Emacs state
-  (add-hook 'diff-mode-hook
-            (lambda ()
-              (when (string-match-p "\\*agent-shell-diff\\*" (buffer-name))
-                (evil-emacs-state))))
-
+  ;; Reuse CLI logins: Codex's ChatGPT subscription, OpenCode's provider
+  ;; setup, and Claude's login (requires an eligible plan/account).
+  ;; Pi and Grok use their own CLI credentials without an Emacs API key.
   (setq agent-shell-openai-authentication
-        (agent-shell-openai-make-authentication :login t))
+        (agent-shell-openai-make-authentication :login t)
+        agent-shell-opencode-authentication
+        (agent-shell-opencode-make-authentication :none t)
+        agent-shell-anthropic-authentication
+        (agent-shell-anthropic-make-authentication :login t))
 
-  ;; env vars for codex/openai subprocesses
-  (setq agent-shell-openai-codex-environment
-        (agent-shell-make-environment-variables :inherit-env t))
+  ;; acp.el inherits the environment at process launch.  Do not snapshot it:
+  ;; this preserves current PATH/mise and buffer-local envrc environments.
+  ;; Keep Codex on subscription auth even if a CODEX_API_KEY is inherited.
+  (setq agent-shell-openai-codex-environment '("CODEX_API_KEY="))
+
+  ;; Install missing adapters with mise (not npm -g):
+  ;; mise use -g npm:pi-acp npm:@agentclientprotocol/claude-agent-acp
+  ;; mise use -g npm:@agentclientprotocol/codex-acp
+  ;; OpenCode and Grok already speak ACP via `opencode acp' / `grok agent stdio'.
+  ;; pi-acp spawns the installed `pi --mode rpc', reusing its settings/skills.
+  ;; TUI-only extensions and extension slash commands may need the Pi UI.
+
+  ;; Keep multiline insert-state editing, but use the native submit command
+  ;; so queuing/steering works instead of bypassing it via comint-send-input.
+  (with-eval-after-load 'evil
+    (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'agent-shell-submit)
+    (evil-set-initial-state 'agent-shell-diff-mode 'emacs))
 
   (with-eval-after-load 'embark
     (define-key embark-file-map (kbd "a") #'khz/agent-shell-project-root)))
