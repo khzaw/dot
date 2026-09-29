@@ -68,6 +68,10 @@
 
   (defun khz/eglot-eldoc-settings ()
     (setq-local eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+
+    ;; eglot already provides python documentation
+    (remove-hook 'eldoc-documentation-functions #'python-eldoc-function t)
+
     ;; make sure flymake-eldoc-function is present and first in the list
     (setq-local eldoc-documentation-functions
                 (cons #'flymake-eldoc-function
