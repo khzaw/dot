@@ -183,5 +183,9 @@
   :defer t
   :straight (:type git :host github :repo "LionyxML/kusanagi-theme"))
 
+(use-package turbo-c-theme
+  :defer t
+  :straight (:type git :host github :repo "Senka07/turboc-emacs-theme"))
+
 (provide 'init-themes)
 ;; init-themes.el ends here
