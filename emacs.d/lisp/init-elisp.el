@@ -23,6 +23,7 @@ for file-backed buffers, and silently skip Paredit elsewhere."
 
 (use-package lispy
   :straight (:type git :host github :repo "abo-abo/lispy")
+  :commands lispy-mode
   :init (setq lispy-close-quotes-at-end-p t)
   :config
   ;; prevents lispy from hijacking standard evil keys (hjkl) in normal mode

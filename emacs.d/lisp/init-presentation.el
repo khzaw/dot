@@ -44,8 +44,12 @@
   (org-present-hide-stars-in-headings nil))
 
 (use-package dslide
-    :straight (dslide :type git :host github
-                      :repo "positron-solutions/dslide"))
+  :straight (dslide :type git :host github
+                    :repo "positron-solutions/dslide")
+  :commands (dslide-mode
+             dslide-deck-start
+             dslide-deck-develop
+             dslide-deck-present))
 
 (use-package epresent
   :commands epresent-run

@@ -206,7 +206,30 @@
   :defer t)
 
 (use-package anki-editor
-  :straight (:type git :host github :repo "anki-editor/anki-editor"))
+  :straight (:type git :host github :repo "anki-editor/anki-editor")
+  :commands (anki-editor-mode
+             anki-editor-push-notes
+             anki-editor-push-note-at-point
+             anki-editor-push-new-notes
+             anki-editor-retry-failed-notes
+             anki-editor-force-push-notes
+             anki-editor-delete-note-at-point
+             anki-editor-insert-note
+             anki-editor-insert-default-note
+             anki-editor-set-note-type
+             anki-editor-set-deck
+             anki-editor-set-default-note-type
+             anki-editor-cloze-region
+             anki-editor-cloze-dwim
+             anki-editor-export-subtree-to-html
+             anki-editor-convert-region-to-html
+             anki-editor-api-check
+             anki-editor-sync-collection
+             anki-editor-gui-browse
+             anki-editor-gui-add-cards
+             anki-editor-find-notes
+             anki-editor-copy-styles
+             anki-editor-remove-styles))
 
 ;; Code coverage in buffer
 (use-package coverlay

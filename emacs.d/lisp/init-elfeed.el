@@ -28,15 +28,19 @@
   (elfeed-show-entry-switch 'display-buffer))
 
 (use-package elfeed-org
+  :after elfeed
   :custom
   (rmh-elfeed-org-files (list (expand-file-name "elfeed.org" user-emacs-directory)))
   :config
   (elfeed-org))
 
 (use-package elfeed-goodies
+  :after elfeed
   :config (elfeed-goodies/setup))
 
 (use-package elfeed-webkit
+  :after elfeed
+  :demand t
   :bind (:map elfeed-show-mode-map
               ("%" . elfeed-webkit-toggle))
   :config (elfeed-webkit-auto-toggle-by-tag))

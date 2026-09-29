@@ -333,7 +333,7 @@
 
   (use-package org-roam
     :straight (org-roam :type git :host github :repo "org-roam/org-roam"
-                        :files (:defaults "extensions/*"))
+                        :files (:defaults "extensions/*" "org-roam-pkg.el"))
     :init
     (setq org-roam-directory (file-truename org-directory))
     (setq org-roam-dailies-directory "daily/")
@@ -402,7 +402,7 @@
   :hook (org-mode . quickroam-enable-cache))
 
 (use-package evil-org
-  :after (evil)
+  :after (evil org)
   :hook (org-mode . (lambda () (evil-org-mode)))
   :config
   (require 'evil-org-agenda)
@@ -536,6 +536,7 @@
 
 (use-package org-modern-indent
   :straight (:type git :host github :repo "jdtsmith/org-modern-indent")
+  :after org
   :config (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 
@@ -630,6 +631,7 @@
 
 (use-package ox
   :straight (:type built-in)
+  :after org
   :config
   (add-to-list 'org-latex-packages-alist '("" "listings"))
   (setq org-export-with-smart-quotes t
@@ -650,6 +652,7 @@
   :after org)
 
 (use-package org-ref
+  :after org
   :config
   (setq bibtex-autokey-year-length 4
         bibtex-autokey-name-year-separator "-"
@@ -797,7 +800,8 @@
   :defer t)
 
 (use-package org-transclusion-blocks
-  :straight (:type git :host github :repo "gggion/org-transclusion-blocks"))
+  :straight (:type git :host github :repo "gggion/org-transclusion-blocks")
+  :after org-transclusion)
 
 (use-package verb :after org
   :config

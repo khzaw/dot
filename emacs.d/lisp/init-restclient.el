@@ -32,6 +32,13 @@
 (use-package impostman
   :straight (:type git :host github :repo "flashcode/impostman"))
 
-(use-package swagg :straight (:host github :repo "isamert/swagg.el"))
+(use-package swagg
+  :straight (:host github :repo "isamert/swagg.el")
+  :commands (swagg-request
+             swagg-request-with-rest-block
+             swagg-request-with-rest-src-block
+             swagg-request-with-fetch
+             swagg-invalidate-cache
+             swagg-display-headers))
 
 (provide 'init-restclient)
