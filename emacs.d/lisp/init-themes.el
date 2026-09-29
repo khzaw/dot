@@ -187,5 +187,9 @@
   :defer t
   :straight (:type git :host github :repo "Senka07/turboc-emacs-theme"))
 
+(use-package ember-theme
+  :defer t
+  :straight (:type git :host github :repo "ember-theme/emacs"))
+
 (provide 'init-themes)
 ;; init-themes.el ends here

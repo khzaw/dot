@@ -22,36 +22,12 @@
 ;; Stop creating .# files
 (setq create-lockfiles nil)
 
-(setq inhibit-compacting-font-caches t)
-
-;; No startup message and screen
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message t)
-
-;; No message in scratch buffer
-(setq initial-scratch-message nil)
-
 ;; Initial buffer
 (setq initial-buffer-choice nil)
-
-;; No frame title
-(setq frame-title-format nil)
-
-(setq frame-resize-pixelwise t)
-
-;; Prevent any attempts to resize the frame.
-(setq frame-inhibit-implied-resize t)
-
-;; No file dialog
-(setq use-file-dialog nil)
 
 ;; No bell
 (setq visible-bell 1)
 (setq ring-bell-function 'ignore)
-
-;; No dialog box
-(setq use-dialog-box nil)
 
 ;; No popup windows
 (setq pop-up-windows nil)
@@ -93,19 +69,8 @@
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
-;; No scroll bars
-(scroll-bar-mode 0)
-
-;; No toolbar
-(tool-bar-mode 0)
-
 (if (eq window-system 'pgtk)
     (add-to-list 'default-frame-alist '(undecorated . t)))
-
-;; No menu bar
-(if (display-graphic-p)
-    (menu-bar-mode t) ;; When nil, focus problem on OSX
-  (menu-bar-mode -1))
 
 ;; Navigate windows using shift+direction
 (windmove-default-keybindings)
@@ -113,15 +78,6 @@
 ;; Enable indentation + completion using the TAB key
 ;; `completion-at-point' is often bound to M-TAB.
 (setq tab-always-indent 'complete)
-
-;; Better scrolling
-(setq scroll-margin 10
-      scroll-step 1
-      next-line-add-newlines nil
-      scroll-conservatively 10000
-      scroll-preserve-screen-position t
-      auto-window-vscroll nil)
-
 
 (blink-cursor-mode t)
 ;; blinks cursor forever
@@ -175,7 +131,6 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(set-language-environment   "UTF-8")
 
 
 ;; Unique buffer names
@@ -214,9 +169,12 @@
   :straight (:type git :host gitlab :repo "ajgrf/on.el"))
 
 (use-package benchmark-init
-  ;; Activation happens in early-init.el so we capture the full init cost.
-  ;; Here we only stop collection once init is finished.
-  :hook (emacs-startup . benchmark-init/deactivate))
+  :commands (benchmark-init/show-durations-tree
+             benchmark-init/show-durations-tabulated)
+  :init
+  ;; Activation happens in early-init.el only when explicitly requested.
+  (when (featurep 'benchmark-init)
+    (add-hook 'emacs-startup-hook #'benchmark-init/deactivate)))
 
 (use-package restart-emacs)
 

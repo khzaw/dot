@@ -1,7 +1,10 @@
 ;;; -*- lexical-binding: t; -*-
 
 ;; setup straight.el
-(setq straight-repository-branch "develop")
+(setq straight-repository-branch "develop"
+      ;; Avoid scanning every package repository during startup. Edits made in
+      ;; Emacs are tracked on save; explicit checks still do a full scan.
+      straight-check-for-modifications '(check-on-save find-when-checking))
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -18,7 +21,9 @@
 (straight-use-package 'use-package)
 (eval-when-compile
   (require 'use-package))
-(setq straight-use-package-by-default t)
+(setq straight-use-package-by-default t
+      ;; Keep macro expansion lean without changing package load policy.
+      use-package-expand-minimally t)
 ;; https://github.com/radian-software/straight.el/issues/1146
 (setq straight-built-in-pseudo-packages
   (append straight-built-in-pseudo-packages '(project xref)))

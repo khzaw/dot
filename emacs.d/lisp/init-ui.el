@@ -8,12 +8,6 @@
 
 ;; (toggle-frame-maximized)
 
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(vertical-scroll-bars . nil) default-frame-alist)
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-
 (tool-bar-mode 0)
 (tooltip-mode 0)
 (menu-bar-mode 0)
@@ -65,13 +59,6 @@
       :hook (global-linum-mode . hlinum-activate)
       :init (setq linum-highlight-in-all-buffersp t))))
 
-;; Suppress GUI features
-(setq use-file-dialog nil
-      use-dialog-box nil
-      inhibit-startup-screen t
-      inhibit-startup-echo-area-message user-login-name
-      inhibit-default-init t)
-
 ;; Easily adjust the font size in all frames
 (use-package default-text-scale
   :commands default-text-scale-mode
@@ -85,7 +72,8 @@
         mouse-wheel-progressive-speed nil))
 (setq scroll-step 1
       scroll-margin 0
-      scroll-conservatively 100000
+      next-line-add-newlines nil
+      scroll-conservatively 101
       auto-window-vscroll nil
       scroll-preserve-screen-position t)
 
@@ -177,15 +165,8 @@
   (window-divider-default-places 'right-only)
   (window-divider-mode t)
   :config
-  (setq-default default-frame-alist
-                (append (list
-                         ;; '(internal-border-width . 10)
-                         '(tool-bar-lines . 0)
-                         '(menu-bar-lines . 0)
-                         '(vertical-scroll-bars . nil))))
   (add-hook 'enable-theme-functions #'khz/adjust-alpha-for-theme)
-  (setq-default window-resize-pixelwise t)
-  (setq-default frame-resize-pixelwise t))
+  (setq-default window-resize-pixelwise t))
 
 ;; Make sure new frames use window-divider
 (add-hook 'before-make-frame-hook 'window-divider-mode)

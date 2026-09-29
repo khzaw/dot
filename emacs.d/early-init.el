@@ -24,26 +24,16 @@
 
 ;; Package initialization is handled by straight.el (see init-package.el).
 
-;; Inhibit resizing frame
-(setq frame-inhibit-implied-resize t)
-
 ;; Set default coding system
 (set-language-environment "UTF-8")
-
-;; Faster to disable these here (before they've been initialized)
-;; (push '(menu-bar-lines . 0) default-frame-alist)
-;; (push '(tool-bar-lines . 0) default-frame-alist)
-;; (push '(vertical-scroll-bars) default-frame-alist)
-;; (when (featurep 'ns)
-;;   (push '(ns-transparent-titlebar . t) default-frame-alist))
-
 
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (setq default-frame-alist
       '((vertical-scroll-bars . nil)
         (menu-bar-lines . 0)
         (tool-bar-lines . 0)
-        (ns-transparent-titlebar . t)))
+        (ns-transparent-titlebar . t)
+        (ns-appearance . dark)))
 
 (dolist (var '(default-frame-alist initial-frame-alist))
   (add-to-list var '(right-divider-width . 20))
@@ -67,7 +57,7 @@
 (setopt frame-inhibit-implied-resize t
         frame-resize-pixelwise t
         ;; HACK: Don't show size info (or anything else) in frame title
-        frame-title-format "\n"
+        frame-title-format nil
         ;; Disable start-up screen
         inhibit-startup-screen t
         inhibit-startup-message t
@@ -75,7 +65,11 @@
         ;; We'll provide our own splash screen, thanks
         inhibit-splash-screen t
         ;; No message in initial scratch buffer
-        initial-scratch-message nil)
+        initial-scratch-message nil
+        ;; Suppress GUI prompts and the site-wide default init file.
+        use-file-dialog nil
+        use-dialog-box nil
+        inhibit-default-init t)
 
 ;; And set these to nil so users don't have to toggle the modes twice to
 ;; reactivate them.
@@ -107,16 +101,15 @@
 ;; `inhibit-startup-screen', it would still initialize anyway.
 (advice-add #'display-startup-screen :override #'ignore)
 
-;; Start benchmarking as early as possible so we capture the full init cost
-;; (package bootstrap, exec-path-from-shell, theme loads, etc.). The package
-;; itself is installed via straight in init-basics.el; here we just load it
-;; directly from its straight build directory and activate.
-(let ((benchmark-init-dir
-       (expand-file-name "straight/build/benchmark-init" user-emacs-directory)))
-  (when (file-directory-p benchmark-init-dir)
-    (add-to-list 'load-path benchmark-init-dir)
-    (require 'benchmark-init)
-    (benchmark-init/activate)))
+;; Opt in to startup profiling with `EMACS_BENCHMARK_INIT=1 emacs'. Keeping
+;; the profiler out of normal launches avoids paying its instrumentation cost.
+(when (getenv "EMACS_BENCHMARK_INIT")
+  (let ((benchmark-init-dir
+         (expand-file-name "straight/build/benchmark-init" user-emacs-directory)))
+    (when (file-directory-p benchmark-init-dir)
+      (add-to-list 'load-path benchmark-init-dir)
+      (require 'benchmark-init)
+      (benchmark-init/activate))))
 
 
 ;;; early-init.el ends here
