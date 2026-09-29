@@ -278,6 +278,7 @@
          ("<left>" . image-previous-file)))
 
 (use-package man
+  :commands man
   :custom (Man-notify-method 'friendly))
 
 (setq eldoc-idle-delay 1.0)

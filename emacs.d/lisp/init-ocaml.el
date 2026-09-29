@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package tuareg
+  :defer t
   :config
   (setq tuareg-indent-align-with-first-arg t)
   (setq tuareg-match-patterns-aligned t)
@@ -18,11 +19,12 @@
 
 (use-package dune
   :straight (:type git :host github :repo "ocaml/dune" :depth 1 :files ("editor-integration/emacs/*.el"))
-  :when (executable-find "dune"))
+  :when (executable-find "dune")
+  :defer t)
 
 (use-package merlin
-  :config
-  (add-hook 'tuareg-mode-hook #'merlin-mode))
+  :commands merlin-mode
+  :hook (tuareg-mode . merlin-mode))
 
 (use-package merlin-eldoc
   :hook (tuareg-mode . merlin-eldoc-setup))
@@ -38,9 +40,10 @@
 
 (use-package utop
   :when (executable-find "opam")
+  :commands (utop utop-minor-mode)
   :config
   (setq utop-command "opam exec -- utop -emacs")
-  :hook ((turaeg-mode) . utop-minor-mode))
+  :hook (tuareg-mode . utop-minor-mode))
 
 (use-package ocamlformat
   :after tuareg

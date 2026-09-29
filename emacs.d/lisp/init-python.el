@@ -56,19 +56,32 @@
   :commands (python-pytest-dispatch python-pytest-file python-pytest-function))
 
 (use-package python-black
-  :if (executable-find "black"))
+  :if (executable-find "black")
+  :commands (python-black-buffer
+             python-black-region
+             python-black-on-save-mode))
 
 (use-package python-isort
-  :if (executable-find "isort"))
+  :if (executable-find "isort")
+  :commands (python-isort-buffer
+             python-isort-region
+             python-isort-on-save-mode))
 
 (use-package ruff-format
-  :if (executable-find "ruff"))
+  :if (executable-find "ruff")
+  :commands (ruff-format-buffer
+             ruff-format-region
+             ruff-format-on-save-mode))
 
 (use-package python-mode
   :straight (python-mode :type git
                          :host gitlab
                          :repo "python-mode-devs/python-mode")
-  :demand t
+  :commands python-mode
+  :mode (("\\.py\\'" . python-mode)
+         ("\\.pyi\\'" . python-mode)
+         ("\\.pyx\\'" . python-mode)
+         ("\\.pxd\\'" . python-mode))
   :hook
   ((python-mode python-ts-mode) . py-electric-backspace-mode)
   :config
@@ -119,7 +132,8 @@
 
 (use-package pet
   :straight (:host github :repo "wyuenho/emacs-pet")
-  :config
+  :commands pet-mode
+  :preface
   (defun khz/python-pet-setup ()
     "Configure Python tooling from the active PET environment."
     (setq-local python-shell-interpreter (pet-executable-find "ipython")
@@ -151,15 +165,18 @@
     (when-let ((isort-executable (pet-executable-find "isort")))
       (setq-local python-isort-command isort-executable)
       (python-isort-on-save-mode)))
-
+  :init
   (add-hook 'python-base-mode-hook 'pet-mode -10)
   (add-hook 'python-base-mode-hook 'khz/python-pet-setup))
 
 (use-package tomlparse
-  :straight (:type git :host github :repo "johannes-mueller/tomlparse.el"))
+  :straight (:type git :host github :repo "johannes-mueller/tomlparse.el")
+  :defer t)
 
 (use-package uv
-  :straight (uv :type git :host github :repo "johannes-mueller/uv.el"))
+  :straight (uv :type git :host github :repo "johannes-mueller/uv.el")
+  :commands (uv uv-init uv-venv uv-add uv-remove uv-sync uv-run uv-tool-run
+                uv-lock uv-activate-venv uv-deactivate-venv))
 
 (provide 'init-python)
 ;; init-python.el ends here
