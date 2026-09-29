@@ -5,6 +5,15 @@
   (defun khz/nov-font-setup()
     (face-remap-add-relative 'variable-pitch :family "Vollkorn" :height 1.2)))
 
+;; TextUI is required by epub-reader and is not in a package archive yet.
+(use-package textui
+  :straight (:type git :host github :repo "yibie/textui")
+  :defer t)
+
+(use-package epub-reader
+  :straight (:type git :host github :repo "yibie/epub-reader")
+  :commands (epub-reader-open))
+
 (use-package nov-xwidget
   :straight (:type git :host github :repo "chenyanming/nov-xwidget")
   :after nov
