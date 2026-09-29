@@ -173,5 +173,15 @@
   :defer t
   :straight (:type git :host codeberg :repo "ashton314/nordic-night" :branch "main"))
 
+(use-package vulkanite-theme
+  :defer t
+  :straight (:type git :host github :repo "Meskour/vulkanite-theme-emacs")
+  :custom
+  (vulkanite-theme-keyword-italic nil))
+
+(use-package kusanagi-theme
+  :defer t
+  :straight (:type git :host github :repo "LionyxML/kusanagi-theme"))
+
 (provide 'init-themes)
 ;; init-themes.el ends here
