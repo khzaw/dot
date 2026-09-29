@@ -12,6 +12,10 @@
         '("PATH"
           "MANPATH"
           "GOPATH"
+          "OPAM_LAST_ENV"
+          "OPAM_SWITCH_PREFIX"
+          "CAML_LD_LIBRARY_PATH"
+          "OCAML_TOPLEVEL_PATH"
           ;; Make Emacs-launched agents and subprocesses use the same GitHub
           ;; credentials as login shells.
           "GITHUB_TOKEN"
