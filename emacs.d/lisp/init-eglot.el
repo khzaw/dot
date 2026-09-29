@@ -344,6 +344,7 @@ of `flymake-eslint-executable-name.'"
 
 (use-package eglot-inactive-regions
   :straight (:type git :host github :repo "fargiolas/eglot-inactive-regions")
+  :after eglot
   :custom
   (eglot-inactive-regions-style 'darken-foreground)
   (eglot-inactive-regions-opacity 0.4)
