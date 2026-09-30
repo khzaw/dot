@@ -139,6 +139,12 @@
 
 (use-package treesit-jump
   :straight (:host github :repo "dmille56/treesit-jump" :files ("*.el" "treesit-queries"))
+  :commands (treesit-jump-transient
+             treesit-jump-jump
+             treesit-jump-select
+             treesit-jump-delete
+             treesit-jump-gptel-describe
+             treesit-jump-parent-jump)
   :config
   ;; Optional: add some queries to filter out of results (since they can be too cluttered sometimes)
   (setq treesit-jump-queries-filter-list '("inner" "test" "param")))
