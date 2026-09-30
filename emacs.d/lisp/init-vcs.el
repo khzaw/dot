@@ -148,9 +148,33 @@
 
 (use-package git-commit
   :straight nil
-  :config
-  (setq git-commit-style-convention-checks '(overlong-summary-line non-empty-second-line))
-  (global-git-commit-mode))
+  :defer t
+  :preface
+  (defconst khz/git-commit-filename-regexp
+    (rx "/"
+        (or (seq (or (seq (or "COMMIT" "NOTES" "PULLREQ" "MERGEREQ" "TAG")
+                          "_EDIT")
+                    "MERGE_"
+                    "")
+                "MSG")
+            (seq (or "BRANCH" "EDIT") "_DESCRIPTION"))
+        string-end)
+    "File names which should activate `git-commit'.")
+
+  (defun khz/git-commit-load-for-message ()
+    "Load `git-commit' when visiting a Git message file."
+    (when (and buffer-file-name
+               (string-match-p khz/git-commit-filename-regexp
+                               buffer-file-name))
+      (require 'git-commit)
+      (remove-hook 'find-file-hook #'khz/git-commit-load-for-message)
+      (git-commit-setup-check-buffer)))
+  :init
+  (setq git-commit-style-convention-checks
+        '(overlong-summary-line non-empty-second-line))
+  (add-hook 'find-file-hook #'khz/git-commit-load-for-message)
+  (with-eval-after-load 'git-commit
+    (remove-hook 'find-file-hook #'khz/git-commit-load-for-message)))
 
 (use-package diff-hl
   :custom (diff-refine 'navigation)
