@@ -445,8 +445,8 @@
 (use-package consult-ls-git
   :straight (consult-ls-git :type git :host github :repo "rcj/consult-ls-git")
   :bind
-  (("C-c g f" . #'consult-ls-git)
-   ("C-c g F" . #'consult-ls-git-other-window)))
+  (("C-c g f" . consult-ls-git)
+   ("C-c g F" . consult-ls-git-other-window)))
 
 (use-package all-the-icons-completion
   :after all-the-icons
@@ -575,9 +575,14 @@
   :bind (("C-," . consult-xref-stack-backward)))
 
 (use-package consult-todo
-  :straight (:type git :host github :repo "eki3z/consult-todo"))
+  :straight (:type git :host github :repo "eki3z/consult-todo")
+  :commands (consult-todo consult-todo-all consult-todo-dir consult-todo-project))
 
-(use-package consult-tex)
+(use-package consult-tex
+  :commands (consult-tex-reference
+             consult-tex-insert-reference
+             consult-tex-citation
+             consult-tex-insert-citation))
 
 (use-package consult-codesearch
   :if (executable-find "codesearch")
