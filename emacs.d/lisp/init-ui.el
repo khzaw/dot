@@ -139,13 +139,15 @@
       :commands elcord-mode
       :hook (emacs-startup . (lambda () (run-with-idle-timer 3.0 nil #'elcord-mode +1)))
       :custom
-      (elcord-use-major-mode-as-main-icon t))
+      (elcord-use-major-mode-as-main-icon t)
+      (elcord-quiet t))
   (use-package elcord
     ;; set discord status
     :commands elcord-mode
     :hook (emacs-startup . (lambda () (run-with-idle-timer 3.0 nil #'elcord-mode +1)))
     :custom
-    (elcord-use-major-mode-as-main-icon t)))
+    (elcord-use-major-mode-as-main-icon t)
+    (elcord-quiet t)))
 
 
 ;; Make a clean & minimalist frame
