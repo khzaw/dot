@@ -24,16 +24,16 @@
 (use-package emojify
   :commands (emojify-mode global-emojify-mode emojify-insert-emoji))
 
-(use-package bookmark-plus
+(use-package bookmark+
   :straight (bookmark-plus :type git :host github :repo "emacsmirror/bookmark-plus")
   :defer 3
   :init
-  (require 'bookmark+)
   ;; save bookmark on every change
   (setq bookmark-save-flag 1))
 
 (use-package bookmark-view
-  :straight (bookmark-view :type git :host github :repo "minad/bookmark-view"))
+  :straight (bookmark-view :type git :host github :repo "minad/bookmark-view")
+  :defer t)
 
 (use-package bookmark-view
   :ensure nil
