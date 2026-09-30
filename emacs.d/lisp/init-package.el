@@ -2,6 +2,9 @@
 
 ;; setup straight.el
 (setq straight-repository-branch "develop"
+      ;; The GUI and CLI may run different Emacs versions. Keep their
+      ;; byte-compiled packages and build caches from invalidating each other.
+      straight-use-version-specific-build-dir t
       ;; Avoid scanning every package repository during startup. Edits made in
       ;; Emacs are tracked on save; explicit checks still do a full scan.
       straight-check-for-modifications '(check-on-save find-when-checking))
