@@ -105,7 +105,9 @@
 ;; the profiler out of normal launches avoids paying its instrumentation cost.
 (when (getenv "EMACS_BENCHMARK_INIT")
   (let ((benchmark-init-dir
-         (expand-file-name "straight/build/benchmark-init" user-emacs-directory)))
+         (expand-file-name
+          (format "straight/build-%s/benchmark-init" emacs-version)
+          user-emacs-directory)))
     (when (file-directory-p benchmark-init-dir)
       (add-to-list 'load-path benchmark-init-dir)
       (require 'benchmark-init)
