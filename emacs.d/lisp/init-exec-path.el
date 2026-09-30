@@ -1,4 +1,14 @@
 ;;; -*- lexical-binding: t -*-
+
+;; Homebrew keeps emacsclient outside the copied Emacs.app. Select the client
+;; for this Emacs major version before with-editor computes its default.
+(when (eq system-type 'darwin)
+  (let ((client
+         (format "/opt/homebrew/opt/emacs-plus@%d/bin/emacsclient"
+                 emacs-major-version)))
+    (when (file-executable-p client)
+      (setq with-editor-emacsclient-executable client))))
+
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :init
@@ -31,10 +41,6 @@
         (when (eq system-type 'darwin)
           (customize-set-variable 'native-comp-driver-options '("-Wl,-w")))
         (setq native-comp-async-report-warning-errors 'silent)
-        ;; Using Emacs.app/Contents/MacOS/bin since it was compiled with
-        ;; ./configure --prefix="$PWD/nextstep/Emacs.app/Contents/MacOS"
-        ;; Append to path to give priority to values from exec-path-from-shell-initialize.
-        (add-to-list 'exec-path (concat invocation-directory (file-name-as-directory "bin")) t)
         (setenv "LIBRARY_PATH" (concat (getenv "LIBRARY_PATH")
                                        (when (getenv "LIBRARY_PATH") ":")
                                        ;; This is where homebrew puts libgccjit libraries
