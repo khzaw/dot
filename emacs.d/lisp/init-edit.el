@@ -307,10 +307,10 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
 
 (use-package ipe
   :straight (:type git :host github :repo "BriansEmacs/insert-pair-edit.el")
+  :bind (([remap insert-parentheses] . ipe-insert-pair-edit)
+         ("A-(" . ipe-insert-pair-edit-update)
+         ("H-(" . ipe-insert-pair-edit-delete))
   :config
-  (global-set-key [remap insert-parentheses] 'ipe-insert-pair-edit)
-  (global-set-key (kbd "A-(") 'ipe-insert-pair-edit-update)
-  (global-set-key (kbd "H-(") 'ipe-insert-pair-edit-delete)
   (require 'ipe-markdown-mode)
   (require 'ipe-texinfo-mode)
   (require 'ipe-html-mode))
