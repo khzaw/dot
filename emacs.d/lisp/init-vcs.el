@@ -469,12 +469,16 @@ branch than the one you're currently working on."
     (remove-hook 'magit-post-refresh-hook #'unpackaged/magit-log--add-date-headers)
     (advice-remove #'magit-setup-buffer-internal #'unpackaged/magit-log--add-date-headers)))
 
-(require 'hydra)
 ;; Resolve diff3 conflicts
 
 (use-package smerge-mode
+  :defer t
+  :commands (smerge-mode smerge-ediff smerge-start-session)
   :config
-  (defhydra unpackaged/smerge-hydra
+  (require 'hydra)
+  ;; Quoting the macro form keeps Hydra itself out of the startup path.
+  (eval
+   '(defhydra unpackaged/smerge-hydra
     (:color pink :hint nil :post (smerge-auto-leave))
     "
 ^Move^       ^Keep^               ^Diff^                 ^Other^
@@ -506,13 +510,15 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
             (save-buffer)
             (bury-buffer))
      "Save and bury buffer" :color blue)
-    ("q" nil "cancel" :color blue))
+    ("q" nil "cancel" :color blue)))
   :hook (magit-diff-visit-file . (lambda ()
                                    (when smerge-mode
                                      (unpackaged/smerge-hydra/body)))))
 
 (use-package ediff
   :straight (:type built-in)
+  :defer t
+  :commands (ediff ediff-files ediff-buffers ediff-revision)
   :custom
   (ediff-diff-options "-w")
   :config
