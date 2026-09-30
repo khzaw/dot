@@ -45,7 +45,8 @@
 (use-package vc-git
   :after vc
   :straight (:type built-in)
-  :config
+  :defer t
+  :init
   (setq vc-git-diff-switches '("--patch-with-stat" "--histogram"))
   (setq vc-git-log-switches '("--stat"))
   (setq vc-git-print-log-follow t))
@@ -338,10 +339,12 @@
           ("B" . browse-at-remote)))
 
 (use-package git-modes
+  :defer t
   :init
   (add-to-list 'auto-mode-alist '("gitignore_global\\'" . gitignore-mode)))
 
-(use-package gitignore-templates)
+(use-package gitignore-templates
+  :commands (gitignore-templates-insert gitignore-templates-new-file))
 
 (use-package git-gutter
   :bind (:map vc-prefix-map
@@ -394,6 +397,7 @@
   (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list)) ;; keep record of searched repos
 
 (use-package consult-git-log-grep
+  :commands (consult-git-log-grep)
   :custom
   (consult-git-log-grep-open-function #'magit-show-commit))
 
@@ -404,6 +408,8 @@
 
 (use-package git-link
   :straight (:type git :host github :repo "sshaw/git-link")
+  :defer t
+  :bind ("C-c g l" . git-link)
   :custom
   (git-link-use-commit t)
   :config
@@ -420,8 +426,7 @@ branch than the one you're currently working on."
                                       default-remote-branch-name)))
       (setq current-prefix-arg nil)
       (call-interactively 'git-link)
-      (setq git-link-default-branch git-link-current-branch-setting)))
-  (global-set-key (kbd "C-c g l") 'git-link))
+      (setq git-link-default-branch git-link-current-branch-setting))))
 
 (use-package magit-town
   :straight (:type git :host github :repo "khzaw/magit-town")
