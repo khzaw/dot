@@ -283,11 +283,13 @@ and CONFIG is the configuration plist for that server.")
 
 ;; show breadcrumbs; not on by default
 (use-package breadcrumb
-  :straight (:repo "joaotavora/breadcrumb" :host github :type git))
+  :straight (:repo "joaotavora/breadcrumb" :host github :type git)
+  :commands (breadcrumb-mode breadcrumb-local-mode breadcrumb-jump))
 
 (use-package flymake-eslint
+  :after eglot
   :config
-  (setq flymake-eslint-prefer-json-diagonistics t)
+  (setq flymake-eslint-prefer-json-diagnostics t)
 
   (defun khz/use-local-eslint ()
     "Set proejct's `node_modules' binary eslint as first priority.
@@ -311,39 +313,6 @@ of `flymake-eslint-executable-name.'"
   (add-hook 'eglot-managed-mode-hook #'khz/use-local-eslint)
 
   ;; (add-hook 'js-ts-mode-hook #'khz/use-local-eslint)
-  )
-
-
-(use-package dape
-  :config
-  (setq dape-buffer-window-arrangement 'right)
-
-  ;; To not display info and/or buffers on startup
-  (remove-hook 'dape-stopped-hook 'dape-info)
-  (remove-hook 'dape-start-hook 'dape-repl)
-
-  ;; Save buffers on startup, useful for interpreted languages
-  (add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
-
-  ;; Projectile users
-  (setq dape-cwd-fn 'projectile-project-root)
-
-  (defun khz/eglot-dape-debug-at-point ()
-    "Jump to definition and start Dape debugging."
-    (interactive)
-    (call-interactively #'eglot-find-definition)
-    (dape))
-
-  (with-eval-after-load 'eglot
-    (bind-key "C-c e D" #'khz/eglot-dape-debug-at-point eglot-mode-map))
-
-  ;; (setq dape-configs
-  ;;       (append dape-configs
-  ;;               '((go-dlv modes (go-mode go-ts-mode)
-  ;;                         :command "dlv dap"
-  ;;                         :port 38697)
-  ;;                 (node modes (tsx-ts-mode typescript-ts-mode)
-  ;;                       :command "node --inspect"))))
   )
 
 (use-package sideline-eglot
