@@ -32,6 +32,7 @@
          ("C-p" . flycheck-error-list-previous-error)))
 
 (use-package flycheck-popup-tip
+  :commands flycheck-popup-tip-mode
   ;; :hook (flycheck-mode . flycheck-popup-tip-mode)
   )
 
