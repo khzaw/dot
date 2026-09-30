@@ -137,10 +137,12 @@
 (global-set-key (kbd "C-c C-'") 'uuidgen)
 
 (use-package writegood-mode
-  :straight (:type git :host github :repo "bnbeckwith/writegood-mode"))
+  :straight (:type git :host github :repo "bnbeckwith/writegood-mode")
+  :commands (writegood-mode writegood-reading-ease writegood-grade-level))
 
 (use-package artbollocks-mode
-  :straight (:type git :host github :repo "sachac/artbollocks-mode"))
+  :straight (:type git :host github :repo "sachac/artbollocks-mode")
+  :commands (artbollocks-mode))
 
 (use-package ultra-scroll
   :straight (:type git :host github :repo "jdtsmith/ultra-scroll")
@@ -161,10 +163,12 @@
   (setq leetcode-language "python3"))
 
 (use-package monkeytype
-  :straight (:type git :host github :repo "jpablobr/emacs-monkeytype"))
+  :straight (:type git :host github :repo "jpablobr/emacs-monkeytype")
+  :commands (monkeytype-buffer monkeytype-region monkeytype-mode))
 
 (use-package fretboard
-  :straight (:host github :repo "skyefreeman/fretboard.el"))
+  :straight (:host github :repo "skyefreeman/fretboard.el")
+  :commands (fretboard))
 
 (use-package edraw
   :straight (edraw :host github :repo "misohena/el-easydraw")
@@ -194,7 +198,8 @@
       pixel-scroll-precision-use-momentum t)
 (setq mwheel-coalesce-scroll-events nil)
 
-(use-package sudo-edit)
+(use-package sudo-edit
+  :commands (sudo-edit sudo-edit-find-file))
 
 (use-package lichess
   :straight (:type git :host github :repo "tmythicator/lichess.el")
