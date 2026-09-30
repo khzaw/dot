@@ -4,7 +4,8 @@
   :bind ("C-c D" . docker)
   :config (setq docker-containers-show-all t))
 
-(use-package dockerfile-mode)
+(use-package dockerfile-mode
+  :defer t)
 
 (use-package docker-compose-mode
   :mode ("docker-compose.*\.yml\\'" . docker-compose-mode))
