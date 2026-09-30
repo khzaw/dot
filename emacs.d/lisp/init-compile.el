@@ -23,7 +23,9 @@
 (use-package recompile-on-save
   :commands (recompile-on-save))
 
-(use-package compile-multi :straight t)
+(use-package compile-multi
+  :straight t
+  :commands (compile-multi))
 
 (use-package consult-compile-multi
   :straight t
