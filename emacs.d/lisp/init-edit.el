@@ -159,9 +159,9 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
   (undo-fu-allow-undo-in-region t))
 
 (use-package undo-fu-session
-  :config
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  (undo-fu-session-global-mode))
+  :hook (on-first-buffer . undo-fu-session-global-mode)
+  :init
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)
@@ -213,6 +213,7 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
 
 (use-package olivetti
   :straight (:type git :host github :repo "rnkn/olivetti")
+  :commands (olivetti-mode)
   ;; :hook (org-mode . olivetti-mode)
   :custom
   (olivetti-margin-width 12)
@@ -225,6 +226,7 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
 ;;   (auto-olivetti-mode))
 
 (use-package apheleia
+  :defer t
   ;; :config
   ;; (apheleia-global-mode t)
   )
@@ -264,7 +266,8 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
           try-complete-lisp-symbol-partially
           try-complete-lisp-symbol)))
 
-(use-package coverlay)
+(use-package coverlay
+  :commands (coverlay-minor-mode global-coverlay-mode))
 
 (use-package indent-tools
   :bind ("C-c TAB" . indent-tools-hydra/body))
@@ -300,10 +303,9 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
 
 (use-package anzu
   :diminish
-  :config
-  (global-set-key [remap query-replace] 'anzu-query-replace)
-  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
-  (global-anzu-mode +1))
+  :hook (on-first-input . global-anzu-mode)
+  :bind (([remap query-replace] . anzu-query-replace)
+         ([remap query-replace-regexp] . anzu-query-replace-regexp)))
 
 (use-package ipe
   :straight (:type git :host github :repo "BriansEmacs/insert-pair-edit.el")
@@ -373,14 +375,16 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
   :straight (:type git :host github :repo "emacsorphanage/ov"))
 
 (use-package dumb-jump
-  :config
+  :commands (dumb-jump-xref-activate)
+  :init
   (setq dumb-jump-prefer-searcher 'rg
         xref-history-storage #'xref-window-local-history
         xref-show-definitions-function #'xref-show-definitions-completing-read)
 
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   ;; Do not use the etags backend.
-  (remove-hook 'xref-backend-functions #'etags--xref-backend))
+  (with-eval-after-load 'xref
+    (remove-hook 'xref-backend-functions #'etags--xref-backend)))
 
 (use-package emacs
   :straight (:type built-in)
@@ -408,8 +412,7 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
 
 (use-package easy-kill
   :straight (:type git :host github :repo "leoliu/easy-kill")
-  :config
-  (global-set-key [remap kill-ring-save] 'easy-kill))
+  :bind ([remap kill-ring-save] . easy-kill))
 
 (use-package selected
   :straight (:type git :host github :repo "Kungsgeten/selected.el")
