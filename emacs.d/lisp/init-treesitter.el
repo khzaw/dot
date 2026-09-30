@@ -39,7 +39,7 @@
                          node
                          (lambda (n)
                            (member (treesit-node-type n) func-node-types)))))
-      (if-let ((name-node (treesit-node-child-by-field-name parent "name")))
+      (if-let* ((name-node (treesit-node-child-by-field-name parent "name")))
           (goto-char (treesit-node-start name-node))
         ;; Fallback
         (goto-char (treesit-node-start parent)))))

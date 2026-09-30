@@ -154,15 +154,15 @@
 
     (setq-local python-pytest-executable (pet-executable-find "pytest"))
 
-    (when-let ((ruff-executable (pet-executable-find "ruff")))
+    (when-let* ((ruff-executable (pet-executable-find "ruff")))
       (setq-local ruff-format-command ruff-executable)
       (ruff-format-on-save-mode))
 
-    (when-let ((black-executable (pet-executable-find "black")))
+    (when-let* ((black-executable (pet-executable-find "black")))
       (setq-local python-black-command black-executable)
       (python-black-on-save-mode))
 
-    (when-let ((isort-executable (pet-executable-find "isort")))
+    (when-let* ((isort-executable (pet-executable-find "isort")))
       (setq-local python-isort-command isort-executable)
       (python-isort-on-save-mode)))
   :init

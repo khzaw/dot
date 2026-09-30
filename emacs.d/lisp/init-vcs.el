@@ -101,7 +101,7 @@
   (add-hook 'magit-status-mode-hook
             (defun +magit-optimize-process-calls-h ()
               "Cache git executable path for current session."
-              (when-let (path (executable-find magit-git-executable t))
+              (when-let* ((path (executable-find magit-git-executable t)))
                 (setq-local magit-git-executable path))))
 
   (add-hook 'magit-status-mode-hook
@@ -122,7 +122,7 @@
     (transient-append-suffix 'magit-diff "r"
       '("U" "Diff upstream..HEAD" (lambda ()
                                     (interactive)
-                                    (if-let ((upstream (magit-get-upstream-branch)))
+                                    (if-let* ((upstream (magit-get-upstream-branch)))
                                         (magit-diff-range (concat (magit-get-upstream-branch) "..HEAD"))
                                       (user-error "No upstream branch")))))))
 

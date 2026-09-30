@@ -497,8 +497,8 @@
 
   (defun +embark-live-vertico ()
     "Shrink Vertico minibuffer when `embark-live' is active."
-    (when-let (win (and (string-prefix-p "*Embark Live" (buffer-name))
-                        (active-minibuffer-window)))
+    (when-let* ((win (and (string-prefix-p "*Embark Live" (buffer-name))
+                          (active-minibuffer-window))))
       (with-selected-window win
         (when (and (bound-and-true-p vertico--input)
                    (fboundp 'vertico-multiform-unobtrusive))
