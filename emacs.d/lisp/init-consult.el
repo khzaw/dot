@@ -604,6 +604,7 @@
 (use-package fzfa
   :straight (:type git :host github :repo "jojojames/fzfa")
   :after fzf-native
+  :defer t
   :config
   (fzfa--ensure-setup))
 
