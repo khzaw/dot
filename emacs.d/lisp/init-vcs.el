@@ -552,7 +552,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :straight (igist
              :repo "KarimAziev/igist"
              :type git
-             :host github))
+             :host github)
+  :defer t)
 
 (use-package majutsu
   :if (executable-find "jj")
@@ -579,7 +580,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (shipit-init))
 
 (use-package inline-review
-  :straight (:type git :host github :repo "phye/inline-review"))
+  :straight (:type git :host github :repo "phye/inline-review")
+  :defer t)
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
