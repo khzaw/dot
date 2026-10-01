@@ -198,7 +198,8 @@ and CONFIG is the configuration plist for that server.")
 
   ;; (load (expand-file-name "lisp/init-flycheck-eglot.el" user-emacs-directory))
 
-  (consult-customize eglot-find-implementation :preview-key "M-.")
+  (with-eval-after-load 'consult
+    (consult-customize eglot-find-implementation :preview-key "M-."))
 
   (progn
     (evil-leader/set-key
