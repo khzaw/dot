@@ -221,7 +221,13 @@
 
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
-  :hook (on-first-file . recentf-mode)
+  :preface
+  (defun khz/recentf-mode-silently ()
+    "Enable Recentf without logging automatic cleanup progress."
+    (let ((inhibit-message t)
+          (message-log-max nil))
+      (recentf-mode 1)))
+  :hook (on-first-file . khz/recentf-mode-silently)
   :init (setq recentf-max-saved-items 300
               recentf-exclude
               '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
