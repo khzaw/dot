@@ -618,8 +618,10 @@
   (add-to-list 'org-structure-template-alist '("M" . "mindmap")))
 
 (use-package denote
-  :custom
-  (denote-directory (file-name-as-directory (file-truename "~/Dropbox/notes/denote")))
+  :defer t
+  :init
+  (setq denote-directory
+        (file-name-as-directory (file-truename "~/Dropbox/notes/denote")))
   :config
   (defun khz/denote-normalize-existing-file (file)
     "Return FILE using its true path when it already exists."
