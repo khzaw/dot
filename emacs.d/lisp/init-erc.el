@@ -2,6 +2,7 @@
 
 (use-package erc
   :ensure nil
+  :commands (erc erc-tls)
   :defines erc-autojoin-channels-alist
   :init (setq erc-rename-buffers t
               erc-interpret-mirc-color t
