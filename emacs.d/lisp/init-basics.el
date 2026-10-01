@@ -206,7 +206,8 @@
                                         (right-fringe . 10))
         which-key-posframe-border-width 5))
 
-(use-package rg)
+(use-package rg
+  :commands (rg rg-project rg-dwim rg-literal))
 
 (use-package editorconfig
   :diminish
