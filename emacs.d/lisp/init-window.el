@@ -117,7 +117,8 @@
         ("U" . winner-redo)))
 
 (use-package burly
-  :straight (:type git :host github :repo "alphapapa/burly.el"))
+  :straight (:type git :host github :repo "alphapapa/burly.el")
+  :defer t)
 
 (use-package zoom
   :bind (("C-c z z" . zoom))
