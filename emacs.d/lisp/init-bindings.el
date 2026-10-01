@@ -114,5 +114,9 @@ are defining or executing a macro."
 (when (eq system-type 'gnu/linux)
   (setq select-enable-clipboard t))
 
+(when (eq system-type 'darwin)
+  ;; Treat an accidental Command-drag like an ordinary text selection.
+  (global-set-key [s-drag-mouse-1] #'mouse-set-region))
+
 (provide 'init-bindings)
 ;;; init-bindings.el ends here
