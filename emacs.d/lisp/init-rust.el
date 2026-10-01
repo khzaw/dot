@@ -11,7 +11,8 @@
   :custom
   (rustic-lsp-client 'eglot))
 
-(use-package rust-playground)
+(use-package rust-playground
+  :commands (rust-playground rust-playground-rm))
 
 
 (provide 'init-rust)

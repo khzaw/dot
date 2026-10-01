@@ -1,8 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package compile
-  :config
-
+  :commands (compile recompile)
+  :init
   (defun khz/compile-mode-hook ()
     (hide-mode-line-mode)
     (setq truncate-lines nil) ;; automatically becomes buffer local
@@ -10,9 +10,9 @@
 
   (setq compilation-scroll-output t)
   (setq compilation-ask-about-save nil)
-  (require 'ansi-color)
   (defun khz/colorize-compilation-buffer ()
     "Enable colors in the *compilation* buffer."
+    (require 'ansi-color)
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region compilation-filter-start (point))))
   (add-hook 'compilation-filter-hook #'khz/colorize-compilation-buffer)
