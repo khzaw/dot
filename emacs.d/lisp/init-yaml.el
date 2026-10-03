@@ -5,6 +5,7 @@
   :preface
   (defun khz/yaml-ts-mode-setup ()
     "Custom setup applied when `yaml-ts-mode' starts."
+    (require 'yaml-mode)
     ;; `treesit-indent' does not behave well in yaml-ts-mode.
     (setq-local indent-line-function #'yaml-indent-line))
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-ts-mode)
