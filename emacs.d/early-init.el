@@ -80,14 +80,18 @@
   "The path to the emacs.d directory.")
 
 
-;; Unset `file-name-handler-alist' too (temporarily). Every file opened and
-;; loaded by Emacs will run through this list to check for a proper handler for
-;; the file, but during startup, it won’t need any of them.
-(defvar file-name-handler-alist-old file-name-handler-alist)
+;; Skip file handlers while loading local init files. Restore them before
+;; startup visits command-line files, retaining handlers installed by packages.
+(defvar khz/startup-file-name-handlers file-name-handler-alist)
+(defun khz/restore-startup-file-name-handlers ()
+  "Restore startup file handlers without dropping newly registered handlers."
+  (dolist (handler khz/startup-file-name-handlers)
+    (unless (member handler file-name-handler-alist)
+      (setq file-name-handler-alist
+            (append file-name-handler-alist (list handler)))))
+  (remove-hook 'after-init-hook #'khz/restore-startup-file-name-handlers))
 (setq file-name-handler-alist nil)
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq file-name-handler-alist file-name-handler-alist-old)))
+(add-hook 'after-init-hook #'khz/restore-startup-file-name-handlers -100)
 
 ;; For LSP mode, use plists for deserialization
 ;; For more info, see https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
