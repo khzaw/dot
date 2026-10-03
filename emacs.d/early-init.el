@@ -15,7 +15,7 @@
 (setq load-prefer-newer t)
 
 ;; Defer garbage collection further back in the startup process.
-;; gcmh (loaded in init-package.el) will restore sensible values once idle.
+;; GCMH restores its normal thresholds after startup, then collects when idle.
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 

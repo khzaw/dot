@@ -71,10 +71,10 @@
 ;; Garbage Collector Magic Hack
 (use-package gcmh
   :diminish
+  :hook (emacs-startup . gcmh-mode)
   :init
   (setq gcmh-idle-delay 15)
-  (setq gcmh-high-cons-threshold (* 16 1024 1024))
-  (gcmh-mode 1))
+  (setq gcmh-high-cons-threshold (* 16 1024 1024)))
 
 (use-package epkg
   :hook (epkg-list-mode . (lambda () (setq truncate-lines t)))

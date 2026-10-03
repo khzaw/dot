@@ -16,7 +16,7 @@
 
 ;; GC is managed by gcmh (loaded in init-package.el).
 ;; early-init.el sets gc-cons-threshold to most-positive-fixnum for fast startup,
-;; and gcmh restores sensible values once idle.
+;; and gcmh restores its normal thresholds on emacs-startup-hook.
 
 ;; custom-file
 (setq custom-file (locate-user-emacs-file "custom.el"))
