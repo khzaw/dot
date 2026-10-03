@@ -180,6 +180,7 @@
 
 (use-package which-key
   :diminish
+  :init (khz/preload-on-idle 'which-key 0.2)
   :custom
   (echo-keystrokes 0.01)
   (which-key-sort-order #'which-key-description-order)

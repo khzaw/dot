@@ -34,6 +34,7 @@
 ;; highlight colors on hex, rgba ., etc
 (use-package colorful-mode
   :straight (:type git :host github :repo "DevelopmentCool2449/colorful-mode")
+  :init (khz/preload-on-idle 'colorful-mode 0.6)
   :hook (on-first-input . global-colorful-mode)
   :config
   (add-to-list 'global-colorful-modes 'help-mode)

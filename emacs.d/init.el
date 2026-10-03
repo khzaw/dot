@@ -30,6 +30,7 @@
 
 (require 'secrets)
 (require 'init-package)
+(require 'init-startup)
 (require 'init-exec-path)
 (require 'init-maintenance)
 

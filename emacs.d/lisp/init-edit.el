@@ -43,6 +43,7 @@
   :config (smartscan-mode))
 
 (use-package avy
+  :init (khz/preload-on-idle 'avy 0.4)
   :bind (("M-g c" . avy-goto-char)
          ("M-g C" . avy-goto-char-2)
          ;; ("C-,"   . avy-goto-char)
@@ -232,6 +233,7 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
   )
 
 (use-package repeat-mode
+  :init (khz/preload-on-idle 'repeat 0.3)
   :straight (:type built-in)
   :diminish
   :hook (on-first-input . repeat-mode)
@@ -302,6 +304,7 @@ Member of `post-self-insert-hook' if `electric-pair-mode' is on."
   )
 
 (use-package anzu
+  :init (khz/preload-on-idle 'anzu 0.5)
   :diminish
   :hook (on-first-input . global-anzu-mode)
   :bind (([remap query-replace] . anzu-query-replace)
