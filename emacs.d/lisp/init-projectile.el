@@ -2,23 +2,16 @@
 
 (use-package projectile
   :delight '(:eval (concat " " (projectile-project-name)))
-  :bind (("C-c p" . khz/load-projectile-prefix)
+  :bind (("C-c p" . khz/projectile-prefix)
          :map projectile-mode-map
          ("C-c p" . projectile-command-map))
   :preface
+  (define-prefix-command 'khz/projectile-prefix)
+  (define-key khz/projectile-prefix [t] #'khz/load-projectile-prefix)
+
   (defun khz/ensure-projectile ()
-    "Load Projectile, allowing integrations to install project prefix keys."
-    (let* ((prefix (kbd "C-c p"))
-           (loader (eq (lookup-key global-map prefix)
-                       #'khz/load-projectile-prefix)))
-      (when loader
-        (global-unset-key prefix))
-      (condition-case err
-          (require 'projectile)
-        (error
-         (when loader
-           (global-set-key prefix #'khz/load-projectile-prefix))
-         (signal (car err) (cdr err))))))
+    "Load Projectile and its configured integrations."
+    (require 'projectile))
 
   (defun khz/load-projectile-prefix ()
     "Load Projectile and replay the project prefix key sequence."
