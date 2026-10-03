@@ -11,9 +11,10 @@
 
 (use-package symbol-overlay-mc
   :straight (:type git :host github :repo "xenodium/symbol-overlay-mc")
-  :config
-  (with-eval-after-load 'casual-symbol-overlay
-    (symbol-overlay-mc-insert-into-casual-tmenu)))
+  :after casual-symbol-overlay
+  :demand t
+  :commands symbol-overlay-mc-mark-all
+  :config (symbol-overlay-mc-insert-into-casual-tmenu))
 
 ;; Highlight the current line
 (use-package hl-line
@@ -48,6 +49,7 @@
 
 (use-package highlight-indent-guides
   :diminish
+  :commands highlight-indent-guides-mode
   ;; :hook ((yaml-mode yaml-ts-mode) . highlight-indent-guides-mode)
   :custom
   (highlight-indent-guides-responsive 'top)

@@ -27,6 +27,9 @@
   :config (kubel-vterm-setup))
 
 (use-package kubernetes-helm
+  :commands (kubernetes-helm-dep-up kubernetes-helm-install
+             kubernetes-helm-upgrade kubernetes-helm-values
+             kubernetes-helm-status kubernetes-helm-template)
   :straight (:type git :host github :repo "abrochard/kubernetes-helm"))
 
 (use-package kubed

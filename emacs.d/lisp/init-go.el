@@ -92,9 +92,11 @@
              godoctor-godoc))
 
 (use-package go-fill-struct
+  :commands go-fill-struct
   :if (executable-find "fillstruct"))
 
 (use-package go-impl
+  :commands go-impl
   :if (executable-find "impl"))
 
 (use-package go-gen-test

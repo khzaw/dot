@@ -2,7 +2,7 @@
 
 (use-package texmathp
   :straight auctex
-  :demand t)
+  :defer t)
 
 (use-package latex
   :straight auctex

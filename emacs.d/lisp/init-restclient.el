@@ -23,13 +23,15 @@
 (use-package grpclient
   :if (executable-find "grpcurl")
   :straight (:type git :host github :repo "Prikaz98/grpclient.el")
-  :init (add-to-list 'auto-mode-alist '("\\.grpc\\'" . grpclient-mode)))
+  :mode ("\\.grpc\\'" . grpclient-mode))
 
 (use-package openapi-preview
+  :commands openapi-preview
   :if (executable-find "redoc-cli")
   :straight (:type git :host github :repo "merrickluo/openapi-preview"))
 
 (use-package impostman
+  :commands (impostman-import-file impostman-import-string impostman-version)
   :straight (:type git :host github :repo "flashcode/impostman"))
 
 (use-package swagg
