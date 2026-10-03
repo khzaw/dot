@@ -28,6 +28,10 @@
     (project-projectile directory))
   :init
   (khz/run-on-idle #'khz/ensure-projectile 0.8)
+  ;; Consult's configuration is ordered after Projectile.  Honour that order
+  ;; when a Consult command is used before the idle preload or a project query.
+  (with-eval-after-load 'consult
+    (khz/ensure-projectile))
   (with-eval-after-load 'project
     (unless (featurep 'projectile)
       (add-hook 'project-find-functions #'khz/project-try-projectile)))
