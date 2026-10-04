@@ -2,6 +2,15 @@
 
 (setq text-scale-mode-step 1.1)
 
+(defcustom khz/font-height-scale
+  (if (eq system-type 'gnu/linux) 0.85 1.0)
+  "Multiplier for Fontaine font heights on this machine.
+Linux starts with smaller fonts; macOS keeps the original sizes.
+After changing this value, run `khz/reload-font-config' to apply it.
+Relative variable-pitch heights remain proportional to the default font."
+  :type 'number
+  :group 'faces)
+
 ;;; https://github.com/mickeynp/ligature.el/wiki
 (use-package ligature
   :straight (:type git :host github :repo "mickeynp/ligature.el")
@@ -99,13 +108,13 @@
                         (_ nil))))
     (setq fontaine-presets
           `((regular
-             :default-height 130
+             :default-height ,(round (* 130 khz/font-height-scale))
              :default-family "Berkeley Mono"
              :fixed-pitch-family "Berkeley Mono"
              :variable-pitch-family "Inter"
              :variable-pitch-height 1.2)
             (writing
-             :default-height 180
+             :default-height ,(round (* 180 khz/font-height-scale))
              :default-family "Berkeley Mono"
              :fixed-pitch-family "Berkeley Mono"
              ;; Charter: Matthew Carter's serif, optimized for screen reading.
@@ -114,13 +123,13 @@
              :variable-pitch-weight normal
              :variable-pitch-height 1.2)
             (reading
-             :default-height 150
+             :default-height ,(round (* 150 khz/font-height-scale))
              :default-family "Berkeley Mono"
              :fixed-pitch-family "Berkeley Mono"
              :variable-pitch-family "Inter"
              :variable-pitch-height 1.0)
             (presentation
-             :default-height 200
+             :default-height ,(round (* 200 khz/font-height-scale))
              :default-family "Berkeley Mono"
              :fixed-pitch-family "Berkeley Mono"
              ;; Avenir Next: clean geometric sans, excellent at large sizes.
