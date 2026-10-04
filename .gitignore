@@ -12,6 +12,7 @@
 auto-save-list
 tramp
 .\#*
+.fzfa-replay
 
 # Org-mode
 .org-id-locations
