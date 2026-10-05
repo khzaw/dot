@@ -135,7 +135,7 @@
   ;; To preview only environments, set it to '(block edit-special) instead
   (setq org-latex-preview-live t)
   (setq org-latex-preview-live-debounce 0.25) ;; More immediate live-previews
-  (plist-put org-format-latex-options :scale 4.0)
+  (plist-put org-format-latex-options :scale 8.0)
 
 
   (add-hook 'org-mode-hook (lambda () (ws-butler-mode -1)))

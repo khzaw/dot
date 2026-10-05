@@ -73,6 +73,14 @@
              ruff-format-region
              ruff-format-on-save-mode))
 
+(use-package python
+  :straight nil
+  :custom
+  (python-indent-offset 4)
+  ;; Use four spaces when the project does not specify an indent size.
+  ;; EditorConfig still sets `python-indent-offset' buffer-locally.
+  (python-indent-guess-indent-offset nil))
+
 (use-package python-mode
   :straight (python-mode :type git
                          :host gitlab
@@ -85,14 +93,12 @@
   :hook
   ((python-mode python-ts-mode) . py-electric-backspace-mode)
   :config
-  (setq py-indent-offset 4
-        python-indent-offset 4
-        python-indent-guess-indent-offset nil)
+  (setq-default py-indent-offset 4)
   (when (executable-find "ipython")
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--simple-prompt -i"))
 
-   ;; Only allow the python-mode's capf to run in python buffers:
+  ;; Only allow the python-mode's capf to run in python buffers:
   (defun khz/python-capf-only-in-python-modes (fn &rest args)
     (when (and (derived-mode-p 'python-mode 'inferior-python-mode)
                (not (bound-and-true-p leetcode-solution-mode))
@@ -105,8 +111,8 @@
     (advice-add 'py-fast-complete :around #'khz/python-capf-only-in-python-modes))
 
   (advice-add 'python-shell-completion-at-point :around
-            (lambda (fun &optional arg)
-              (cape-wrap-noninterruptible (lambda () (funcall fun arg)))))
+              (lambda (fun &optional arg)
+                (cape-wrap-noninterruptible (lambda () (funcall fun arg)))))
 
   (defun turn-off-corfu-auto ()
     "turn off corfu-auto"
@@ -138,8 +144,6 @@
     "Configure Python tooling from the active PET environment."
     (setq-local python-shell-interpreter (pet-executable-find "ipython")
                 python-shell-virtualenv-root (pet-virtualenv-root))
-    (setq-local python-indent-offset 4)
-    (setq-local py-indent-offset 4)
     (pet-eglot-setup)
     ;; (pet-flycheck-setup)
     ;; (flycheck-mode)

@@ -65,6 +65,34 @@
   ;; Performance optimizations
   (fset #'jsonrpc--log-event #'ignore)
   :config
+  (defclass eglot-typescript (eglot-lsp-server) ()
+    :documentation "TypeScript language server with a globally managed fallback.")
+
+  (defun khz/typescript-tsserver-path ()
+    "Return a portable fallback path for a PATH-installed tsserver."
+    (or
+     (catch 'found
+       (dolist (dir exec-path)
+         (let* ((launcher
+                 (locate-file "tsserver" (list dir) exec-suffixes
+                              #'file-executable-p))
+                (resolved (and launcher (file-truename launcher))))
+           (when resolved
+             (dolist (candidate
+                      (list
+                       (and (string= (file-name-nondirectory resolved)
+                                     "tsserver.js")
+                            resolved)
+                       (expand-file-name "../lib/tsserver.js"
+                                         (file-name-directory resolved))
+                       (expand-file-name "../typescript/lib/tsserver.js" dir)))
+               (when (and candidate (file-readable-p candidate))
+                 (throw 'found candidate)))))))
+     "tsserver"))
+
+  (cl-defmethod eglot-initialization-options ((_server eglot-typescript))
+    `(:tsserver
+      (:fallbackPath ,(khz/typescript-tsserver-path))))
 
   (defun khz/eglot-eldoc-settings ()
     (setq-local eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
@@ -144,7 +172,7 @@ and CONFIG is the configuration plist for that server.")
 
   (dolist (server-programs
            '(((js-mode jsx-mode rjsx-mode typescript-mode typescript-ts-mode tsx-ts-mode)
-              . ("typescript-language-server" "--stdio"))
+              . (eglot-typescript "typescript-language-server" "--stdio"))
              (solidity-mode . ("nomicfoundation-solidity-language-server" "--stdio"))
              (astro-ts-mode . ("astro-ls" "--stdio"
                                :initializationOptions
