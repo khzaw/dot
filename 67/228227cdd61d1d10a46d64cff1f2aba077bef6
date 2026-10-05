@@ -1,0 +1,36 @@
+emacs.d/lisp/init-exec-path.el
+  s_d748532b4d6739::t_defc20644f6433 12-18,22-32,62-71
+emacs.d/lisp/init-python.el
+  s_d748532b4d6739::t_defc20644f6433 76-83,96,101,114-115
+emacs.d/lisp/init-consult.el
+  h_4c0c7d5341815b 614-619
+emacs.d/lisp/init-eglot.el
+  s_d748532b4d6739::t_251e8fc34ffc24 89
+  s_d748532b4d6739::t_f55370075bdb78 72,83-85
+  s_d748532b4d6739::t_68f7e6de1b0497 68-69,93-94,175
+  s_d748532b4d6739::t_0da125927a2362 71,73-82,86-88,90-92,95
+  s_d748532b4d6739::t_eb039c9ab030c9 70
+emacs.d/lisp/init-org.el
+  h_4c0c7d5341815b 138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "67228227cdd61d1d10a46d64cff1f2aba077bef6",
+  "prompts": {},
+  "humans": {
+    "h_4c0c7d5341815b": {
+      "author": "Kaung Htet <kayhzaw@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_d748532b4d6739": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f00c-2c8c-7522-ac9b-8caa5df480fd",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Kaung Htet <kayhzaw@gmail.com>"
+    }
+  }
+}
