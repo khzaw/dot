@@ -4,6 +4,7 @@
   :preface (setq evil-want-keybinding nil)
   :init
   (setq evil-undo-system 'undo-fu)
+  (setq evil-ex-hl-update-delay 0.01)
   :config
 
 

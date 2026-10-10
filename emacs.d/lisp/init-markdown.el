@@ -126,6 +126,11 @@
     (add-to-list 'markdown-code-lang-modes entry))
   (setq markdown-split-window-direction 'right))
 
+(use-package markdown-modern
+  :straight (:type git :host github :repo "rjprins/markdown-modern"
+             :files ("lisp/*.el"))
+  :commands (markdown-modern-mode markdown-modern-install-grammars))
+
 (use-package markdown-toc
   :commands (markdown-toc-generate-toc
              markdown-toc-refresh-toc

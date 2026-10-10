@@ -57,7 +57,7 @@
   (corfu-quit-at-boundry nil)      ;; never quit a completion boundary
   (corfu-preselect 'directory)
   (corfu-auto t)
-  (corfu-auto-delay 0.5)
+  (corfu-auto-delay 0.3)
   (corfu-auto-prefix 2)
   (corfu-separator ?_)             ;; Set to orderless separator, if not using space
   (corfu-quit-no-match 'separator) ;; or t

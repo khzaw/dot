@@ -155,8 +155,7 @@
   :straight (:type built-in)
   :preface
   (defun khz/adjust-alpha-for-theme (_theme)
-    "Keep frames fully opaque after theme changes."
-    (let ((alpha 96))
+    (let ((alpha (if (eq system-type 'gnu/linux) 100 96)))
       (set-frame-parameter nil 'alpha `(,alpha ,alpha))
       (let ((elt (assoc 'alpha default-frame-alist)))
         (if elt (setcdr elt `(,alpha ,alpha))

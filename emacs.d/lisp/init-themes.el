@@ -138,6 +138,10 @@
   :defer t
   :straight (:type git :host github :repo "khzaw/almost-mono-themes"))
 
+(use-package ayu-theme
+  :defer t
+  :straight (:type git :host github :repo "1buran/ayu-emacs-theme"))
+
 (use-package green-phosphor-theme
   :defer t
   :straight (:type git :host github :repo "emacsmirror/green-phosphor-theme"))
