@@ -195,5 +195,13 @@
   :defer t
   :straight (:type git :host github :repo "ember-theme/emacs"))
 
+(use-package foxglove-themes
+  :defer t
+  :straight (:type git :host gitlab :repo "vegasharmon/foxglove-themes"))
+
+(use-package au-themes
+  :defer t
+  :straight (:type git :host github :repo "szymonwilczek/au-themes"))
+
 (provide 'init-themes)
 ;; init-themes.el ends here
