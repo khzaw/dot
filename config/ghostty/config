@@ -15,3 +15,8 @@ keybind = global:ctrl+grave_accent=toggle_quick_terminal
 # Per-machine settings (ignored by Git). Loaded last so they can override
 # shared values such as font-size without making the dotfiles diverge.
 config-file = ?config.local
+
+# >>> herdr-radar font block
+font-codepoint-map = U+E1A0-U+E1BA=Herdr Agent Icons Max
+font-codepoint-map = U+E1C0-U+E1C5=Herdr Agent Icons Max
+# <<< herdr-radar font block

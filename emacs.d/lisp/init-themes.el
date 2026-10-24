@@ -93,8 +93,8 @@
   :bind (("<f6>" . ivory-themes-toggle)
          ("S-<f6>" . khz/reload-ivory-theme))
   :config
-  (setq ivory-themes-soft-backgrounds t)
-  (ivory-themes-load 'ivory-light))
+  (setq ivory-themes-soft-backgrounds nil)
+  (ivory-themes-load 'ivory-dark))
 
 ;; (use-package modus-themes
 ;;   :straight (:type git :host github :repo "protesilaos/modus-themes")
