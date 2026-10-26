@@ -4,6 +4,7 @@ font-size = 14
 
 window-padding-x = 40
 window-padding-y = 20
+# window-decoration = false
 window-colorspace = display-p3
 
 confirm-close-surface = false
@@ -11,12 +12,13 @@ macos-titlebar-style = tabs
 mouse-hide-while-typing = true
 adjust-cursor-thickness = 300%
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
-
-# Per-machine settings (ignored by Git). Loaded last so they can override
-# shared values such as font-size without making the dotfiles diverge.
-config-file = ?config.local
+auto-update-channel = tip
 
 # >>> herdr-radar font block
 font-codepoint-map = U+E1A0-U+E1BA=Herdr Agent Icons Max
 font-codepoint-map = U+E1C0-U+E1C5=Herdr Agent Icons Max
 # <<< herdr-radar font block
+
+# Per-machine settings (ignored by Git).
+config-file = ?config.local
+
