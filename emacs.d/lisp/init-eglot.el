@@ -94,6 +94,37 @@
     `(:tsserver
       (:fallbackPath ,(khz/typescript-tsserver-path))))
 
+  (defclass eglot-typescript-native (eglot-lsp-server) ()
+    :documentation "Native TypeScript LSP with built-in file watching on macOS.")
+
+  (cl-defmethod eglot-client-capabilities ((_server eglot-typescript-native))
+    ;; TypeScript can request watches above the project root. Eglot expands
+    ;; those recursively. On macOS the native server can use FSEvents instead.
+    (let* ((capabilities (cl-call-next-method))
+           (workspace (plist-get capabilities :workspace)))
+      (when (eq system-type 'darwin)
+        (plist-put workspace :didChangeWatchedFiles
+                   '(:dynamicRegistration :json-false)))
+      capabilities))
+
+  (cl-defmethod eglot-register-capability
+    ((_server eglot-typescript-native)
+     (_method (eql workspace/didChangeConfiguration)) _id &rest _options)
+    ;; Eglot already sends configuration updates without dynamic registration.
+    nil)
+
+  (defun khz/typescript-eglot-command (&rest _)
+    "Use native TypeScript LSP on version 7+, or tsserver on older setups."
+    (let ((compiler (executable-find "tsc")))
+      (if (and compiler
+               (with-temp-buffer
+                 (and (zerop (call-process compiler nil t nil "--version"))
+                      (goto-char (point-min))
+                      (looking-at "Version \\([0-9]+\\)")
+                      (>= (string-to-number (match-string 1)) 7))))
+          (list 'eglot-typescript-native compiler "--lsp" "--stdio")
+        '(eglot-typescript "typescript-language-server" "--stdio"))))
+
   (defun khz/eglot-eldoc-settings ()
     (setq-local eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
 
@@ -129,7 +160,8 @@
                        :maxCompletionItems 50
                        :gofumpt t))
       (tsx-ts-mode typescript-ts-mode
-                   :typescript-language-server (:inlayHints (:parameterNames "all")))
+                   :typescript (:inlayHints (:parameterNames (:enabled "all")
+                                            :includeInlayParameterNameHints "all")))
 
       ;; (rust-mode rust-ts-mode
       ;;  :rust-analyzer (:checkOnSave (:command "clippy")))
@@ -171,8 +203,14 @@ and CONFIG is the configuration plist for that server.")
   (setq eglot-extend-to-xref t)
 
   (dolist (server-programs
-           '(((js-mode jsx-mode rjsx-mode typescript-mode typescript-ts-mode tsx-ts-mode)
-              . (eglot-typescript "typescript-language-server" "--stdio"))
+           '((((js-mode :language-id "javascript")
+              (js-ts-mode :language-id "javascript")
+              (jsx-mode :language-id "javascriptreact")
+              (rjsx-mode :language-id "javascriptreact")
+              (typescript-mode :language-id "typescript")
+              (typescript-ts-mode :language-id "typescript")
+              (tsx-ts-mode :language-id "typescriptreact"))
+              . khz/typescript-eglot-command)
              (solidity-mode . ("nomicfoundation-solidity-language-server" "--stdio"))
              (astro-ts-mode . ("astro-ls" "--stdio"
                                :initializationOptions
