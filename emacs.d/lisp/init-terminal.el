@@ -135,7 +135,10 @@ apply this to Eshell or Shell buffers, which support normal Emacs editing."
   (add-to-list 'ghostel-eval-cmds '("magit-status-setup-buffer" magit-status-setup-buffer)))
 
 (use-package evil-ghostel
-  :straight nil
+  ;; Distributed separately from Ghostel's core Lisp files.
+  :straight (:type git :host github :repo "dakra/ghostel"
+             :local-repo "ghostel"
+             :files ("extensions/evil-ghostel/*.el"))
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
 
