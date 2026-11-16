@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""Report a submitted diff-review thread result to its originating Emacs."""
+
+import argparse
+import base64
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--batch", type=Path, required=True)
+    parser.add_argument("action", choices=("resolve", "reply"))
+    parser.add_argument("thread")
+    body = parser.add_mutually_exclusive_group(required=True)
+    body.add_argument("--body")
+    body.add_argument("--body-file", type=Path)
+    args = parser.parse_args()
+
+    try:
+        batch_path = args.batch.resolve(strict=True)
+        batch = json.loads(batch_path.read_text(encoding="utf-8"))
+        if batch.get("format") != "diff-review-herdr/1":
+            raise ValueError("Unrecognized feedback batch")
+        if batch.get("state") == "cancelled":
+            raise ValueError("This feedback batch was cancelled")
+        if args.thread not in {item["comment"]["id"] for item in batch["threads"]}:
+            raise ValueError("Thread is not part of this feedback batch")
+        text = args.body_file.read_text(encoding="utf-8") if args.body_file else args.body
+        if not text.strip():
+            raise ValueError("A result needs a nonempty reply")
+        request = {
+            "batch": str(batch_path),
+            "thread": args.thread,
+            "action": args.action,
+            "body": text,
+        }
+        encoded = base64.b64encode(json.dumps(request).encode("utf-8")).decode("ascii")
+        expression = f'(diff-review-herdr-apply-result "{encoded}")'
+        # No shell and no user text interpolated into Lisp: the payload is base64.
+        result = subprocess.run(
+            [*batch["client"], "--eval", expression],
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=False,
+        )
+        if result.returncode or result.stdout.strip() != '"OK"':
+            detail = result.stderr.strip() or result.stdout.strip() or "No acknowledgement"
+            raise ValueError(f"Emacs did not confirm the update: {detail}")
+    except (OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired) as error:
+        print(f"diff-review-herdr: {error}", file=sys.stderr)
+        print("The result is unconfirmed; do not claim that the thread was resolved.", file=sys.stderr)
+        return 1
+    print(f"Recorded {args.action} for {args.thread}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
