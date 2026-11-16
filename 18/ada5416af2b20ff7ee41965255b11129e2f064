@@ -1,0 +1,46 @@
+README.md
+  s_32f7ae8b0a1a5a::t_2e683d649b3a72 3-4
+emacs.d/diff-review-herdr.md
+  s_32f7ae8b0a1a5a::t_2e683d649b3a72 1-59,63-97
+  s_32f7ae8b0a1a5a::t_25ae44d2102e83 60-62
+emacs.d/bin/diff-review-herdr
+  s_32f7ae8b0a1a5a::t_aa642d967ff773 1-62
+emacs.d/lisp/diff-review-herdr.el
+  s_32f7ae8b0a1a5a::t_0570bd42e66d94 345-346
+  s_32f7ae8b0a1a5a::t_aa642d967ff773 1-22,24-27,29-42,46-50,54,56-58,72-203,213-218,223-278,280-328,330-344,347-414,418-425,434-436
+  s_32f7ae8b0a1a5a::t_1ce240213d58d4 43-45,51-53,55,59-71,329
+  s_32f7ae8b0a1a5a::t_94eccc9c51f0b3 23,204-212,426-433
+  s_32f7ae8b0a1a5a::t_fc52e05da16014 28,219-222,279,415-417
+emacs.d/tests/diff-review-herdr-test.el
+  s_32f7ae8b0a1a5a::t_25ae44d2102e83 221,229
+  s_32f7ae8b0a1a5a::t_0570bd42e66d94 294,316-317
+  s_32f7ae8b0a1a5a::t_94eccc9c51f0b3 7,38-43,117-125
+  s_32f7ae8b0a1a5a::t_08c413f1648286 208-220,222-228,230-236
+  s_32f7ae8b0a1a5a::t_1ce240213d58d4 301-302,310-315
+  s_32f7ae8b0a1a5a::t_fc52e05da16014 1-6,8-37,44-116,126-207,237-264,266-272,274-293,295-300,303-309,318-325,327-328
+  s_32f7ae8b0a1a5a::t_2e683d649b3a72 265,273,326
+emacs.d/lisp/init-ai.el
+  s_32f7ae8b0a1a5a::t_aa642d967ff773 183-189
+emacs.d/tests/run-diff-review-herdr-tests
+  s_32f7ae8b0a1a5a::t_fc52e05da16014 1-6,8-16
+  s_32f7ae8b0a1a5a::t_94eccc9c51f0b3 7
+emacs.d/lisp/init-vcs.el
+  s_32f7ae8b0a1a5a::t_aa642d967ff773 599-600
+  s_32f7ae8b0a1a5a::t_25ae44d2102e83 601-605
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "18ada5416af2b20ff7ee41965255b11129e2f064",
+  "prompts": {},
+  "sessions": {
+    "s_32f7ae8b0a1a5a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1e378-6304-7633-88ba-d5b32c2bb2da",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Kaung Htet <kayhzaw@gmail.com>"
+    }
+  }
+}
