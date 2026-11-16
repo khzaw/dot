@@ -180,5 +180,13 @@ Follow good Git style:
   :config
   (setq package-install-upgrade-built-in t))
 
+(use-package herdr
+  :straight (:type git :host github :repo "baongoc124/emacs-herdr")
+  :hook (after-init . herdr-mode)
+  :custom
+  (herdr-menu-key "C-c j")
+  (herdr-sync-workspace-labels 'project)
+  (herdr-sync-tab-labels t))
+
 (provide 'init-ai)
 ;;; init-ai.el ends here

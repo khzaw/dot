@@ -596,12 +596,28 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (use-package diff-review
   :straight (:type git :host github :repo "xiaoxinghu/diff-review")
-  :config (with-eval-after-load
-              'magit
-            (add-hook 'magit-status-sections-hook #'diff-review-magit-insert-worktrees t)
-            (transient-append-suffix 'magit-diff 'magit-stash-show
-              '("v" "Review" diff-review-magit-commits))
-            (diff-review-magit-mode)))
+  :custom
+  (diff-review-sidebar-width 60)
+  :config
+  (require 'diff-review-herdr)
+  (require 'diff-review-sidebar-folds)
+  (with-eval-after-load 'evil
+    (evil-define-minor-mode-key 'normal 'diff-review-file-mode
+      "]c" #'diff-review-next-hunk
+      "[c" #'diff-review-previous-hunk
+      "zv" #'diff-review-viewed-and-next
+      "zf" #'diff-review-toggle-focus
+      "zd" #'diff-review-toggle-inline-removed
+      "gc" #'diff-review-comment
+      "gl" #'diff-review-overview
+      "gq" #'diff-review-quit))
+
+  (with-eval-after-load
+      'magit
+    (add-hook 'magit-status-sections-hook #'diff-review-magit-insert-worktrees t)
+    (transient-append-suffix 'magit-diff 'magit-stash-show
+      '("v" "Review" diff-review-magit-commits))
+    (diff-review-magit-mode)))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
