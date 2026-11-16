@@ -1,0 +1,35 @@
+emacs.d/lisp/init-vcs.el
+  s_6e3fe600e38d1d::t_c9dfa468564a48 603
+  s_32f7ae8b0a1a5a::t_817f08ffe7aa3c 599-602,604-620
+emacs.d/lisp/init-ai.el
+  s_32f7ae8b0a1a5a::t_7b911ff74dcd35 183-190
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "420a4cb0f53056a49afebd17f1eee90e7714b49b",
+  "prompts": {},
+  "humans": {
+    "h_4c0c7d5341815b": {
+      "author": "Kaung Htet <kayhzaw@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_32f7ae8b0a1a5a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1e378-6304-7633-88ba-d5b32c2bb2da",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Kaung Htet <kayhzaw@gmail.com>"
+    },
+    "s_6e3fe600e38d1d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1e3e1-f5f8-7a92-96a2-c886f395b372",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Kaung Htet <kayhzaw@gmail.com>"
+    }
+  }
+}
