@@ -13,4 +13,6 @@ for task_dependency in diff-review magit/lisp compat cond-let llama transient/li
 done
 
 exec "${EMACS:-emacs}" --batch -Q "$@" -L "$task_emacs_dir/lisp" \
-    -l "$task_emacs_dir/tests/diff-review-herdr-test.el" -f ert-run-tests-batch-and-exit
+    -l "$task_emacs_dir/tests/diff-review-herdr-test.el" \
+    -l "$task_emacs_dir/tests/diff-review-sidebar-folds-test.el" \
+    -f ert-run-tests-batch-and-exit

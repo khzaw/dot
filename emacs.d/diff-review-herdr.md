@@ -26,6 +26,10 @@ blocked sessions. Only local reviews are supported. A branch must have a
 writable worktree checked out; fixed commit-range reviews are not editable
 targets.
 
+Manually collapsed sidebar folders stay closed when switching files or
+redrawing the tree. Use `TAB` to expand them when desired. This fold state lasts
+for the current sidebar buffer; it is not stored in the review JSON.
+
 ## Replies and resolution
 
 The generated prompt includes the helper's absolute path, an absolute batch
