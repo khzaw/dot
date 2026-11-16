@@ -594,5 +594,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :straight (:type git :host github :repo "phye/inline-review")
   :defer t)
 
+(use-package diff-review
+  :straight (:type git :host github :repo "xiaoxinghu/diff-review"))
+
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
