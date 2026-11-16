@@ -1,5 +1,7 @@
 # Dotfiles
 
+Emacs supports [sending diff-review feedback to Herdr agents](emacs.d/diff-review-herdr.md).
+
 ## Machine-local settings
 
 Shared application defaults live in the tracked config files. Values that

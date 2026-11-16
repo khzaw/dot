@@ -596,12 +596,13 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (use-package diff-review
   :straight (:type git :host github :repo "xiaoxinghu/diff-review")
-  :config (with-eval-after-load
-              'magit
-            (add-hook 'magit-status-sections-hook #'diff-review-magit-insert-worktrees t)
-            (transient-append-suffix 'magit-diff 'magit-stash-show
-              '("v" "Review" diff-review-magit-commits))
-            (diff-review-magit-mode)))
+  :config
+  (require 'diff-review-herdr)
+  (with-eval-after-load 'magit
+    (add-hook 'magit-status-sections-hook #'diff-review-magit-insert-worktrees t)
+    (transient-append-suffix 'magit-diff 'magit-stash-show
+      '("v" "Review" diff-review-magit-commits))
+    (diff-review-magit-mode)))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here

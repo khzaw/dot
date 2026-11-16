@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+
+task_emacs_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+task_repos=${STRAIGHT_REPOS:-$HOME/.emacs.d/straight/repos}
+set --
+for task_dependency in diff-review magit/lisp compat cond-let llama transient/lisp ghostel/lisp emacs-herdr evil goto-chg; do
+    if [ ! -d "$task_repos/$task_dependency" ]; then
+        echo "Missing installed dependency: $task_repos/$task_dependency" >&2
+        exit 1
+    fi
+    set -- "$@" -L "$task_repos/$task_dependency"
+done
+
+exec "${EMACS:-emacs}" --batch -Q "$@" -L "$task_emacs_dir/lisp" \
+    -l "$task_emacs_dir/tests/diff-review-herdr-test.el" -f ert-run-tests-batch-and-exit
