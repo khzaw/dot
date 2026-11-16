@@ -180,6 +180,28 @@
 (use-package vulkanite-theme
   :defer t
   :straight (:type git :host github :repo "Meskour/vulkanite-theme-emacs")
+  :preface
+  (defun khz/vulkanite-fix-org-hide (args)
+    "Keep Vulkanite's hidden stars from inheriting `org-indent' in ARGS."
+    (let ((theme (car args))
+          (hide (assq 'org-hide (cdr args)))
+          (indent (assq 'org-indent (cdr args))))
+      (if (and (or (eq theme 'vulkanite)
+                   (string-prefix-p "vulkanite-" (symbol-name theme)))
+               (equal (cadr hide) '((t (:inherit org-indent))))
+               indent)
+          ;; Org's org-indent already inherits org-hide.  Copy the theme's
+          ;; indentation colors instead of adding the reverse inheritance.
+          (cons theme
+                (mapcar (lambda (face)
+                          (if (eq (car face) 'org-hide)
+                              (cons 'org-hide (cdr indent))
+                            face))
+                        (cdr args)))
+        args)))
+  :init
+  ;; Fix face specs before activation; enable-theme-functions runs too late.
+  (advice-add 'custom-theme-set-faces :filter-args #'khz/vulkanite-fix-org-hide)
   :custom
   (vulkanite-theme-keyword-italic nil))
 
