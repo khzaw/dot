@@ -120,6 +120,9 @@ apply this to Eshell or Shell buffers, which support normal Emacs editing."
          :map ghostel-mode-map
          ("C-s" . consult-line)
          ("C-k" . khz/ghostel-send-C-k-and-kill)
+         ;; C-x is a `ghostel-keymap-exceptions' prefix; this sends a literal
+         ;; C-x (e.g. herdr's `C-b C-x' close-pane).
+         ("C-c C-x" . khz/ghostel-send-C-x)
          ("M-p" . (lambda () (interactive) (ghostel-send-key "p" "ctrl")))
          ("M-n" . (lambda () (interactive) (ghostel-send-key "n" "ctrl"))))
   :init
@@ -132,6 +135,10 @@ apply this to Eshell or Shell buffers, which support normal Emacs editing."
     (interactive)
     (kill-ring-save (point) (line-end-position))
     (ghostel-send-key "k" "ctrl"))
+  (defun khz/ghostel-send-C-x ()
+    "Send a literal `C-x' to the terminal."
+    (interactive)
+    (ghostel-send-key "x" "ctrl"))
   (add-to-list 'ghostel-eval-cmds '("magit-status-setup-buffer" magit-status-setup-buffer)))
 
 (use-package evil-ghostel

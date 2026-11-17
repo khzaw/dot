@@ -612,12 +612,17 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
       "gl" #'diff-review-overview
       "gq" #'diff-review-quit))
 
-  (with-eval-after-load
-      'magit
-    (add-hook 'magit-status-sections-hook #'diff-review-magit-insert-worktrees t)
-    (transient-append-suffix 'magit-diff 'magit-stash-show
-      '("v" "Review" diff-review-magit-commits))
-    (diff-review-magit-mode)))
+  (defun khz/diff-review-current-branch ()
+    "Review the current branch against `diff-review-default-base'."
+    (interactive)
+    (diff-review-branch (or (magit-get-current-branch)
+                            (user-error "Not on a branch"))))
+
+  (with-eval-after-load 'magit
+    ;; Adds the worktrees section and `d v' (review selected commits).
+    (diff-review-magit-mode)
+    (transient-append-suffix 'magit-diff 'diff-review-magit-commits
+      '("b" "Review branch" khz/diff-review-current-branch))))
 
 (provide 'init-vcs)
 ;;; init-vcs.el ends here
