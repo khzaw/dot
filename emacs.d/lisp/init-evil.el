@@ -93,7 +93,9 @@
 (use-package evil-goggles :config (evil-goggles-mode))
 
 ;; provides 2-character motions for quickly jumping around text compared to Evil's built-in f/F/t/T motions, incrementally highlighting candidate targets as you type. By default, snipe only binds s (forward) and S (backward) to evil-snipe-s and evil-snipe-S, respectively. In operator mode, snipe is bound to z/Z and x/X (exclusive):
+;; Disabled: its s/S shadow diff-review's S (Herdr send).
 (use-package evil-snipe
+  :disabled t
   :commands evil-snipe-mode
   :hook (on-first-buffer . evil-snipe-mode))
 
